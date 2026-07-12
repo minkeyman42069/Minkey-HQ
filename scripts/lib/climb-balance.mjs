@@ -68,12 +68,13 @@ function simPitch(node, stamina, acc, timeoutRate, boons) {
   let missCount = 0;
   let strikes = 0;
 
-  if (boons.provisions) stamina = Math.min(BALANCE.STAM_MAX, stamina + 4);
+  if (boons.provisions) stamina = Math.min(BALANCE.STAM_MAX, stamina + 5);
 
   for (let q = 0; q < node.need; q++) {
     const time = node.time || 16;
     const crux = node.need > 1 && done >= node.need - 1;
-    const riseMult = crux ? BALANCE.CRUX_RISE_MULT : 1;
+    let riseMult = crux ? BALANCE.CRUX_RISE_MULT : 1;
+    if (boons.updraft) riseMult *= 0.68;
 
     // passive threat per question: rise * 0.05 per 50ms tick ≈ rise * seconds
     threat += node.rise * time * riseMult;

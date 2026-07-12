@@ -14,8 +14,10 @@
     "overhaul": "node scripts/overhaul-bank.mjs",
     "apply-batch": "node scripts/apply-overhaul-batch.mjs",
     "sync": "node scripts/inject-bank.mjs",
+    "build:trail": "node scripts/build-trail.mjs",
+    "verify:trail": "node scripts/verify-trail.mjs",
     "playground": "npx --yes serve . -p 4174",
-    "check": "npm run validate && npm run analyze && npm run sync-check",
+    "check": "npm run validate && npm run analyze && npm run sync-check && npm run build:trail && npm run verify:trail",
     "refresh": "npm run overhaul && npm run apply-batch && npm run audit && npm run sync && npm run check"
   }
 }

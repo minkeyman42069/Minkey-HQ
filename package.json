@@ -7,6 +7,13 @@
     "dev": "npx --yes serve . -p 4173",
     "validate": "node scripts/validate-bank.mjs",
     "analyze": "node scripts/analyze-bank.mjs",
-    "check": "npm run validate && npm run analyze"
+    "audit": "node scripts/quality-audit.mjs",
+    "extract": "node scripts/extract-bank.mjs",
+    "overhaul": "node scripts/overhaul-bank.mjs",
+    "apply-batch": "node scripts/apply-overhaul-batch.mjs",
+    "sync": "node scripts/inject-bank.mjs",
+    "playground": "npx --yes serve . -p 4174",
+    "check": "npm run validate && npm run analyze",
+    "refresh": "npm run overhaul && npm run apply-batch && npm run audit && npm run sync && npm run check"
   }
 }

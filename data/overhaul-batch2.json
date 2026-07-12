@@ -1,0 +1,691 @@
+[
+  {
+    "id": 16,
+    "q": "Before lunch, a client who has not eaten since breakfast works eagerly for food tokens during a DTT session. After a full lunch, the same tokens no longer motivate the client. The variable that changed how valuable the tokens are right now is best described as a:",
+    "a": [
+      "Motivating operation",
+      "Discriminative stimulus",
+      "Conditioned punisher",
+      "Extinction burst"
+    ],
+    "c": 0,
+    "e": "A <b>motivating operation (MO)</b> temporarily alters the reinforcing effectiveness of a consequence. Hunger before lunch is an establishing operation; satiation after eating is an abolishing operation. A discriminative stimulus signals availability of reinforcement but does not change reinforcer value.",
+    "dom": "C"
+  },
+  {
+    "id": 17,
+    "q": "A learner has been outside in hot weather for an hour with no water. When the RBT offers a cold drink as a reinforcer, the learner immediately completes the next task. The state that increased the value of the drink is an:",
+    "a": [
+      "Establishing operation",
+      "Abolishing operation",
+      "Discriminative stimulus",
+      "Conditioned stimulus"
+    ],
+    "c": 0,
+    "e": "<b>Deprivation of water</b> is an <b>establishing operation (EO)</b> \u2014 it increases the value of the drink and makes the learner more likely to work for it. An abolishing operation would decrease value (e.g., after the learner is fully hydrated).",
+    "dom": "C"
+  },
+  {
+    "id": 18,
+    "q": "After a client eats a large snack, the RBT offers the client's favorite sticker and the client shows no interest in working for it. The state that decreased the sticker's value is an:",
+    "a": [
+      "Abolishing operation",
+      "Establishing operation",
+      "Discriminative stimulus",
+      "Negative reinforcement"
+    ],
+    "c": 0,
+    "e": "<b>Satiation</b> from the snack is an <b>abolishing operation (AO)</b> \u2014 it temporarily lowers the reinforcing value of the sticker. An establishing operation would increase value (e.g., if the client had not eaten).",
+    "dom": "C"
+  },
+  {
+    "id": 220,
+    "q": "An RBT notices that a client who skipped breakfast is highly motivated by crackers during morning sessions, but after eating crackers at snack time the client no longer works for them. This pattern illustrates that deprivation ___ reinforcer value while satiation ___ it.",
+    "a": [
+      "increases; decreases",
+      "decreases; increases",
+      "eliminates; creates",
+      "signals; punishes"
+    ],
+    "c": 0,
+    "e": "<b>Deprivation</b> (no breakfast) is an establishing operation that <b>increases</b> value; <b>satiation</b> (just ate crackers) is an abolishing operation that <b>decreases</b> value. This is not about SDs or punishment.",
+    "dom": "C"
+  },
+  {
+    "id": 221,
+    "q": "Before a session, the BCBA reports the client had a poor night's sleep and has not eaten breakfast. The RBT should recognize these as variables that operate:",
+    "a": [
+      "Before the target behavior, altering reinforcer value",
+      "After the behavior, as consequences",
+      "Only during reinforcement delivery",
+      "As permanent product measures"
+    ],
+    "c": 0,
+    "e": "<b>Motivating operations</b> are antecedent variables \u2014 they change how effective a reinforcer will be <b>before</b> the learner responds. They are not consequences and are not measurement procedures.",
+    "dom": "C"
+  },
+  {
+    "id": 382,
+    "q": "During a community outing, a client who has been walking for 30 minutes without a break becomes highly motivated by a rest on a bench. The RBT recognizes that fatigue temporarily changed the ___ of rest as a reinforcer.",
+    "a": [
+      "Value",
+      "Topography",
+      "Latency",
+      "Interobserver agreement"
+    ],
+    "c": 0,
+    "e": "Fatigue is an <b>establishing operation</b> that increases the <b>value</b> of rest. Topography describes behavior form; latency and IOA are measurement concepts, not MO effects.",
+    "dom": "C"
+  },
+  {
+    "id": 21,
+    "q": "An RBT delivers a token after every 5 correct tact responses during a 30-minute session, regardless of how long each set takes. This reinforcement schedule is:",
+    "a": [
+      "Fixed ratio (FR-5)",
+      "Variable ratio (VR-5)",
+      "Fixed interval (FI-5)",
+      "Variable interval (VI-5)"
+    ],
+    "c": 0,
+    "e": "Reinforcement after a <b>set number of responses</b> (every 5th) is <b>fixed ratio (FR)</b>. Variable ratio would use an unpredictable response requirement; interval schedules depend on time, not response count.",
+    "dom": "C"
+  },
+  {
+    "id": 22,
+    "q": "A slot-machine-style token board gives the client a reinforcer after 3, 7, 2, and 9 correct responses across trials \u2014 the requirement changes unpredictably. This schedule is:",
+    "a": [
+      "Variable ratio",
+      "Fixed ratio",
+      "Fixed interval",
+      "Continuous reinforcement"
+    ],
+    "c": 0,
+    "e": "A <b>varying, unpredictable number of responses</b> before reinforcement is <b>variable ratio (VR)</b>, which produces steady, resistant responding. Fixed ratio uses a constant response requirement.",
+    "dom": "C"
+  },
+  {
+    "id": 23,
+    "q": "An RBT sets a timer for 2 minutes. The first correct response after each 2-minute interval earns a sticker. This schedule is:",
+    "a": [
+      "Fixed interval (FI 2-min)",
+      "Variable interval (VI 2-min)",
+      "Fixed ratio (FR 2)",
+      "Variable ratio (VR 2)"
+    ],
+    "c": 0,
+    "e": "Reinforcement for the first response after a <b>fixed amount of time</b> is <b>fixed interval (FI)</b>. Variable interval would use unpredictable time periods; ratio schedules depend on response count.",
+    "dom": "C"
+  },
+  {
+    "id": 24,
+    "q": "A supervisor instructs the RBT to deliver praise on average every 4 minutes, but the actual interval varies from 2 to 6 minutes across the session. This schedule is:",
+    "a": [
+      "Variable interval (VI 4-min)",
+      "Fixed interval (FI 4-min)",
+      "Variable ratio (VR 4)",
+      "Noncontingent reinforcement"
+    ],
+    "c": 0,
+    "e": "Reinforcement after a <b>varying amount of time</b> (around 4 minutes) is <b>variable interval (VI)</b>. Fixed interval would use identical time periods; ratio schedules depend on responses, not time.",
+    "dom": "C"
+  },
+  {
+    "id": 25,
+    "q": "While teaching a brand-new skill, the RBT delivers praise and a token after every correct response. This schedule is:",
+    "a": [
+      "Continuous reinforcement (CRF)",
+      "Fixed ratio (FR-1)",
+      "Variable ratio",
+      "Fixed interval"
+    ],
+    "c": 0,
+    "e": "Reinforcing <b>every occurrence</b> during initial acquisition is <b>continuous reinforcement (CRF)</b>. Although FR-1 also delivers after each response, CRF is the standard term for 100% reinforcement during early teaching.",
+    "dom": "C"
+  },
+  {
+    "id": 28,
+    "q": "After a client masters hand-washing with a token after every correct step, the BCBA instructs the RBT to move to a token every 3 steps, then every 5 steps. This process is called:",
+    "a": [
+      "Thinning the reinforcement schedule",
+      "Shaping the topography",
+      "Fading the discriminative stimulus",
+      "Extinction of the replacement behavior"
+    ],
+    "c": 0,
+    "e": "<b>Thinning</b> systematically reduces how often reinforcement is delivered while maintaining the behavior. Shaping changes response form; fading reduces prompts, not reinforcement frequency.",
+    "dom": "C"
+  },
+  {
+    "id": 160,
+    "q": "An RBT's supervisor explains that one program reinforces after 10 responses and another reinforces after 3 minutes regardless of response count. The key difference between these two schedules is:",
+    "a": [
+      "One is ratio (responses); the other is interval (time)",
+      "One is fixed; the other is always variable",
+      "One uses tokens; the other uses praise only",
+      "One is punishment; the other is reinforcement"
+    ],
+    "c": 0,
+    "e": "<b>Ratio schedules</b> depend on the <b>number of responses</b>; <b>interval schedules</b> depend on <b>passage of time</b>. Fixed vs. variable is a separate dimension on each type.",
+    "dom": "C"
+  },
+  {
+    "id": 161,
+    "q": "A client's caregiver reports that allowance is delivered every two weeks on the same day, and the client often asks for money right before payday. This real-world example best matches which schedule?",
+    "a": [
+      "Fixed interval",
+      "Variable interval",
+      "Fixed ratio",
+      "Variable ratio"
+    ],
+    "c": 0,
+    "e": "Pay on a predictable, set <b>time</b> cycle is <b>fixed interval (FI)</b>, which often produces a pre-reinforcement response burst. Ratio schedules depend on response count, not calendar time.",
+    "dom": "C"
+  },
+  {
+    "id": 163,
+    "q": "To reduce attention-maintained behavior, the BCBA instructs the RBT to deliver preferred attention every 3 minutes on a timer, regardless of whether the client is engaging in problem behavior. This antecedent strategy is:",
+    "a": [
+      "Noncontingent reinforcement (NCR)",
+      "DRO",
+      "Fixed ratio",
+      "Extinction"
+    ],
+    "c": 0,
+    "e": "<b>NCR</b> delivers reinforcement on a <b>time schedule independent of behavior</b>, reducing the MO for attention. DRO reinforces intervals without problem behavior; extinction withholds the reinforcer entirely.",
+    "dom": "C"
+  },
+  {
+    "id": 386,
+    "q": "A client reliably mands for break with FR-1 reinforcement. The BCBA directs the RBT to require 2 mands per break, then 5, then 10 across weeks. This progression is called:",
+    "a": [
+      "Thinning the schedule",
+      "Shaping",
+      "Backward chaining",
+      "Prompt fading"
+    ],
+    "c": 0,
+    "e": "Increasing the response requirement (FR-2 \u2192 FR-5 \u2192 FR-10) is <b>schedule thinning</b>. Shaping changes response topography; chaining sequences steps; fading reduces prompts.",
+    "dom": "C"
+  },
+  {
+    "id": 39,
+    "q": "An RBT is instructed to mark each instance of hand-flapping on a counter every time it occurs during a 45-minute observation with no breaks. This data collection method is:",
+    "a": [
+      "Continuous measurement",
+      "Partial-interval recording",
+      "Momentary time sampling",
+      "Permanent product recording"
+    ],
+    "c": 0,
+    "e": "Recording <b>every occurrence</b> throughout the observation is <b>continuous measurement</b>. Interval and momentary methods sample only part of the session; permanent product measures outcomes after the behavior.",
+    "dom": "A"
+  },
+  {
+    "id": 40,
+    "q": "During a session, an RBT tallies each time a learner leaves the table without permission across a 20-minute period. The RBT is using:",
+    "a": [
+      "Frequency/event recording",
+      "Duration recording",
+      "Latency recording",
+      "Whole-interval recording"
+    ],
+    "c": 0,
+    "e": "A raw <b>count of each occurrence</b> is <b>frequency (event) recording</b>, a continuous measure. Duration records how long behavior lasts; latency records time to onset; whole-interval is discontinuous.",
+    "dom": "A"
+  },
+  {
+    "id": 42,
+    "q": "A learner's tantrum begins at 10:04 and the RBT records when it ends at 10:11. The RBT is measuring:",
+    "a": [
+      "Duration",
+      "Latency",
+      "Interresponse time",
+      "Rate"
+    ],
+    "c": 0,
+    "e": "<b>Duration</b> is the total time a behavior <b>lasts</b> from start to stop. Latency measures time from a cue to behavior onset; IRT measures time between responses.",
+    "dom": "A"
+  },
+  {
+    "id": 43,
+    "q": "The RBT says 'Touch red' and starts a stopwatch. The learner touches red 8 seconds later. The RBT records 8 seconds as the:",
+    "a": [
+      "Latency",
+      "Duration",
+      "Interresponse time",
+      "Frequency"
+    ],
+    "c": 0,
+    "e": "<b>Latency</b> is the time from the <b>SD/cue until the behavior begins</b>. Duration measures how long the behavior continues once started.",
+    "dom": "A"
+  },
+  {
+    "id": 44,
+    "q": "An RBT records how long a learner waits between two consecutive independent mands during a 15-minute mand training block. This measure is:",
+    "a": [
+      "Interresponse time (IRT)",
+      "Latency",
+      "Duration",
+      "Partial interval"
+    ],
+    "c": 0,
+    "e": "<b>Interresponse time (IRT)</b> is the elapsed time <b>between two instances</b> of the same response. Latency is cue-to-first-response; duration is how long one episode lasts.",
+    "dom": "A"
+  },
+  {
+    "id": 216,
+    "q": "An RBT gives the instruction 'Line up' and records 12 seconds until the learner begins walking. On a separate trial, the learner's off-task behavior lasts 12 seconds before stopping. These two measures respectively represent:",
+    "a": [
+      "Latency; duration",
+      "Duration; latency",
+      "Frequency; rate",
+      "IRT; frequency"
+    ],
+    "c": 0,
+    "e": "<b>Latency</b> = time from the instruction until behavior <b>starts</b>. <b>Duration</b> = how long the behavior <b>lasts</b> once it begins. Both can be 12 seconds but measure different dimensions.",
+    "dom": "A"
+  },
+  {
+    "id": 249,
+    "q": "The BCBA asks the RBT team to review which procedures are continuous measures. Which does NOT belong in that group?",
+    "a": [
+      "Partial-interval recording",
+      "Frequency recording",
+      "Duration recording",
+      "Rate calculation"
+    ],
+    "c": 0,
+    "e": "<b>Partial-interval recording</b> is a <b>discontinuous</b> time-sampling method. Frequency, duration, and rate are all continuous measurement procedures.",
+    "dom": "A"
+  },
+  {
+    "id": 49,
+    "q": "A learner's stereotypy occurs roughly 80 times per minute, making event recording impractical. The BCBA selects a discontinuous method because the behavior occurs at:",
+    "a": [
+      "Very high rates",
+      "Very low rates",
+      "Fixed ratios only",
+      "Unknown functions"
+    ],
+    "c": 0,
+    "e": "Discontinuous methods estimate behavior that occurs at <b>very high rates</b> and is difficult to count in real time. Low-rate behavior is usually better suited to continuous event recording.",
+    "dom": "A"
+  },
+  {
+    "id": 50,
+    "q": "An RBT divides a session into 10-second intervals and marks '+' only if the client remained in seat for the entire 10 seconds. This procedure is:",
+    "a": [
+      "Whole-interval recording",
+      "Partial-interval recording",
+      "Momentary time sampling",
+      "Frequency recording"
+    ],
+    "c": 0,
+    "e": "<b>Whole-interval</b> requires the behavior to occur for the <b>entire interval</b> to score a '+'. Partial interval marks any occurrence; momentary samples only at the interval end.",
+    "dom": "A"
+  },
+  {
+    "id": 51,
+    "q": "During interval recording, an RBT marks '+' if aggression occurred at any point during the 30-second interval, even briefly. This procedure is:",
+    "a": [
+      "Partial-interval recording",
+      "Whole-interval recording",
+      "Momentary time sampling",
+      "Permanent product recording"
+    ],
+    "c": 0,
+    "e": "<b>Partial-interval</b> scores a '+' if the behavior occurred at <b>any point</b> during the interval. Whole-interval requires behavior throughout; momentary checks only at the interval boundary.",
+    "dom": "A"
+  },
+  {
+    "id": 52,
+    "q": "Every 2 minutes an RBT glances at the client and records whether on-task behavior is occurring at that exact moment. This procedure is:",
+    "a": [
+      "Momentary time sampling",
+      "Partial-interval recording",
+      "Whole-interval recording",
+      "Duration recording"
+    ],
+    "c": 0,
+    "e": "<b>Momentary time sampling</b> records whether behavior is occurring at the <b>precise moment</b> the interval ends. Partial and whole interval track whether behavior occurred during the interval.",
+    "dom": "A"
+  },
+  {
+    "id": 55,
+    "q": "A BCBA selects momentary time sampling to estimate on-task behavior that persists for most of a 30-minute block with few clear starts and stops. This method works best when behavior is:",
+    "a": [
+      "Frequent and long-lasting",
+      "Brief and rare",
+      "Always identical in length",
+      "Only measurable as a product"
+    ],
+    "c": 0,
+    "e": "<b>Momentary time sampling</b> efficiently estimates <b>high-rate, ongoing</b> behavior by sampling at intervals. Brief, rare behaviors are better captured with event recording.",
+    "dom": "A"
+  },
+  {
+    "id": 177,
+    "q": "An RBT compares two data sheets: one marks '+' only if stereotypy occurred the full 15 seconds, and another marks '+' only if stereotypy is occurring when the 15-second interval ends. The key difference is:",
+    "a": [
+      "Whole interval requires behavior the entire interval; momentary checks only at the end",
+      "Whole interval is continuous; momentary is a product measure",
+      "Whole interval counts frequency; momentary counts duration",
+      "There is no meaningful difference"
+    ],
+    "c": 0,
+    "e": "<b>Whole-interval</b> requires the behavior throughout the interval (often underestimates). <b>Momentary time sampling</b> records status at the instant the interval closes. Neither is continuous or a product measure.",
+    "dom": "A"
+  },
+  {
+    "id": 286,
+    "q": "A learner's vocal stereotypy occurs continuously and is too fast to count individually. The supervising BCBA directs the RBT to use interval recording because the behavior is:",
+    "a": [
+      "High-rate and difficult to count every instance",
+      "Extremely rare and brief",
+      "Always the same duration",
+      "Only visible on completed worksheets"
+    ],
+    "c": 0,
+    "e": "Interval recording is most appropriate when behavior is <b>high-rate</b> and continuous measurement is impractical. Rare behaviors and permanent products call for different methods.",
+    "dom": "A"
+  },
+  {
+    "id": 87,
+    "q": "An RBT presents one toy at a time to a learner, records approach and engagement for 30 seconds, then removes it before presenting the next item. This direct assessment is:",
+    "a": [
+      "Single stimulus (successive choice)",
+      "Paired stimulus (forced choice)",
+      "MSWO",
+      "Free-operant observation"
+    ],
+    "c": 0,
+    "e": "<b>Single stimulus</b> presents <b>one item at a time</b> in succession. Paired stimulus uses two items side by side; MSWO uses an array with removal; free operant allows unrestricted access.",
+    "dom": "B"
+  },
+  {
+    "id": 88,
+    "q": "An RBT lines up bubbles and a puzzle, asks the learner to pick one, records the choice, then presents a new pair. This direct assessment is:",
+    "a": [
+      "Paired stimulus (forced choice)",
+      "Single stimulus assessment",
+      "MSWO",
+      "Indirect assessment"
+    ],
+    "c": 0,
+    "e": "<b>Paired stimulus</b> presents <b>two items at a time</b> and records which is chosen. Single stimulus shows one item; MSWO uses a larger array with removal after each choice.",
+    "dom": "B"
+  },
+  {
+    "id": 91,
+    "q": "An RBT lays out five reinforcers, lets the client choose one, removes the chosen item, and repeats with the remaining items until all are ranked. This procedure is:",
+    "a": [
+      "Multiple stimulus without replacement (MSWO)",
+      "Multiple stimulus with replacement (MSW)",
+      "Paired stimulus assessment",
+      "Free-operant preference assessment"
+    ],
+    "c": 0,
+    "e": "<b>MSWO</b> presents an array and <b>removes</b> each chosen item without returning it, producing a ranked hierarchy. MSW returns chosen items; paired stimulus uses pairs only.",
+    "dom": "B"
+  },
+  {
+    "id": 92,
+    "q": "Before starting a new client's token program, the BCBA asks the RBT to run a preference assessment because:",
+    "a": [
+      "Reinforcers are individual \u2014 what motivates one client may not motivate another",
+      "All clients prefer the same primary reinforcers",
+      "Assessments replace ongoing data collection",
+      "Pairing is unnecessary after assessment"
+    ],
+    "c": 0,
+    "e": "Effective reinforcement requires identifying what is <b>actually motivating for this individual</b>. Assuming universal preferences leads to weak programs. Assessment complements, not replaces, data collection.",
+    "dom": "B"
+  },
+  {
+    "id": 128,
+    "q": "An RBT places several toys on a table, allows a learner to move freely and interact with any item, and records duration of engagement with no items removed or trial structure. This is:",
+    "a": [
+      "Free-operant preference assessment",
+      "Paired stimulus assessment",
+      "MSWO",
+      "Single stimulus assessment"
+    ],
+    "c": 0,
+    "e": "<b>Free-operant</b> allows unrestricted access while the RBT records <b>duration of engagement</b>. No items are removed (unlike MSWO) and no forced choices are presented (unlike paired stimulus).",
+    "dom": "B"
+  },
+  {
+    "id": 132,
+    "q": "A learner becomes aggressive when preferred items are taken away during assessment. The BCBA selects a method using a small array where the chosen item is returned after each selection. This is:",
+    "a": [
+      "MSW \u2014 items are replaced, reducing problem behavior from removal",
+      "MSWO \u2014 items are permanently removed to rank preferences",
+      "Paired stimulus \u2014 only two items are compared",
+      "Indirect assessment \u2014 no item contact"
+    ],
+    "c": 0,
+    "e": "<b>MSW (with replacement)</b> returns the chosen item to the array, making it safer for learners who escalate when items are removed. MSWO removes items; paired uses dyads; indirect involves no direct contact.",
+    "dom": "B"
+  },
+  {
+    "id": 134,
+    "q": "An RBT runs two preference assessments: in one, chosen items leave the array permanently; in the other, chosen items go back into the array after each pick. The critical difference between MSWO and MSW is:",
+    "a": [
+      "MSWO removes the chosen item; MSW returns it to the array",
+      "MSWO uses two items; MSW uses one",
+      "MSWO is indirect; MSW is direct",
+      "MSWO measures duration; MSW counts approaches"
+    ],
+    "c": 0,
+    "e": "Both use arrays, but <b>MSWO removes</b> the selected stimulus while <b>MSW replaces</b> it. This replacement distinction drives the clinical choice when removal triggers problem behavior.",
+    "dom": "B"
+  },
+  {
+    "id": 136,
+    "q": "Before meeting a new client, an RBT emails a caregiver questionnaire asking which activities the child enjoys at home, without presenting any stimuli to the child. This is:",
+    "a": [
+      "Indirect preference assessment",
+      "Paired stimulus assessment",
+      "MSWO",
+      "Free-operant observation"
+    ],
+    "c": 0,
+    "e": "<b>Indirect assessment</b> gathers preference information through <b>reports or rating scales</b> with no direct interaction with stimuli. All other options involve presenting items to the learner.",
+    "dom": "B"
+  },
+  {
+    "id": 137,
+    "q": "During a free-access period, an RBT records how many seconds a learner plays with each of four toys without presenting trials or removing items. The primary data recorded reflect:",
+    "a": [
+      "Duration of engagement with each item",
+      "Forced choice between two items",
+      "Number of items removed from an array",
+      "Latency to first approach only"
+    ],
+    "c": 0,
+    "e": "In <b>free-operant</b> assessment, <b>duration of engagement</b> is the primary measure \u2014 longer contact indicates higher preference. Forced choice and removal characterize other methods.",
+    "dom": "B"
+  },
+  {
+    "id": 56,
+    "q": "A learner cannot initiate shoe-tying. The RBT physically guides the learner's hands through each loop and pull. This prompt type is:",
+    "a": [
+      "Full physical prompt",
+      "Partial physical prompt",
+      "Gestural prompt",
+      "Verbal prompt"
+    ],
+    "c": 0,
+    "e": "<b>Hand-over-hand</b> guidance through the entire response is a <b>full physical prompt</b> \u2014 the most intrusive level. Gestural and verbal prompts provide less direct support.",
+    "dom": "C"
+  },
+  {
+    "id": 57,
+    "q": "During a matching task, the RBT points to the correct card without speaking. The learner then selects it. This prompt is:",
+    "a": [
+      "Gestural prompt",
+      "Verbal prompt",
+      "Model prompt",
+      "Full physical prompt"
+    ],
+    "c": 0,
+    "e": "Pointing or motioning toward the correct stimulus is a <b>gestural prompt</b>. Verbal prompts use spoken words; model prompts demonstrate the response; physical prompts involve contact.",
+    "dom": "C"
+  },
+  {
+    "id": 60,
+    "q": "A new learner is taught to wash hands using full physical guidance on day 1, partial physical on day 3, and gestural prompts by day 7. This prompting hierarchy is:",
+    "a": [
+      "Most-to-least prompting",
+      "Least-to-most prompting",
+      "Time delay prompting",
+      "Backward chaining"
+    ],
+    "c": 0,
+    "e": "<b>Most-to-least</b> begins with the <b>most intrusive</b> prompt and systematically reduces support. Least-to-most starts minimal and increases only after errors.",
+    "dom": "C"
+  },
+  {
+    "id": 61,
+    "q": "A learner is brand new to toothbrushing and has never attempted the skill independently. The BCBA recommends starting with hand-over-hand guidance. This is consistent with:",
+    "a": [
+      "Most-to-least prompting for errorless early success",
+      "Least-to-most prompting for independent learners",
+      "Time delay only",
+      "No prompting during acquisition"
+    ],
+    "c": 0,
+    "e": "<b>Most-to-least</b> suits <b>new skills</b> because it ensures immediate success and prevents error practice. Least-to-most is better when the learner already performs most steps independently.",
+    "dom": "C"
+  },
+  {
+    "id": 62,
+    "q": "A learner completes 90% of sorting steps independently but occasionally needs help. The RBT waits 5 seconds, then provides a gesture if needed. This approach is:",
+    "a": [
+      "Least-to-most prompting",
+      "Most-to-least prompting",
+      "Total task chaining",
+      "Extinction"
+    ],
+    "c": 0,
+    "e": "<b>Least-to-most</b> is appropriate when the learner is <b>mostly independent</b> and needs only occasional support. Most-to-least is reserved for learners who need maximum help from the start.",
+    "dom": "C"
+  },
+  {
+    "id": 63,
+    "q": "The RBT presents 'Touch blue,' waits 4 seconds, and only then points to the blue card if the learner has not responded. This strategy is:",
+    "a": [
+      "Time delay prompt",
+      "Gestural prompt only",
+      "Full physical prompt",
+      "Visual prompt"
+    ],
+    "c": 0,
+    "e": "Inserting a <b>planned pause</b> before delivering a prompt is <b>time delay</b> \u2014 it creates an opportunity for independent responding. The gesture afterward is a separate prompt type.",
+    "dom": "C"
+  },
+  {
+    "id": 66,
+    "q": "A learner only washes hands when the RBT physically guides them and stops when guidance is removed. The BCBA instructs the team to fade prompts so the learner can:",
+    "a": [
+      "Respond independently without prompt dependence",
+      "Finish sessions faster with less data",
+      "Increase problem behavior for measurement",
+      "Avoid reinforcement entirely"
+    ],
+    "c": 0,
+    "e": "The purpose of <b>prompt fading</b> is to build <b>independent responding</b> and prevent prompt dependence. It is not about session length, increasing problem behavior, or removing reinforcement.",
+    "dom": "C"
+  },
+  {
+    "id": 152,
+    "q": "A learner needs help putting on a jacket. The BCBA asks the RBT to select the prompt that provides the most direct assistance. The RBT should use:",
+    "a": [
+      "Full physical prompt",
+      "Gestural prompt",
+      "Verbal prompt",
+      "Visual prompt"
+    ],
+    "c": 0,
+    "e": "<b>Full physical</b> (hand-over-hand) is the <b>most intrusive</b> prompt level. Gestural, verbal, and visual prompts are less direct and are faded to after physical support is reduced.",
+    "dom": "C"
+  },
+  {
+    "id": 154,
+    "q": "A learner has completed 8 consecutive trials of a sorting task correctly with a gestural prompt. The BCBA instructs the RBT to reduce prompt level. The RBT should:",
+    "a": [
+      "Fade to a less intrusive prompt now that performance is fluent",
+      "Remove all prompts immediately regardless of performance",
+      "Increase to full physical prompts",
+      "Wait until the entire program ends to fade"
+    ],
+    "c": 0,
+    "e": "Fade prompts when the learner performs <b>fluently and consistently</b> at the current level. Immediate removal risks errors; increasing intrusiveness moves backward; waiting creates prompt dependence.",
+    "dom": "C"
+  },
+  {
+    "id": 27,
+    "q": "A learner is learning to request 'break' using a communication card for the first time. The BCBA instructs the RBT to deliver a preferred break after every correct mand during the first week. The recommended schedule is:",
+    "a": [
+      "Continuous reinforcement (CRF)",
+      "Variable ratio",
+      "Fixed interval",
+      "Extinction"
+    ],
+    "c": 0,
+    "e": "During <b>initial acquisition</b> of a new skill, <b>CRF</b> (reinforcing every correct response) builds the response quickly. Thinning to intermittent schedules comes after the skill is established.",
+    "dom": "C"
+  },
+  {
+    "id": 48,
+    "q": "Instead of tallying every instance of vocal stereotypy for 60 minutes, an RBT records whether behavior occurred during each 1-minute interval. This approach is:",
+    "a": [
+      "Discontinuous measurement",
+      "Continuous frequency recording",
+      "Permanent product recording",
+      "Duration recording"
+    ],
+    "c": 0,
+    "e": "Recording behavior only during <b>specific intervals</b> rather than continuously is <b>discontinuous measurement</b>. Continuous methods capture every occurrence or the full time behavior occurs.",
+    "dom": "A"
+  },
+  {
+    "id": 89,
+    "q": "An RBT presents five snacks in an array. The client picks crackers, so crackers are removed. The client then picks juice from the remaining items, and juice is removed. This procedure is:",
+    "a": [
+      "MSWO (multiple stimulus without replacement)",
+      "MSW (multiple stimulus with replacement)",
+      "Paired stimulus assessment",
+      "Single stimulus assessment"
+    ],
+    "c": 0,
+    "e": "<b>MSWO</b> uses an array and <b>removes each chosen item</b> without returning it, producing a preference hierarchy. MSW would return items; paired uses two at a time; single presents one.",
+    "dom": "B"
+  },
+  {
+    "id": 64,
+    "q": "While teaching shoe-tying, the RBT moves from guiding both hands to guiding one hand to tapping the learner's wrist as performance improves. This process is:",
+    "a": [
+      "Prompt fading",
+      "Schedule thinning",
+      "Shaping",
+      "Extinction"
+    ],
+    "c": 0,
+    "e": "Systematically reducing physical guidance as the learner improves is <b>prompt fading</b>. Schedule thinning changes reinforcement frequency; shaping changes response form; extinction withholds reinforcement.",
+    "dom": "C"
+  },
+  {
+    "id": 19,
+    "q": "A client has had no access to water during a long community outing on a hot day. When offered water at the clinic, the client immediately drinks and then works eagerly for snack tokens. The pre-session state that increased water's value is:",
+    "a": [
+      "Establishing operation (deprivation)",
+      "Abolishing operation (satiation)",
+      "Discriminative stimulus",
+      "Conditioned punisher"
+    ],
+    "c": 0,
+    "e": "<b>Water deprivation</b> is an <b>establishing operation</b> that increases the value of water. Satiation would decrease value after the client is no longer thirsty.",
+    "dom": "C"
+  }
+]

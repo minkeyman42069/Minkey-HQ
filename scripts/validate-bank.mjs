@@ -1,30 +1,9 @@
 #!/usr/bin/env node
 /**
- * Validates the question BANK embedded in index.html.
+ * Validates the question BANK in data/questions.json (or index.html).
  * Run: npm run validate
  */
-import { readFileSync } from 'fs';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
-
-const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-const html = readFileSync(join(root, 'index.html'), 'utf8');
-
-const start = html.indexOf('const BANK = [');
-const end = html.indexOf('];\nBANK.forEach', start);
-if (start < 0 || end < 0) {
-  console.error('Could not locate BANK array in index.html');
-  process.exit(1);
-}
-
-const bankSrc = html.slice(start + 'const BANK = '.length, end + 1);
-let bank;
-try {
-  bank = Function(`"use strict"; return (${bankSrc});`)();
-} catch (e) {
-  console.error('Failed to parse BANK:', e.message);
-  process.exit(1);
-}
+import { loadBank } from './lib/load-bank.mjs';
 
 const DOMAINS = new Set(['A', 'B', 'C', 'D', 'E', 'F']);
 const TYPES = new Set(['mc', 'odd', 'tf']);
@@ -35,13 +14,9 @@ function fail(msg) {
   errors++;
 }
 
-// IDs are assigned at runtime in the game (BANK.forEach)
-bank.forEach((q, i) => {
-  q.id = i;
-  if (!q.type) q.type = 'mc';
-});
-
+const bank = loadBank();
 const seen = new Set();
+
 bank.forEach((q, i) => {
   if (q.id !== i) fail(`Question at index ${i} has id ${q.id}`);
   if (seen.has(q.id)) fail(`Duplicate id ${q.id}`);

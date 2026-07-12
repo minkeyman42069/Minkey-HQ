@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RBT Trail — Question Quality Playground</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@600;700&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#081320;--card:#12283c;--line:#254864;--ink:#eaf2f7;--mut:#8aa6bb;--pine:#5fce9f;--rust:#e37356;--lantern:#f2b64e;--ice:#8fc4dd}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+header{padding:20px 18px 10px;border-bottom:1px solid var(--line)}
+h1{font-family:'Space Grotesk',sans-serif;font-size:22px;margin:0 0 4px}
+.sub{color:var(--mut);font-size:13px;line-height:1.45}
+.layout{display:grid;grid-template-columns:300px 1fr;min-height:calc(100vh - 90px)}
+aside{border-right:1px solid var(--line);padding:14px;overflow:auto}
+main{padding:14px 18px;overflow:auto}
+.statgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
+.stat .v{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700}
+.stat .l{font-size:10px;color:var(--mut);text-transform:uppercase;letter-spacing:.1em}
+label{font-size:11px;color:var(--mut);display:block;margin:10px 0 4px}
+select,input{width:100%;background:#0a1a28;border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:9px;font:inherit}
+.qlist{display:flex;flex-direction:column;gap:6px;max-height:55vh;overflow:auto}
+.qitem{text-align:left;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 10px;cursor:pointer;color:inherit;font:inherit}
+.qitem:hover,.qitem.active{border-color:var(--lantern)}
+.qitem .meta{font-size:10px;color:var(--mut);margin-bottom:3px}
+.badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 6px;border-radius:6px;margin-right:4px}
+.badge.A{background:rgba(95,206,159,.2);color:var(--pine)}
+.badge.B{background:rgba(143,196,221,.15);color:var(--ice)}
+.badge.C,.badge.D,.badge.F{background:rgba(227,115,86,.15);color:var(--rust)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.qtext{font-size:17px;line-height:1.45;font-weight:600;margin:0 0 14px}
+.opts{display:grid;gap:8px;margin-bottom:14px}
+.opt{padding:11px 12px;border:1px solid var(--line);border-radius:9px;font-size:14px}
+.opt.correct{border-color:var(--pine);background:rgba(95,206,159,.1)}
+.opt.wrong{opacity:.55}
+.flags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.flag{font-size:11px;padding:4px 8px;border-radius:99px;border:1px solid var(--line);color:var(--mut)}
+.explain{font-size:14px;line-height:1.5;color:#cfe0ea;background:#0a1c2b;border:1px solid var(--line);border-radius:9px;padding:12px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+button{background:#173350;border:1px solid var(--line2);color:var(--ink);border-radius:8px;padding:8px 12px;font:inherit;cursor:pointer}
+button:hover{border-color:var(--lantern)}
+.empty{color:var(--mut);padding:40px;text-align:center}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{max-height:40vh}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Question Quality Playground</h1>
+  <p class="sub">BACB-aligned rubric review for <strong>The RBT Trail</strong> — filter by grade, domain, or flag. Run <code>npm run audit</code> to refresh.</p>
+</header>
+<div class="layout">
+  <aside>
+    <div class="statgrid" id="stats"></div>
+    <label>Filter grade</label>
+    <select id="fGrade"><option value="">All</option><option>A</option><option>B</option><option>C</option><option>D</option><option>F</option></select>
+    <label>Filter domain</label>
+    <select id="fDom"><option value="">All</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option></select>
+    <label>Filter flag</label>
+    <select id="fFlag"><option value="">All</option></select>
+    <label>Search stem</label>
+    <input id="fSearch" placeholder="e.g. MSWO, DRO, rate">
+    <div class="qlist" id="qlist"></div>
+  </aside>
+  <main>
+    <div id="detail" class="empty">Select a question to review stem, answer pool, flags, and explanation.</div>
+  </main>
+</div>
+<script type="module">
+const DOMAINS={A:'Data Collection & Graphing',B:'Behavior Assessment',C:'Behavior Acquisition',D:'Behavior Reduction',E:'Documentation',F:'Ethics'};
+let bank=[], report=[];
+async function load(){
+  const [b,r]=await Promise.all([
+    fetch('../data/questions.json').then(x=>x.json()),
+    fetch('../data/quality-report.json').then(x=>x.json())
+  ]);
+  bank=b; report=r.results;
+  const flags=new Set(); report.forEach(x=>x.flags.forEach(f=>flags.add(f)));
+  const sel=document.getElementById('fFlag');
+  [...flags].sort().forEach(f=>{const o=document.createElement('option');o.value=f;o.textContent=f;sel.appendChild(o)});
+  renderStats(r.summary); renderList();
+}
+function renderStats(s){
+  document.getElementById('stats').innerHTML=`
+    <div class="stat"><div class="v">${s.total}</div><div class="l">Questions</div></div>
+    <div class="stat"><div class="v">${s.avgQuality}</div><div class="l">Avg score</div></div>
+    <div class="stat"><div class="v">${s.grades.A}</div><div class="l">Grade A</div></div>
+    <div class="stat"><div class="v">${s.needsWork.length}</div><div class="l">Needs work</div></div>`;
+}
+function filtered(){
+  const g=document.getElementById('fGrade').value;
+  const d=document.getElementById('fDom').value;
+  const f=document.getElementById('fFlag').value;
+  const s=document.getElementById('fSearch').value.toLowerCase();
+  return report.filter(r=>{
+    if(g&&r.grade!==g) return false;
+    if(d&&r.dom!==d) return false;
+    if(f&&!r.flags.includes(f)) return false;
+    if(s&&!r.q.toLowerCase().includes(s)) return false;
+    return true;
+  });
+}
+function renderList(){
+  const list=filtered();
+  const host=document.getElementById('qlist'); host.innerHTML='';
+  list.forEach(r=>{
+    const b=document.createElement('button'); b.className='qitem';
+    b.innerHTML=`<div class="meta"><span class="badge ${r.grade}">${r.grade} ${r.quality}</span> ${r.dom} · ${r.cat}</div>${r.preview}…`;
+    b.onclick=()=>show(r.id,b); host.appendChild(b);
+  });
+}
+function show(id,btn){
+  document.querySelectorAll('.qitem').forEach(x=>x.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  const q=bank[id], r=report.find(x=>x.id===id);
+  const opts=(q.a||[]).map((t,i)=>{
+    const cls=i===(q.c??-1)?'opt correct':'opt wrong';
+    return `<div class="${cls}">${String.fromCharCode(65+i)}. ${t}</div>`;
+  }).join('');
+  const tf=q.type==='tf'?`<div class="opt correct">Answer: ${q.correct?'True':'False'}</div>`:'';
+  document.getElementById('detail').className='card';
+  document.getElementById('detail').innerHTML=`
+    <div class="meta"><span class="badge ${r.grade}">${r.grade} · ${r.quality}/100</span> #${id} · ${DOMAINS[r.dom]||r.dom} · ${q.cat}${q.source?` · <em>${q.source}</em>`:''}</div>
+    <p class="qtext">${q.q}</p>
+    <div class="opts">${q.type==='tf'?tf:opts}</div>
+    <div class="flags">${r.flags.map(f=>`<span class="flag">${f}</span>`).join('')||'<span class="flag">No flags</span>'}</div>
+    <div class="explain">${q.e||''}</div>
+    <div class="toolbar">
+      <button onclick="navigator.clipboard.writeText(JSON.stringify(${JSON.stringify('')}${''},null,2))">Copy JSON</button>
+    </div>`;
+  document.querySelector('.toolbar button').onclick=()=>navigator.clipboard.writeText(JSON.stringify(q,null,2));
+}
+['fGrade','fDom','fFlag','fSearch'].forEach(id=>document.getElementById(id).addEventListener('input',renderList));
+load().catch(e=>{document.getElementById('detail').textContent='Load data/quality-report.json first (npm run audit)';});
+</script>
+</body>
+</html>

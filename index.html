@@ -31,6 +31,12 @@
   --t0:#5f7d93; --t1:#8fc4dd; --t2:#f2b64e; --t3:#5fce9f; --t4:#ffd484;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+/* reliable tap targets — children never steal touches from the control */
+.cta,.opt,.chip,.boon,.rbtn,.next,.lifeline,.flarebtn,.tnode,.pausebtn,.mapquit,.dock-go,.mnode{
+  touch-action:manipulation;-webkit-user-select:none;user-select:none;}
+.opt,.lifeline,.next,.boon,.chip{min-height:44px;}
+.cta *,.opt *,.chip *,.boon *,.rbtn *,.next *,.lifeline *,.flarebtn *{pointer-events:none;}
+.tnode .trow,.tnode .tblurb,.tnode .tdisc,.tnode .tinfo,.tnode .tgo,.tnode .tdone,.tnode .talt{pointer-events:none;}
 html,body{margin:0;height:100%;}
 body{
   font-family:'Inter',system-ui,sans-serif;color:var(--ink);
@@ -243,7 +249,8 @@ body{
 .draft-l{text-align:center;color:var(--mut);font-size:12px;text-transform:uppercase;letter-spacing:2px;margin:16px 0 12px;}
 .boons{display:flex;flex-direction:column;gap:11px;}
 .boon{background:linear-gradient(180deg,var(--surf2),var(--surf));border:1px solid var(--line);
-  border-radius:var(--r-sm);padding:15px 16px;cursor:pointer;transition:all .14s;display:flex;gap:14px;align-items:center;}
+  border-radius:var(--r-sm);padding:15px 16px;cursor:pointer;transition:all .14s;display:flex;gap:14px;align-items:center;
+  width:100%;text-align:left;font:inherit;color:inherit;-webkit-appearance:none;appearance:none;}
 .boon:hover{border-color:var(--lantern);transform:translateY(-2px);box-shadow:var(--glow-lantern);}
 .boon:active{transform:scale(.99);}
 .boon .bic{font-size:28px;flex:0 0 34px;text-align:center;}
@@ -1561,33 +1568,33 @@ function nSwitch(need,alt){ return {kind:'switchback',icon:'\uD83E\uDEA8',title:
   blurb:"Loose scree — it slides when you misstep. Time barely matters here; footing is everything.",
   need:need,time:18,rise:0.8,miss:26,ease:7,max:100,hit:12,restore:14,boon:false,alt:alt,
   tname:'Loose scree',tic:'\uD83E\uDEA8'}; }
-function nStorm(need,alt){ return {kind:'storm',icon:'\uD83C\uDF29\uFE0F',title:'Squall Line',
-  blurb:"A squall, building by the second. Right answers won’t calm it — only speed clears the ridge.",
-  need:need,time:12,rise:2.2,miss:15,ease:4,max:100,hit:16,restore:16,boon:true,alt:alt,
+function nStorm(need,alt){ return {kind:'storm',icon:'\uD83C\uDF29\uFE0F',title:'Rising Squall',
+  blurb:"A squall building by the second. Correct answers won't calm it — only speed clears the ridge.",
+  need:need,time:12,rise:2.4,miss:15,ease:0,max:100,hit:16,restore:16,boon:true,alt:alt,
   tname:'The squall',tic:'\uD83C\uDF29\uFE0F'}; }
-function nGate(need,alt,domain){ return {kind:'gate',icon:'\uD83D\uDEE1\uFE0F',title:'The Gatekeeper',
+function nGate(need,alt,domain){ return {kind:'gate',icon:'\uD83D\uDEE1\uFE0F',title:'Gatekeeper',
   blurb:"It tests you on "+domain+". Every wrong answer emboldens it; every right one drives it back.",
   need:need,time:17,rise:1.35,miss:30,ease:12,max:100,hit:20,restore:22,boon:true,domain:domain,alt:alt,
   tname:'The Gatekeeper',tic:'\uD83D\uDEE1\uFE0F'}; }
 function nRest(alt){ return {kind:'rest',icon:'\uD83C\uDFD5\uFE0F',title:'Ledge Camp',
   blurb:'Catch your breath. Take something for the pitch ahead.',need:0,restore:CONFIG.REST_RESTORE,boon:true,alt:alt}; }
-function nSummit(need,alt){ return {kind:'summit',icon:'\uD83C\uDFD4\uFE0F',title:'The Cornice',
-  blurb:"The cornice — wind, ice, and everything the mountain has, all at once.",
-  need:need,time:15,rise:2.3,miss:24,ease:8,max:100,hit:22,restore:0,boon:false,alt:alt,
-  tname:'The cornice',tic:'\u2744\uFE0F'}; }
-function nSerac(need,alt){ return {kind:'serac',icon:'\uD83E\uDDCA',title:'The Serac',
-  blurb:"A wall of unstable ice \u2014 it can go at any second. Fast, punishing, and it hits hard.",
-  need:need,time:13,rise:2.7,miss:26,ease:10,max:100,hit:25,restore:20,boon:true,alt:alt,
+function nSummit(need,alt){ return {kind:'summit',icon:'\uD83C\uDFD4\uFE0F',title:'Summit Push',
+  blurb:"The last pitch — wind, ice, and everything the mountain has saved for the top.",
+  need:need,time:15,rise:2.1,miss:22,ease:8,max:100,hit:20,restore:0,boon:false,alt:alt,
+  tname:'Summit push',tic:'\u2744\uFE0F'}; }
+function nSerac(need,alt){ return {kind:'serac',icon:'\uD83E\uDDCA',title:'Falling Serac',
+  blurb:"A wall of unstable ice — it can go at any second. Fast, punishing, and it hits hard.",
+  need:need,time:13,rise:2.5,miss:24,ease:10,max:100,hit:22,restore:20,boon:true,alt:alt,
   tname:'The serac',tic:'\uD83E\uDDCA'}; }
-function nWhiteout(need,alt){ return {kind:'whiteout',icon:'\uD83C\uDF2B\uFE0F',title:'The Whiteout',
+function nWhiteout(need,alt){ return {kind:'whiteout',icon:'\uD83C\uDF2B\uFE0F',title:'Blinding Whiteout',
   blurb:"The cloud swallows the ridge whole. You climb by feel now \u2014 and you climb fast, before it closes for good.",
   need:need,time:10,rise:2.8,miss:13,ease:5,max:100,hit:15,restore:16,boon:true,alt:alt,
   tname:'The whiteout',tic:'\uD83C\uDF2B\uFE0F'}; }
-function nCrevasse(need,alt){ return {kind:'crevasse',icon:'\uD83D\uDD73\uFE0F',title:'The Crevasse',
-  blurb:"A snow bridge over a black drop. Only a few steps to cross \u2014 but one wrong step and the mountain takes you.",
-  need:need,time:15,rise:1.0,miss:44,ease:12,max:100,hit:26,restore:18,boon:true,alt:alt,
-  tname:'The crevasse',tic:'\uD83D\uDD73\uFE0F'}; }
-function nTraverse(need,alt){ return {kind:'traverse',icon:'\uD83E\uDDD7',title:'The Long Traverse',
+function nCrevasse(need,alt){ return {kind:'crevasse',icon:'\uD83D\uDD73\uFE0F',title:'Snow Bridge',
+  blurb:"A snow bridge over a black drop. Only a few steps to cross — but one wrong step and the mountain takes you.",
+  need:need,time:15,rise:1.0,miss:36,ease:12,max:100,hit:24,restore:18,boon:true,alt:alt,
+  tname:'The snow bridge',tic:'\uD83D\uDD73\uFE0F'}; }
+function nTraverse(need,alt){ return {kind:'traverse',icon:'\uD83E\uDDD7',title:'Exposed Traverse',
   blurb:"A long, exposed line across the face. Nothing here is hard \u2014 but it never ends, and the wind never once stops.",
   need:need,time:16,rise:1.5,miss:16,ease:6,max:100,hit:14,restore:16,boon:true,alt:alt,
   tname:'The traverse',tic:'\uD83E\uDDD7'}; }
@@ -1599,18 +1606,18 @@ function nIcefall(need,alt){ return {kind:'icefall',icon:'\u2604\uFE0F',title:'T
   blurb:"Ice comes down the couloir in volleys, on its own grim schedule. Read the rhythm \u2014 move between the falls.",
   need:need,time:14,rise:0.8,miss:18,ease:9,max:100,hit:15,restore:16,boon:true,spike:13,spikeEvery:5,alt:alt,
   tname:'The icefall',tic:'\u2604\uFE0F'}; }
-function nVoid(need,alt){ return {kind:'void',icon:'\uD83C\uDF11',title:'The Void',
-  blurb:"Up here nothing works \u2014 no flare, no field notes, no tricks. Just you and what you actually know.",
+function nVoid(need,alt){ return {kind:'void',icon:'\uD83C\uDF11',title:'Bare Ridge',
+  blurb:"Up here nothing works — no flare, no field notes, no tricks. Just you and what you actually know.",
   need:need,time:15,rise:1.4,miss:20,ease:10,max:100,hit:16,restore:18,boon:false,suppress:true,alt:alt,
-  tname:'The void',tic:'\uD83C\uDF11'}; }
+  tname:'Bare ridge',tic:'\uD83C\uDF11'}; }
 function nKnife(need,alt){ return {kind:'knife',icon:'\uD83D\uDDE1\uFE0F',title:'The Knife-Edge',
   blurb:"A ridge one boot wide, a clean fall on either side. Falter and you slide back \u2014 the edge forgives nothing.",
   need:need,time:15,rise:1.2,miss:20,ease:10,max:100,hit:16,restore:18,boon:true,streakGate:true,alt:alt,
   tname:'The knife-edge',tic:'\uD83D\uDDE1\uFE0F'}; }
-function nBergschrund(need,alt){ return {kind:'berg',icon:'\u26CF\uFE0F',title:'The Bergschrund',
+function nBergschrund(need,alt){ return {kind:'berg',icon:'\u26CF\uFE0F',title:'Widening Crack',
   blurb:"The gap between snow and ice widens with every slip. Stumble once and it yawns; stumble again and it swallows.",
-  need:need,time:15,rise:1.0,miss:14,ease:10,max:100,hit:16,restore:18,boon:true,escalate:6,alt:alt,
-  tname:'The bergschrund',tic:'\u26CF\uFE0F'}; }
+  need:need,time:15,rise:1.0,miss:14,ease:10,max:100,hit:16,restore:18,boon:true,escalate:5,alt:alt,
+  tname:'The widening crack',tic:'\u26CF\uFE0F'}; }
 function nSnowfield(need,alt){ return {kind:'snowfield',icon:'\uD83C\uDF28\uFE0F',title:'The Snowfield',
   blurb:"Deep, soft snow \u2014 slow and plodding, but it forgives a stumble. Find your pace.",
   need:need,time:18,rise:0.7,miss:12,ease:10,max:100,hit:10,restore:14,boon:true,alt:alt,
@@ -1623,14 +1630,14 @@ function nIcewall(need,alt){ return {kind:'icewall',icon:'\uD83D\uDCA0',title:'T
   blurb:"Vertical ice. Every placement matters, and it does not forgive hesitation.",
   need:need,time:14,rise:1.6,miss:24,ease:9,max:100,hit:20,restore:18,boon:true,alt:alt,
   tname:'The ice wall',tic:'\uD83D\uDCA0'}; }
-function nWindslab(need,alt){ return {kind:'windslab',icon:'\uD83C\uDF00',title:'The Windslab',
-  blurb:"A wind-loaded slab, primed to release. The gusts come without warning \u2014 brace, and keep moving through them.",
+function nWindslab(need,alt){ return {kind:'windslab',icon:'\uD83C\uDF00',title:'Gust Field',
+  blurb:"Wind-loaded snow, primed to release. Gusts of threat come without warning — brace and keep moving through them.",
   need:need,time:14,rise:1.0,miss:16,ease:8,max:100,hit:16,restore:16,boon:true,gust:0.5,alt:alt,
-  tname:'The windslab',tic:'\uD83C\uDF00'}; }
-function nSealedFace(need,alt){ return {kind:'sealedface',icon:'\uD83D\uDD12',title:'The Sealed Face',
-  blurb:"A face sealed in hard blue ice. Chip through the shell before the mountain will let you climb at all.",
+  tname:'The gust field',tic:'\uD83C\uDF00'}; }
+function nSealedFace(need,alt){ return {kind:'sealedface',icon:'\uD83D\uDD12',title:'Ice Shell',
+  blurb:"A face sealed in hard blue ice. Your first correct answers break the shell — then you can climb for real.",
   need:need,time:15,rise:1.2,miss:20,ease:10,max:100,hit:17,restore:18,boon:true,shield:2,alt:alt,
-  tname:'The sealed face',tic:'\uD83D\uDD12'}; }
+  tname:'The ice shell',tic:'\uD83D\uDD12'}; }
 function nLongWall(need,alt){ return {kind:'longwall',icon:'\uD83E\uDE9C',title:'The Long Wall',
   blurb:"A wall with no top in sight. The longer you are on it, the less each breather gives back \u2014 and it knows it.",
   need:need,time:16,rise:1.3,miss:18,ease:12,max:100,hit:16,restore:16,boon:true,fatigue:true,alt:alt,
@@ -1650,14 +1657,14 @@ function nAvalanche(need,alt){ return {kind:'avalanche',icon:'\uD83D\uDCA5',titl
 function nShrine(alt){ return {kind:'shrine',icon:'\u26E9\uFE0F',title:'Weathered Shrine',
   blurb:'Cairns and faded prayer flags. Climbers leave something here, and the mountain remembers.',
   need:0,restore:0,boon:false,alt:alt}; }
-function nCorniceRidge(need,alt){ return {kind:'corniceridge',icon:'\uD83C\uDF2C\uFE0F',title:'The Cornice Ridge',
-  blurb:'A wind-carved lip of snow over empty air. Gusts hammer it, and one wrong step unravels the crossing.',
+function nCorniceRidge(need,alt){ return {kind:'corniceridge',icon:'\uD83C\uDF2C\uFE0F',title:'Wind Lip',
+  blurb:'A wind-carved lip of snow over empty air. Gusts hammer it, and one wrong step sends you sliding back.',
   need:need,time:15,rise:1.1,miss:18,ease:9,max:100,hit:17,restore:16,boon:true,gust:0.4,streakGate:true,alt:alt,
-  tname:'The cornice ridge',tic:'\uD83C\uDF2C\uFE0F'}; }
-function nFrozenTitan(need,alt){ return {kind:'frozentitan',icon:'\uD83E\uDDCA',title:'The Frozen Titan',
-  blurb:'A pillar of ancient blue ice that only wakes when struck. Break its shell, and it breaks its patience.',
-  need:need,time:14,rise:1.2,miss:22,ease:9,max:100,hit:20,restore:20,boon:true,shield:3,enrage:1.5,alt:alt,
-  tname:'The frozen titan',tic:'\uD83E\uDDCA'}; }
+  tname:'The wind lip',tic:'\uD83C\uDF2C\uFE0F'}; }
+function nFrozenTitan(need,alt){ return {kind:'frozentitan',icon:'\uD83E\uDDCA',title:'Glacier Block',
+  blurb:'A pillar of ancient blue ice. Break through three frozen layers — then it rages when the threat runs high.',
+  need:need,time:14,rise:1.2,miss:20,ease:9,max:100,hit:18,restore:20,boon:true,shield:3,enrage:1.5,alt:alt,
+  tname:'The glacier block',tic:'\uD83E\uDDCA'}; }
 
 var ACTS=[
  {name:'The Approach',flavor:'Warm rock and open glacier. The mountain lets you find your rhythm before it bares its teeth.'},
@@ -1665,25 +1672,25 @@ var ACTS=[
  {name:'The Death Zone',flavor:'Above the last camp the air turns to knives. Everything the mountain has, thrown at once.'}
 ];
 function scaleNode(n,act){ n.act=act; if(n.kind==='rest') return n;
-  var sc=1+(act-1)*0.30;
+  var sc=1+(act-1)*0.22;
   n.rise=+(n.rise*sc).toFixed(2);
-  n.miss=Math.round(n.miss*(1+(act-1)*0.12));
-  n.hit=Math.round(n.hit*(1+(act-1)*0.15));
+  n.miss=Math.round(n.miss*(1+(act-1)*0.10));
+  n.hit=Math.round(n.hit*(1+(act-1)*0.12));
   n.time=Math.max(8, n.time-(act-1)*2);
   return n; }
 var BESTIARY=[
  {fn:nSwitch,t:1,a:'Accuracy',m:'Loose footing. Time barely matters here — it is all about getting the answer right.'},
  {fn:nTraverse,t:1,a:'Endurance',m:'Nothing is hard, but it never ends and the wind never stops. Steady, grinding pressure.'},
  {fn:nSnowfield,t:1,a:'Accuracy',m:'Deep, forgiving snow. Slow going, but it lets a stumble slide. A place to find your rhythm.'},
- {fn:nCrevasse,t:2,a:'Precision',m:'A black drop under a thin bridge. Few steps to cross, but a single miss is punishing.'},
- {fn:nBergschrund,t:2,a:'Escalating',m:'A widening gap. Every slip costs more stamina than the one before it.'},
- {fn:nStorm,t:2,a:'Speed',m:'A squall building by the second. Right answers will not calm it — only speed clears the ridge.'},
+ {fn:nCrevasse,t:2,a:'Precision',m:'A snow bridge over a black drop. Few steps to cross, but a single miss is punishing.'},
+ {fn:nBergschrund,t:2,a:'Escalating',m:'A widening crack. Every slip costs more stamina than the one before it.'},
+ {fn:nStorm,t:2,a:'Speed',m:'A squall building by the second. Correct answers will not calm it — only speed clears the ridge.'},
  {fn:nCouloir,t:2,a:'Speed',m:'A steep gully funneling everything down. Keep pace, or it wears you down.'},
- {fn:nWindslab,t:2,a:'Chaos',m:'A wind-loaded slab. Gusts of threat come without warning — brace and push through them.'},
- {fn:nVoid,t:3,a:'No boons',m:'Nothing works here. No flare, no field notes, no tricks — just you and what you actually know.'},
+ {fn:nWindslab,t:2,a:'Chaos',m:'Wind-loaded snow. Gusts of threat come without warning — brace and push through them.'},
+ {fn:nVoid,t:3,a:'No boons',m:'Bare ridge — nothing works here. No flare, no field notes, no tricks. Just what you know.'},
  {fn:nKnife,t:3,a:'Consistency',m:'A ridge one boot wide. Falter and you slide back down it — a miss undoes your progress.'},
  {fn:nIcewall,t:3,a:'Precision',m:'Vertical ice. Every placement matters, and it does not forgive hesitation.'},
- {fn:nSealedFace,t:3,a:'Armored',m:'Sealed in hard blue ice. Your first correct answers break the shield before any climbing counts.'},
+ {fn:nSealedFace,t:3,a:'Armored',m:'Hard blue ice shell. Your first correct answers break the layers before any climbing counts.'},
  {fn:nLongWall,t:3,a:'Attrition',m:'A wall with no top in sight. The longer you are on it, the less each breather gives back.'},
  {fn:nWhiteout,t:4,a:'Speed',m:'The cloud swallows the ridge. You climb blind and fast, before it closes for good.'},
  {fn:nThinAir,t:4,a:'Attrition',m:'Air too thin to breathe. Standing still bleeds you dry — keep moving or waste away.'},
@@ -1691,11 +1698,11 @@ var BESTIARY=[
  {fn:nTempest,t:4,a:'Enrage',m:'A storm that feeds on chaos. The closer you are to the edge, the harder it drives you toward it.'},
  {fn:nClosing,t:4,a:'Countdown',m:'A weather window slamming shut. Every second you are given is shorter than the last.'},
  {fn:nAvalanche,t:4,a:'Release',m:'A loaded, silent slope. It waits — then lets go all at once at the halfway point. Be past it.'},
- {fn:nCorniceRidge,t:3,a:'Chaos ridge',m:'Random gusts hammer the crossing, and a single miss unravels your progress. Two cruelties, one ridge.'},
- {fn:nFrozenTitan,t:4,a:'Armored elite',m:'Three shield layers to break before you can climb \u2014 and once struck, it rages when the threat runs high.'},
+ {fn:nCorniceRidge,t:3,a:'Chaos ridge',m:'Wind lip over empty air. Random gusts hammer the crossing, and a single miss sends you sliding back.'},
+ {fn:nFrozenTitan,t:4,a:'Armored elite',m:'Glacier block with three ice layers to break — then it rages when the threat runs high.'},
  {fn:function(n,al){return nGate(n,al,'your weakest domain');},t:5,a:'Competence duel',m:'It tests one domain. Every wrong answer emboldens it; every right one drives it back.'},
  {fn:nSerac,t:5,a:'Elite',m:'A wall of unstable ice that can go at any second. Fast, punishing, and it hits hard.'},
- {fn:nSummit,t:5,a:'Final pitch',m:'The cornice — wind, ice, and everything the mountain has, all at once. The last thing between you and the top.'}
+ {fn:nSummit,t:5,a:'Final pitch',m:'Summit push — wind, ice, and everything the mountain has saved for the top.'}
 ];
 function openBestiary(){ RENDER.bestiary(); show('bestiary'); }
 function openMods(){ RENDER.mods(); show('mods'); }
@@ -1749,7 +1756,8 @@ function enterCurrentNode(){
   if(node.kind==='shrine'){ openShrine(node); return; }
   ENC={ node:node, need:node.need, done:0, threat:0, max:node.max, lifelineUsed:false, firstMissUsed:false, firstTimeoutUsed:false, rallyUsed:false, bulwarkUsed:false, streakEase:0, cairnBank:0, missCount:0, spikeT:0, shieldLeft:(node.shield||0), easeMul:1, timeMul:1, phaseMul:1, phased:false, luckyUsed:false, cruxTold:false, streak:0, lastId:-1 };
   RUN.altitude=node.alt; RUN.ending=false;
-  if(node.kind==='serac'){ ENC.threat=40; setTimeout(function(){ banner('The ice groans','it was waiting for you'); },250); }
+  if(node.kind==='serac'){ ENC.threat=30; setTimeout(function(){ banner('The ice groans','it was waiting for you'); },250); }
+  if(node.kind==='storm'){ setTimeout(function(){ banner('Rising squall','only speed clears this ridge'); },250); }
   if(node.kind==='summit'){ ENC.threat=25; setTimeout(function(){ banner('The final pitch','everything the mountain has'); },250); }
   if(BOON.has('provisions')) addStamina(hasDuo('Base Camp')?16:10);
   show('encounter'); RENDER.encChrome(); nextInEncounter();
@@ -1776,7 +1784,7 @@ function resolve(correct, viaTimeout, srcEl){
   if(correct){
     RUN.right++; ENC.streak++; RUN.bestStreak=Math.max(RUN.bestStreak,ENC.streak);
     if(ENC.shieldLeft>0){ ENC.shieldLeft--; banner('The face cracks', ENC.shieldLeft>0?(ENC.shieldLeft+' layer'+(ENC.shieldLeft>1?'s':'')+' to break'):'shield broken \u2014 climb!'); }
-    else { ENC.done++; if(ENC.node.phase && !ENC.phased && ENC.done>=Math.ceil(ENC.need/2)){ ENC.phased=true; ENC.phaseMul=1.6; raiseThreat(30); banner('The slope lets go','it releases all at once'); }
+    else { ENC.done++; if(ENC.node.phase && !ENC.phased && ENC.done>=Math.ceil(ENC.need/2)){ ENC.phased=true; ENC.phaseMul=1.5; raiseThreat(22); banner('The slope lets go','it releases all at once'); }
       if(ENC.need>1 && ENC.done===ENC.need-1 && !ENC.cruxTold){ ENC.cruxTold=true; banner('The crux','one hard move from the ledge'); } }
     AUDIO.correct(); flash('ok'); if(srcEl) burst(srcEl);
     if(before<lockTierNow() && p.tier>=lockTierNow()) sealLocked();
@@ -1785,7 +1793,7 @@ function resolve(correct, viaTimeout, srcEl){
     if(BOON.has('wildfire')) raiseThreat(-(hasDuo('Wildfire Spread')?3+Math.min(7,ENC.streak):3));
     if(BOON.has('secondhand')) RUN.timeLeft=Math.min(RUN.maxTime, RUN.timeLeft+(hasDuo('Slipstream')?2.4:1.2));
     if(BOON.has('cairn') && ENC.streak%3===0){ var _cb=hasDuo('Deep Reserves')?8:5; ENC.cairnBank+=_cb; banner('Cairn stacked','+'+_cb+' stamina at clear'); }
-    var ease=(ENC.node.ease||CONFIG.EASE_ON_CORRECT)+(BOON.has('momentum')?ENC.streakEase:0);
+    var ease=(typeof ENC.node.ease==='number'?ENC.node.ease:CONFIG.EASE_ON_CORRECT)+(BOON.has('momentum')?ENC.streakEase:0);
     if(ENC.node.fatigue){ ease*=(ENC.easeMul||1); ENC.easeMul=Math.max(0.35,(ENC.easeMul||1)-0.14); }
     if(BOON.has('gambit')) ease*=1.6;
     if(hasDuo('Avalanche') && ENC.streak>=5){ ease+=10; banner('Avalanche','the threat gives way'); }
@@ -1894,10 +1902,10 @@ function openShrine(node){
   var draftWrap=document.getElementById('draftWrap'); draftWrap.style.display='block';
   document.getElementById('draftLabel').textContent='What do you do?';
   var box=document.getElementById('boons'); box.innerHTML='';
-  var give=document.createElement('div'); give.className='boon rare';
+  var give=document.createElement('button'); give.type='button'; give.className='boon rare';
   give.innerHTML='<div class="bic">&#127873;</div><div><div class="bt">Leave an offering</div><div class="bd">Give 12 stamina. The mountain answers with a relic.</div></div>';
   give.onclick=function(){ addStamina(-12); grantRelic(); AUDIO.correct(); draftWrap.style.display='none'; renderHeld(); };
-  var pass=document.createElement('div'); pass.className='boon';
+  var pass=document.createElement('button'); pass.type='button'; pass.className='boon';
   pass.innerHTML='<div class="bic">&#128694;</div><div><div class="bt">Pass by</div><div class="bd">Save your strength for the ridge ahead.</div></div>';
   pass.onclick=function(){ draftWrap.style.display='none'; };
   box.appendChild(give); box.appendChild(pass);
@@ -1922,7 +1930,7 @@ function openLedge(node, mode){
     document.getElementById('draftLabel').textContent = isRest?'Take one for the climb':'Claim a boon';
     var box=document.getElementById('boons'); box.innerHTML='';
     offer.forEach(function(id){
-      var b=BOONS[id]; var el=document.createElement('div'); el.className='boon'+(b.rare?' rare':'');
+      var b=BOONS[id]; var el=document.createElement('button'); el.type='button'; el.className='boon'+(b.rare?' rare':'');
       el.innerHTML='<div class="bic">'+b.ic+'</div><div><div class="bt">'+b.name+(b.rare?' <span class=\"raretag\">RARE</span>':'')+'</div><div class="bd">'+b.desc+'</div></div>';
       el.onclick=function(){ RUN.boons.add(id); if(id==='flare') RUN.flares=2; AUDIO.correct(); draftWrap.style.display='none'; renderHeld(); };
       box.appendChild(el);
@@ -2004,8 +2012,8 @@ var RENDER = {
     sec('Events');
     card('\u26E9\uFE0F','Weathered Shrine','Appears on every route. Trade 12 stamina for a relic \u2014 or walk on.','#c9a86a','');
     sec('New foes in the rotation');
-    card('\uD83C\uDF2C\uFE0F','The Cornice Ridge','Gusts + progress loss on a miss. Tier III.','#9fb4c8','');
-    card('\uD83E\uDDCA','The Frozen Titan','Triple shield + enrage. Tier IV elite.','#7fd4e8','');
+    card('\uD83C\uDF2C\uFE0F','Wind Lip','Gusts + progress loss on a miss. Tier III.','#9fb4c8','');
+    card('\uD83E\uDDCA','Glacier Block','Triple ice shell + enrage. Tier IV elite.','#7fd4e8','');
   },
   bestiary:function(){
     var host=document.getElementById('bestList'); if(!host) return; host.innerHTML='';
@@ -2026,7 +2034,7 @@ var RENDER = {
   },
   encChrome:function(){
     var n=ENC.node;
-    document.getElementById('encKind').textContent = ({switchback:'Accuracy',storm:'Speed',gate:'Competence duel',serac:'Elite',summit:'Final pitch',whiteout:'Speed \u00b7 blind',crevasse:'Precision',traverse:'Endurance',thinair:'Attrition',icefall:'Timing',void:'No boons',knife:'Consistency',berg:'Escalating',snowfield:'Accuracy',couloir:'Speed',icewall:'Precision',windslab:'Chaos',sealedface:'Armored',longwall:'Attrition',tempest:'Enrage',closing:'Countdown',avalanche:'Release',corniceridge:'Chaos ridge',frozentitan:'Armored elite'}[n.kind]||'Trial');
+    document.getElementById('encKind').textContent = ({switchback:'Accuracy',storm:'Speed · no relief',gate:'Competence duel',serac:'Elite',summit:'Final pitch',whiteout:'Speed · blind',crevasse:'Precision',traverse:'Endurance',thinair:'Attrition',icefall:'Timing',void:'No boons',knife:'Consistency',berg:'Escalating',snowfield:'Accuracy',couloir:'Speed',icewall:'Precision',windslab:'Chaos',sealedface:'Armored',longwall:'Attrition',tempest:'Enrage',closing:'Countdown',avalanche:'Release',corniceridge:'Chaos ridge',frozentitan:'Armored elite'}[n.kind]||'Trial');
     document.getElementById('encTitle').innerHTML = n.title + (n.domain? ' <span style="color:var(--mut);font-weight:500;font-size:14px">('+n.domain+')</span>':'');
     document.getElementById('encBlurb').textContent = n.blurb||'';
     document.getElementById('encAlt').textContent=fmt(n.alt)+' m';
@@ -2312,7 +2320,7 @@ function hashStr(s){ var h=2166136261; for(var i=0;i<s.length;i++){ h=Math.imul(
 function dailyKey(){ try{ return new Date().toISOString().slice(0,10); }catch(e){ return '2026-01-01'; } }
 function gradeRun(){ var acc=RUN.seen?RUN.right/RUN.seen:0; var sc=acc*100; if(RUN.summited) sc+=12; sc+=Math.min(8,RUN.bestStreak); sc+=RUN.stamina*0.05; sc+=(RUN.recovered||0)*3; sc+=(RUN.clutch||0)*4; if(RUN.relics&&RUN.relics.has('stone')) sc+=15; sc=sc*(RUN.weather?RUN.weather.score:1);
   return sc>=100?'S':sc>=88?'A':sc>=74?'B':sc>=58?'C':'D'; }
-function nodeEmoji(kind){ var m={storm:'⛈️',gate:'🛡️',rest:'🏕️',summit:'🏔️',serac:'🧊',whiteout:'🌫️',crevasse:'🕳️',traverse:'🧗',thinair:'🫁',icefall:'☄️',void:'🌑',knife:'🗡️',berg:'⛏️',snowfield:'🌨️',couloir:'🗻',icewall:'💠',windslab:'🌀',sealedface:'🔒',longwall:'🪜',tempest:'🌪️',closing:'⏳',avalanche:'💥'}; return m[kind]||'⛰️'; }
+function nodeEmoji(kind){ var m={storm:'⛈️',gate:'🛡️',rest:'🏕️',summit:'🏔️',serac:'🧊',whiteout:'🌫️',crevasse:'🕳️',traverse:'🧗',thinair:'🫁',icefall:'☄️',void:'🌑',knife:'🗡️',berg:'⛏️',snowfield:'🌨️',couloir:'🗻',icewall:'💠',windslab:'🌀',sealedface:'🔒',longwall:'🪜',tempest:'🌪️',closing:'⏳',avalanche:'💥',corniceridge:'🌬️',frozentitan:'🧊',shrine:'⛩️'}; return m[kind]||'⛰️'; }
 function copyText(txt, btnId, done){ var b=document.getElementById(btnId);
   var okc=function(){ if(b){ b.classList.add('done'); b.textContent=done; } };
   if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(okc).catch(function(){fb(txt,okc);}); } else fb(txt,okc); }
@@ -2390,9 +2398,10 @@ function toMenu(){ if(RUN.timer) clearInterval(RUN.timer); renderMeta(); show('m
 function nodeSub(node){
   var n=node.need;
   if(node.kind==='switchback') return 'Footing over speed — '+n+' to clear';
-  if(node.kind==='storm')      return 'Beat the squall — '+n+' before it breaks';
+  if(node.kind==='storm')      return 'Speed only — correct answers won\'t calm it ('+n+')';
   if(node.kind==='gate')       return 'A test of competence — '+node.domain;
   if(node.kind==='rest')       return 'Catch your breath, then draft a boon';
+  if(node.kind==='shrine')     return 'Leave an offering for a relic, or pass by';
   if(node.kind==='serac')      return 'Fast and punishing — '+n+' before the ice lets go';
   if(node.kind==='summit')     return 'The final pitch — '+n+' to top out';
   if(node.kind==='whiteout')   return 'Move fast — '+n+' before the cloud closes';
@@ -2402,16 +2411,18 @@ function nodeSub(node){
   if(node.kind==='icefall')    return 'Between the volleys — '+n+' to clear';
   if(node.kind==='void')       return 'No boons, no tricks — just '+n+' and what you know';
   if(node.kind==='knife')      return 'Stay clean — a slip sends you back ('+n+')';
-  if(node.kind==='berg')       return 'Do not falter — each slip costs more ('+n+')';
+  if(node.kind==='berg')       return 'Each slip costs more — '+n+' across the crack';
   if(node.kind==='snowfield') return 'Find your pace — '+n+' to cross';
   if(node.kind==='couloir') return 'Keep pace — '+n+' before it wears you';
   if(node.kind==='icewall') return 'Every placement counts — '+n+' to the top';
   if(node.kind==='windslab') return 'Brace for gusts — '+n+' through the chaos';
-  if(node.kind==='sealedface') return 'Break the ice first — '+n+' past the shield';
+  if(node.kind==='sealedface') return 'Break the ice shell first — '+n+' past the layers';
   if(node.kind==='longwall') return 'It never ends — '+n+', and rest gives less each time';
   if(node.kind==='tempest') return 'It feeds on danger — '+n+' before it rages';
   if(node.kind==='closing') return 'The window is closing — '+n+', faster each time';
   if(node.kind==='avalanche') return 'It waits, then breaks — '+n+' before the slope goes';
+  if(node.kind==='corniceridge') return 'Gusts + setbacks — '+n+' across the wind lip';
+  if(node.kind==='frozentitan') return 'Break 3 ice layers — '+n+' past the glacier block';
   return n+' to clear';
 }
 /* ---------- META-PROGRESSION (permanent bank so a fall is never a reset) ---------- */

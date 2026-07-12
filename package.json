@@ -1,0 +1,12 @@
+{
+  "name": "rbt-trail",
+  "version": "1.0.0",
+  "private": true,
+  "description": "The RBT Trail — roguelike spaced-repetition study game for the RBT exam",
+  "scripts": {
+    "dev": "npx --yes serve . -p 4173",
+    "validate": "node scripts/validate-bank.mjs",
+    "analyze": "node scripts/analyze-bank.mjs",
+    "check": "npm run validate && npm run analyze"
+  }
+}

@@ -602,7 +602,7 @@ body.lastlegs::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:
       <h1 class="title">THE RBT <span class="k">TRAIL</span></h1>
       <p class="tag">Know your terms, or the mountain wins. A spaced-repetition climb built for the RBT exam.</p>
       <button class="cta big" onclick="beginRun(null)">&#129406; Set out</button>
-      <button class="cta big ghost daily" onclick="beginRun(null, true)">&#128198; Daily Ascent</button>
+      <button class="cta big ghost" onclick="beginRun(null, true)">&#128198; Daily Ascent <span style="font-size:11px;opacity:.75">(seeded · keeps expedition progress)</span></button>
       <button class="cta big ghost" onclick="startExam()">&#128221; Board Simulation</button>
       <button class="cta big ghost" onclick="openBestiary()">&#128215; The Bestiary</button>
       <button class="cta big ghost" onclick="openMods()">&#129513; Expedition Mods</button>
@@ -612,13 +612,13 @@ body.lastlegs::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:
     <div class="menucard">
       <div class="subhead">Train one trail</div>
       <div class="chips" id="chips"></div>
-      <div class="subhead">Resume a climb</div>
+      <div class="subhead">Import concept progress</div>
       <div class="resume">
         <input id="resumeIn" type="text" placeholder="Paste a trail-log code (RBT5:…)" autocomplete="off" autocapitalize="off" spellcheck="false"/>
-        <button id="resumeBtn" class="rbtn" onclick="resumeFromCode()">Restore</button>
+        <button id="resumeBtn" class="rbtn" onclick="resumeFromCode()">Import</button>
       </div>
       <div class="resume-msg" id="resumeMsg"></div>
-      <p class="note">Finish a run for a fresh <b>trail-log code</b>. Paste it here next time to pick up where your memory left off &mdash; and paste it to me so I can cut questions for your weak spots.</p>
+      <p class="note">Trail-log codes save <b>concept tiers</b> from finished climbs — not a mid-run checkpoint. Import one to start ahead on weak spots.</p>
     </div>
   </section>
 
@@ -1425,14 +1425,37 @@ const BANK = [
 {cat:"Ethics & Scope",dom:"F",task:"F.6",q:"A caregiver invites the RBT to a personal social media group for \"team updates.\" The best response is to:",a:["Decline and keep communication on approved professional channels","Join but avoid posting","Join and post weekly progress photos","Join only if the BCBA is also a member"],c:0,e:"Professional <b>boundaries</b> limit social-media entanglements that blur the therapeutic relationship (F.6)."},
 {cat:"Ethics & Scope",dom:"F",task:"F.7",q:"A family offers the RBT paid babysitting on weekends. This is problematic because it creates a:",a:["Multiple relationship","Supervision deficit","Token economy","Motivating operation"],c:0,e:"A <b>multiple relationship</b> can impair objectivity and create conflicts of interest (F.7)."},
 ];
-BANK.forEach(function(q,i){ q.id=i; if(!q.type) q.type='mc'; });var CONFIG = {
-  STAM_MAX:100, MISS_COST:18, TIMEOUT_COST:12, REST_RESTORE:26,
+BANK.forEach(function(q,i){ q.id=i; if(!q.type) q.type='mc'; });  STAM_MAX:100, MISS_COST:14, TIMEOUT_COST:10, REST_RESTORE:28,
+  CLEAR_RESTORE_MULT:0.85, THREAT_RESET:75, CRUX_RISE_MULT:1.2, MAX_BOONS:5,
   MODS:{ weather:true, relics:true, shrines:true },
   LOCK_TIER:3, MASTER_TIER:4,
   BOX_WEIGHTS:[9,6.5,5,3.5,2],
-  EASE_ON_CORRECT:6,      // a right answer pushes the threat back a little
+  EASE_ON_CORRECT:6,
   AUDIO:true, EXAM_N:40, EXAM_PASS:80
 };
+
+/* ---------- TCO DOMAINS (exam blueprint — used by gatekeeper + board sim) ---------- */
+var DOMAINS={A:{n:'Data Collection & Graphing',pct:17},B:{n:'Behavior Assessment',pct:11},C:{n:'Behavior Acquisition',pct:25},D:{n:'Behavior Reduction',pct:19},E:{n:'Documentation & Reporting',pct:13},F:{n:'Ethics',pct:15}};
+var DOMAIN_OF={'Continuous Measurement':'A','Discontinuous Measurement':'A','Graphing & Data':'A','Data Collection & Graphing':'A',
+ 'Assessment & FBA':'B','Preference Assessment':'B','Behavior Assessment':'B',
+ 'Chaining':'C','Generalization & Maintenance':'C','Prompting':'C','Prompting & Fading':'C','Reinforcement':'C','Reinforcement & Punishment':'C','Schedules of Reinforcement':'C','Shaping':'C','Teaching Procedures':'C','Token Economy':'C','Verbal Operants':'C','Motivating Operations':'C',
+ 'Behavior Reduction':'D','Crisis & Emergency':'D','Differential Reinforcement':'D','Extinction':'D','Extinction & Replacement':'D','Functions of Behavior':'D',
+ 'Documentation & Reporting':'E',
+ 'Ethics & Scope':'F','Professionalism & Scope':'F'};
+function domainOf(q){ return q.dom || DOMAIN_OF[q.cat] || 'C'; }
+function weakestDomainLetter(){
+  var seen={A:0,B:0,C:0,D:0,E:0,F:0}, wrong={A:0,B:0,C:0,D:0,E:0,F:0};
+  Object.keys(RUN.prog||{}).forEach(function(id){ var q=BANK[id]; if(!q) return; var d=domainOf(q);
+    seen[d]=(seen[d]||0)+1; wrong[d]+=(RUN.prog[id].wrong||0); });
+  var order=['E','B','A','F','D','C'], pick='C', score=-1;
+  order.forEach(function(d){ var s=(wrong[d]||0)*3+Math.max(0,4-(seen[d]||0)); if(s>score){ score=s; pick=d; } });
+  return pick;
+}
+function pitchRestore(node, mode){
+  var heal=(RUN.weather?RUN.weather.heal:1);
+  if(mode==='rest') return Math.round(node.restore*heal);
+  return Math.round(node.restore*CONFIG.CLEAR_RESTORE_MULT*heal);
+}
 
 /* ---------- TIERS (mastery ladder) ---------- */
 var WEATHERS=[
@@ -1509,7 +1532,7 @@ var BOONS = {
   secondwind:{ic:'💨',name:'Second Wind',rare:false,desc:'Every 5 correct in a row restores 10 stamina.'},
   tailwind:{ic:'🌬️',name:'Tailwind',rare:false,desc:'Adds 4 seconds to the focus timer.'},
   updraft:{ic:'🎈',name:'Updraft',rare:false,desc:'The threat rises more slowly all pitch long.'},
-  provisions:{ic:'🎒',name:'Provisions',rare:false,desc:'Begin every pitch with +10 stamina.'},
+  provisions:{ic:'🎒',name:'Provisions',rare:false,desc:'Begin every pitch with +4 stamina.'},
   rally:{ic:'🚩',name:'Rally',rare:true,desc:'Once per pitch, a miss will not break your streak.'},
   bulwark:{ic:'🧱',name:'Bulwark',rare:true,desc:'Once per pitch, the next time the mountain strikes it costs no stamina.'},
   anchor:{ic:'⚓',name:'Storm Anchor',rare:true,desc:'When the mountain strikes, it costs far less stamina.'},
@@ -1527,7 +1550,7 @@ var DUOS=[
   {ids:['momentum','gambit'],name:'Avalanche',ic:'🏔️',desc:'On a 5+ streak, a correct answer crushes the threat.'},
   {ids:['wildfire','momentum'],name:'Wildfire Spread',ic:'🔥',desc:'Each correct calms the threat more the longer your streak.'},
   {ids:['cairn','secondwind'],name:'Deep Reserves',ic:'🎓',desc:'Cairn banks more stamina per streak.'},
-  {ids:['provisions','highcamp'],name:'Base Camp',ic:'⛺',desc:'Start each pitch stronger, and finish it stronger.'},
+  {ids:['provisions','highcamp'],name:'Base Camp',ic:'⛺',desc:'Start each pitch with +8 stamina, and finish it stronger.'},
   {ids:['rally','bulwark'],name:'Unbreakable',ic:'🛡️',desc:'Rally also refreshes your Bulwark.'},
   {ids:['anchor','bulwark'],name:'Fortress',ic:'🏰',desc:'The strikes that land are blunted even further.'},
   {ids:['surefoot','steady'],name:'Crampons',ic:'🧦',desc:'Your first mistake each pitch also calms the threat.'},
@@ -1554,7 +1577,7 @@ var SCHED = {
     var p=RUN.prog[id]||(RUN.prog[id]={tier:0,seen:0,right:0,wrong:0}); p.seen++;
     var lt=lockTierNow();
     if(correct){ p.right++; p.tier=Math.min(CONFIG.MASTER_TIER,p.tier+1); }
-    else { p.wrong++; p.tier=viaTimeout?Math.max(0,p.tier-1):0; }
+    else { p.wrong++; p.tier=viaTimeout?Math.max(0,p.tier-1):Math.max(0,p.tier-2); }
     if(p.tier>=lt) RUN.locked.add(id); else RUN.locked.delete(id);
     if(p.tier>=CONFIG.MASTER_TIER) RUN.mastered.add(id);
     return p;
@@ -1570,17 +1593,17 @@ function nSwitch(need,alt){ return {kind:'switchback',icon:'\uD83E\uDEA8',title:
   tname:'Loose scree',tic:'\uD83E\uDEA8'}; }
 function nStorm(need,alt){ return {kind:'storm',icon:'\uD83C\uDF29\uFE0F',title:'Rising Squall',
   blurb:"A squall building by the second. Correct answers won't calm it — only speed clears the ridge.",
-  need:need,time:12,rise:2.4,miss:15,ease:0,max:100,hit:16,restore:16,boon:true,alt:alt,
+  need:need,time:12,rise:2.0,miss:15,ease:0,max:100,hit:16,restore:16,boon:true,noBoonEase:true,alt:alt,
   tname:'The squall',tic:'\uD83C\uDF29\uFE0F'}; }
 function nGate(need,alt,domain){ return {kind:'gate',icon:'\uD83D\uDEE1\uFE0F',title:'Gatekeeper',
-  blurb:"It tests you on "+domain+". Every wrong answer emboldens it; every right one drives it back.",
-  need:need,time:17,rise:1.35,miss:30,ease:12,max:100,hit:20,restore:22,boon:true,domain:domain,alt:alt,
+  blurb:domain?"It tests you on "+domain+". Every wrong answer emboldens it; every right one drives it back.":"It tests your weakest exam domain. Every wrong answer emboldens it; every right one drives it back.",
+  need:need,time:17,rise:1.35,miss:30,ease:12,max:100,hit:20,restore:22,boon:true,domain:domain,gateDomain:null,alt:alt,
   tname:'The Gatekeeper',tic:'\uD83D\uDEE1\uFE0F'}; }
 function nRest(alt){ return {kind:'rest',icon:'\uD83C\uDFD5\uFE0F',title:'Ledge Camp',
   blurb:'Catch your breath. Take something for the pitch ahead.',need:0,restore:CONFIG.REST_RESTORE,boon:true,alt:alt}; }
 function nSummit(need,alt){ return {kind:'summit',icon:'\uD83C\uDFD4\uFE0F',title:'Summit Push',
   blurb:"The last pitch — wind, ice, and everything the mountain has saved for the top.",
-  need:need,time:15,rise:2.1,miss:22,ease:8,max:100,hit:20,restore:0,boon:false,alt:alt,
+  need:need,time:15,rise:2.1,miss:22,ease:8,max:100,hit:20,restore:14,boon:false,alt:alt,
   tname:'Summit push',tic:'\u2744\uFE0F'}; }
 function nSerac(need,alt){ return {kind:'serac',icon:'\uD83E\uDDCA',title:'Falling Serac',
   blurb:"A wall of unstable ice — it can go at any second. Fast, punishing, and it hits hard.",
@@ -1588,11 +1611,11 @@ function nSerac(need,alt){ return {kind:'serac',icon:'\uD83E\uDDCA',title:'Falli
   tname:'The serac',tic:'\uD83E\uDDCA'}; }
 function nWhiteout(need,alt){ return {kind:'whiteout',icon:'\uD83C\uDF2B\uFE0F',title:'Blinding Whiteout',
   blurb:"The cloud swallows the ridge whole. You climb by feel now \u2014 and you climb fast, before it closes for good.",
-  need:need,time:10,rise:2.8,miss:13,ease:5,max:100,hit:15,restore:16,boon:true,alt:alt,
+  need:need,time:10,rise:2.4,miss:13,ease:5,max:100,hit:15,restore:16,boon:true,alt:alt,
   tname:'The whiteout',tic:'\uD83C\uDF2B\uFE0F'}; }
 function nCrevasse(need,alt){ return {kind:'crevasse',icon:'\uD83D\uDD73\uFE0F',title:'Snow Bridge',
   blurb:"A snow bridge over a black drop. Only a few steps to cross — but one wrong step and the mountain takes you.",
-  need:need,time:15,rise:1.0,miss:36,ease:12,max:100,hit:24,restore:18,boon:true,alt:alt,
+  need:need,time:15,rise:1.0,miss:28,ease:12,max:100,hit:24,restore:18,boon:true,alt:alt,
   tname:'The snow bridge',tic:'\uD83D\uDD73\uFE0F'}; }
 function nTraverse(need,alt){ return {kind:'traverse',icon:'\uD83E\uDDD7',title:'Exposed Traverse',
   blurb:"A long, exposed line across the face. Nothing here is hard \u2014 but it never ends, and the wind never once stops.",
@@ -1600,7 +1623,7 @@ function nTraverse(need,alt){ return {kind:'traverse',icon:'\uD83E\uDDD7',title:
   tname:'The traverse',tic:'\uD83E\uDDD7'}; }
 function nThinAir(need,alt){ return {kind:'thinair',icon:'\uD83E\uDEC1',title:'The Thin Air',
   blurb:"The air is too thin to breathe. Standing still costs you now \u2014 every second up here bleeds you dry. Keep moving.",
-  need:need,time:16,rise:1.0,miss:18,ease:8,max:100,hit:12,restore:16,boon:true,drain:0.55,alt:alt,
+  need:need,time:16,rise:1.0,miss:18,ease:8,max:100,hit:12,restore:16,boon:true,drain:0.20,alt:alt,
   tname:'Thin air',tic:'\uD83E\uDEC1'}; }
 function nIcefall(need,alt){ return {kind:'icefall',icon:'\u2604\uFE0F',title:'The Icefall',
   blurb:"Ice comes down the couloir in volleys, on its own grim schedule. Read the rhythm \u2014 move between the falls.",
@@ -1616,7 +1639,7 @@ function nKnife(need,alt){ return {kind:'knife',icon:'\uD83D\uDDE1\uFE0F',title:
   tname:'The knife-edge',tic:'\uD83D\uDDE1\uFE0F'}; }
 function nBergschrund(need,alt){ return {kind:'berg',icon:'\u26CF\uFE0F',title:'Widening Crack',
   blurb:"The gap between snow and ice widens with every slip. Stumble once and it yawns; stumble again and it swallows.",
-  need:need,time:15,rise:1.0,miss:14,ease:10,max:100,hit:16,restore:18,boon:true,escalate:5,alt:alt,
+  need:need,time:15,rise:1.0,miss:14,ease:10,max:100,hit:16,restore:18,boon:true,escalate:4,alt:alt,
   tname:'The widening crack',tic:'\u26CF\uFE0F'}; }
 function nSnowfield(need,alt){ return {kind:'snowfield',icon:'\uD83C\uDF28\uFE0F',title:'The Snowfield',
   blurb:"Deep, soft snow \u2014 slow and plodding, but it forgives a stumble. Find your pace.",
@@ -1672,10 +1695,10 @@ var ACTS=[
  {name:'The Death Zone',flavor:'Above the last camp the air turns to knives. Everything the mountain has, thrown at once.'}
 ];
 function scaleNode(n,act){ n.act=act; if(n.kind==='rest') return n;
-  var sc=1+(act-1)*0.22;
+  var sc=1+(act-1)*0.20;
   n.rise=+(n.rise*sc).toFixed(2);
-  n.miss=Math.round(n.miss*(1+(act-1)*0.10));
-  n.hit=Math.round(n.hit*(1+(act-1)*0.12));
+  n.miss=Math.round(n.miss*(1+(act-1)*0.08));
+  n.hit=Math.round(n.hit*(1+(act-1)*0.10));
   n.time=Math.max(8, n.time-(act-1)*2);
   return n; }
 var BESTIARY=[
@@ -1700,7 +1723,7 @@ var BESTIARY=[
  {fn:nAvalanche,t:4,a:'Release',m:'A loaded, silent slope. It waits — then lets go all at once at the halfway point. Be past it.'},
  {fn:nCorniceRidge,t:3,a:'Chaos ridge',m:'Wind lip over empty air. Random gusts hammer the crossing, and a single miss sends you sliding back.'},
  {fn:nFrozenTitan,t:4,a:'Armored elite',m:'Glacier block with three ice layers to break — then it rages when the threat runs high.'},
- {fn:function(n,al){return nGate(n,al,'your weakest domain');},t:5,a:'Competence duel',m:'It tests one domain. Every wrong answer emboldens it; every right one drives it back.'},
+ {fn:function(n,al){return nGate(n,al,null);},t:5,a:'Competence duel',m:'Tests your weakest TCO exam domain at entry. Every wrong answer emboldens it; every right one drives it back.'},
  {fn:nSerac,t:5,a:'Elite',m:'A wall of unstable ice that can go at any second. Fast, punishing, and it hits hard.'},
  {fn:nSummit,t:5,a:'Final pitch',m:'Summit push — wind, ice, and everything the mountain has saved for the top.'}
 ];
@@ -1720,16 +1743,17 @@ function buildRoute(topic){
   A(nSwitch(nd(3),step(215)),1);
   pick([nTraverse,nSnowfield],1).forEach(function(fn){ A(fn(nd(3),step(220)),1); });
   A(pick(T2,1)[0](nd(4),step(240)),1);
-  A(nGate(nd(4),step(235),gcat()),1); A(nRest(step(150)),1);
+  A(nGate(nd(4),step(235),null),1); A(nRest(step(150)),1);
   // ACT II - The Headwall: T2 core rises into a T3
   pick(T2,2).forEach(function(fn){ A(fn(nd(5),step(255)),2); });
   A(pick(T3,1)[0](nd(5),step(270)),2);
   if(CONFIG.MODS.shrines) A(nShrine(step(110)),2);
-  A(nGate(nd(5),step(280),gcat()),2); A(nRest(step(165)),2);
-  // ACT III - The Death Zone: a T3, then two T4 brutes, then Gatekeeper -> elite Serac -> Summit
-  A(pick(T3,1)[0](nd(5),step(295)),3);
-  pick(T4,2).forEach(function(fn){ A(fn(nd(5),step(305)),3); });
-  A(nGate(nd(6),step(315),gcat()),3); A(nSerac(6,step(320)),3); A(nSummit(8,step(360)),3);
+  A(nGate(nd(5),step(280),null),2); A(nRest(step(165)),2);
+  // ACT III - The Death Zone: T3, two T4 brutes, Gatekeeper, high camp, Serac, Summit
+  A(pick(T3,1)[0](nd(4),step(295)),3);
+  pick(T4,2).forEach(function(fn){ A(fn(nd(4),step(305)),3); });
+  A(nGate(nd(5),step(315),null),3); A(nRest(step(140)),3);
+  A(nSerac(5,step(320)),3); A(nSummit(6,step(360)),3);
   return r;
 }
 
@@ -1746,6 +1770,7 @@ function freshRun(topic, daily){
     weather:(CONFIG.MODS.weather?WEATHERS[Math.floor(rnd()*WEATHERS.length)]:WEATHERS[0]), relics:new Set(), relicLog:[], iceaxeUsed:false, clutch:0, lastLegsTold:false,
     busy:false, current:null, view:null, timer:null, timeLeft:0, maxTime:0 };
   if(!daily){ var mb=mergedBank(); Object.keys(mb).forEach(function(id){ if(+id>=0 && +id<BANK.length){ _r.prog[id]={tier:mb[id],seen:0,right:0,wrong:0}; } }); }
+  else { var mb2=mergedBank(); Object.keys(mb2).forEach(function(id){ if(+id>=0 && +id<BANK.length){ _r.prog[id]={tier:mb2[id],seen:0,right:0,wrong:0}; } }); }
   return _r;
 }
 function beginRun(topic, daily){ if(CONFIG.AUDIO) AUDIO.unlock(); if(daily){ RNG.fn=mulberry32(hashStr(dailyKey())); RNG.seeded=true; } else { RNG.fn=Math.random; RNG.seeded=false; } RUN=freshRun(topic, daily); RENDER.map(); show('map'); if(RUN.weather && RUN.weather.name!=='Clear Dawn') setTimeout(function(){ banner(RUN.weather.ic+' '+RUN.weather.name, RUN.weather.desc); },350); }
@@ -1756,16 +1781,27 @@ function enterCurrentNode(){
   if(node.kind==='shrine'){ openShrine(node); return; }
   ENC={ node:node, need:node.need, done:0, threat:0, max:node.max, lifelineUsed:false, firstMissUsed:false, firstTimeoutUsed:false, rallyUsed:false, bulwarkUsed:false, streakEase:0, cairnBank:0, missCount:0, spikeT:0, shieldLeft:(node.shield||0), easeMul:1, timeMul:1, phaseMul:1, phased:false, luckyUsed:false, cruxTold:false, streak:0, lastId:-1 };
   RUN.altitude=node.alt; RUN.ending=false;
-  if(node.kind==='serac'){ ENC.threat=30; setTimeout(function(){ banner('The ice groans','it was waiting for you'); },250); }
+  if(node.kind==='gate'){
+    if(RUN.topic){ ENC.node.domain=RUN.topic; ENC.node.blurb="It tests you on "+RUN.topic+". Every wrong answer emboldens it; every right one drives it back."; }
+    else {
+    var gd=weakestDomainLetter(); ENC.node.gateDomain=gd; ENC.node.domain=DOMAINS[gd].n;
+    ENC.node.blurb="It tests you on "+DOMAINS[gd].n+" — your weakest exam domain so far. Every wrong answer emboldens it; every right one drives it back.";
+    setTimeout(function(){ banner('Gatekeeper waits','Domain '+gd+': '+DOMAINS[gd].n); },200);
+    }
+  }
+  if(node.kind==='serac'){ ENC.threat=25; setTimeout(function(){ banner('The ice groans','it was waiting for you'); },250); }
   if(node.kind==='storm'){ setTimeout(function(){ banner('Rising squall','only speed clears this ridge'); },250); }
-  if(node.kind==='summit'){ ENC.threat=25; setTimeout(function(){ banner('The final pitch','everything the mountain has'); },250); }
-  if(BOON.has('provisions')) addStamina(hasDuo('Base Camp')?16:10);
+  if(node.kind==='summit'){ ENC.threat=20; setTimeout(function(){ banner('The final pitch','everything the mountain has'); },250); }
+  if(BOON.has('provisions')) addStamina(hasDuo('Base Camp')?8:4);
   show('encounter'); RENDER.encChrome(); nextInEncounter();
 }
 function nextInEncounter(){
   RUN.busy=false; var _cc=document.getElementById('card'); if(_cc) _cc.classList.remove('ok','no','shake');
-  var poolCat = RUN.topic || (ENC.node.domain||null);
-  var ids = poolCat ? BANK.filter(function(q){return q.cat===poolCat;}).map(function(q){return q.id;}) : BANK.map(function(q){return q.id;});
+  var poolCat = RUN.topic || null;
+  var ids;
+  if(poolCat){ ids=BANK.filter(function(q){return q.cat===poolCat;}).map(function(q){return q.id;}); }
+  else if(ENC.node.gateDomain){ var gd=ENC.node.gateDomain; ids=BANK.filter(function(q){return domainOf(q)===gd;}).map(function(q){return q.id;}); }
+  else { ids=BANK.map(function(q){return q.id;}); }
   var _stone=null; for(var _sid in RUN.stones){ if(RUN.stones[_sid]<=RUN.seen && (+_sid)!==ENC.lastId){ _stone=+_sid; break; } }
   var id; if(_stone!=null){ delete RUN.stones[_stone]; RUN.stoneNow=_stone; id=_stone; } else { RUN.stoneNow=null; id=SCHED.pick(ids, ENC.lastId); }
   ENC.lastId=id; RUN.current=BANK[id];
@@ -1790,13 +1826,14 @@ function resolve(correct, viaTimeout, srcEl){
     if(before<lockTierNow() && p.tier>=lockTierNow()) sealLocked();
     if(BOON.has('secondwind') && ENC.streak%5===0) addStamina(10);
     if(BOON.has('momentum')) ENC.streakEase=Math.min(6, ENC.streakEase+1.2);
-    if(BOON.has('wildfire')) raiseThreat(-(hasDuo('Wildfire Spread')?3+Math.min(7,ENC.streak):3));
+    if(BOON.has('wildfire') && !ENC.node.noBoonEase) raiseThreat(-(hasDuo('Wildfire Spread')?2+Math.min(5,ENC.streak):2));
     if(BOON.has('secondhand')) RUN.timeLeft=Math.min(RUN.maxTime, RUN.timeLeft+(hasDuo('Slipstream')?2.4:1.2));
     if(BOON.has('cairn') && ENC.streak%3===0){ var _cb=hasDuo('Deep Reserves')?8:5; ENC.cairnBank+=_cb; banner('Cairn stacked','+'+_cb+' stamina at clear'); }
-    var ease=(typeof ENC.node.ease==='number'?ENC.node.ease:CONFIG.EASE_ON_CORRECT)+(BOON.has('momentum')?ENC.streakEase:0);
+    var ease=(typeof ENC.node.ease==='number'?ENC.node.ease:CONFIG.EASE_ON_CORRECT)+(BOON.has('momentum')&&!ENC.node.noBoonEase?ENC.streakEase:0);
     if(ENC.node.fatigue){ ease*=(ENC.easeMul||1); ENC.easeMul=Math.max(0.35,(ENC.easeMul||1)-0.14); }
-    if(BOON.has('gambit')) ease*=1.6;
-    if(hasDuo('Avalanche') && ENC.streak>=5){ ease+=10; banner('Avalanche','the threat gives way'); }
+    if(BOON.has('gambit')) ease*=1.45;
+    if(hasDuo('Avalanche') && ENC.streak>=5){ ease+=8; banner('Avalanche','the threat gives way'); }
+    if(ENC.node.noBoonEase) ease=0;
     raiseThreat(-ease);
   } else {
     AUDIO.wrong(viaTimeout); flash('no'); var _sc=document.getElementById('card'); _sc.classList.remove('shake'); void _sc.offsetWidth; _sc.classList.add('shake');
@@ -1809,7 +1846,7 @@ function resolve(correct, viaTimeout, srcEl){
     ENC.missCount++;
     if(cost>0) addStamina(-cost);
     if(freed && hasDuo('Crampons')) raiseThreat(-8);
-    var thr=ENC.node.miss; if(BOON.has('gambit')) thr*=1.6;
+    var thr=ENC.node.miss; if(BOON.has('gambit')) thr*=1.45;
     raiseThreat(thr);
     if(ENC.node.streakGate){ ENC.done=Math.max(0, ENC.done-2); if(RENDER.encChrome) RENDER.encChrome(); banner('Knocked back','you slide down the ridge'); }
   }
@@ -1824,7 +1861,7 @@ function clearEncounter(){
   clearInterval(RUN.timer); RUN.nodeCleared++;
   var _bonus=(ENC.cairnBank||0); if(BOON.has('highcamp')) _bonus+=Math.min(15, ENC.streak*(hasDuo('Base Camp')?3:2));
   if(RUN.stamina>0 && RUN.stamina<=25){ RUN.clutch=(RUN.clutch||0)+1; banner('Clutch pitch','cleared on your last legs'); }
-  addStamina(Math.round(ENC.node.restore*0.5*(RUN.weather?RUN.weather.heal:1)) + _bonus);
+  addStamina(pitchRestore(ENC.node,'clear') + _bonus);
   if(['whiteout','thinair','icefall','tempest','closing','avalanche','frozentitan'].indexOf(ENC.node.kind)>=0 && rnd()<(RUN.weather&&RUN.weather.name==='Dead of Night'?0.5:0.3)) grantRelic();
   RUN.nodeIdx++;
   if(ENC.node.kind==='summit'){ RUN.summited=true; endRun('summit'); return; }
@@ -1834,9 +1871,9 @@ function clearEncounter(){
 /* threat + stamina */
 function raiseThreat(x){ if(!ENC) return; ENC.threat=Math.max(0,Math.min(ENC.max,ENC.threat+x));
   if(ENC.threat>=ENC.max) mountainStrikes(); RENDER.threat(); }
-function mountainStrikes(){ ENC.threat=Math.max(0,ENC.threat-70);
+function mountainStrikes(){ ENC.threat=Math.max(0,ENC.threat-CONFIG.THREAT_RESET);
   if(BOON.has('bulwark') && !ENC.bulwarkUsed){ ENC.bulwarkUsed=true; AUDIO.tick(); RENDER.encChrome(); banner('Bulwark holds','no stamina lost'); return; }
-  var _hit=ENC.node.hit; if(BOON.has('anchor')) _hit=Math.round(_hit*(hasDuo('Fortress')?0.35:0.6));
+  var _hit=ENC.node.hit; if(BOON.has('anchor')) _hit=Math.round(_hit*(hasDuo('Fortress')?0.55:0.62));
   if(RUN.relics&&RUN.relics.has('carabiner')&&!ENC.luckyUsed){ ENC.luckyUsed=true; _hit=Math.round(_hit*0.5); }
   if(RUN.relics&&RUN.relics.has('rope')&&ENC.node.kind==='gate') _hit=Math.round(_hit*0.75);
   addStamina(-_hit); AUDIO.strike();
@@ -1859,7 +1896,7 @@ function startTick(){
   var wrap=document.getElementById('focus'), bar=document.getElementById('focusbar');
   RUN.timer=setInterval(function(){
     RUN.timeLeft-=0.05; var frac=Math.max(0,RUN.timeLeft/RUN.maxTime); bar.style.width=(frac*100)+'%';
-    if(ENC.node.rise){ var _rm=(BOON.has('updraft')?0.68:1); if(ENC.node.enrage && ENC.threat>=ENC.max*0.6) _rm*=ENC.node.enrage; if(ENC.phaseMul) _rm*=ENC.phaseMul; if(ENC.need>1 && ENC.done>=ENC.need-1) _rm*=1.75; _rm=Math.min(_rm,2.2); raiseThreat(ENC.node.rise*0.05*_rm*(RUN.weather?RUN.weather.rise:1)); }
+    if(ENC.node.rise){ var _rm=(BOON.has('updraft')?0.68:1); if(ENC.node.enrage && ENC.threat>=ENC.max*0.6) _rm*=ENC.node.enrage; if(ENC.phaseMul) _rm*=ENC.phaseMul; if(ENC.need>1 && ENC.done>=ENC.need-1) _rm*=CONFIG.CRUX_RISE_MULT; _rm=Math.min(_rm,2.0); raiseThreat(ENC.node.rise*0.05*_rm*(RUN.weather?RUN.weather.rise:1)); }
     if(ENC.node.gust && rnd()<ENC.node.gust*0.05) raiseThreat(12+Math.floor(rnd()*10));
     if(ENC.node.drain) addStamina(-ENC.node.drain*0.05);
     if(ENC.node.spike){ ENC.spikeT+=0.05; if(ENC.spikeT>=(ENC.node.spikeEvery||3.5)){ ENC.spikeT=0; AUDIO.tick(); raiseThreat(ENC.node.spike); } }
@@ -1913,7 +1950,7 @@ function openShrine(node){
 }
 function openLedge(node, mode){
   clearInterval(RUN.timer); RUN.altitude=node.alt||RUN.altitude;
-  if(mode==='rest'){ addStamina(Math.round(node.restore*(RUN.weather?RUN.weather.heal:1))); RUN.nodeIdx++; }
+  if(mode==='rest'){ addStamina(pitchRestore(node,'rest')); RUN.nodeIdx++; }
   var isRest=(mode==='rest');
   document.getElementById('ledgeIc').innerHTML = isRest ? '&#127957;&#65039;' : (node.kind==='gate'?'&#128737;&#65039;':'&#9968;&#65039;');
   document.getElementById('ledgeTitle').textContent = isRest ? 'Ledge Camp' : (node.kind==='gate'?'Gatekeeper down':'Ledge reached');
@@ -1921,7 +1958,8 @@ function openLedge(node, mode){
     ? 'Fire&rsquo;s warm. You catch your breath before the next pitch.'
     : (node.kind==='gate'?'The ridge lets you pass. That stretch is behind you.':'Solid ground. A moment before the trail climbs again.');
   var rr=document.getElementById('rewardRow');
-  rr.innerHTML='<span class="pill pine">&#129482; +'+node.restore+' stamina</span><span class="pill ice">&#9968;&#65039; '+fmt(node.alt||RUN.altitude)+' m</span>';
+  var clearGain=isRest?pitchRestore(node,'rest'):pitchRestore(node,'clear');
+  rr.innerHTML='<span class="pill pine">&#129482; +'+clearGain+' stamina</span><span class="pill ice">&#9968;&#65039; '+fmt(node.alt||RUN.altitude)+' m</span>';
 
   var draftWrap=document.getElementById('draftWrap');
   var offer = (isRest || node.kind==='gate') && draftBoons();
@@ -1930,6 +1968,12 @@ function openLedge(node, mode){
     document.getElementById('draftLabel').textContent = isRest?'Take one for the climb':'Claim a boon';
     var box=document.getElementById('boons'); box.innerHTML='';
     offer.forEach(function(id){
+      if(id==='_stamina'){
+        var el=document.createElement('button'); el.type='button'; el.className='boon';
+        el.innerHTML='<div class="bic">&#129482;</div><div><div class="bt">Stamina cache</div><div class="bd">Pack is full — take +15 stamina instead.</div></div>';
+        el.onclick=function(){ addStamina(15); AUDIO.correct(); draftWrap.style.display='none'; };
+        box.appendChild(el); return;
+      }
       var b=BOONS[id]; var el=document.createElement('button'); el.type='button'; el.className='boon'+(b.rare?' rare':'');
       el.innerHTML='<div class="bic">'+b.ic+'</div><div><div class="bt">'+b.name+(b.rare?' <span class=\"raretag\">RARE</span>':'')+'</div><div class="bd">'+b.desc+'</div></div>';
       el.onclick=function(){ RUN.boons.add(id); if(id==='flare') RUN.flares=2; AUDIO.correct(); draftWrap.style.display='none'; renderHeld(); };
@@ -1940,6 +1984,7 @@ function openLedge(node, mode){
   show('ledge');
 }
 function draftBoons(){
+  if(RUN.boons.size>=CONFIG.MAX_BOONS) return ['_stamina'];
   var owned=RUN.boons; var pool=Object.keys(BOONS).filter(function(id){return !owned.has(id);}).slice();
   var pick=[];
   while(pick.length<3 && pool.length){
@@ -2023,6 +2068,7 @@ var RENDER = {
       var h=document.createElement('div'); h.className='besttier'; h.textContent=tierName[t]; host.appendChild(h);
       grp.forEach(function(b){
         var node=b.fn(4,3000), col=foeColor(node.kind);
+        node=scaleNode(Object.assign({},node),3);
         var card=document.createElement('div'); card.className='bestcard';
         card.innerHTML='<div class="bestic" style="background:'+col+'22;border-color:'+col+'">'+node.icon+'</div>'
           +'<div class="bestbody"><div class="bestrow"><span class="bestname">'+node.title+'</span>'
@@ -2117,14 +2163,6 @@ function hideOverlay(){ document.getElementById('overlay').classList.remove('sho
 function missedIds(){ var ids=Object.keys(RUN.prog).filter(function(id){ return RUN.prog[id].wrong>0 && BANK[id]; });
   ids.sort(function(a,b){ return RUN.prog[b].wrong-RUN.prog[a].wrong; }); return ids; }
 /* ---------- BOARD SIMULATION (mock exam that mirrors the real thing) ---------- */
-var DOMAINS={A:{n:'Data Collection & Graphing',pct:17},B:{n:'Behavior Assessment',pct:11},C:{n:'Behavior Acquisition',pct:25},D:{n:'Behavior Reduction',pct:19},E:{n:'Documentation & Reporting',pct:13},F:{n:'Ethics',pct:15}};
-var DOMAIN_OF={'Continuous Measurement':'A','Discontinuous Measurement':'A','Graphing & Data':'A','Data Collection & Graphing':'A',
- 'Assessment & FBA':'B','Preference Assessment':'B','Behavior Assessment':'B',
- 'Chaining':'C','Generalization & Maintenance':'C','Prompting':'C','Prompting & Fading':'C','Reinforcement':'C','Reinforcement & Punishment':'C','Schedules of Reinforcement':'C','Shaping':'C','Teaching Procedures':'C','Token Economy':'C','Verbal Operants':'C','Motivating Operations':'C',
- 'Behavior Reduction':'D','Crisis & Emergency':'D','Differential Reinforcement':'D','Extinction':'D','Extinction & Replacement':'D','Functions of Behavior':'D',
- 'Documentation & Reporting':'E',
- 'Ethics & Scope':'F','Professionalism & Scope':'F'};
-function domainOf(q){ return q.dom || DOMAIN_OF[q.cat] || 'C'; }
 var EXAM=null;
 function pickExamIds(n){
   var byDom={A:[],B:[],C:[],D:[],E:[],F:[]};
@@ -2399,7 +2437,7 @@ function nodeSub(node){
   var n=node.need;
   if(node.kind==='switchback') return 'Footing over speed — '+n+' to clear';
   if(node.kind==='storm')      return 'Speed only — correct answers won\'t calm it ('+n+')';
-  if(node.kind==='gate')       return 'A test of competence — '+node.domain;
+  if(node.kind==='gate')       return (node.domain?'Weakest domain — '+node.domain:'Gatekeeper duel');
   if(node.kind==='rest')       return 'Catch your breath, then draft a boon';
   if(node.kind==='shrine')     return 'Leave an offering for a relic, or pass by';
   if(node.kind==='serac')      return 'Fast and punishing — '+n+' before the ice lets go';

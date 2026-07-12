@@ -250,9 +250,9 @@ export function nFrozenTitan(need, alt) {
 }
 
 export const ACTS = [
-  { name: 'The Approach', flavor: 'Warm rock and open glacier. The mountain lets you find your rhythm before it bares its teeth.' },
-  { name: 'The Headwall', flavor: 'The face rears up. No more easy ground — every pitch asks for technique and nerve.' },
-  { name: 'The Death Zone', flavor: 'Above the last camp the air turns to knives. Everything the mountain has, thrown at once.' },
+  { name: 'The Approach', flavor: 'Warm rock, open glacier. The mountain lets you find your rhythm before it shows its teeth.' },
+  { name: 'The Headwall', flavor: 'The face rears up. Easy ground is gone — every pitch wants technique, nerve, and recall under pressure.' },
+  { name: 'The Death Zone', flavor: 'Above the last camp the air turns to knives. Everything the mountain saved for the summit push, thrown at once.' },
 ];
 
 export function scaleNode(n, act) {

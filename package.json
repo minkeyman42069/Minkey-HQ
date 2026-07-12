@@ -2,6 +2,7 @@
   "name": "rbt-trail",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "description": "The RBT Trail — roguelike spaced-repetition study game for the RBT exam",
   "scripts": {
     "dev": "npx --yes serve . -p 4173",

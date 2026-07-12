@@ -404,7 +404,11 @@ body{
   *{transition-duration:.01ms!important;}
 }
 
-.qleft{display:flex;align-items:center;gap:0;flex-wrap:wrap;}
+/* ===== atmosphere ===== */
+#skyshift{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.15;
+  background:radial-gradient(120% 80% at 50% -10%, rgba(140,190,225,.10), transparent 55%), linear-gradient(180deg, rgba(6,14,26,0), rgba(5,12,22,.6));
+  transition:opacity 1.1s ease;}
+
 .qmode{display:none;align-items:center;gap:5px;font-size:10px;letter-spacing:1px;text-transform:uppercase;
   color:var(--ice);border:1px solid var(--line2);border-radius:999px;padding:3px 9px;margin-left:8px;background:rgba(139,196,221,.08);}
 .opt.tf{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:17px;}

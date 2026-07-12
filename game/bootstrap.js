@@ -79,6 +79,10 @@ window.draftBoons = function () {
 
 window.TrailAgents = Trail.meta;
 
+if (Trail.agents.atlas?.api?.applyDesignTokens) {
+  Trail.agents.atlas.api.applyDesignTokens();
+}
+
 // Signal that agents are ready
 window.dispatchEvent(new CustomEvent('trail:agents-ready', { detail: Trail }));
 

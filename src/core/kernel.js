@@ -14,6 +14,7 @@ import {
 } from '../agents/trail-scholar.js';
 import * as HazardWarden from '../agents/hazard-warden.js';
 import { buildRoute, ACTS as ROUTE_ACTS } from '../agents/expedition-director.js';
+import { createAtlasArtisan } from '../agents/atlas-artisan.js';
 
 const AGENT_META = [
   {
@@ -51,14 +52,23 @@ const AGENT_META = [
     color: '#c9a86a',
     blurb: 'Three-act route assembly, camp pacing, and summit sequencing tuned by the balance simulator.',
   },
+  {
+    id: 'atlas-artisan',
+    name: 'Atlas Artisan',
+    icon: '🎨',
+    color: '#e8a0c8',
+    blurb: 'Visual design tokens, menu composition, and UI polish — presentation separated from mechanics.',
+  },
 ];
 
 export function createKernel() {
   const bus = createAgentBus();
   const boonAgent = createBoonArchitect();
   const economy = createEconomyApi();
+  const atlasAgent = createAtlasArtisan();
   const scheduler = createScheduler(CONFIG);
   boonAgent.register(bus);
+  atlasAgent.register(bus);
 
   const agents = {
     boon: boonAgent,
@@ -82,6 +92,7 @@ export function createKernel() {
       name: 'Expedition Director',
       api: { buildRoute, ACTS: ROUTE_ACTS },
     },
+    atlas: atlasAgent,
   };
 
   function makeCtx(run, enc, extras = {}) {

@@ -1390,6 +1390,71 @@ var TrailBundle = (() => {
     return r;
   }
 
+  // src/agents/atlas-artisan.js
+  var ATLAS_TOKENS = {
+    radii: { sm: 10, md: 14, lg: 18, pill: 999 },
+    glass: {
+      bg: "rgba(8, 18, 30, 0.72)",
+      border: "rgba(49, 89, 122, 0.55)",
+      blur: "12px"
+    },
+    glow: {
+      lantern: "0 0 28px rgba(242, 182, 78, 0.38)",
+      pine: "0 0 22px rgba(95, 206, 159, 0.32)"
+    },
+    type: {
+      hero: "'Space Grotesk', sans-serif",
+      body: "'Inter', system-ui, sans-serif",
+      mono: "'Space Mono', monospace"
+    }
+  };
+  var MENU_COPY = {
+    kicker: "Roguelike study climb",
+    title: "THE RBT",
+    titleAccent: "TRAIL",
+    tagline: "Know your terms, or the mountain wins.",
+    lore: "A spaced-repetition ascent through BACB terrain \u2014 draft boons, survive hazards, lock concepts into memory before the summit push.",
+    primaryCta: "Climb the mountain",
+    focusSummary: "Focus one trail",
+    importSummary: "Import saved progress"
+  };
+  var SECONDARY_ACTIONS = [
+    { id: "exam", label: "Board Sim", icon: "\u{1F4CB}", action: "startExam()" },
+    { id: "bestiary", label: "Bestiary", icon: "\u{1F4D6}", action: "openBestiary()" }
+  ];
+  function applyDesignTokens() {
+    if (typeof document === "undefined") return;
+    const r = document.documentElement.style;
+    r.setProperty("--glass-bg", ATLAS_TOKENS.glass.bg);
+    r.setProperty("--glass-border", ATLAS_TOKENS.glass.border);
+    r.setProperty("--glass-blur", ATLAS_TOKENS.glass.blur);
+    r.setProperty("--glow-lantern-soft", ATLAS_TOKENS.glow.lantern);
+    r.setProperty("--radius-ui", ATLAS_TOKENS.radii.md + "px");
+  }
+  function createAtlasArtisan() {
+    const api = {
+      tokens: ATLAS_TOKENS,
+      copy: MENU_COPY,
+      secondaryActions: SECONDARY_ACTIONS,
+      applyDesignTokens,
+      statsMarkup(meta, helpers) {
+        const { boardReady, careerRank, fmt, BANK: BANK2, CONFIG: CONFIG2 } = helpers;
+        const br = boardReady();
+        const tot = BANK2.length;
+        const pct = tot ? Math.round(br / tot * 100) : 0;
+        return '<div class="stat-rank"><span class="stat-rank-name">' + careerRank() + '</span><span class="stat-rank-meta">' + meta.summits + " summit" + (meta.summits === 1 ? "" : "s") + " \xB7 " + meta.runs + " climb" + (meta.runs === 1 ? "" : "s") + " \xB7 best " + fmt(meta.bestAlt || 1600) + 'm</span></div><div class="stat-bar"><span style="width:' + pct + '%"></span></div><div class="stat-foot"><b>' + br + "</b> of " + tot + " board-ready \xB7 " + fmt(meta.miles) + " trail miles</div>";
+      }
+    };
+    return {
+      id: "atlas-artisan",
+      name: "Atlas Artisan",
+      role: "Visual design system, menu composition, and UI polish",
+      api,
+      register() {
+      }
+    };
+  }
+
   // src/core/kernel.js
   var AGENT_META = [
     {
@@ -1426,14 +1491,23 @@ var TrailBundle = (() => {
       icon: "\u{1F9ED}",
       color: "#c9a86a",
       blurb: "Three-act route assembly, camp pacing, and summit sequencing tuned by the balance simulator."
+    },
+    {
+      id: "atlas-artisan",
+      name: "Atlas Artisan",
+      icon: "\u{1F3A8}",
+      color: "#e8a0c8",
+      blurb: "Visual design tokens, menu composition, and UI polish \u2014 presentation separated from mechanics."
     }
   ];
   function createKernel() {
     const bus = createAgentBus();
     const boonAgent = createBoonArchitect();
     const economy = createEconomyApi();
+    const atlasAgent = createAtlasArtisan();
     const scheduler = createScheduler(CONFIG);
     boonAgent.register(bus);
+    atlasAgent.register(bus);
     const agents = {
       boon: boonAgent,
       hazard: {
@@ -1455,7 +1529,8 @@ var TrailBundle = (() => {
         id: "expedition-director",
         name: "Expedition Director",
         api: { buildRoute, ACTS }
-      }
+      },
+      atlas: atlasAgent
     };
     function makeCtx(run, enc, extras = {}) {
       return {
@@ -1574,6 +1649,9 @@ var TrailBundle = (() => {
     return Trail.agents.boon.api.pickDraft(Trail.makeCtx(RUN, ENC), rnd);
   };
   window.TrailAgents = Trail.meta;
+  if (Trail.agents.atlas?.api?.applyDesignTokens) {
+    Trail.agents.atlas.api.applyDesignTokens();
+  }
   window.dispatchEvent(new CustomEvent("trail:agents-ready", { detail: Trail }));
   var bootstrap_default = Trail;
   return __toCommonJS(bootstrap_exports);

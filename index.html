@@ -32,10 +32,10 @@
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 /* reliable tap targets — children never steal touches from the control */
-.cta,.opt,.chip,.boon,.rbtn,.next,.lifeline,.flarebtn,.tnode,.pausebtn,.mapquit,.dock-go,.mnode{
+.cta,.opt,.chip,.boon,.rbtn,.next,.lifeline,.flarebtn,.tnode,.pausebtn,.mapquit,.dock-go,.mnode,.act-btn{
   touch-action:manipulation;-webkit-user-select:none;user-select:none;}
-.opt,.lifeline,.next,.boon,.chip{min-height:44px;}
-.cta *,.opt *,.chip *,.boon *,.rbtn *,.next *,.lifeline *,.flarebtn *{pointer-events:none;}
+.opt,.lifeline,.next,.boon,.chip,.act-btn{min-height:44px;}
+.cta *,.opt *,.chip *,.boon *,.rbtn *,.next *,.lifeline *,.flarebtn *,.act-btn *{pointer-events:none;}
 .tnode .trow,.tnode .tblurb,.tnode .tdisc,.tnode .tinfo,.tnode .tgo,.tnode .tdone,.tnode .talt{pointer-events:none;}
 html,body{margin:0;height:100%;}
 body{
@@ -65,10 +65,11 @@ body{
 .cta{display:block;width:100%;border:0;cursor:pointer;
   background:linear-gradient(180deg,var(--lantern-soft),var(--lantern));color:#2b1c06;
   font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;letter-spacing:.3px;
-  padding:16px;border-radius:var(--r);box-shadow:var(--shadow),inset 0 1px 0 rgba(255,255,255,.5);
-  transition:transform .07s ease,filter .15s;}
-.cta:active{transform:translateY(2px) scale(.995);filter:brightness(1.05);}
-.cta.ghost{background:transparent;border:1px solid var(--line2);color:var(--ink);box-shadow:none;}
+  padding:16px;border-radius:var(--radius-ui,14px);box-shadow:0 4px 0 #8a5f18,0 10px 28px rgba(242,182,78,.28),inset 0 1px 0 rgba(255,255,255,.5);
+  transition:transform .07s ease,filter .15s,box-shadow .15s;}
+.cta:active{transform:translateY(2px) scale(.995);filter:brightness(1.05);box-shadow:0 2px 0 #8a5f18,0 6px 18px rgba(242,182,78,.22),inset 0 1px 0 rgba(255,255,255,.5);}
+.cta.ghost{background:rgba(10,22,34,.55);border:1px solid var(--line2);color:var(--ink);box-shadow:none;}
+.cta.ghost:active{box-shadow:none;}
 .stamp{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:.5px;}
 .altitude{font-family:'Space Mono',monospace;font-size:12px;color:var(--ice);letter-spacing:.5px;}
 
@@ -91,25 +92,93 @@ body{
 .lg .ic{font-size:23px;margin-bottom:6px;}
 .lg .h{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;margin-bottom:2px;}
 .lg .s{font-size:11px;color:var(--mut);line-height:1.35;}
+/* ===== trailhead (home) — Atlas Artisan layout ===== */
+#menu{padding-top:8px;}
+.trailhead{max-width:400px;margin:0 auto;}
+.trail-hero{text-align:center;padding:18px 6px 8px;}
+.trail-kicker{display:inline-flex;align-items:center;gap:7px;font-size:10px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--ice);border:1px solid var(--glass-border,rgba(49,89,122,.55));
+  border-radius:999px;padding:5px 12px;margin-bottom:18px;background:var(--glass-bg,rgba(8,18,30,.72));backdrop-filter:blur(var(--glass-blur,12px));}
+.trail-kicker .pip{width:5px;height:5px;border-radius:50%;background:var(--pine);box-shadow:var(--glow-pine);}
+.crest{width:88px;height:88px;margin:0 auto 14px;filter:drop-shadow(0 10px 24px rgba(0,0,0,.5));}
+.crest svg{width:100%;height:100%;display:block;}
+.crestglow{animation:glowp 4.5s ease-in-out infinite;}
+@keyframes glowp{50%{opacity:.5;}}
+#menu .title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:44px;line-height:.92;letter-spacing:-1.8px;
+  margin:0 0 8px;color:#eef6fb;text-shadow:0 2px 36px rgba(120,160,190,.28);}
+#menu .title .k{color:var(--lantern);text-shadow:var(--glow-lantern-soft,0 0 28px rgba(242,182,78,.38));}
+.trail-tag{color:var(--ink);font-size:15px;font-weight:600;line-height:1.4;margin:0 auto 6px;max-width:340px;}
+.trail-lore{color:var(--mut);font-size:12.5px;line-height:1.55;margin:0 auto 22px;max-width:360px;}
+.trail-cta{max-width:320px;margin:0 auto;}
+.cta.big{max-width:320px;margin:0 auto;}
+.cta.prime{font-size:17px;padding:17px 20px;letter-spacing:.02em;}
+.act-row{display:flex;gap:10px;max-width:320px;margin:12px auto 0;}
+.act-btn{flex:1;appearance:none;-webkit-appearance:none;border:1px solid var(--line2);
+  background:var(--glass-bg,rgba(8,18,30,.72));backdrop-filter:blur(var(--glass-blur,12px));
+  border-radius:12px;padding:11px 8px;cursor:pointer;color:var(--ink);font:inherit;
+  display:flex;flex-direction:column;align-items:center;gap:4px;transition:border-color .14s,transform .08s,box-shadow .14s;
+  touch-action:manipulation;min-height:44px;}
+.act-btn .act-ic{font-size:20px;line-height:1;}
+.act-btn .act-lb{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:12px;letter-spacing:.01em;}
+.act-btn:hover{border-color:var(--lantern);box-shadow:0 0 0 1px rgba(242,182,78,.12);}
+.act-btn:active{transform:scale(.98);}
+.trail-stats{margin-top:20px;padding:14px 15px;border-radius:var(--radius-ui,14px);
+  background:var(--glass-bg,rgba(8,18,30,.72));border:1px solid var(--glass-border,rgba(49,89,122,.55));
+  backdrop-filter:blur(var(--glass-blur,12px));box-shadow:0 8px 28px rgba(0,0,0,.22);}
+.stat-rank{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px;}
+.stat-rank-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;color:var(--lantern-soft);}
+.stat-rank-meta{font-size:11px;color:var(--mut);text-align:right;line-height:1.35;}
+.stat-bar{height:7px;border-radius:6px;background:rgba(255,255,255,.06);overflow:hidden;border:1px solid var(--line2);}
+.stat-bar span{display:block;height:100%;background:linear-gradient(90deg,var(--pine),var(--lantern-soft));border-radius:6px;transition:width .5s;}
+.stat-foot{margin-top:8px;font-size:11px;color:var(--ice);line-height:1.4;}
+.stat-foot b{color:var(--ink);font-family:'Space Grotesk',sans-serif;}
+.trail-panel{margin-top:12px;border:1px solid var(--line);border-radius:var(--radius-ui,14px);
+  background:rgba(8,18,30,.45);overflow:hidden;}
+.trail-panel>summary{cursor:pointer;list-style:none;padding:13px 15px;font-family:'Space Grotesk',sans-serif;
+  font-weight:600;font-size:13px;color:var(--ink);display:flex;align-items:center;justify-content:space-between;
+  touch-action:manipulation;min-height:44px;}
+.trail-panel>summary::-webkit-details-marker{display:none;}
+.trail-panel>summary::after{content:'+';color:var(--mut);font-size:16px;font-weight:400;}
+.trail-panel[open]>summary{border-bottom:1px solid var(--line);color:var(--lantern-soft);}
+.trail-panel[open]>summary::after{content:'−';}
+.trail-panel .panel-in{padding:12px 14px 14px;}
+.trail-panel.subtle>summary{font-size:12px;color:var(--mut);font-weight:500;}
+.trail-panel .note{margin:10px 0 0;font-size:11.5px;text-align:left;}
+.chips{display:flex;flex-wrap:wrap;gap:7px;}
+.chip{background:rgba(14,32,48,.8);border:1px solid var(--line);color:var(--ink);
+  padding:9px 12px;border-radius:10px;font-size:12px;cursor:pointer;
+  display:flex;align-items:center;gap:7px;transition:all .13s;}
+.chip:hover{border-color:var(--lantern);color:var(--lantern-soft);}
+.chip:active{transform:scale(.96);}
+.chip .cn{width:6px;height:6px;border-radius:50%;}
+.resume{display:flex;gap:8px;}
+.resume input{flex:1;min-width:0;background:#0a1a28;border:1px solid var(--line);border-radius:10px;
+  color:var(--ink);font-family:'Space Mono',monospace;font-size:11.5px;padding:11px;outline:none;transition:border-color .12s;}
+.resume input:focus{border-color:var(--lantern);}
+.resume input::placeholder{color:var(--dim);}
+.rbtn{background:var(--surf2);border:1px solid var(--line2);color:var(--ink);border-radius:10px;
+  padding:11px 14px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;cursor:pointer;transition:all .12s;white-space:nowrap;}
+.rbtn:hover{border-color:var(--lantern);color:var(--lantern-soft);} .rbtn:active{transform:scale(.97);}
+.resume-msg{font-size:12px;margin-top:8px;min-height:16px;line-height:1.45;}
+.resume-msg.ok{color:var(--pine);} .resume-msg.ok b{color:var(--pine);}
+.resume-msg.warn{color:var(--lantern-soft);}
+
+/* legacy menu bits kept for other screens */
 .subhead{display:flex;align-items:center;gap:10px;margin:28px 4px 12px;color:var(--mut);
   font-size:12px;text-transform:uppercase;letter-spacing:2px;}
 .subhead:before,.subhead:after{content:"";height:1px;background:var(--line);flex:1;}
-.chips{display:flex;flex-wrap:wrap;gap:8px;}
-.chip{background:rgba(18,40,60,.72);border:1px solid var(--line);color:var(--ink);
-  padding:10px 13px;border-radius:var(--r-sm);font-size:13px;cursor:pointer;
-  display:flex;align-items:center;gap:8px;transition:all .13s;}
-.chip:hover{border-color:var(--lantern);color:var(--lantern-soft);}
-.chip:active{transform:scale(.96);}
-.chip .cn{width:7px;height:7px;border-radius:50%;}
 .note{margin:24px 6px 8px;color:var(--mut);font-size:12.5px;line-height:1.55;text-align:center;}
 .note b{color:var(--lantern-soft);font-weight:600;}
 
 /* ============================================================
    ROUTE MAP  (the run, laid out ahead of you)
    ============================================================ */
-.maphead{text-align:center;padding:14px 8px 4px;}
-.maptitle{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:26px;margin:0 0 4px;}
-.mapsub{color:var(--mut);font-size:13.5px;line-height:1.5;margin-bottom:6px;}
+.maphead{text-align:center;padding:18px 8px 6px;}
+.maptitle{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px;margin:0 0 6px;letter-spacing:-.02em;}
+.mapsub{color:var(--mut);font-size:13px;line-height:1.5;margin-bottom:8px;max-width:420px;margin-left:auto;margin-right:auto;}
+.mapquit{margin-top:10px;background:rgba(10,22,34,.55);border:1px solid var(--line);color:var(--mut);
+  font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;padding:9px 14px;border-radius:10px;cursor:pointer;}
+.mapquit:hover{border-color:var(--line2);color:var(--ink);}
 .route{position:relative;margin:6px auto 0;width:100%;max-width:520px;padding-bottom:96px;}
 .rnode{display:flex;align-items:center;gap:14px;padding:9px 0;position:relative;}
 .rnode .track{position:absolute;left:23px;top:0;bottom:0;width:2px;background:var(--line);z-index:0;}
@@ -322,38 +391,6 @@ body{
   padding:12px;border-radius:var(--r-xs);font-size:13.5px;cursor:pointer;font-family:inherit;font-weight:600;transition:all .12s;}
 .copybtn:active{transform:scale(.98);} .copybtn.done{background:var(--pine);color:#06281c;border-color:var(--pine);}
 
-/* ===== master title screen ===== */
-#skyshift{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.15;
-  background:radial-gradient(120% 80% at 50% -10%, rgba(140,190,225,.10), transparent 55%), linear-gradient(180deg, rgba(6,14,26,0), rgba(5,12,22,.6));
-  transition:opacity 1.1s ease;}
-.titlewrap{text-align:center;padding:32px 10px 6px;position:relative;}
-.crest{width:112px;height:112px;margin:0 auto 16px;filter:drop-shadow(0 12px 28px rgba(0,0,0,.55));}
-.crest svg{width:100%;height:100%;display:block;}
-.crestglow{animation:glowp 4.5s ease-in-out infinite;}
-@keyframes glowp{50%{opacity:.5;}}
-#menu .title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:52px;line-height:.9;letter-spacing:-2px;
-  margin:0 0 14px;color:#eef6fb;text-shadow:0 2px 44px rgba(120,160,190,.3);}
-#menu .title .k{color:var(--lantern);text-shadow:0 0 30px rgba(242,182,78,.5);}
-#menu .tag{color:var(--mut);font-size:15px;line-height:1.55;max-width:400px;margin:0 auto 24px;}
-#menu .tag b{color:var(--ink);}
-.cta.big{max-width:340px;margin:0 auto;}
-.feats{display:flex;align-items:center;justify-content:center;gap:11px;flex-wrap:wrap;margin:20px auto 2px;color:var(--mut);font-size:12.5px;}
-.feats i{width:4px;height:4px;border-radius:50%;background:var(--line2);display:inline-block;}
-.menucard{margin-top:24px;background:rgba(10,22,34,.62);backdrop-filter:blur(7px);border:1px solid var(--line);
-  border-radius:var(--r);padding:16px 15px 18px;box-shadow:var(--shadow);}
-.menucard .subhead{margin-top:14px;}
-.menucard .subhead:first-child{margin-top:2px;}
-.resume{display:flex;gap:8px;}
-.resume input{flex:1;min-width:0;background:#0a1a28;border:1px solid var(--line);border-radius:var(--r-sm);
-  color:var(--ink);font-family:'Space Mono',monospace;font-size:12px;padding:12px;outline:none;transition:border-color .12s;}
-.resume input:focus{border-color:var(--lantern);}
-.resume input::placeholder{color:var(--dim);}
-.rbtn{background:var(--surf2);border:1px solid var(--line2);color:var(--ink);border-radius:var(--r-sm);
-  padding:12px 16px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;cursor:pointer;transition:all .12s;white-space:nowrap;}
-.rbtn:hover{border-color:var(--lantern);color:var(--lantern-soft);} .rbtn:active{transform:scale(.97);}
-.resume-msg{font-size:12.5px;margin-top:9px;min-height:16px;line-height:1.45;}
-.resume-msg.ok{color:var(--pine);} .resume-msg.ok b{color:var(--pine);}
-.resume-msg.warn{color:var(--lantern-soft);}
 .aurora{animation:aur 15s ease-in-out infinite alternate;transform-origin:center;}
 .aurora2{animation:aur2 22s ease-in-out infinite alternate;transform-origin:center;}
 @keyframes aur{0%{opacity:.16;transform:translateX(-6px) scaleY(1);}100%{opacity:.32;transform:translateX(8px) scaleY(1.08);}}
@@ -373,7 +410,6 @@ body{
 .opt.tf{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:17px;}
 .opt.tf .lx{background:rgba(139,196,221,.12);}
 
-.cta.big.ghost.daily{margin-top:10px;font-size:15px;padding:13px;}
 .grademark{display:inline-flex;align-items:center;justify-content:center;gap:12px;margin:8px auto 0;}
 .gradebadge{width:60px;height:60px;border-radius:16px;display:flex;align-items:center;justify-content:center;
   font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;border:2px solid;}
@@ -394,14 +430,6 @@ body{
 .ract{display:flex;align-items:center;gap:8px;margin:16px 0 4px;font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);}
 .ract span{color:#2b1c06;background:var(--lantern-soft);font-weight:700;padding:2px 7px;border-radius:6px;letter-spacing:.04em;}
 .ract:first-child{margin-top:2px;}
-.expedcard{padding-top:14px;}
-.mrank{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:2px 0 10px;}
-.rankname{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;color:var(--lantern-soft);}
-.ranksub{font-size:12px;color:var(--mut);}
-.brbar{height:9px;border-radius:6px;background:rgba(255,255,255,.07);overflow:hidden;border:1px solid var(--line2);}
-.brbar span{display:block;height:100%;background:linear-gradient(90deg,var(--pine),var(--lantern-soft));border-radius:6px;transition:width .5s;}
-.brlabel{margin-top:7px;font-size:12px;color:var(--ice);}
-.brlabel b{color:var(--ink);font-family:'Space Grotesk',sans-serif;}
 .bankline{margin:10px auto 2px;font-size:12.5px;color:var(--ice);line-height:1.5;max-width:440px;}
 .bankline b{color:var(--lantern-soft);font-family:'Space Grotesk',sans-serif;}
 
@@ -473,9 +501,7 @@ body{
 .mp-blurb{color:var(--mut);font-size:12.5px;line-height:1.55;margin-bottom:12px;min-height:40px;}
 .mp-state{text-align:center;padding:13px;color:var(--mut);font-size:13px;border:1px dashed var(--line2);border-radius:var(--r-xs);}
 .mp-state.done{color:var(--pine);border-color:rgba(95,206,159,.4);}
-.mapquit{width:100%;margin-top:10px;background:transparent;border:0;color:var(--mut);font-family:inherit;font-size:12.5px;cursor:pointer;padding:6px;}
 
-.mapquit{display:inline-block;margin-top:10px;background:transparent;border:0;color:var(--mut);font-family:inherit;font-size:12.5px;cursor:pointer;padding:4px 8px;text-decoration:underline;text-underline-offset:3px;}
 .route::before{content:'';position:absolute;left:42px;top:64px;bottom:132px;width:2px;background:linear-gradient(var(--line2),rgba(255,255,255,0));opacity:.5;}
 .tact{margin:22px 0 8px;padding-left:6px;}
 .tact-n{display:inline-block;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#2b1c06;background:var(--lantern-soft);padding:3px 10px;border-radius:99px;vertical-align:middle;}
@@ -592,54 +618,52 @@ body.lastlegs::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:
 
   <!-- ===== MENU ===== -->
   <section id="menu" class="screen active">
-    <div class="titlewrap">
-      <div class="crest">
-        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <defs>
-            <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a3350"/><stop offset="1" stop-color="#0b1a2c"/></linearGradient>
-            <radialGradient id="cl" cx="0.5" cy="0.4" r="0.62"><stop offset="0" stop-color="#f4d190" stop-opacity=".85"/><stop offset="1" stop-color="#f4d190" stop-opacity="0"/></radialGradient>
-          </defs>
-          <circle cx="60" cy="60" r="56" fill="url(#cg)" stroke="#2c5470" stroke-width="2"/>
-          <circle class="crestglow" cx="60" cy="50" r="32" fill="url(#cl)"/>
-          <path d="M16,88 L44,42 L58,63 L74,32 L104,88 Z" fill="#0e2438" stroke="#3a6a86" stroke-width="1.6" stroke-linejoin="round"/>
-          <path d="M74,32 L80,42 L76,45 L70,38 Z" fill="#eef6fb"/>
-          <path d="M44,42 L48,49 L45,51 L41,45 Z" fill="#eef6fb"/>
-          <path d="M28,82 Q46,71 57,77 T94,69" fill="none" stroke="#f2b64e" stroke-width="2" stroke-dasharray="3 4" stroke-linecap="round"/>
-          <circle cx="74" cy="32" r="3.2" fill="#f4d190"/>
-          <path d="M74,29 L74,18 L85,21.5 L74,25 Z" fill="#e37356"/>
-        </svg>
+    <div class="trailhead">
+      <div class="trail-hero">
+        <div class="trail-kicker"><span class="pip"></span> Roguelike study climb</div>
+        <div class="crest">
+          <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a3350"/><stop offset="1" stop-color="#0b1a2c"/></linearGradient>
+              <radialGradient id="cl" cx="0.5" cy="0.4" r="0.62"><stop offset="0" stop-color="#f4d190" stop-opacity=".85"/><stop offset="1" stop-color="#f4d190" stop-opacity="0"/></radialGradient>
+            </defs>
+            <circle cx="60" cy="60" r="56" fill="url(#cg)" stroke="#2c5470" stroke-width="2"/>
+            <circle class="crestglow" cx="60" cy="50" r="32" fill="url(#cl)"/>
+            <path d="M16,88 L44,42 L58,63 L74,32 L104,88 Z" fill="#0e2438" stroke="#3a6a86" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M74,32 L80,42 L76,45 L70,38 Z" fill="#eef6fb"/>
+            <path d="M44,42 L48,49 L45,51 L41,45 Z" fill="#eef6fb"/>
+            <path d="M28,82 Q46,71 57,77 T94,69" fill="none" stroke="#f2b64e" stroke-width="2" stroke-dasharray="3 4" stroke-linecap="round"/>
+            <circle cx="74" cy="32" r="3.2" fill="#f4d190"/>
+            <path d="M74,29 L74,18 L85,21.5 L74,25 Z" fill="#e37356"/>
+          </svg>
+        </div>
+        <h1 class="title">THE RBT <span class="k">TRAIL</span></h1>
+        <p class="trail-tag">Know your terms, or the mountain wins.</p>
+        <p class="trail-lore">Draft boons at ledge camps. Survive hazards that punish the concepts you haven&rsquo;t locked in. What you master on the climb stays learned when you fall.</p>
       </div>
-      <h1 class="title">THE RBT <span class="k">TRAIL</span></h1>
-      <p class="tag">Know your terms, or the mountain wins. A spaced-repetition climb built for the RBT exam.</p>
-      <button class="cta big" onclick="beginRun(null)">&#129406; Set out</button>
-      <button class="cta big ghost" onclick="beginRun(null, true)">&#128198; Daily Ascent <span style="font-size:11px;opacity:.75">(seeded · keeps expedition progress)</span></button>
-      <button class="cta big ghost" onclick="startExam()">&#128221; Board Simulation</button>
-      <button class="cta big ghost" onclick="openBestiary()">&#128215; The Bestiary</button>
-      <button class="cta big ghost" onclick="openMods()">&#129513; Expedition Mods</button>
-      <div class="feats"><span>&#129482; Hold your footing</span><i></i><span>&#127794; Draft boons</span><i></i><span>&#129504; Master by memory</span></div>
-    </div>
-    <div class="menucard expedcard" id="expedCard"></div>
-    <div class="menucard">
-      <div class="subhead">Train one trail</div>
-      <div class="chips" id="chips"></div>
-      <div class="subhead">Import concept progress</div>
-      <div class="resume">
-        <input id="resumeIn" type="text" placeholder="Paste a trail-log code (RBT5:…)" autocomplete="off" autocapitalize="off" spellcheck="false"/>
-        <button id="resumeBtn" class="rbtn" onclick="resumeFromCode()">Import</button>
+      <div class="trail-cta">
+        <button class="cta big prime" onclick="beginRun(null)">&#129406; Climb the mountain</button>
       </div>
-      <div class="resume-msg" id="resumeMsg"></div>
-      <p class="note">Trail-log codes save <b>concept tiers</b> from finished climbs — not a mid-run checkpoint. Import one to start ahead on weak spots.</p>
-    </div>
-  </section>
-
-  <section id="mods" class="screen">
-    <div class="bestwrap">
-      <div class="besthead">
-        <h2 class="besttitle">Expedition Mod Pack <span style="font-size:13px;color:var(--mut)">v1</span></h2>
-        <p class="bestsub">Modules layered onto the mountain. Every knob here is tunable &mdash; tell the master what to change.</p>
+      <div class="act-row">
+        <button type="button" class="act-btn" onclick="startExam()"><span class="act-ic">&#128221;</span><span class="act-lb">Board Sim</span></button>
+        <button type="button" class="act-btn" onclick="openBestiary()"><span class="act-ic">&#128215;</span><span class="act-lb">Bestiary</span></button>
       </div>
-      <div id="modList"></div>
-      <button class="cta" style="margin-top:14px" onclick="toMenu()">&#129406; Back to trailhead</button>
+      <div class="trail-stats" id="trailStats"></div>
+      <details class="trail-panel">
+        <summary>Focus one trail</summary>
+        <div class="panel-in"><div class="chips" id="chips"></div></div>
+      </details>
+      <details class="trail-panel subtle">
+        <summary>Import saved progress</summary>
+        <div class="panel-in">
+          <div class="resume">
+            <input id="resumeIn" type="text" placeholder="Trail-log code (RBT5:…)" autocomplete="off" autocapitalize="off" spellcheck="false"/>
+            <button id="resumeBtn" class="rbtn" onclick="resumeFromCode()">Import</button>
+          </div>
+          <div class="resume-msg" id="resumeMsg"></div>
+          <p class="note">Codes save <b>concept tiers</b> from finished climbs — not mid-run saves. Import to start ahead on weak spots.</p>
+        </div>
+      </details>
     </div>
   </section>
 
@@ -1453,18 +1477,18 @@ var RUN={}, ENC=null;
 var SAVED={};
 var RNG={fn:Math.random,seeded:false};
 function rnd(){ return RNG.fn(); }
-function freshRun(topic, daily){
-  var _r={ topic:topic, daily:!!daily, route:buildRoute(topic), nodeIdx:0,
+function freshRun(topic){
+  var mb=mergedBank();
+  var _r={ topic:topic, route:buildRoute(topic), nodeIdx:0,
     prog:{}, locked:new Set(), mastered:new Set(), boons:new Set(), flares:0,
     stamina:CONFIG.STAM_MAX, altitude:1600,
     seen:0, right:0, bestStreak:0, nodeCleared:0, summited:false, stones:{}, stoneNow:null, recovered:0,
     weather:(CONFIG.MODS.weather?WEATHERS[Math.floor(rnd()*WEATHERS.length)]:WEATHERS[0]), relics:new Set(), relicLog:[], iceaxeUsed:false, clutch:0, lastLegsTold:false,
     busy:false, current:null, view:null, timer:null, timeLeft:0, maxTime:0 };
-  if(!daily){ var mb=mergedBank(); Object.keys(mb).forEach(function(id){ if(+id>=0 && +id<BANK.length){ _r.prog[id]={tier:mb[id],seen:0,right:0,wrong:0}; } }); }
-  else { var mb2=mergedBank(); Object.keys(mb2).forEach(function(id){ if(+id>=0 && +id<BANK.length){ _r.prog[id]={tier:mb2[id],seen:0,right:0,wrong:0}; } }); }
+  Object.keys(mb).forEach(function(id){ if(+id>=0 && +id<BANK.length){ _r.prog[id]={tier:mb[id],seen:0,right:0,wrong:0}; } });
   return _r;
 }
-function beginRun(topic, daily){ if(CONFIG.AUDIO) AUDIO.unlock(); if(daily){ RNG.fn=mulberry32(hashStr(dailyKey())); RNG.seeded=true; } else { RNG.fn=Math.random; RNG.seeded=false; } RUN=freshRun(topic, daily); RENDER.map(); show('map'); if(RUN.weather && RUN.weather.name!=='Clear Dawn') setTimeout(function(){ banner(RUN.weather.ic+' '+RUN.weather.name, RUN.weather.desc); },350); }
+function beginRun(topic){ if(CONFIG.AUDIO) AUDIO.unlock(); RNG.fn=Math.random; RNG.seeded=false; RUN=freshRun(topic); RENDER.map(); show('map'); if(RUN.weather && RUN.weather.name!=='Clear Dawn') setTimeout(function(){ banner(RUN.weather.ic+' '+RUN.weather.name, RUN.weather.desc); },350); }
 
 function enterCurrentNode(){
   var node=RUN.route[RUN.nodeIdx];
@@ -1726,26 +1750,6 @@ var RENDER = {
       dock.innerHTML='<div class="dock-l"><span class="dock-ic" style="border-color:'+dfc+'">'+cur.icon+'</span><div class="dock-tx"><div class="dock-k">'+(cur.kind==='rest'?'Ledge camp':'Next pitch')+'</div><div class="dock-n">'+cur.title+'</div></div></div><button class="cta dock-go" onclick="enterCurrentNode()">'+(cur.kind==='rest'?'Make camp':'Climb')+' →</button>'; }
     if(document.querySelectorAll){ var ce=document.querySelectorAll('#route .tnode.cur')[0]; if(ce && ce.scrollIntoView){ try{ ce.scrollIntoView({behavior:'smooth',block:'center'}); }catch(e){} } }
   },
-  mods:function(){
-    var host=document.getElementById('modList'); if(!host) return; host.innerHTML='';
-    function sec(t){ var h=document.createElement('div'); h.className='besttier'; h.textContent=t; host.appendChild(h); }
-    function card(ic,name,desc,col,tag){ var c=document.createElement('div'); c.className='bestcard';
-      c.innerHTML='<div class="bestic" style="background:'+col+'22;border-color:'+col+'">'+ic+'</div><div class="bestbody"><div class="bestrow"><span class="bestname">'+name+'</span>'+(tag?'<span class="bestarch" style="color:'+col+'">'+tag+'</span>':'')+'</div><div class="bestmech">'+desc+'</div></div>'; host.appendChild(c); }
-    sec('Trail Agents \u00b7 modular climb systems');
-    var agents=(typeof TrailAgents!=='undefined'?TrailAgents:[]);
-    agents.forEach(function(a){ card(a.icon,a.name,a.blurb,a.color||'#8fc4dd',a.id); });
-    sec('Weather \u00b7 one rolled each climb');
-    var cur=(typeof RUN!=='undefined'&&RUN&&RUN.weather)?RUN.weather.name:null;
-    WEATHERS.forEach(function(w){ card(w.ic,w.name,w.desc,'#8fb7d6',w.name===cur?'THIS CLIMB':''); });
-    sec('Relics \u00b7 found, not chosen');
-    var owned=(typeof RUN!=='undefined'&&RUN&&RUN.relics)?RUN.relics:new Set();
-    Object.keys(RELICS).forEach(function(k){ var r=RELICS[k]; card(r.ic,r.name,r.desc,'#c9a86a',owned.has(k)?'CARRIED':''); });
-    sec('Events');
-    card('\u26E9\uFE0F','Weathered Shrine','Appears on every route. Trade 12 stamina for a relic \u2014 or walk on.','#c9a86a','');
-    sec('New foes in the rotation');
-    card('\uD83C\uDF2C\uFE0F','Wind Lip','Gusts + progress loss on a miss. Tier III.','#9fb4c8','');
-    card('\uD83E\uDDCA','Glacier Block','Triple ice shell + enrage. Tier IV elite.','#7fd4e8','');
-  },
   bestiary:function(){
     var host=document.getElementById('bestList'); if(!host) return; host.innerHTML='';
     var tierName={1:'Tier I · The Approach',2:'Tier II · The Headwall',3:'Tier III · The Hard Ground',4:'Tier IV · The Death Zone',5:'Fixed Points · Always on the Mountain'};
@@ -1954,7 +1958,7 @@ function endRun(kind){
   document.getElementById('grid').innerHTML =
     cell(RUN.mastered.size,'Mastered')+cell(fmt(RUN.altitude)+'m','Altitude')+cell(acc+'%','Accuracy')+cell(RUN.bestStreak+'\u00d7','Best run');
   var _G=gradeRun();
-  document.getElementById('grademark').innerHTML='<div class="gradebadge '+_G+'">'+_G+'</div><div class="grade-l"><b>Grade '+_G+'</b><br>'+(RUN.daily?'Daily Ascent \u00b7 '+dailyKey():'Free climb')+' \u00b7 '+acc+'% \u00b7 '+(RUN.summited?'summited':'fell')+'</div>';
+  document.getElementById('grademark').innerHTML='<div class="gradebadge '+_G+'">'+_G+'</div><div class="grade-l"><b>Grade '+_G+'</b><br>'+acc+'% accuracy \u00b7 '+(RUN.summited?'summited':'fell')+'</div>';
 
   var top={}; Object.keys(RUN.prog).forEach(function(id){ var p=RUN.prog[id]; if(!p.seen) return;
     var c=BANK[id].cat; top[c]=top[c]||{seen:0,locked:0}; top[c].seen++; if(p.tier>=lockTierNow()) top[c].locked++; });
@@ -2044,10 +2048,7 @@ function starField(){ var s=''; var pts=[[10,12],[22,8],[34,16],[46,10],[58,14],
   pts.forEach(function(p,i){ var tw=(i%3===0)?' class="tw"':''; var d=((i%5)*0.6).toFixed(1);
     s+='<circle'+tw+' cx="'+p[0]+'" cy="'+p[1]+'" r="'+(i%3===0?0.55:0.35)+'" fill="#dbe8f2" opacity="'+(0.4+((i%4)*0.12)).toFixed(2)+'" style="animation-delay:'+d+'s"/>'; }); return s; }
 
-/* ---------- daily ascent, grade, share (fresh steals: Wordle daily + fighting-game rank) ---------- */
-function mulberry32(a){ return function(){ a|=0; a=a+0x6D2B79F5|0; var t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
-function hashStr(s){ var h=2166136261; for(var i=0;i<s.length;i++){ h=Math.imul(h^s.charCodeAt(i),16777619); } return h>>>0; }
-function dailyKey(){ try{ return new Date().toISOString().slice(0,10); }catch(e){ return '2026-01-01'; } }
+/* ---------- grade, share ---------- */
 function gradeRun(){ var acc=RUN.seen?RUN.right/RUN.seen:0; var sc=acc*100; if(RUN.summited) sc+=12; sc+=Math.min(8,RUN.bestStreak); sc+=RUN.stamina*0.05; sc+=(RUN.recovered||0)*3; sc+=(RUN.clutch||0)*4; if(RUN.relics&&RUN.relics.has('stone')) sc+=15; sc=sc*(RUN.weather?RUN.weather.score:1);
   return sc>=100?'S':sc>=88?'A':sc>=74?'B':sc>=58?'C':'D'; }
 function nodeEmoji(kind){ var m={storm:'⛈️',gate:'🛡️',rest:'🏕️',summit:'🏔️',serac:'🧊',whiteout:'🌫️',crevasse:'🕳️',traverse:'🧗',thinair:'🫁',icefall:'☄️',void:'🌑',knife:'🗡️',berg:'⛏️',snowfield:'🌨️',couloir:'🗻',icewall:'💠',windslab:'🌀',sealedface:'🔒',longwall:'🪜',tempest:'🌪️',closing:'⏳',avalanche:'💥',corniceridge:'🌬️',frozentitan:'🧊',shrine:'⛩️'}; return m[kind]||'⛰️'; }
@@ -2057,12 +2058,13 @@ function copyText(txt, btnId, done){ var b=document.getElementById(btnId);
 function shareResult(){
   var G=gradeRun(); var acc=RUN.seen?Math.round(RUN.right/RUN.seen*100):0; var line='';
   for(var i=0;i<RUN.route.length;i++){ line += (i<RUN.nodeIdx? nodeEmoji(RUN.route[i].kind) : '⬛'); }
-  var txt='🏔️ The RBT Trail'+(RUN.daily?' — Daily '+dailyKey():'')
+  var txt='🏔️ The RBT Trail'
     +'\nGrade '+G+' · '+acc+'% · '+(RUN.summited?'summit':'fell')
     +'\n'+line+'  '+RUN.nodeIdx+'/'+RUN.route.length
     +'\n🔥 streak '+RUN.bestStreak+' · '+fmt(RUN.altitude)+'m';
   copyText(txt,'shareBtn','✓ Copied — paste it anywhere');
 }
+function openBestiary(){ RENDER.bestiary(); show('bestiary'); }
 /* ---------- resume, keyboard, atmosphere (master additions) ---------- */
 function resumeFromCode(){
   var el=document.getElementById('resumeIn'); var msg=document.getElementById('resumeMsg');
@@ -2171,12 +2173,15 @@ function commitRun(kind){
   saveMeta();
 }
 function renderMeta(){
-  var el=document.getElementById('expedCard'); if(!el) return;
+  var el=document.getElementById('trailStats'); if(!el) return;
+  if(typeof Trail!=='undefined' && Trail.agents && Trail.agents.atlas){
+    el.innerHTML=Trail.agents.atlas.api.statsMarkup(META,{boardReady:boardReady,careerRank:careerRank,fmt:fmt,BANK:BANK,CONFIG:CONFIG});
+    return;
+  }
   var br=boardReady(), tot=BANK.length, pct=tot?Math.round(br/tot*100):0;
-  el.innerHTML='<div class="subhead">Expedition log</div>'
-    +'<div class="mrank"><span class="rankname">'+careerRank()+'</span><span class="ranksub">'+META.summits+' summit'+(META.summits===1?'':'s')+' \u00b7 '+META.runs+' climb'+(META.runs===1?'':'s')+' \u00b7 best '+fmt(META.bestAlt||1600)+'m</span></div>'
-    +'<div class="brbar"><span style="width:'+pct+'%"></span></div>'
-    +'<div class="brlabel"><b>'+br+'</b> of '+tot+' concepts board-ready \u00b7 '+fmt(META.miles)+' trail miles climbed</div>';
+  el.innerHTML='<div class="stat-rank"><span class="stat-rank-name">'+careerRank()+'</span><span class="stat-rank-meta">'+META.summits+' summit'+(META.summits===1?'':'s')+' \u00b7 '+META.runs+' climb'+(META.runs===1?'':'s')+' \u00b7 best '+fmt(META.bestAlt||1600)+'m</span></div>'
+    +'<div class="stat-bar"><span style="width:'+pct+'%"></span></div>'
+    +'<div class="stat-foot"><b>'+br+'</b> of '+tot+' board-ready \u00b7 '+fmt(META.miles)+' trail miles</div>';
 }
 (function buildMenu(){
   buildScene(); setSky(); loadMeta(); renderMeta();

@@ -1,92 +1,101 @@
 # The RBT Trail
 
-A roguelike spaced-repetition study game for the **RBT exam** (3rd ed. Test Content Outline). Climb the mountain, draft boons, survive encounters, and lock in ABA concepts.
+Roguelike spaced-repetition study game for the **RBT exam** (3rd ed. Test Content Outline). Draft boons, survive hazards, and lock in ABA concepts on the climb.
 
 > Unofficial study tool — not affiliated with the BACB.
 
-## Play
+## Play online
+
+**[Play the game →](https://minkeyman42069.github.io/Minkey-HQ/)**
+
+No install required. Works on phone and desktop.
+
+## Play locally
 
 ```bash
+git clone https://github.com/minkeyman42069/Minkey-HQ.git
+cd Minkey-HQ
 npm run dev
-# → http://localhost:4173
 ```
 
-Open `index.html` directly — works offline after first load.
+Open **http://localhost:4173**
 
-## Modes
+You can also open `index.html` directly in a browser — works offline after the first load.
+
+## What you get
 
 | Mode | What it does |
 |------|----------------|
-| **Set out** | Full roguelike climb with Leitner scheduling |
-| **Daily Ascent** | Same route, seeded daily |
-| **Board Simulation** | 40-question mock exam weighted to TCO domains |
-| **The Bestiary** | Hazard reference |
-| **Expedition Mods** | Weather, relics, shrine events |
+| **Climb the mountain** | Full roguelike run with Leitner scheduling, boon drafts, and hazard encounters |
+| **Board Sim** | 40-question mock exam weighted to TCO domains |
+| **Bestiary** | Hazard reference — what each node does and how to beat it |
 
-## Question quality playground
+After each run you receive an `RBT5:…` trail-log code. Paste it on the trailhead to import concept tiers from finished climbs.
 
-Cursor can audit and overhaul the question bank against BACB item-writing standards (scenario stems, 4 options, teaching explanations).
-
-```bash
-npm run audit        # score every question → data/quality-report.json
-npm run playground   # → http://localhost:4174/playground/
-npm run overhaul     # apply core quality transforms
-npm run apply-batch  # apply curated scenario rewrites
-npm run refresh      # overhaul + batch + audit + sync + validate
-```
-
-### Quality rubric checks
-
-- Scenario-based stems (RBT/client/learner context)
-- Exactly 4 parallel answer options (matches BACB exam format)
-- Plausible distractors from the same concept family
-- Explanations that teach *why* — not just label the answer
-- BACB terminology (`access to tangibles`, `escape/avoidance`, MSWO, DRO, etc.)
-- `dom` tags on every question (TCO domains A–F)
-- Duplicate stem detection
-
-### Bank workflow
+## Repo layout
 
 ```
-data/questions.json     ← edit here (source of truth)
-        ↓ npm run sync
-index.html              ← game loads BANK (single-file deploy)
+index.html                 # Deployable game shell (UI, engine, embedded question bank)
+game/
+  bootstrap.js             # Agent kernel entry + legacy global bridge
+  trail.bundle.js          # Built IIFE bundle (commit this — no build step to play)
+data/
+  questions.json           # Question bank source of truth (433 items)
+  quality-report.json      # Latest audit output (generated)
+  balance-report.json      # Balance sim output (generated)
+src/
+  core/                    # Agent bus, kernel, shared config
+  agents/                  # Modular game systems (see docs/ARCHITECTURE.md)
+playground/index.html      # Visual question-quality reviewer
+scripts/                   # Bank tooling, balance sim, bundle build
+docs/ARCHITECTURE.md       # How the codebase is organized
 ```
 
-## Trail-log codes
+**Where to read code**
 
-After each run you get an `RBT5:…` code with a checksum. Paste it on the menu to resume, or paste it to Cursor to generate weak-spot question batches.
+- **Gameplay & UI** → `index.html` (encounter engine, rendering, audio, meta)
+- **Boons, weather, hazards, scheduling** → `src/agents/`
+- **Questions** → `data/questions.json` (synced into `index.html` via `npm run sync`)
 
-## Scripts
+## Development
 
 | Command | Purpose |
 |---------|---------|
-| `npm run validate` | Structural integrity checks |
-| `npm run analyze` | Domain coverage vs. exam blueprint |
-| `npm run audit` | Full quality scoring + flags |
-| `npm run check` | validate + analyze |
+| `npm run dev` | Local game server (port 4173) |
+| `npm run playground` | Quality reviewer (port 4174) |
+| `npm run check` | Validate bank, sync, build bundle, verify trail |
+| `npm run balance` | Run climb balance simulator |
+| `npm run audit` | Score every question → `data/quality-report.json` |
+| `npm run sync` | Inject `data/questions.json` into `index.html` |
+| `npm run build:trail` | Rebuild `game/trail.bundle.js` from `src/` |
+| `npm run refresh` | Full bank overhaul pipeline |
+
+### Question bank workflow
+
+```
+data/questions.json     ← edit here
+        ↓ npm run sync
+index.html              ← embedded BANK (single-file deploy)
+```
+
+### Agent changes
+
+If you edit anything under `src/`:
+
+```bash
+npm run build:trail
+npm run verify:trail
+```
+
+Then commit both source and `game/trail.bundle.js`.
 
 ## Content sources
 
-Question overhauls align to:
+Question content aligns to:
 
 - [RBT Test Content Outline (3rd ed.)](https://www.bacb.com/wp-content/uploads/2023/12/RBT-3rd-Edition-Test-Content-Outline-240903-a.pdf)
-- [RBT Handbook sample items](https://www.bacb.com/wp-content/uploads/2025/08/RBTHandbook_260116-a.pdf) (retired BACB questions included)
+- [RBT Handbook sample items](https://www.bacb.com/wp-content/uploads/2025/08/RBTHandbook_260116-a.pdf)
 
-## Project layout
+## License
 
-```
-index.html                    # deployable single-file game
-data/
-  questions.json              # question bank (edit here)
-  quality-report.json         # latest audit (generated)
-  overhaul-batch2.json        # curated rewrites
-playground/index.html         # visual quality reviewer
-scripts/
-  lib/load-bank.mjs           # shared loader
-  lib/quality-rubric.mjs      # BACB-aligned scoring
-  quality-audit.mjs
-  overhaul-bank.mjs
-  apply-overhaul-batch.mjs
-  inject-bank.mjs
-```
+Study content is for personal exam prep. BACB trademarks belong to the BACB.

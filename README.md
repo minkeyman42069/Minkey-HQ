@@ -10,6 +10,8 @@ Roguelike spaced-repetition study game for the **RBT exam** (3rd ed. Test Conten
 
 No install required. Works on phone and desktop.
 
+> **First-time setup (repo owner):** If the link above 404s, enable hosting once: **Settings → Pages → Build and deployment → Source: GitHub Actions**. The `Deploy GitHub Pages` workflow publishes `main` automatically after that.
+
 ## Play locally
 
 ```bash

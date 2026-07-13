@@ -29,6 +29,9 @@ import {
   createSeededRng,
 } from '../agents/expedition-director.js';
 import { createAtlasArtisan } from '../agents/atlas-artisan.js';
+import { createSandboxSteward } from '../agents/sandbox-steward.js';
+import { createTrailChronicler } from '../agents/trail-chronicler.js';
+import { createSummitSage } from '../agents/summit-sage.js';
 
 const AGENT_META = [
   {
@@ -73,6 +76,27 @@ const AGENT_META = [
     color: '#e8a0c8',
     blurb: 'Visual design tokens, menu composition, and UI polish — presentation separated from mechanics.',
   },
+  {
+    id: 'summit-sage',
+    name: 'Summit Sage',
+    icon: '🧠',
+    color: '#7fd4a0',
+    blurb: 'Study coach. Domain readiness, mastery analytics, and what to review next — pure functions over run progress.',
+  },
+  {
+    id: 'trail-chronicler',
+    name: 'Trail Chronicler',
+    icon: '📓',
+    color: '#c0b0e6',
+    blurb: 'Passive telemetry. Records every hook the bus emits into a capped log without ever changing the outcome.',
+  },
+  {
+    id: 'sandbox-steward',
+    name: 'Sandbox Steward',
+    icon: '🧪',
+    color: '#e6c36a',
+    blurb: 'Deterministic control surface. Spawns any pitch, previews drafts, and simulates climbs through the real bus.',
+  },
 ];
 
 export function createKernel() {
@@ -80,9 +104,14 @@ export function createKernel() {
   const boonAgent = createBoonArchitect();
   const economy = createEconomyApi();
   const atlasAgent = createAtlasArtisan();
+  const sageAgent = createSummitSage();
+  const stewardAgent = createSandboxSteward();
+  const chroniclerAgent = createTrailChronicler();
   const scheduler = createScheduler(CONFIG);
   boonAgent.register(bus);
   atlasAgent.register(bus);
+  // Chronicler registers last so it observes fully-resolved ctx; it never mutates.
+  chroniclerAgent.register(bus);
 
   const agents = {
     boon: boonAgent,
@@ -121,6 +150,9 @@ export function createKernel() {
       },
     },
     atlas: atlasAgent,
+    sage: sageAgent,
+    steward: stewardAgent,
+    chronicler: chroniclerAgent,
   };
 
   function makeCtx(run, enc, extras = {}) {

@@ -18,6 +18,7 @@
     "build:trail": "node scripts/build-trail.mjs",
     "verify:trail": "node scripts/verify-trail.mjs",
     "playground": "npx --yes serve . -p 4174",
+    "sandbox": "npx --yes serve . -p 4175",
     "check": "npm run validate && npm run analyze && npm run sync-check && npm run build:trail && npm run verify:trail",
     "refresh": "npm run overhaul && npm run apply-batch && npm run audit && npm run sync && npm run check"
   }

@@ -1788,6 +1788,490 @@ var TrailBundle = (() => {
     };
   }
 
+  // src/agents/sandbox-steward.js
+  var NODE_FACTORIES = {
+    switchback: "nSwitch",
+    storm: "nStorm",
+    gate: "nGate",
+    serac: "nSerac",
+    summit: "nSummit",
+    whiteout: "nWhiteout",
+    crevasse: "nCrevasse",
+    traverse: "nTraverse",
+    thinair: "nThinAir",
+    icefall: "nIcefall",
+    void: "nVoid",
+    knife: "nKnife",
+    berg: "nBergschrund",
+    snowfield: "nSnowfield",
+    couloir: "nCouloir",
+    icewall: "nIcewall",
+    windslab: "nWindslab",
+    sealedface: "nSealedFace",
+    longwall: "nLongWall",
+    tempest: "nTempest",
+    closing: "nClosing",
+    avalanche: "nAvalanche",
+    corniceridge: "nCorniceRidge",
+    frozentitan: "nFrozenTitan"
+  };
+  function seededRng(seed) {
+    let a = seed >>> 0 || 1;
+    return function() {
+      a |= 0;
+      a = a + 1831565813 | 0;
+      let t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  function clamp(v, lo, hi) {
+    return Math.max(lo, Math.min(hi, v));
+  }
+  function createSandboxSteward() {
+    const api = {
+      factories: NODE_FACTORIES,
+      seededRng,
+      /** All pitch kinds this sandbox can spawn. */
+      pitchKinds() {
+        return Object.keys(NODE_FACTORIES);
+      },
+      /** Build a throwaway RUN shaped like index.html's freshRun (minimal). */
+      blankRun(over = {}) {
+        const run = {
+          topic: over.topic || null,
+          route: [],
+          nodeIdx: over.nodeIdx || 0,
+          prog: over.prog || {},
+          locked: new Set(over.locked || []),
+          mastered: new Set(over.mastered || []),
+          boons: new Set(over.boons || []),
+          flares: over.flares || 0,
+          stamina: over.stamina != null ? over.stamina : 100,
+          altitude: over.altitude || 1600,
+          seen: 0,
+          right: 0,
+          bestStreak: 0,
+          nodeCleared: 0,
+          summited: false,
+          stones: {},
+          recovered: 0,
+          weather: over.weather || null,
+          relics: new Set(over.relics || []),
+          relicLog: [],
+          recent: []
+        };
+        if (run.boons.has("flare")) run.flares = run.flares || 2;
+        return run;
+      },
+      /** Build a throwaway ENC shaped like index.html's encounter state. */
+      blankEnc(node, over = {}) {
+        return {
+          node,
+          need: node.need,
+          done: 0,
+          threat: over.threat != null ? over.threat : node.startThreat || 0,
+          max: node.max || 100,
+          lifelineUsed: false,
+          firstMissUsed: false,
+          firstTimeoutUsed: false,
+          rallyUsed: false,
+          bulwarkUsed: false,
+          streakEase: 0,
+          cairnBank: 0,
+          missCount: 0,
+          spikeT: 0,
+          shieldLeft: node.shield || 0,
+          easeMul: 1,
+          timeMul: 1,
+          phaseMul: 1,
+          phased: false,
+          luckyUsed: false,
+          cruxTold: false,
+          streak: 0,
+          lastId: -1
+        };
+      },
+      /** Spawn any pitch node via the real Hazard Warden factories, scaled to an act. */
+      spawnNode(trail, opts = {}) {
+        const H2 = trail.agents.hazard.api;
+        const kind = opts.kind || "switchback";
+        const fnName = NODE_FACTORIES[kind];
+        if (!fnName || !H2[fnName]) throw new Error("Unknown pitch kind: " + kind);
+        const need = opts.need != null ? opts.need : 4;
+        const alt = opts.alt != null ? opts.alt : 2e3;
+        const act = clamp(opts.act || 1, 1, 3);
+        let node;
+        if (kind === "gate") node = H2.nGate(need, alt, opts.domain || null);
+        else node = H2[fnName](need, alt);
+        if (kind === "serac") node.startThreat = 25;
+        if (kind === "summit") node.startThreat = 20;
+        return H2.scaleNode(node, act);
+      },
+      /** Preview the boon draft a ledge would offer, deterministically. */
+      previewDraft(trail, opts = {}) {
+        const run = api.blankRun({
+          boons: opts.owned || [],
+          stamina: opts.stamina != null ? opts.stamina : 60,
+          nodeIdx: opts.nodeIdx || 0
+        });
+        const enc = api.blankEnc(api.spawnNode(trail, { kind: "switchback" }));
+        const ctx = trail.makeCtx(run, enc);
+        const rnd2 = seededRng(opts.seed || 1);
+        return trail.agents.boon.api.pickDraft(ctx, rnd2, opts.count || 3);
+      },
+      /**
+       * Simulate a single pitch by driving the real hook bus.
+       *
+       * @param {object} trail  kernel handle (window.Trail)
+       * @param {object} opts
+       *   kind, act, need, boons[], relics[], weather (object), seed,
+       *   answers: array of booleans OR {correct, viaTimeout},
+       *   secondsPerQuestion: passive threat drift applied between answers (0 = off)
+       * @returns {{node, start, steps, final, cleared, strikes}}
+       */
+      simulatePitch(trail, opts = {}) {
+        const CONFIG2 = trail.CONFIG;
+        const rnd2 = seededRng(opts.seed || 1);
+        const node = api.spawnNode(trail, {
+          kind: opts.kind,
+          need: opts.need,
+          act: opts.act,
+          alt: opts.alt,
+          domain: opts.domain
+        });
+        const run = api.blankRun({
+          boons: opts.boons || [],
+          relics: opts.relics || [],
+          weather: opts.weather || null,
+          stamina: opts.stamina != null ? opts.stamina : CONFIG2.STAM_MAX,
+          nodeIdx: opts.nodeIdx || 0
+        });
+        const enc = api.blankEnc(node, { threat: node.startThreat || 0 });
+        const steps = [];
+        let strikes = 0;
+        const ctx = (extra) => trail.makeCtx(run, enc, { rnd: rnd2, ...extra || {} });
+        const addStamina = (x) => {
+          run.stamina = clamp(run.stamina + x, 0, CONFIG2.STAM_MAX);
+        };
+        const raiseThreat = (x) => {
+          enc.threat = clamp(enc.threat + x, 0, enc.max);
+          if (enc.threat >= enc.max) {
+            enc.threat = Math.max(0, enc.threat - CONFIG2.THREAT_RESET);
+            const sout = trail.emit("mountain:strike", ctx());
+            if (sout.blocked) {
+              steps.push({ kind: "strike", blocked: true, banners: sout.banners || [] });
+              return;
+            }
+            let hit = sout.hit != null ? sout.hit : node.hit;
+            if (run.relics.has("carabiner") && !enc.luckyUsed) {
+              enc.luckyUsed = true;
+              hit = Math.round(hit * 0.5);
+            }
+            if (run.relics.has("rope") && node.kind === "gate") hit = Math.round(hit * 0.75);
+            addStamina(-hit);
+            strikes++;
+            steps.push({ kind: "strike", blocked: false, hit, banners: sout.banners || [] });
+          }
+        };
+        const weatherRise = run.weather ? run.weather.rise : 1;
+        const driftPerSec = opts.secondsPerQuestion || 0;
+        const applyDrift = () => {
+          if (!driftPerSec || !node.rise) return;
+          let rm = trail.agents.boon.api.riseMultiplier(ctx());
+          if (node.enrage && enc.threat >= enc.max * 0.6) rm *= node.enrage;
+          if (enc.phaseMul) rm *= enc.phaseMul;
+          if (enc.need > 1 && enc.done >= enc.need - 1) rm *= CONFIG2.CRUX_RISE_MULT;
+          rm = Math.min(rm, 2);
+          raiseThreat(node.rise * rm * weatherRise * driftPerSec);
+        };
+        const pe = trail.emit("pitch:enter", ctx());
+        if (pe.staminaDelta) addStamina(pe.staminaDelta);
+        const start = { stamina: run.stamina, threat: Math.round(enc.threat), banners: pe.banners || [] };
+        const answers = (opts.answers || []).map(
+          (a) => typeof a === "boolean" ? { correct: a, viaTimeout: false } : a
+        );
+        for (let i = 0; i < answers.length && run.stamina > 0; i++) {
+          const a = answers[i];
+          applyDrift();
+          const qs = trail.emit("question:start", ctx());
+          if (qs.staminaDelta) addStamina(qs.staminaDelta);
+          const step = { n: i + 1, correct: a.correct, viaTimeout: !!a.viaTimeout, banners: [] };
+          if (qs.banners && qs.banners.length) step.banners.push(...qs.banners);
+          if (a.correct) {
+            enc.streak++;
+            run.bestStreak = Math.max(run.bestStreak, enc.streak);
+            if (enc.shieldLeft > 0) {
+              enc.shieldLeft--;
+              step.shield = enc.shieldLeft;
+            } else {
+              enc.done++;
+              if (node.phase && !enc.phased && enc.done >= Math.ceil(enc.need / 2)) {
+                enc.phased = true;
+                enc.phaseMul = 1.5;
+                raiseThreat(22);
+                step.banners.push({ title: "The slope lets go", sub: "it releases all at once" });
+              }
+            }
+            const out = trail.emit("answer:correct", ctx());
+            if (out.staminaDelta) addStamina(out.staminaDelta);
+            if (out.threatDelta) raiseThreat(out.threatDelta);
+            if (out.banners) step.banners.push(...out.banners);
+            step.threatDelta = out.threatDelta || 0;
+          } else {
+            const out = trail.emit("answer:wrong", ctx({ viaTimeout: a.viaTimeout }));
+            if (!out.keepStreak) {
+              enc.streak = 0;
+              enc.streakEase = 0;
+            }
+            if (out.staminaCost > 0) addStamina(-out.staminaCost);
+            else if (out.staminaDelta) addStamina(out.staminaDelta);
+            if (out.threatDelta) raiseThreat(out.threatDelta);
+            if (out.banners) step.banners.push(...out.banners);
+            if (node.streakGate) {
+              enc.done = Math.max(0, enc.done - 2);
+              step.banners.push({ title: "Knocked back", sub: "you slide down the ridge" });
+            }
+            step.threatDelta = out.threatDelta || 0;
+          }
+          step.stamina = run.stamina;
+          step.threat = Math.round(enc.threat);
+          step.streak = enc.streak;
+          step.done = enc.done;
+          steps.push(step);
+          if (enc.done >= enc.need) {
+            step.cleared = true;
+            break;
+          }
+        }
+        const cleared = enc.done >= enc.need;
+        let clearRestore = 0;
+        if (cleared) {
+          const co = trail.emit("pitch:clear", ctx());
+          clearRestore = (co.clearBonus || 0) + trail.pitchRestore(node, "clear", run);
+          addStamina(clearRestore);
+        }
+        return {
+          node,
+          start,
+          steps,
+          strikes,
+          cleared,
+          final: {
+            stamina: run.stamina,
+            threat: Math.round(enc.threat),
+            streak: enc.streak,
+            bestStreak: run.bestStreak,
+            done: enc.done,
+            need: enc.need,
+            clearRestore,
+            survived: run.stamina > 0
+          }
+        };
+      },
+      /** Convenience: the whole staff roster for the sandbox gallery. */
+      roster(trail) {
+        return trail.meta;
+      }
+    };
+    return {
+      id: "sandbox-steward",
+      name: "Sandbox Steward",
+      role: "Deterministic simulation & control surface for the Staff Sandbox",
+      api,
+      register() {
+      }
+    };
+  }
+
+  // src/agents/trail-chronicler.js
+  var WATCHED = [
+    "pitch:enter",
+    "question:start",
+    "answer:correct",
+    "answer:wrong",
+    "mountain:strike",
+    "hazard:gust",
+    "pitch:clear"
+  ];
+  function summarize(event, ctx) {
+    const enc = ctx.enc || {};
+    const run = ctx.run || {};
+    const bits = [];
+    if (typeof enc.streak === "number") bits.push("streak " + enc.streak);
+    if (typeof enc.threat === "number") bits.push("threat " + Math.round(enc.threat));
+    if (typeof run.stamina === "number") bits.push("stam " + Math.round(run.stamina));
+    if (enc.node && enc.node.kind) bits.push(enc.node.kind);
+    return bits.join(" \xB7 ");
+  }
+  function createTrailChronicler(limit = 500) {
+    let seq = 0;
+    const buffer = [];
+    const listeners = /* @__PURE__ */ new Set();
+    function record(event, ctx) {
+      const entry = {
+        seq: ++seq,
+        t: Date.now(),
+        event,
+        summary: summarize(event, ctx)
+      };
+      buffer.push(entry);
+      if (buffer.length > limit) buffer.shift();
+      listeners.forEach((fn) => {
+        try {
+          fn(entry);
+        } catch (_) {
+        }
+      });
+      return {};
+    }
+    const api = {
+      events: WATCHED,
+      /** All recorded entries (oldest first). */
+      log() {
+        return buffer.slice();
+      },
+      /** Most recent n entries. */
+      tail(n = 20) {
+        return buffer.slice(-n);
+      },
+      /** Count of records grouped by event name. */
+      stats() {
+        const out = {};
+        buffer.forEach((e) => {
+          out[e.event] = (out[e.event] || 0) + 1;
+        });
+        return out;
+      },
+      clear() {
+        buffer.length = 0;
+        seq = 0;
+      },
+      /** Subscribe to live records; returns an unsubscribe fn. */
+      onRecord(fn) {
+        listeners.add(fn);
+        return () => listeners.delete(fn);
+      }
+    };
+    return {
+      id: "trail-chronicler",
+      name: "Trail Chronicler",
+      role: "Passive hook telemetry & run event log",
+      api,
+      register(bus) {
+        WATCHED.forEach((event) => {
+          bus.on(event, (ctx) => record(event, ctx), "trail-chronicler");
+        });
+      }
+    };
+  }
+
+  // src/agents/summit-sage.js
+  function emptyTally() {
+    return { A: 0, B: 0, C: 0, D: 0, E: 0, F: 0 };
+  }
+  function createSummitSage() {
+    const api = {
+      domains: DOMAINS,
+      /** Per-domain seen / right / wrong / board-ready / mastered / accuracy. */
+      domainBreakdown(run, bank, config) {
+        const lock = config && config.LOCK_TIER || 3;
+        const master = config && config.MASTER_TIER || 4;
+        const seen = emptyTally();
+        const right = emptyTally();
+        const wrong = emptyTally();
+        const ready = emptyTally();
+        const mastered = emptyTally();
+        const total = emptyTally();
+        (bank || []).forEach((q, i) => {
+          const d = domainOf(q);
+          if (total[d] == null) return;
+          total[d]++;
+          const p = run.prog && run.prog[q.id != null ? q.id : i];
+          if (!p) return;
+          seen[d] += p.seen ? 1 : 0;
+          right[d] += p.right || 0;
+          wrong[d] += p.wrong || 0;
+          if (p.tier >= lock) ready[d]++;
+          if (p.tier >= master) mastered[d]++;
+        });
+        return Object.keys(DOMAINS).map((d) => {
+          const attempts = right[d] + wrong[d];
+          return {
+            domain: d,
+            name: DOMAINS[d].n,
+            weight: DOMAINS[d].pct,
+            total: total[d],
+            seen: seen[d],
+            ready: ready[d],
+            mastered: mastered[d],
+            accuracy: attempts ? Math.round(right[d] / attempts * 100) : null,
+            readyPct: total[d] ? Math.round(ready[d] / total[d] * 100) : 0
+          };
+        });
+      },
+      /** Overall board readiness: concepts at/above lock tier. */
+      readiness(run, bank, config) {
+        const lock = config && config.LOCK_TIER || 3;
+        let ready = 0;
+        let mastered = 0;
+        const master = config && config.MASTER_TIER || 4;
+        const total = (bank || []).length;
+        (bank || []).forEach((q, i) => {
+          const p = run.prog && run.prog[q.id != null ? q.id : i];
+          if (!p) return;
+          if (p.tier >= lock) ready++;
+          if (p.tier >= master) mastered++;
+        });
+        return {
+          ready,
+          mastered,
+          total,
+          readyPct: total ? Math.round(ready / total * 100) : 0
+        };
+      },
+      /** Lowest-tier, most-missed concepts to review next. */
+      nextReview(run, bank, n = 8) {
+        const scored = [];
+        (bank || []).forEach((q, i) => {
+          const id = q.id != null ? q.id : i;
+          const p = run.prog && run.prog[id];
+          if (!p || !p.seen) return;
+          const score = p.tier * 10 - (p.wrong || 0) * 5;
+          scored.push({ id, cat: q.cat, domain: domainOf(q), tier: p.tier, wrong: p.wrong || 0, score });
+        });
+        return scored.sort((a, b) => a.score - b.score).slice(0, n);
+      },
+      /** Human-readable coaching tips from the breakdown. */
+      recommend(run, bank, config) {
+        const rows = api.domainBreakdown(run, bank, config).slice();
+        const tips = [];
+        const weakest = rows.filter((r) => r.total > 0).sort((a, b) => a.readyPct - b.readyPct)[0];
+        if (weakest) {
+          tips.push(
+            "Focus Domain " + weakest.domain + " (" + weakest.name + ") \u2014 " + weakest.ready + "/" + weakest.total + " board-ready (" + weakest.readyPct + "%)."
+          );
+        }
+        const shaky = rows.filter((r) => r.accuracy != null && r.accuracy < 70);
+        shaky.forEach((r) => {
+          tips.push("Accuracy dip in " + r.name + ": " + r.accuracy + "% correct so far.");
+        });
+        const due = api.nextReview(run, bank, 100).filter((x) => x.tier < (config && config.LOCK_TIER || 3));
+        if (due.length) tips.push(due.length + " concept" + (due.length === 1 ? "" : "s") + " still below board-ready.");
+        if (!tips.length) tips.push("Strong footing across every domain \u2014 press for the summit.");
+        return tips;
+      }
+    };
+    return {
+      id: "summit-sage",
+      name: "Summit Sage",
+      role: "Study coach \u2014 domain readiness, mastery analytics, review planning",
+      api,
+      register() {
+      }
+    };
+  }
+
   // src/core/kernel.js
   var AGENT_META = [
     {
@@ -1831,6 +2315,27 @@ var TrailBundle = (() => {
       icon: "\u{1F3A8}",
       color: "#e8a0c8",
       blurb: "Visual design tokens, menu composition, and UI polish \u2014 presentation separated from mechanics."
+    },
+    {
+      id: "summit-sage",
+      name: "Summit Sage",
+      icon: "\u{1F9E0}",
+      color: "#7fd4a0",
+      blurb: "Study coach. Domain readiness, mastery analytics, and what to review next \u2014 pure functions over run progress."
+    },
+    {
+      id: "trail-chronicler",
+      name: "Trail Chronicler",
+      icon: "\u{1F4D3}",
+      color: "#c0b0e6",
+      blurb: "Passive telemetry. Records every hook the bus emits into a capped log without ever changing the outcome."
+    },
+    {
+      id: "sandbox-steward",
+      name: "Sandbox Steward",
+      icon: "\u{1F9EA}",
+      color: "#e6c36a",
+      blurb: "Deterministic control surface. Spawns any pitch, previews drafts, and simulates climbs through the real bus."
     }
   ];
   function createKernel() {
@@ -1838,9 +2343,13 @@ var TrailBundle = (() => {
     const boonAgent = createBoonArchitect();
     const economy = createEconomyApi();
     const atlasAgent = createAtlasArtisan();
+    const sageAgent = createSummitSage();
+    const stewardAgent = createSandboxSteward();
+    const chroniclerAgent = createTrailChronicler();
     const scheduler = createScheduler(CONFIG);
     boonAgent.register(bus);
     atlasAgent.register(bus);
+    chroniclerAgent.register(bus);
     const agents = {
       boon: boonAgent,
       hazard: {
@@ -1877,7 +2386,10 @@ var TrailBundle = (() => {
           createSeededRng
         }
       },
-      atlas: atlasAgent
+      atlas: atlasAgent,
+      sage: sageAgent,
+      steward: stewardAgent,
+      chronicler: chroniclerAgent
     };
     function makeCtx(run, enc, extras = {}) {
       return {

@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The RBT Trail — Staff Sandbox</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏔️</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@600;700&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#081320;--bg2:#0a1a28;--card:#12283c;--card2:#0f2233;--line:#254864;--line2:#31597a;
+  --ink:#eaf2f7;--mut:#8aa6bb;--pine:#5fce9f;--rust:#e37356;--lantern:#f2b64e;--ice:#8fc4dd;--violet:#9b6fd0;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:Inter,system-ui,sans-serif;background:radial-gradient(1200px 600px at 70% -10%,#12324c22,transparent),var(--bg);color:var(--ink);min-height:100vh}
+a{color:var(--ice)}
+code,.mono{font-family:'Space Mono',monospace}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif;margin:0}
+header.top{padding:18px 20px 12px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:14px 22px;align-items:center;position:sticky;top:0;background:rgba(8,19,32,.92);backdrop-filter:blur(10px);z-index:20}
+.brand h1{font-size:20px;letter-spacing:.2px}
+.brand .sub{color:var(--mut);font-size:12px;margin-top:2px}
+.brand .sub b{color:var(--pine)}
+.seedbox{display:flex;align-items:center;gap:8px;margin-left:auto}
+.seedbox label{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.12em}
+input[type=number],input[type=text],select{background:var(--bg2);border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:8px 9px;font:inherit}
+input[type=number]{width:84px}
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:3px 9px;border-radius:99px;border:1px solid var(--line);color:var(--mut)}
+.busbadge{cursor:pointer}
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;padding:12px 20px 0;border-bottom:1px solid var(--line);position:sticky;top:64px;background:rgba(8,19,32,.92);backdrop-filter:blur(10px);z-index:19}
+nav.tabs button{background:transparent;border:1px solid transparent;border-bottom:none;color:var(--mut);border-radius:10px 10px 0 0;padding:9px 14px;font:inherit;cursor:pointer;font-weight:600;font-size:13px}
+nav.tabs button:hover{color:var(--ink)}
+nav.tabs button.active{color:var(--ink);background:var(--card);border-color:var(--line)}
+main{padding:22px 20px 60px;max-width:1180px;margin:0 auto}
+section.tab{display:none;animation:fade .2s ease}
+section.tab.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1}}
+.lead{color:var(--mut);font-size:13.5px;line-height:1.55;max-width:760px;margin:2px 0 18px}
+.grid{display:grid;gap:14px}
+.cards{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+.card{background:linear-gradient(180deg,var(--card),var(--card2));border:1px solid var(--line);border-radius:14px;padding:16px}
+.card h3{font-size:15px;display:flex;align-items:center;gap:9px}
+.card .role{color:var(--mut);font-size:11px;text-transform:uppercase;letter-spacing:.1em;margin:8px 0 6px}
+.card .blurb{font-size:13px;color:#cfe0ea;line-height:1.5}
+.ic{font-size:20px;line-height:1}
+.dot{width:9px;height:9px;border-radius:99px;display:inline-block}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:16px}
+.panel h2{font-size:16px;margin-bottom:4px}
+.panel .hint{color:var(--mut);font-size:12.5px;line-height:1.5;margin-bottom:12px}
+.row{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:flex-end;margin-bottom:14px}
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-size:10.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.1em}
+button.act{background:var(--lantern);color:#1a1205;border:none;border-radius:9px;padding:9px 15px;font:inherit;font-weight:700;cursor:pointer}
+button.act:hover{filter:brightness(1.06)}
+button.ghost{background:#173350;border:1px solid var(--line2);color:var(--ink);border-radius:8px;padding:8px 12px;font:inherit;cursor:pointer}
+button.ghost:hover{border-color:var(--lantern)}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{border:1px solid var(--line);background:var(--bg2);color:var(--mut);border-radius:99px;padding:6px 11px;font-size:12px;cursor:pointer;display:inline-flex;gap:6px;align-items:center;user-select:none}
+.chip:hover{border-color:var(--line2);color:var(--ink)}
+.chip.on{background:rgba(242,182,78,.14);border-color:var(--lantern);color:var(--ink)}
+.chip.on .tagdot{box-shadow:0 0 0 2px rgba(242,182,78,.25)}
+.tagdot{width:8px;height:8px;border-radius:99px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+th{color:var(--mut);font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+td.num,th.num{text-align:right;font-family:'Space Mono',monospace}
+.mut{color:var(--mut)}
+.good{color:var(--pine)}.bad{color:var(--rust)}.warn{color:var(--lantern)}
+.out{margin-top:12px}
+.nodehead{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.nodehead .ne{font-size:30px}
+.nodehead .nt{font-family:'Space Grotesk',sans-serif;font-size:17px}
+.nodehead .nk{font-size:11px;color:var(--mut);font-family:'Space Mono',monospace}
+.statline{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.stat{background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:5px 9px;font-size:11.5px}
+.stat b{font-family:'Space Mono',monospace;color:var(--ice)}
+.verdict{border-radius:10px;padding:12px 14px;font-size:14px;font-weight:600;margin-top:12px;border:1px solid var(--line)}
+.verdict.win{background:rgba(95,206,159,.12);border-color:var(--pine);color:var(--pine)}
+.verdict.lose{background:rgba(227,115,86,.12);border-color:var(--rust);color:var(--rust)}
+.banners{display:flex;flex-wrap:wrap;gap:5px;margin-top:3px}
+.btag{font-size:10.5px;background:rgba(155,111,208,.15);border:1px solid #3a3358;color:#cdbff0;border-radius:6px;padding:2px 7px}
+.bar{height:7px;border-radius:99px;background:#0c1c2b;overflow:hidden;border:1px solid var(--line)}
+.bar span{display:block;height:100%}
+.mini{font-size:11px;color:var(--mut)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.tile{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:11px}
+.tile .v{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700}
+.tile .l{font-size:10px;color:var(--mut);text-transform:uppercase;letter-spacing:.09em;margin-top:2px}
+.route{display:flex;flex-direction:column;gap:6px}
+.rn{display:flex;align-items:center;gap:10px;background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:8px 11px}
+.rn .re{font-size:18px}
+.rn .rt{font-weight:600;font-size:13.5px}
+.rn .rs{font-size:11.5px;color:var(--mut)}
+.acthead{font-family:'Space Grotesk',sans-serif;font-size:12px;color:var(--lantern);text-transform:uppercase;letter-spacing:.1em;margin:14px 0 4px}
+.acthead:first-child{margin-top:0}
+.log{font-family:'Space Mono',monospace;font-size:12px;line-height:1.6;max-height:52vh;overflow:auto;background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.log .ev{color:var(--ice)}
+.log .sq{color:var(--mut);margin-right:8px}
+.evrow{border-bottom:1px dashed #1b3247;padding:2px 0}
+.duos{display:flex;flex-direction:column;gap:7px}
+.duo{display:flex;gap:9px;align-items:flex-start;background:var(--bg2);border:1px solid var(--line);border-radius:9px;padding:8px 10px}
+.duo.live{border-color:var(--pine)}
+.duo .di{font-size:17px}
+.duo .dn{font-weight:600;font-size:13px}
+.duo .dd{font-size:11.5px;color:var(--mut)}
+.empty{color:var(--mut);padding:20px;text-align:center;font-size:13px}
+@media(max-width:620px){.seedbox{margin-left:0;width:100%}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <h1>🏔️ The RBT Trail — Staff Sandbox</h1>
+    <div class="sub">Live control room for the <b>full staff team</b>. Every panel drives the real agent bus from <code>game/trail.bundle.js</code>.</div>
+  </div>
+  <div class="seedbox">
+    <label for="seed">Seed</label>
+    <input type="number" id="seed" value="7" min="1" step="1" title="Deterministic seed — same seed, same result">
+    <span class="pill busbadge" id="busBadge" title="Jump to the Bus Log">📓 bus: 0</span>
+  </div>
+</header>
+
+<nav class="tabs" id="tabs"></nav>
+
+<main>
+  <section class="tab" data-tab="team">
+    <p class="lead">Nine staff members run this mountain — six gameplay systems plus a coach, a chronicler, and a steward. Each is a modular agent registered on one hook bus. Mechanics stay separate from presentation, and nothing here can drift from what the game actually does.</p>
+    <div class="grid cards" id="roster"></div>
+  </section>
+
+  <section class="tab" data-tab="pitch">
+    <div class="panel">
+      <h2>🧪 Pitch Lab</h2>
+      <p class="hint">The <b>Sandbox Steward</b> spawns a real <b>Hazard Warden</b> node, loads your <b>Boon Architect</b> loadout + <b>Mountain Economy</b> relics/weather, then simulates the pitch through the live hook bus. Deterministic from the seed above.</p>
+      <div class="row">
+        <div class="field"><label>Hazard</label><select id="pl_kind"></select></div>
+        <div class="field"><label>Act</label><select id="pl_act"><option>1</option><option>2</option><option>3</option></select></div>
+        <div class="field"><label>Need</label><input type="number" id="pl_need" value="4" min="1" max="9"></div>
+        <div class="field"><label>Weather</label><select id="pl_weather"></select></div>
+        <div class="field"><label>Answers (C/W/T)</label><input type="text" id="pl_seq" value="CCWCC" size="16" title="C=correct, W=wrong, T=timeout"></div>
+        <div class="field"><label>Passive drift (s/Q)</label><input type="number" id="pl_drift" value="0" min="0" max="20" step="1"></div>
+        <div class="field"><label>&nbsp;</label><button class="act" id="pl_run">Simulate pitch ▶</button></div>
+      </div>
+      <div class="row" style="margin-bottom:6px">
+        <div class="field" style="flex:1;min-width:260px">
+          <label>Boon loadout</label>
+          <div class="chips" id="pl_boons"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field" style="flex:1;min-width:220px">
+          <label>Relics</label>
+          <div class="chips" id="pl_relics"></div>
+        </div>
+        <div class="field">
+          <label>Presets</label>
+          <div class="chips">
+            <span class="chip" data-seq="CCCCCCCCC">Flawless</span>
+            <span class="chip" data-seq="CCWCCWCC">Rocky</span>
+            <span class="chip" data-seq="WWCWWC">Falling apart</span>
+            <span class="chip" data-seq="CTCTCC">Timeouts</span>
+          </div>
+        </div>
+      </div>
+      <div class="out" id="pl_out"><div class="empty">Set a loadout and press Simulate.</div></div>
+    </div>
+  </section>
+
+  <section class="tab" data-tab="boons">
+    <div class="panel">
+      <h2>🎒 Boon Architect</h2>
+      <p class="hint">Toggle a loadout to see which <b>duos</b> light up, then preview the draft a ledge would offer for that loadout at the current seed.</p>
+      <div class="row">
+        <div class="field" style="flex:1;min-width:260px"><label>Owned boons</label><div class="chips" id="bn_owned"></div></div>
+        <div class="field"><label>Draft size</label><input type="number" id="bn_count" value="3" min="1" max="6"></div>
+        <div class="field"><label>Stamina</label><input type="number" id="bn_stam" value="60" min="0" max="100"></div>
+        <div class="field"><label>&nbsp;</label><button class="act" id="bn_draft">Preview draft 🎲</button></div>
+      </div>
+      <div id="bn_draftout" class="out"></div>
+    </div>
+    <div class="grid" style="grid-template-columns:1fr 1fr;gap:16px">
+      <div class="panel" style="margin:0"><h2>Active duos</h2><p class="hint">Synergies live for the selected loadout.</p><div class="duos" id="bn_duos"></div></div>
+      <div class="panel" style="margin:0"><h2>Catalog</h2><p class="hint" id="bn_catcount"></p><div id="bn_catalog"></div></div>
+    </div>
+  </section>
+
+  <section class="tab" data-tab="route">
+    <div class="panel">
+      <h2>🧭 Expedition Director</h2>
+      <p class="hint">Assemble a full three-act climb. Same seed → same route, so the balance simulator and the game agree.</p>
+      <div class="row">
+        <div class="field"><label>Focus topic</label><select id="rt_topic"><option value="">Mixed (weakest-domain gates)</option></select></div>
+        <div class="field"><label>&nbsp;</label><button class="act" id="rt_build">Build route 🗺️</button></div>
+      </div>
+      <div id="rt_out" class="out"></div>
+    </div>
+  </section>
+
+  <section class="tab" data-tab="study">
+    <div class="panel">
+      <h2>📚 Trail Scholar × 🧠 Summit Sage</h2>
+      <p class="hint">The <b>Trail Scholar</b> Leitner scheduler runs a study session at a target accuracy; the <b>Summit Sage</b> then reads the resulting progress and coaches you.</p>
+      <div class="row">
+        <div class="field"><label>Questions</label><input type="number" id="st_n" value="300" min="10" max="800"></div>
+        <div class="field"><label>Accuracy %</label><input type="number" id="st_acc" value="85" min="0" max="100"></div>
+        <div class="field"><label>Focus domain</label><select id="st_dom"><option value="">All domains</option></select></div>
+        <div class="field"><label>&nbsp;</label><button class="act" id="st_run">Run session ▶</button></div>
+      </div>
+      <div id="st_out" class="out"></div>
+    </div>
+  </section>
+
+  <section class="tab" data-tab="bestiary">
+    <div class="panel">
+      <h2>⛈️ Hazard Warden — Bestiary</h2>
+      <p class="hint">Every hazard the mountain can throw, from the <b>Hazard Warden</b> registry. Pick an act to see scaled numbers.</p>
+      <div class="row">
+        <div class="field"><label>Scale to act</label><select id="be_act"><option>1</option><option>2</option><option>3</option></select></div>
+      </div>
+      <div id="be_out" class="out"></div>
+    </div>
+  </section>
+
+  <section class="tab" data-tab="bus">
+    <div class="panel">
+      <h2>📓 Trail Chronicler — Bus Log</h2>
+      <p class="hint">Passive telemetry of every hook the bus emits while you use this sandbox. The Chronicler never changes an outcome — it only records.</p>
+      <div class="row">
+        <div class="field"><label>&nbsp;</label><button class="ghost" id="bus_clear">Clear log</button></div>
+        <div class="field" style="flex:1"><label>Event counts</label><div id="bus_stats" class="chips"></div></div>
+      </div>
+      <div id="bus_log" class="log"></div>
+    </div>
+  </section>
+</main>
+
+<script src="../game/trail.bundle.js"></script>
+<script>
+(function(){
+  "use strict";
+  var Trail = window.Trail;
+  var S = Trail.agents.steward.api;
+  var BOON = Trail.agents.boon.api;
+  var HAZ = Trail.agents.hazard.api;
+  var ECON = Trail.agents.economy.api;
+  var SCHOLAR = Trail.agents.scholar.api;
+  var SAGE = Trail.agents.sage.api;
+  var CHRON = Trail.agents.chronicler.api;
+  var CFG = Trail.CONFIG;
+  var $ = function(id){ return document.getElementById(id); };
+  function seed(){ return parseInt($('seed').value,10)||1; }
+  function esc(s){ return String(s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];}); }
+
+  var BANK = [];
+
+  /* ---------------- Tabs ---------------- */
+  var TABS = [
+    ['team','Staff Team'],['pitch','Pitch Lab'],['boons','Boons'],
+    ['route','Route'],['study','Study & Coach'],['bestiary','Bestiary'],['bus','Bus Log']
+  ];
+  function buildTabs(){
+    var nav=$('tabs'); nav.innerHTML='';
+    TABS.forEach(function(t,i){
+      var b=document.createElement('button'); b.textContent=t[1]; b.dataset.tab=t[0];
+      b.onclick=function(){ showTab(t[0]); };
+      nav.appendChild(b);
+    });
+    showTab('team');
+  }
+  function showTab(name){
+    [].forEach.call(document.querySelectorAll('nav.tabs button'),function(b){ b.classList.toggle('active',b.dataset.tab===name); });
+    [].forEach.call(document.querySelectorAll('section.tab'),function(s){ s.classList.toggle('active',s.dataset.tab===name); });
+    if(name==='bus') renderBus();
+  }
+  $('busBadge').onclick=function(){ showTab('bus'); };
+
+  /* ---------------- Team roster ---------------- */
+  function renderRoster(){
+    var host=$('roster'); host.innerHTML='';
+    Trail.meta.forEach(function(m){
+      var c=document.createElement('div'); c.className='card';
+      c.innerHTML='<h3><span class="ic">'+m.icon+'</span>'+esc(m.name)+
+        ' <span class="dot" style="background:'+m.color+'"></span></h3>'+
+        '<div class="role">'+esc(m.id)+'</div>'+
+        '<div class="blurb">'+esc(m.blurb)+'</div>';
+      host.appendChild(c);
+    });
+  }
+
+  /* ---------------- Shared chip pickers ---------------- */
+  var plBoons=new Set(), plRelics=new Set(), bnOwned=new Set();
+  function boonChip(id, set, host, onchange){
+    var b=BOON.catalog[id];
+    var el=document.createElement('span'); el.className='chip'+(set.has(id)?' on':'');
+    var tag=BOON.tags[b.tag]||{color:'#888',label:b.tag};
+    el.innerHTML='<span class="tagdot" style="background:'+tag.color+'"></span>'+b.ic+' '+esc(b.name);
+    el.title=b.desc;
+    el.onclick=function(){ if(set.has(id)){set.delete(id);el.classList.remove('on');} else {set.add(id);el.classList.add('on');} onchange&&onchange(); };
+    host.appendChild(el);
+  }
+  function renderBoonPicker(host,set,onchange){
+    host.innerHTML='';
+    Object.keys(BOON.catalog).forEach(function(id){ boonChip(id,set,host,onchange); });
+  }
+  function renderRelicPicker(){
+    var host=$('pl_relics'); host.innerHTML='';
+    Object.keys(ECON.RELICS).forEach(function(id){
+      var r=ECON.RELICS[id];
+      var el=document.createElement('span'); el.className='chip'+(plRelics.has(id)?' on':'');
+      el.innerHTML=r.ic+' '+esc(r.name); el.title=r.desc;
+      el.onclick=function(){ if(plRelics.has(id)){plRelics.delete(id);el.classList.remove('on');} else {plRelics.add(id);el.classList.add('on');} };
+      host.appendChild(el);
+    });
+  }
+
+  /* ---------------- Pitch Lab ---------------- */
+  function fillKinds(){
+    var sel=$('pl_kind'); sel.innerHTML='';
+    S.pitchKinds().forEach(function(k){
+      var o=document.createElement('option'); o.value=k; o.textContent=HAZ.nodeEmoji(k)+'  '+k; sel.appendChild(o);
+    });
+    sel.value='crevasse';
+    var w=$('pl_weather'); w.innerHTML='';
+    ECON.WEATHERS.forEach(function(wx,i){ var o=document.createElement('option'); o.value=i; o.textContent=wx.ic+' '+wx.name; w.appendChild(o); });
+  }
+  function parseSeq(s){
+    var out=[]; (s||'').toUpperCase().split('').forEach(function(c){
+      if(c==='C') out.push({correct:true,viaTimeout:false});
+      else if(c==='W') out.push({correct:false,viaTimeout:false});
+      else if(c==='T') out.push({correct:false,viaTimeout:true});
+    });
+    return out;
+  }
+  function bannerTags(bs){
+    if(!bs||!bs.length) return '';
+    return '<span class="banners">'+bs.map(function(b){return '<span class="btag">'+esc(b.title)+(b.sub?' · '+esc(b.sub):'')+'</span>';}).join('')+'</span>';
+  }
+  function runPitch(){
+    var kind=$('pl_kind').value;
+    var res=S.simulatePitch(Trail,{
+      kind:kind, act:parseInt($('pl_act').value,10), need:parseInt($('pl_need').value,10),
+      boons:[].slice.call(plBoons), relics:[].slice.call(plRelics),
+      weather:ECON.WEATHERS[parseInt($('pl_weather').value,10)||0],
+      seed:seed(), answers:parseSeq($('pl_seq').value),
+      secondsPerQuestion:parseFloat($('pl_drift').value)||0
+    });
+    var n=res.node;
+    var flags=[];
+    ['suppress','noBoonEase','shield','streakGate','escalate','fatigue','enrage','phase','decay','drain','spike','gust'].forEach(function(f){
+      if(n[f]) flags.push(f+(typeof n[f]==='number'&&n[f]!==true?(':'+n[f]):''));
+    });
+    var h='<div class="nodehead"><span class="ne">'+n.icon+'</span><div><div class="nt">'+esc(n.title)+'</div>'+
+      '<div class="nk">kind '+n.kind+' · act '+n.act+' · '+esc(HAZ.nodeSub(n))+'</div></div></div>';
+    h+='<div class="statline">'+
+      st('need',n.need)+st('time',n.time+'s')+st('rise',n.rise)+st('miss',n.miss)+st('hit',n.hit)+st('restore',n.restore)+
+      (flags.length?'<span class="stat">flags <b>'+flags.join(', ')+'</b></span>':'')+'</div>';
+    h+='<div class="mini">Start · stamina <b class="mono">'+res.start.stamina+'</b> · threat <b class="mono">'+res.start.threat+'</b> '+bannerTags(res.start.banners)+'</div>';
+    h+='<table style="margin-top:10px"><tr><th>#</th><th>answer</th><th class="num">stamina</th><th class="num">threat</th><th class="num">streak</th><th class="num">done</th><th>events</th></tr>';
+    res.steps.forEach(function(s){
+      if(s.kind==='strike'){
+        h+='<tr><td colspan="6" class="bad">⛏️ mountain strike '+(s.blocked?'— blocked':'−'+s.hit+' stamina')+'</td><td>'+bannerTags(s.banners)+'</td></tr>';
+        return;
+      }
+      var aw=s.correct?'<span class="good">✓ correct</span>':('<span class="bad">✗ '+(s.viaTimeout?'timeout':'wrong')+'</span>');
+      h+='<tr><td class="mut">'+s.n+'</td><td>'+aw+'</td><td class="num">'+s.stamina+'</td><td class="num">'+s.threat+'</td><td class="num">'+s.streak+'</td><td class="num">'+s.done+'/'+res.final.need+'</td><td>'+bannerTags(s.banners)+'</td></tr>';
+    });
+    h+='</table>';
+    var f=res.final;
+    var cls = f.cleared ? 'win' : (f.survived ? '' : 'lose');
+    var verdict = f.cleared
+      ? '🏔️ Pitch cleared — +'+f.clearRestore+' stamina at the ledge. Ended '+f.stamina+' stamina, best streak '+f.bestStreak+'.'
+      : (f.survived
+          ? '⏸️ Ran out of answers at '+f.done+'/'+f.need+' — '+f.stamina+' stamina, '+f.threat+' threat, '+res.strikes+' strike'+(res.strikes===1?'':'s')+'.'
+          : '🌍 Driven back — stamina hit 0 after '+res.strikes+' strike'+(res.strikes===1?'':'s')+'.');
+    h+='<div class="verdict '+cls+'">'+verdict+'</div>';
+    $('pl_out').innerHTML=h;
+    updateBusBadge();
+  }
+  function st(l,v){ return '<span class="stat">'+l+' <b>'+v+'</b></span>'; }
+
+  /* ---------------- Boons ---------------- */
+  function renderCatalog(){
+    var host=$('bn_catalog');
+    var ids=Object.keys(BOON.catalog);
+    $('bn_catcount').textContent=ids.length+' boons · '+BOON.duos.length+' duos · tap a tag color to read its role';
+    var h='<table><tr><th>Boon</th><th>Tag</th><th>Rarity</th><th>Effect</th></tr>';
+    ids.forEach(function(id){
+      var b=BOON.catalog[id]; var tag=BOON.tags[b.tag]||{color:'#888',label:b.tag};
+      h+='<tr><td>'+b.ic+' '+esc(b.name)+'</td>'+
+        '<td><span class="tagdot" style="background:'+tag.color+';display:inline-block;margin-right:5px"></span>'+esc(tag.label)+'</td>'+
+        '<td class="'+(b.rare?'warn':'mut')+'">'+(b.rare?'rare':'common')+'</td>'+
+        '<td class="mut">'+esc(b.desc)+'</td></tr>';
+    });
+    host.innerHTML=h+'</table>';
+  }
+  function renderDuos(){
+    var host=$('bn_duos');
+    var run=S.blankRun({boons:[].slice.call(bnOwned)});
+    var enc=S.blankEnc(S.spawnNode(Trail,{kind:'switchback'}));
+    var live=BOON.activeDuos(Trail.makeCtx(run,enc));
+    var liveNames={}; live.forEach(function(d){liveNames[d.name]=1;});
+    host.innerHTML=BOON.duos.map(function(d){
+      var on=liveNames[d.name];
+      var pair=d.ids.map(function(i){return BOON.catalog[i]?BOON.catalog[i].name:i;}).join(' + ');
+      return '<div class="duo'+(on?' live':'')+'"><span class="di">'+d.ic+'</span><div><div class="dn">'+esc(d.name)+(on?' <span class="good">● live</span>':'')+'</div>'+
+        '<div class="dd">'+esc(pair)+' — '+esc(d.desc)+'</div></div></div>';
+    }).join('');
+  }
+  function previewDraft(){
+    var picks=S.previewDraft(Trail,{owned:[].slice.call(bnOwned),seed:seed(),count:parseInt($('bn_count').value,10),stamina:parseInt($('bn_stam').value,10)});
+    var h='<div class="chips">';
+    picks.forEach(function(id){
+      if(id==='_stamina'){ h+='<span class="chip on">🧃 +Stamina (pack full)</span>'; return; }
+      var b=BOON.catalog[id]||{ic:'❔',name:id,desc:''};
+      h+='<span class="chip on" title="'+esc(b.desc)+'">'+b.ic+' '+esc(b.name)+'</span>';
+    });
+    h+='</div><div class="mini" style="margin-top:8px">Deterministic for seed '+seed()+'. The weighting avoids piling on safety picks and leans into threat control late.</div>';
+    $('bn_draftout').innerHTML=h;
+    updateBusBadge();
+  }
+
+  /* ---------------- Route ---------------- */
+  function fillTopics(){
+    var cats={}; BANK.forEach(function(q){cats[q.cat]=1;});
+    var sel=$('rt_topic');
+    Object.keys(cats).sort().forEach(function(c){ var o=document.createElement('option'); o.value=c; o.textContent=c; sel.appendChild(o); });
+  }
+  function buildRoute(){
+    var topic=$('rt_topic').value||null;
+    var route=Trail.buildRoute(S.seededRng(seed()), topic);
+    var h=''; var lastAct=0;
+    var actNames=HAZ.ACTS;
+    route.forEach(function(n){
+      if(n.act && n.act!==lastAct){ lastAct=n.act; h+='<div class="acthead">Act '+n.act+' — '+esc(actNames[n.act-1]?actNames[n.act-1].name:'')+'</div>'; }
+      var sub = n.kind==='rest' ? 'Ledge camp — rest & draft' : (n.kind==='shrine' ? 'Shrine — offering' : esc(HAZ.nodeSub(n)));
+      h+='<div class="rn"><span class="re">'+(n.icon||HAZ.nodeEmoji(n.kind))+'</span><div style="flex:1"><div class="rt">'+esc(n.title||n.kind)+'</div><div class="rs">'+sub+'</div></div><span class="mini mono">'+ (n.alt?fmt(n.alt)+'m':'') +'</span></div>';
+    });
+    var pitches=route.filter(function(n){return n.need>0;}).length;
+    $('rt_out').innerHTML='<div class="mini" style="margin-bottom:8px">'+route.length+' nodes · '+pitches+' pitches · '+route.filter(function(n){return n.kind==='rest';}).length+' camps · '+route.filter(function(n){return n.kind==='gate';}).length+' gatekeepers</div><div class="route">'+h+'</div>';
+    updateBusBadge();
+  }
+  function fmt(n){ return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,','); }
+
+  /* ---------------- Study & Coach ---------------- */
+  function fillDomains(){
+    var sel=$('st_dom');
+    Object.keys(SCHOLAR.DOMAINS).forEach(function(d){ var o=document.createElement('option'); o.value=d; o.textContent=d+' — '+SCHOLAR.DOMAINS[d].n; sel.appendChild(o); });
+    sel.value='A';
+  }
+  function runSession(){
+    var n=parseInt($('st_n').value,10), acc=(parseInt($('st_acc').value,10)||0)/100, dom=$('st_dom').value;
+    var rnd=S.seededRng(seed());
+    var sched=Trail.createScheduler();
+    var run=S.blankRun({});
+    var ids=BANK.filter(function(q){ return !dom || SCHOLAR.domainOf(q)===dom; }).map(function(q){return q.id;});
+    if(!ids.length){ $('st_out').innerHTML='<div class="empty">No questions in that domain.</div>'; return; }
+    var last=-1;
+    for(var i=0;i<n;i++){
+      var id=sched.pick(ids,last,run,rnd); last=id;
+      run.recent.push(id); if(run.recent.length>9) run.recent.shift();
+      var correct=rnd()<acc;
+      sched.grade(id,correct,false,run); run.seen++; if(correct) run.right++;
+    }
+    // Headline readiness is scoped to the studied pool; the breakdown/coaching
+    // always span the full bank so neglected domains still surface.
+    var focusBank = dom ? BANK.filter(function(q){ return SCHOLAR.domainOf(q)===dom; }) : BANK;
+    var read=SAGE.readiness(run,focusBank,CFG);
+    var rows=SAGE.domainBreakdown(run,BANK,CFG);
+    var tips=SAGE.recommend(run,BANK,CFG);
+    var tierCount=[0,0,0,0,0];
+    Object.keys(run.prog).forEach(function(k){ var t=run.prog[k].tier; tierCount[t]=(tierCount[t]||0)+1; });
+
+    var h='<div class="tiles">'+
+      tile(read.readyPct+'%','Board-ready'+(dom?' ('+dom+')':''))+
+      tile(read.ready+' / '+read.total,'Concepts locked')+
+      tile(read.mastered,'Mastered (tier 4)')+
+      tile(run.seen,'Questions answered')+
+      tile(Math.round((run.right/Math.max(1,run.seen))*100)+'%','Session accuracy')+
+    '</div>';
+
+    h+='<div class="panel" style="margin-top:14px"><h3 style="font-size:14px;margin-bottom:8px">🧠 Summit Sage recommends</h3>'+
+       '<ul style="margin:0;padding-left:18px;font-size:13px;line-height:1.7">'+tips.map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ul></div>';
+
+    h+='<table style="margin-top:6px"><tr><th>Domain</th><th class="num">TCO %</th><th class="num">answered</th><th class="num">accuracy</th><th class="num">board-ready</th><th style="width:150px">readiness</th></tr>';
+    rows.forEach(function(r){
+      h+='<tr><td>'+r.domain+' — '+esc(r.name)+'</td><td class="num">'+r.weight+'%</td><td class="num">'+r.seen+'</td>'+
+        '<td class="num '+(r.accuracy!=null&&r.accuracy<70?'bad':'')+'">'+(r.accuracy==null?'—':r.accuracy+'%')+'</td>'+
+        '<td class="num">'+r.ready+'/'+r.total+'</td>'+
+        '<td><div class="bar"><span style="width:'+r.readyPct+'%;background:'+barColor(r.readyPct)+'"></span></div></td></tr>';
+    });
+    h+='</table>';
+    h+='<div class="mini" style="margin-top:10px">Leitner tiers after session — New '+tierCount[0]+' · Learning '+tierCount[1]+' · Familiar '+tierCount[2]+' · Solid '+tierCount[3]+' · Mastered '+tierCount[4]+'</div>';
+    $('st_out').innerHTML=h;
+    updateBusBadge();
+  }
+  function tile(v,l){ return '<div class="tile"><div class="v">'+v+'</div><div class="l">'+l+'</div></div>'; }
+  function barColor(p){ return p>=66?'var(--pine)':p>=33?'var(--lantern)':'var(--rust)'; }
+
+  /* ---------------- Bestiary ---------------- */
+  function renderBestiary(){
+    var act=parseInt($('be_act').value,10);
+    var h='<table><tr><th>Hazard</th><th>Tier</th><th>Trait</th><th class="num">need</th><th class="num">time</th><th class="num">rise</th><th class="num">miss</th><th class="num">hit</th><th>What it does</th></tr>';
+    HAZ.BESTIARY.forEach(function(e){
+      var n=HAZ.scaleNode(e.fn(4,2000),act);
+      h+='<tr><td>'+(n.icon||'')+' '+esc(n.title||n.kind)+'</td><td class="mut">T'+e.t+'</td><td class="warn">'+esc(e.a)+'</td>'+
+        '<td class="num">'+n.need+'</td><td class="num">'+n.time+'s</td><td class="num">'+n.rise+'</td><td class="num">'+n.miss+'</td><td class="num">'+n.hit+'</td>'+
+        '<td class="mut">'+esc(e.m)+'</td></tr>';
+    });
+    $('be_out').innerHTML=h+'</table>';
+  }
+
+  /* ---------------- Bus Log (Chronicler) ---------------- */
+  function updateBusBadge(){ $('busBadge').textContent='📓 bus: '+CHRON.log().length; }
+  var EVC={'pitch:enter':'#8fc4dd','question:start':'#c9a86a','answer:correct':'#5fce9f','answer:wrong':'#e37356','mountain:strike':'#e0655a','hazard:gust':'#7d93b0','pitch:clear':'#f2b64e'};
+  function renderBus(){
+    var log=CHRON.log();
+    var stats=CHRON.stats();
+    $('bus_stats').innerHTML=Object.keys(stats).map(function(k){
+      return '<span class="chip on" style="border-color:'+(EVC[k]||'#888')+'"><span class="tagdot" style="background:'+(EVC[k]||'#888')+'"></span>'+k+' · '+stats[k]+'</span>';
+    }).join('')||'<span class="mini">No events yet — run a simulation.</span>';
+    var host=$('bus_log');
+    if(!log.length){ host.innerHTML='<div class="empty">The bus is quiet. Simulate a pitch or preview a draft to see hooks fire.</div>'; return; }
+    host.innerHTML=log.slice(-200).reverse().map(function(e){
+      return '<div class="evrow"><span class="sq">#'+e.seq+'</span><span class="ev" style="color:'+(EVC[e.event]||'var(--ice)')+'">'+e.event+'</span>'+(e.summary?' <span class="mut">— '+esc(e.summary)+'</span>':'')+'</div>';
+    }).join('');
+  }
+  CHRON.onRecord(function(){ updateBusBadge(); var b=$('bus_log'); if(document.querySelector('section[data-tab=bus]').classList.contains('active')) renderBus(); });
+
+  /* ---------------- Wire up ---------------- */
+  function wire(){
+    $('pl_run').onclick=runPitch;
+    [].forEach.call(document.querySelectorAll('#pitch .chip[data-seq]'),function(c){ c.onclick=function(){ $('pl_seq').value=c.dataset.seq; }; });
+    $('bn_draft').onclick=previewDraft;
+    $('rt_build').onclick=buildRoute;
+    $('st_run').onclick=runSession;
+    $('be_act').onchange=renderBestiary;
+    $('bus_clear').onclick=function(){ CHRON.clear(); renderBus(); updateBusBadge(); };
+  }
+
+  function init(){
+    buildTabs();
+    renderRoster();
+    fillKinds();
+    renderBoonPicker($('pl_boons'),plBoons);
+    renderRelicPicker();
+    renderBoonPicker($('bn_owned'),bnOwned,function(){ renderDuos(); });
+    renderCatalog(); renderDuos();
+    fillDomains();
+    wire();
+    fetch('../data/questions.json').then(function(r){return r.json();}).then(function(data){
+      BANK=data; BANK.forEach(function(q,i){ if(q.id==null)q.id=i; if(!q.type)q.type='mc'; });
+      fillTopics();
+    }).catch(function(){
+      $('rt_topic').insertAdjacentHTML('beforeend','');
+      $('st_out').innerHTML='<div class="empty">Serve over HTTP (npm run sandbox) to load the question bank for study analytics.</div>';
+    });
+    updateBusBadge();
+  }
+
+  if(window.Trail) init();
+  else window.addEventListener('trail:agents-ready', init, {once:true});
+})();
+</script>
+</body>
+</html>

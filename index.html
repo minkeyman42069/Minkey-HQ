@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>The RBT Trail</title>
 <meta name="description" content="Roguelike spaced-repetition climb for the RBT exam. Master ABA concepts or the mountain wins.">
 <meta name="theme-color" content="#0c1b2a">
@@ -402,7 +402,71 @@ body{
 @media (prefers-reduced-motion: reduce){
   .aurora,.aurora2,.tw,.shoot,.mist,.crestglow,.rdisc,.screen{animation:none!important;}
   *{transition-duration:.01ms!important;}
+  .card.shake,.card.ok,.card.no,.stam.low,.threat.hot,.threat.enraged,
+  .threat.hot .cloud,.threat.enraged .cloud,.mnode.cur,.tnode.cur .tdisc,.rgo,
+  .seal.fire,.particle,.momentum.bump,.focus.low .focus-bar{animation:none!important;}
+  .card.shake{transform:none!important;}
 }
+/* User-forced reduced motion (Settings) mirrors the media query above. */
+html.rm-on .aurora,html.rm-on .aurora2,html.rm-on .tw,html.rm-on .shoot,html.rm-on .mist,
+html.rm-on .crestglow,html.rm-on .rdisc,html.rm-on .screen,html.rm-on .card.shake,
+html.rm-on .card.ok,html.rm-on .card.no,html.rm-on .stam.low,html.rm-on .threat.hot,
+html.rm-on .threat.enraged,html.rm-on .threat.hot .cloud,html.rm-on .threat.enraged .cloud,
+html.rm-on .mnode.cur,html.rm-on .tnode.cur .tdisc,html.rm-on .rgo,html.rm-on .seal.fire,
+html.rm-on .particle,html.rm-on .momentum.bump,html.rm-on .focus.low .focus-bar{animation:none!important;}
+html.rm-on .card.shake{transform:none!important;}
+html.rm-on *{transition-duration:.01ms!important;}
+/* Keyboard focus visibility (WCAG 2.4.7) */
+.cta:focus-visible,.opt:focus-visible,.chip:focus-visible,.boon:focus-visible,.act-btn:focus-visible,
+.mapquit:focus-visible,.pausebtn:focus-visible,.back-link:focus-visible,.rbtn:focus-visible,
+.copybtn:focus-visible,.lifeline:focus-visible,.next:focus-visible,.tnode:focus-visible,
+.trail-panel>summary:focus-visible,.set-row:focus-visible,.set-row input:focus-visible{
+  outline:2px solid var(--lantern-soft);outline-offset:2px;border-radius:8px;}
+/* Larger tap targets (WCAG 2.5.5) */
+.pausebtn{min-width:44px;min-height:44px;}
+.mapquit{min-height:44px;}
+.back-link{min-height:44px;padding-left:14px;padding-right:14px;}
+/* Non-color answer cues (WCAG 1.4.1) — check/x + weight, not color alone */
+.opt.correct .lx::after{content:'\2713';margin-left:1px;}
+.opt.wrong .lx::after{content:'\2717';margin-left:1px;}
+.opt.correct{border-width:2px;font-weight:600;}
+.opt.wrong{border-width:2px;}
+/* Let students select question + explanation text for study */
+.qtext,.explain,#examQ,#examEx{user-select:text;-webkit-user-select:text;}
+/* Settings panel */
+.set-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 2px;min-height:44px;border-bottom:1px solid rgba(49,89,122,.28);}
+.set-row:last-child{border-bottom:0;}
+.set-row .set-l{font-size:13px;color:var(--ink);}
+.set-row .set-l small{display:block;color:var(--mut);font-size:11px;margin-top:1px;}
+.set-row select{background:#0a1a28;border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:7px 9px;font:inherit;font-size:12.5px;}
+.set-row input[type=range]{width:120px;accent-color:var(--lantern);}
+.switch{position:relative;width:44px;height:26px;flex:0 0 auto;}
+.switch input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer;}
+.switch .track{position:absolute;inset:0;background:#0e2434;border:1px solid var(--line2);border-radius:999px;transition:background .15s;}
+.switch .track::after{content:'';position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:var(--mut);transition:transform .15s,background .15s;}
+.switch input:checked+.track{background:rgba(95,206,159,.3);border-color:var(--pine);}
+.switch input:checked+.track::after{transform:translateX(18px);background:var(--pine);}
+/* Trailhead extras: streak, next-rank, coach, achievements, domain dashboard */
+.meta-extra{margin-top:10px;display:flex;flex-direction:column;gap:8px;}
+.streak-line{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink);}
+.streak-line .fire{font-size:15px;}
+.streak-line .best{color:var(--mut);}
+.next-rank{font-size:12px;color:var(--mut);}
+.next-rank b{color:var(--lantern-soft);}
+.coach-line{font-size:12.5px;color:#cfe0ea;background:rgba(127,212,160,.08);border:1px solid rgba(127,212,160,.35);border-radius:9px;padding:8px 10px;line-height:1.45;}
+.coach-line b{color:var(--pine);}
+.dom-dash{display:flex;flex-direction:column;gap:5px;margin-top:2px;}
+.dom-row{display:flex;align-items:center;gap:8px;font-size:11px;}
+.dom-row .dn{flex:0 0 132px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.dom-row .db{flex:1;height:6px;border-radius:99px;background:#0c1c2b;border:1px solid var(--line);overflow:hidden;}
+.dom-row .db span{display:block;height:100%;}
+.dom-row .dp{flex:0 0 auto;font-family:'Space Mono',monospace;color:var(--mut);}
+.ach-grid{display:flex;flex-wrap:wrap;gap:6px;}
+.ach{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:4px 9px;border-radius:99px;border:1px solid var(--line);color:var(--mut);}
+.ach.on{border-color:var(--lantern);color:var(--ink);background:rgba(242,182,78,.12);}
+.daily-cta{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:8px;background:transparent;border:1px solid var(--line2);color:var(--ice);border-radius:12px;padding:11px;font:inherit;font-weight:600;cursor:pointer;}
+.daily-cta:hover{border-color:var(--ice);}
+.daily-cta .dtag{font-size:11px;color:var(--mut);font-weight:400;}
 
 /* ===== atmosphere ===== */
 #skyshift{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.15;
@@ -740,6 +804,7 @@ body.lastlegs::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:
       </div>
       <div class="trail-cta">
         <button class="cta big prime" onclick="beginRun(null)">&#129406; Climb the mountain</button>
+        <button type="button" class="daily-cta" id="dailyCta" onclick="beginDailyRun()">&#128197; Today&rsquo;s climb <span class="dtag" id="dailyTag">same route for everyone</span></button>
       </div>
       <div class="act-row">
         <button type="button" class="act-btn" onclick="startExam()"><span class="act-ic">&#128221;</span><span class="act-lb">Board Sim</span></button>
@@ -759,6 +824,24 @@ body.lastlegs::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:
           </div>
           <div class="resume-msg" id="resumeMsg"></div>
           <p class="note">Codes save <b>concept tiers</b> from finished climbs — not mid-run saves. Import to start ahead on weak spots.</p>
+        </div>
+      </details>
+      <details class="trail-panel subtle">
+        <summary>Settings</summary>
+        <div class="panel-in" id="settingsPanel">
+          <div class="set-row"><span class="set-l">Sound<small>Answer, threat &amp; summit cues</small></span>
+            <label class="switch"><input type="checkbox" id="setSound" onchange="SETTINGS.sound=this.checked;saveSettings();if(this.checked)AUDIO.unlock();"><span class="track"></span></label></div>
+          <div class="set-row"><span class="set-l">Volume</span>
+            <input type="range" id="setVol" min="0" max="100" step="5" oninput="SETTINGS.volume=this.value/100;saveSettings();"></div>
+          <div class="set-row"><span class="set-l">Focus timer<small>Relaxed adds time; Off removes the clock</small></span>
+            <select id="setTimer" onchange="SETTINGS.timer=this.value;saveSettings();">
+              <option value="normal">Normal</option><option value="relaxed">Relaxed (+60%)</option><option value="off">Off (untimed)</option></select></div>
+          <div class="set-row"><span class="set-l">Reduce motion<small>Calm shakes, pulses &amp; particles</small></span>
+            <label class="switch"><input type="checkbox" id="setRM" onchange="SETTINGS.reduceMotion=this.checked;saveSettings();applyReduceMotion();"><span class="track"></span></label></div>
+          <div class="set-row"><span class="set-l">Haptics<small>Vibration on mobile</small></span>
+            <label class="switch"><input type="checkbox" id="setHaptics" onchange="SETTINGS.haptics=this.checked;saveSettings();"><span class="track"></span></label></div>
+          <div class="set-row"><span class="set-l">Tutorial<small>Replay the first-run primer</small></span>
+            <button class="rbtn" onclick="showPrimer(0)">Replay</button></div>
         </div>
       </details>
     </div>
@@ -1620,7 +1703,7 @@ function freshRun(topic){
   Object.keys(mb).forEach(function(id){ if(+id>=0 && +id<BANK.length){ _r.prog[id]={tier:mb[id],seen:0,right:0,wrong:0,ease:CONFIG.EASE_START||2.5,cstreak:0,nextDue:0,dom:domainOf(BANK[id])}; } });
   return _r;
 }
-function beginRun(topic){ if(CONFIG.AUDIO) AUDIO.unlock(); RNG.fn=Math.random; RNG.seeded=false; RUN=freshRun(topic); RENDER.map(); show('map'); if(RUN.weather && RUN.weather.name!=='Clear Dawn') setTimeout(function(){ banner(RUN.weather.ic+' '+RUN.weather.name, RUN.weather.desc); },350); }
+function beginRun(topic){ AUDIO.unlock(); try{Trail.agents.chronicler.api.clear();}catch(e){} RNG.fn=Math.random; RNG.seeded=false; RUN=freshRun(topic); RENDER.map(); show('map'); if(RUN.weather && RUN.weather.name!=='Clear Dawn') setTimeout(function(){ banner(RUN.weather.ic+' '+RUN.weather.name, RUN.weather.desc); },350); }
 
 function enterCurrentNode(){
   var node=RUN.route[RUN.nodeIdx];
@@ -1646,6 +1729,7 @@ function enterCurrentNode(){
 }
 function nextInEncounter(){
   RUN.busy=false; var _cc=document.getElementById('card'); if(_cc) _cc.classList.remove('ok','no','shake');
+  maybeCoachEncounter();
   var poolCat = RUN.topic || null;
   var ids;
   if(poolCat){ ids=BANK.filter(function(q){return q.cat===poolCat;}).map(function(q){return q.id;}); }
@@ -1676,7 +1760,7 @@ function resolve(correct, viaTimeout, srcEl){
     if(ENC.shieldLeft>0){ ENC.shieldLeft--; banner('The face cracks', ENC.shieldLeft>0?(ENC.shieldLeft+' layer'+(ENC.shieldLeft>1?'s':'')+' to break'):'shield broken \u2014 climb!'); }
     else { ENC.done++; if(ENC.node.phase && !ENC.phased && ENC.done>=Math.ceil(ENC.need/2)){ ENC.phased=true; ENC.phaseMul=1.5; raiseThreat(22); banner('The slope lets go','it releases all at once'); }
       if(ENC.need>1 && ENC.done===ENC.need-1 && !ENC.cruxTold){ ENC.cruxTold=true; banner('The crux','one hard move from the ledge'); } }
-    AUDIO.correct(); flash('ok'); if(srcEl) burst(srcEl);
+    AUDIO.correct(); flash('ok'); if(srcEl) burst(srcEl); HAPTIC.pulse(12);
     if(before<lockTierNow() && p.tier>=lockTierNow()) sealLocked();
     var bout=Trail.emit('answer:correct', trailCtx());
     if(bout.staminaDelta) addStamina(bout.staminaDelta);
@@ -1684,7 +1768,7 @@ function resolve(correct, viaTimeout, srcEl){
     if(bout.threatDelta) raiseThreat(bout.threatDelta);
     showBanners(bout.banners);
   } else {
-    AUDIO.wrong(viaTimeout); flash('no'); var _sc=document.getElementById('card'); _sc.classList.remove('shake'); void _sc.offsetWidth; _sc.classList.add('shake');
+    AUDIO.wrong(viaTimeout); flash('no'); HAPTIC.pulse([28,18,28]); var _sc=document.getElementById('card'); _sc.classList.remove('shake'); void _sc.offsetWidth; _sc.classList.add('shake');
     var wout=Trail.emit('answer:wrong', trailCtx({ viaTimeout: viaTimeout }));
     if(!wout.keepStreak){ ENC.streak=0; ENC.streakEase=0; }
     if(wout.staminaCost>0) addStamina(-wout.staminaCost);
@@ -1732,8 +1816,10 @@ function addStamina(x){ RUN.stamina=Math.max(0,Math.min(CONFIG.STAM_MAX, RUN.sta
 
 /* focus timer */
 function startTimer(){
-  var base=(ENC.node.time||16)*(RUN.weather?RUN.weather.time:1); if(ENC.node.decay){ base=Math.max(6, base*(ENC.timeMul||1)); ENC.timeMul=Math.max(0.5,(ENC.timeMul||1)-0.09); } RUN.maxTime=BOON.focusTime(base); RUN.timeLeft=RUN.maxTime;
   var wrap=document.getElementById('focus'), bar=document.getElementById('focusbar');
+  if(SETTINGS.timer==='off'){ if(wrap){ wrap.classList.remove('low'); wrap.style.display='none'; } RUN.maxTime=0; RUN.timeLeft=0; return; }
+  if(wrap) wrap.style.display='';
+  var base=(ENC.node.time||16)*(RUN.weather?RUN.weather.time:1); if(ENC.node.decay){ base=Math.max(6, base*(ENC.timeMul||1)); ENC.timeMul=Math.max(0.5,(ENC.timeMul||1)-0.09); } if(SETTINGS.timer==='relaxed') base*=1.6; RUN.maxTime=BOON.focusTime(base); RUN.timeLeft=RUN.maxTime;
   wrap.classList.remove('low'); bar.style.width='100%';
   startTick();
 }
@@ -1987,7 +2073,7 @@ function burst(el){ var r=el.getBoundingClientRect(); var ic=['&#10024;','&#1277
   for(var k=0;k<4;k++){ var p=document.createElement('div'); p.className='particle'; p.innerHTML=ic[k%ic.length];
     p.style.left=(r.left+r.width*(0.2+rnd()*0.6))+'px'; p.style.top=(r.top+6)+'px';
     document.body.appendChild(p); (function(pp){ setTimeout(function(){pp.remove();},950); })(p); } }
-function sealLocked(){ AUDIO.lock(); var s=document.getElementById('seal'); s.classList.remove('fire'); void s.offsetWidth; s.classList.add('fire'); }
+function sealLocked(){ AUDIO.lock(); HAPTIC.pulse([18,10,18,10,40]); var s=document.getElementById('seal'); s.classList.remove('fire'); void s.offsetWidth; s.classList.add('fire'); }
 function banner(title, sub){
   var t=document.getElementById('toast'); if(!t) return;
   t.innerHTML='<span class="toast-t">'+title+'</span>'+(sub?'<span class="toast-s"> '+sub+'</span>':'');
@@ -2037,8 +2123,8 @@ function examQuestion(){
 function examPick(correct){
   if(EXAM.busy) return; EXAM.busy=true; RUN.busy=true;
   var id=EXAM.ids[EXAM.i], q=BANK[id];
-  EXAM.seen++; if(correct){ EXAM.right++; AUDIO.correct(); META.bank[id]=Math.max(META.bank[id]||0, CONFIG.LOCK_TIER); }
-  else { AUDIO.wrong(false); EXAM.missed.push(id); }
+  EXAM.seen++; if(correct){ EXAM.right++; AUDIO.correct(); HAPTIC.pulse(12); META.bank[id]=Math.max(META.bank[id]||0, CONFIG.LOCK_TIER); }
+  else { AUDIO.wrong(false); HAPTIC.pulse([28,18,28]); EXAM.missed.push(id); }
   var dk=domainOf(q); var d=EXAM.dom[dk]||{seen:0,right:0}; d.seen++; if(correct) d.right++; EXAM.dom[dk]=d;
   var ans = q.type==='tf' ? (q.correct?'True':'False') : (q.a&&q.a[q.c]!=null?q.a[q.c]:'');
   var ex=document.getElementById('examEx'); ex.className='explain show';
@@ -2053,8 +2139,10 @@ function examNext(){
   examQuestion();
 }
 function examEnd(early){
-  if(!EXAM) return; saveMeta();
+  if(!EXAM) return;
   var pct=EXAM.seen?Math.round(EXAM.right/EXAM.seen*100):0, pass=examPassed(pct);
+  if(EXAM.seen>=10){ (META.exams=META.exams||[]).push({date:todayKey(),pct:pct,pass:pass}); if(META.exams.length>10) META.exams.shift(); tickStudyStreak(); }
+  var _examAch=checkAchievements(); saveMeta();
   var order=['A','B','C','D','E','F'];
   var rows=order.filter(function(k){return EXAM.dom[k];}).map(function(k){ var d=EXAM.dom[k]; var pc=Math.round(d.right/d.seen*100); return '<div class="trow'+(pc<70?' weak':'')+'"><span class="tn">'+DOMAINS[k].n+' <em>'+DOMAINS[k].pct+'%</em></span><span class="tb"><span style="width:'+pc+'%"></span></span><span class="tp">'+d.right+'/'+d.seen+'</span></div>'; }).join('');
   var missRows=EXAM.missed.slice(0,12).map(function(id){ var q=BANK[id]; var ans=q.type==='tf'?(q.correct?'True':'False'):(q.a&&q.a[q.c]!=null?q.a[q.c]:''); return '<div class="missrow"><div class="mq">'+q.q+'</div><div class="ma">&#10003; '+ans+'</div>'+(q.e?'<div class="me">'+q.e+'</div>':'')+'</div>'; }).join('');
@@ -2070,7 +2158,9 @@ function examEnd(early){
   document.getElementById('examCat').textContent=''; var ex=document.getElementById('examEx'); ex.className='explain'; ex.innerHTML='';
   document.getElementById('examNext').classList.remove('show'); document.getElementById('examQuit').style.display='none';
   document.getElementById('examBar').style.width='100%';
-  AUDIO.summitSnd(); renderMeta();
+  if(pass){ AUDIO.summitSnd(); HAPTIC.pulse([20,40,20,40,80]); } else AUDIO.wrong(true);
+  if(_examAch&&_examAch.length) setTimeout(function(){ banner('\uD83C\uDFC5 Achievement',_examAch[0].ic+' '+_examAch[0].name); },700);
+  renderMeta();
   try{ el.scrollIntoView({behavior:'smooth',block:'start'}); }catch(e){}
 }
 function renderMissed(){
@@ -2086,7 +2176,8 @@ function renderMissed(){
   el.innerHTML='<details class="missdetails"><summary>Concepts that slipped ('+ids.length+') &mdash; tap to review the answers</summary><div class="misswrap">'+rows+more+'</div></details>';
 }
 function endRun(kind){
-  clearInterval(RUN.timer); hideOverlay(); AUDIO.summitSnd();
+  clearInterval(RUN.timer); hideOverlay();
+  if(kind==='summit'){ AUDIO.summitSnd(); HAPTIC.pulse([20,40,20,40,80]); }
   var acc = RUN.seen? Math.round(RUN.right/RUN.seen*100):0;
   var m;
   if(typeof Trail!=='undefined'&&Trail.agents&&Trail.agents.atlas){
@@ -2126,6 +2217,16 @@ function endRun(kind){
   renderMissed();
   var _brB=boardReady(); commitRun(kind); var _brA=boardReady(); var _bl=document.getElementById('bankline');
   if(_bl){ var _d=_brA-_brB; _bl.innerHTML='&#9968;\uFE0F Banked to your expedition log \u2014 <b>'+(_d>0?'+'+_d:_d)+'</b> newly board-ready, now <b>'+_brA+'/'+BANK.length+'</b> \u00b7 +'+fmt(Math.max(0,Math.round(RUN.altitude-1600)))+' trail miles'; }
+  // Coaching + run chronicle (Summit Sage + Trail Chronicler)
+  try{
+    var coach=[];
+    if(kind==='fell' && typeof ENC!=='undefined' && ENC && ENC.node){ var strk=0; try{ strk=(Trail.agents.chronicler.api.stats()['mountain:strike'])||0; }catch(e){}
+      coach.push('Driven back on <b>'+(ENC.node.title||'the mountain')+'</b>'+(strk?(' after '+strk+' mountain strike'+(strk===1?'':'s')):'')+'.'); }
+    if(Trail.agents.sage){ var _tips=Trail.agents.sage.api.recommend(RUN,BANK,CONFIG); if(_tips&&_tips.length) coach.push(_tips[0]); }
+    var wc=document.getElementById('weakcard');
+    if(coach.length && wc){ wc.style.display='block'; wc.innerHTML+='<div style="margin-top:9px;padding-top:9px;border-top:1px solid rgba(49,89,122,.35);color:#cfe0ea">\uD83E\uDDE0 '+coach.join(' ')+'</div>'; }
+  }catch(e){}
+  if(RUN._newAch && RUN._newAch.length){ RUN._newAch.forEach(function(a,idx){ setTimeout(function(){ banner('\uD83C\uDFC5 Achievement',a.ic+' '+a.name); }, 800+idx*1500); }); }
   var cb=document.getElementById('copybtn'); cb.className='copybtn'; cb.innerHTML='&#128203; Copy trail log';
   show('debrief');
 }
@@ -2148,13 +2249,29 @@ function copyCode(){
 }
 function fb(txt,done){ var t=document.createElement('textarea'); t.value=txt; t.style.position='fixed'; t.style.opacity='0'; document.body.appendChild(t); t.select(); try{document.execCommand('copy');done();}catch(e){} t.remove(); }
 
+/* ---------- SETTINGS (persisted player prefs — separate from progress) ---------- */
+var SETTINGS={ sound:CONFIG.AUDIO!==false, volume:0.85, timer:'normal', reduceMotion:false, haptics:true };
+function loadSettings(){ try{ var s=localStorage.getItem('rbtTrailSettings'); if(s) Object.assign(SETTINGS, JSON.parse(s)); }catch(e){} }
+function saveSettings(){ try{ localStorage.setItem('rbtTrailSettings', JSON.stringify(SETTINGS)); }catch(e){} }
+function audioEnabled(){ return SETTINGS.sound!==false; }
+function applyReduceMotion(){ try{ document.documentElement.classList.toggle('rm-on', !!SETTINGS.reduceMotion); }catch(e){} }
+function syncSettingsUI(){
+  var q=function(id){ return document.getElementById(id); };
+  if(q('setSound')) q('setSound').checked=SETTINGS.sound!==false;
+  if(q('setVol')) q('setVol').value=Math.round((SETTINGS.volume==null?0.85:SETTINGS.volume)*100);
+  if(q('setTimer')) q('setTimer').value=SETTINGS.timer||'normal';
+  if(q('setRM')) q('setRM').checked=!!SETTINGS.reduceMotion;
+  if(q('setHaptics')) q('setHaptics').checked=SETTINGS.haptics!==false;
+}
+var HAPTIC={ pulse:function(p){ try{ if(SETTINGS.haptics!==false && navigator.vibrate) navigator.vibrate(p); }catch(e){} } };
+
 /* ---------- AUDIO ---------- */
 var AUDIO = {
   ctx:null,
-  unlock:function(){ if(!CONFIG.AUDIO) return; if(!this.ctx){ try{ this.ctx=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } },
-  t:function(f,d,type,v,when){ if(!this.ctx) return; var c=this.ctx,t=c.currentTime+(when||0);
+  unlock:function(){ if(!audioEnabled()) return; if(!this.ctx){ try{ this.ctx=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } if(this.ctx && this.ctx.state==='suspended'){ try{ this.ctx.resume(); }catch(e){} } },
+  t:function(f,d,type,v,when){ if(!audioEnabled()||!this.ctx) return; var vol=(v||0.12)*(SETTINGS.volume==null?0.85:SETTINGS.volume); var c=this.ctx,t=c.currentTime+(when||0);
     var o=c.createOscillator(),g=c.createGain(); o.type=type||'sine'; o.frequency.value=f;
-    g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(v||0.12,t+0.012);
+    g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(vol,t+0.012);
     g.gain.exponentialRampToValueAtTime(0.0001,t+d); o.connect(g); g.connect(c.destination); o.start(t); o.stop(t+d+0.02); },
   correct:function(){ this.t(587,0.11,'triangle',0.12,0); this.t(880,0.15,'triangle',0.11,0.08); },
   wrong:function(to){ if(to){ this.t(300,0.24,'sine',0.11,0);} else { this.t(196,0.26,'sawtooth',0.11,0); this.t(146,0.28,'sawtooth',0.09,0.02);} },
@@ -2305,37 +2422,134 @@ function nodeSub(node){
   return n+' to clear';
 }
 /* ---------- META-PROGRESSION (permanent bank so a fall is never a reset) ---------- */
-var META={bank:{},runs:0,summits:0,bestAlt:0,miles:0};
-function loadMeta(){ try{ var s=localStorage.getItem('rbtTrailMeta'); if(s){ var o=JSON.parse(s); META={bank:o.bank||{},runs:o.runs||0,summits:o.summits||0,bestAlt:o.bestAlt||0,miles:o.miles||0}; } }catch(e){} }
+var META={bank:{},runs:0,summits:0,bestAlt:0,miles:0,streak:{current:0,longest:0,lastDate:null,freezeAvail:true},achievements:[],exams:[],daily:{}};
+function loadMeta(){ try{ var s=localStorage.getItem('rbtTrailMeta'); if(s){ var o=JSON.parse(s);
+    META={ bank:o.bank||{}, runs:o.runs||0, summits:o.summits||0, bestAlt:o.bestAlt||0, miles:o.miles||0,
+      streak:o.streak||{current:0,longest:0,lastDate:null,freezeAvail:true},
+      achievements:o.achievements||[], exams:o.exams||[], daily:o.daily||{} }; } }catch(e){} }
 function saveMeta(){ try{ localStorage.setItem('rbtTrailMeta',JSON.stringify(META)); }catch(e){} }
 function mergedBank(){ var m={},b=META.bank||{}; Object.keys(b).forEach(function(id){ m[id]=b[id]; }); Object.keys(SAVED).forEach(function(id){ m[id]=Math.max(m[id]||0,SAVED[id]); }); return m; }
 function boardReady(){ var b=META.bank||{},n=0; Object.keys(b).forEach(function(id){ if(b[id]>=CONFIG.LOCK_TIER) n++; }); return n; }
+function boardMastered(){ var b=META.bank||{},n=0; Object.keys(b).forEach(function(id){ if(b[id]>=CONFIG.MASTER_TIER) n++; }); return n; }
 var RANKS=[[0,'Novice'],[8,'Apprentice'],[25,'Technician'],[60,'Seasoned'],[120,'Board-Ready']];
 function careerRank(){ var br=boardReady(),name='Novice'; for(var i=0;i<RANKS.length;i++){ if(br>=RANKS[i][0]) name=RANKS[i][1]; } return name; }
+function nextRankDelta(){ var br=boardReady(); for(var i=0;i<RANKS.length;i++){ if(br<RANKS[i][0]) return {name:RANKS[i][1],need:RANKS[i][0]-br}; } return null; }
+/* synthetic run.prog from the permanent bank so the Summit Sage can coach on the trailhead */
+function metaRunFromBank(){ var prog={}; var b=META.bank||{}; BANK.forEach(function(q,i){ var t=b[i]||0; prog[i]={tier:t,seen:t>0?1:0,right:t,wrong:0}; }); return {prog:prog}; }
+function todayKey(){ var d=new Date(); return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(); }
+function dayNumber(d){ d=d||new Date(); return Math.floor(new Date(d.getFullYear(),d.getMonth(),d.getDate()).getTime()/86400000); }
+/* Compassionate study streak: +1 on a new day, one free 1-day grace, reset (not shame) otherwise. */
+function tickStudyStreak(){ var st=META.streak||(META.streak={current:0,longest:0,lastDate:null,freezeAvail:true}); var today=todayKey();
+  if(st.lastDate===today) return; var gap = st.lastDate? (dayNumber()-dayNumber(new Date(st.lastDate))) : 999;
+  if(st.lastDate===null || gap===1){ st.current=(st.current||0)+1; }
+  else if(gap===2 && st.freezeAvail){ st.current=(st.current||0)+1; st.freezeAvail=false; }
+  else { st.current=1; st.freezeAvail=true; }
+  if(gap===1||st.lastDate===null) st.freezeAvail=true;
+  st.longest=Math.max(st.longest||0, st.current); st.lastDate=today; }
+var ACHIEVEMENTS=[
+  {id:'first_climb', ic:'\uD83D\uDC5F', name:'First steps', test:function(){return META.runs>=1;}},
+  {id:'first_summit', ic:'\uD83C\uDFC6', name:'First summit', test:function(){return META.summits>=1;}},
+  {id:'streak3', ic:'\uD83D\uDD25', name:'3-day streak', test:function(){return (META.streak&&META.streak.longest>=3);}},
+  {id:'streak7', ic:'\uD83D\uDCC5', name:'Week on the mountain', test:function(){return (META.streak&&META.streak.longest>=7);}},
+  {id:'ready25', ic:'\uD83D\uDCDA', name:'25 board-ready', test:function(){return boardReady()>=25;}},
+  {id:'ready120', ic:'\uD83C\uDF93', name:'Board-Ready rank', test:function(){return boardReady()>=120;}},
+  {id:'master50', ic:'\uD83D\uDC8E', name:'50 mastered', test:function(){return boardMastered()>=50;}},
+  {id:'mockpass', ic:'\u2705', name:'Passed a mock', test:function(){return (META.exams||[]).some(function(e){return e.pass;});}}
+];
+function checkAchievements(){ var newly=[]; ACHIEVEMENTS.forEach(function(a){ if(META.achievements.indexOf(a.id)<0 && a.test()){ META.achievements.push(a.id); newly.push(a); } }); return newly; }
 function commitRun(kind){
   Object.keys(RUN.prog).forEach(function(id){ var t=RUN.prog[id].tier||0; if(t>0) META.bank[id]=Math.max(META.bank[id]||0,t); });
   META.runs++; if(kind==='summit') META.summits++;
   META.bestAlt=Math.max(META.bestAlt, Math.round(RUN.altitude));
   META.miles+=Math.max(0, Math.round(RUN.altitude-1600));
+  tickStudyStreak();
+  if(RUN.daily){ var dk=todayKey(); var g=gradeRun(); var prev=META.daily||{}; if(prev.date!==dk || !prev.best){ META.daily={date:dk, best:g, summited:!!RUN.summited, seed:RUN.seed}; } else { META.daily.summited=META.daily.summited||!!RUN.summited; } }
+  RUN._newAch=checkAchievements();
   saveMeta();
 }
 function renderMeta(){
   var el=document.getElementById('trailStats'); if(!el) return;
+  var base;
   if(typeof Trail!=='undefined' && Trail.agents && Trail.agents.atlas){
-    el.innerHTML=Trail.agents.atlas.api.statsMarkup(META,{boardReady:boardReady,careerRank:careerRank,fmt:fmt,BANK:BANK,CONFIG:CONFIG});
-    return;
+    base=Trail.agents.atlas.api.statsMarkup(META,{boardReady:boardReady,careerRank:careerRank,fmt:fmt,BANK:BANK,CONFIG:CONFIG});
+  } else {
+    var br=boardReady(), tot=BANK.length, pct=tot?Math.round(br/tot*100):0;
+    base='<div class="stat-rank"><span class="stat-rank-name">'+careerRank()+'</span><span class="stat-rank-meta">'+META.summits+' summit'+(META.summits===1?'':'s')+' \u00b7 '+META.runs+' climb'+(META.runs===1?'':'s')+' \u00b7 best '+fmt(META.bestAlt||1600)+'m</span></div>'
+      +'<div class="stat-bar"><span style="width:'+pct+'%"></span></div>'
+      +'<div class="stat-foot"><b>'+br+'</b> of '+tot+' board-ready \u00b7 '+fmt(META.miles)+' trail miles</div>';
   }
-  var br=boardReady(), tot=BANK.length, pct=tot?Math.round(br/tot*100):0;
-  el.innerHTML='<div class="stat-rank"><span class="stat-rank-name">'+careerRank()+'</span><span class="stat-rank-meta">'+META.summits+' summit'+(META.summits===1?'':'s')+' \u00b7 '+META.runs+' climb'+(META.runs===1?'':'s')+' \u00b7 best '+fmt(META.bestAlt||1600)+'m</span></div>'
-    +'<div class="stat-bar"><span style="width:'+pct+'%"></span></div>'
-    +'<div class="stat-foot"><b>'+br+'</b> of '+tot+' board-ready \u00b7 '+fmt(META.miles)+' trail miles</div>';
+  el.innerHTML=base+metaExtraMarkup();
+  updateDailyTag();
+}
+function metaExtraMarkup(){
+  var out='<div class="meta-extra">';
+  var st=META.streak||{current:0,longest:0};
+  if(st.current>0) out+='<div class="streak-line"><span class="fire">\uD83D\uDD25</span> <b>'+st.current+'-day study streak</b> <span class="best">\u00b7 best '+(st.longest||st.current)+'</span></div>';
+  var nr=nextRankDelta();
+  if(nr) out+='<div class="next-rank"><b>'+nr.need+'</b> more board-ready \u2192 '+nr.name+'</div>';
+  var mastered=boardMastered(); if(mastered>0) out+='<div class="next-rank">\uD83D\uDC8E <b>'+mastered+'</b> concepts mastered</div>';
+  // Summit Sage coaching + per-domain readiness from the permanent bank
+  try{
+    if(Trail.agents.sage){
+      var mrun=metaRunFromBank();
+      var tips=Trail.agents.sage.api.recommend(mrun,BANK,CONFIG);
+      if(tips&&tips.length) out+='<div class="coach-line">\uD83E\uDDE0 '+tips[0]+'</div>';
+      var rows=Trail.agents.sage.api.domainBreakdown(mrun,BANK,CONFIG);
+      out+='<div class="dom-dash">'+rows.map(function(r){ var col=r.readyPct>=66?'var(--pine)':r.readyPct>=33?'var(--lantern)':'var(--rust)';
+        return '<div class="dom-row"><span class="dn">'+r.domain+' '+r.name+'</span><span class="db"><span style="width:'+r.readyPct+'%;background:'+col+'"></span></span><span class="dp">'+r.ready+'/'+r.total+'</span></div>'; }).join('')+'</div>';
+    }
+  }catch(e){}
+  var unlocked=(META.achievements||[]);
+  if(ACHIEVEMENTS && ACHIEVEMENTS.length){ out+='<div class="ach-grid">'+ACHIEVEMENTS.map(function(a){ var on=unlocked.indexOf(a.id)>=0; return '<span class="ach'+(on?' on':'')+'" title="'+a.name+'">'+a.ic+' '+(on?a.name:'???')+'</span>'; }).join('')+'</div>'; }
+  return out+'</div>';
+}
+function updateDailyTag(){ var t=document.getElementById('dailyTag'); if(!t) return; var d=META.daily||{};
+  if(d.date===todayKey()) t.textContent = d.summited?'today: summited \u2022 grade '+d.best:'today: grade '+d.best+' \u2014 retry';
+  else t.textContent='same route for everyone \u00b7 today'; }
+/* ---------- DAILY CLIMB (seeded — same route + weather for everyone today) ---------- */
+function beginDailyRun(){
+  AUDIO.unlock();
+  var seed=20260000+dayNumber();
+  if(Trail && Trail.agents && Trail.agents.steward){ RNG.fn=Trail.agents.steward.api.seededRng(seed); RNG.seeded=true; }
+  else { RNG.fn=Math.random; RNG.seeded=false; }
+  try{Trail.agents.chronicler.api.clear();}catch(e){}
+  RUN=freshRun(null); RUN.daily=true; RUN.seed=seed;
+  RENDER.map(); show('map');
+  setTimeout(function(){ banner('\uD83D\uDCC5 Today\u2019s climb','Same route & weather for every climber today'); },350);
+}
+/* ---------- FIRST-RUN PRIMER (onboarding) ---------- */
+var PRIMER=[
+  {ic:'\uD83E\uDDD7',t:'Climb by knowing',s:'Every pitch is a set of questions. Right answers move you up the mountain; wrong ones cost stamina.'},
+  {ic:'\u26C8\uFE0F',t:'Read the mountain',s:'Threat rises as you climb \u2014 let it peak and the mountain strikes your stamina. At zero stamina, the run ends.'},
+  {ic:'\uD83D\uDD12',t:'What you lock in stays',s:'Master a concept and it banks forever. Fall off the mountain and you keep everything you sealed. Draft boons at ledge camps for an edge.'}
+];
+function showPrimer(i){ i=i||0; if(i>=PRIMER.length){ finishPrimer(); return; }
+  var ov=document.getElementById('overlay'); if(!ov) return;
+  document.getElementById('ovic').innerHTML=PRIMER[i].ic;
+  document.getElementById('ovt').textContent=PRIMER[i].t;
+  document.getElementById('ovs').innerHTML=PRIMER[i].s+'<div style="margin-top:10px;font-size:12px;color:var(--mut)"><a href="#" onclick="finishPrimer();return false;" style="color:var(--mut);text-decoration:underline;text-underline-offset:2px">Skip</a> \u00b7 '+(i+1)+' / '+PRIMER.length+'</div>';
+  var b=document.getElementById('ovBtn'); b.textContent=i<PRIMER.length-1?'Next \u2192':'Start climbing \u2192';
+  b.onclick=function(){ showPrimer(i+1); };
+  ov.classList.add('show');
+}
+function finishPrimer(){ try{ localStorage.setItem('rbtTrailPrimerV1','1'); }catch(e){} hideOverlay();
+  var b=document.getElementById('ovBtn'); if(b){ b.textContent='Keep climbing \u2192'; b.onclick=hideOverlay; } }
+/* First-encounter coach marks (only for brand-new players) */
+function maybeCoachEncounter(){
+  if(META.runs!==0 || RUN._hintedEnc) return; RUN._hintedEnc=true;
+  setTimeout(function(){ banner('\uD83E\uDDE4 Stamina','Your rope \u2014 wrong answers spend it'); },600);
+  setTimeout(function(){ banner('\u26C8\uFE0F Threat','Rises as you climb; a peak strikes your stamina'); },2600);
+  setTimeout(function(){ banner('\u23F1\uFE0F Focus timer','Answer before it empties (change it in Settings)'); },4600);
 }
 (function buildMenu(){
-  buildScene(); setSky(); loadMeta(); renderMeta();
+  loadSettings(); applyReduceMotion();
+  buildScene(); setSky(); loadMeta(); renderMeta(); syncSettingsUI();
   var box=document.getElementById('chips'); var tones=['var(--t1)','var(--t2)','var(--t3)','var(--ice)','var(--lantern)','var(--pine)'];
   uniqueCats().forEach(function(c,i){ var b=document.createElement('button'); b.className='chip';
     b.innerHTML='<span class="cn" style="background:'+tones[i%tones.length]+'"></span>'+c;
     b.onclick=function(){ beginRun(c); }; box.appendChild(b); });
+  var seenPrimer=false; try{ seenPrimer=!!localStorage.getItem('rbtTrailPrimerV1'); }catch(e){}
+  if(!seenPrimer && META.runs===0){ setTimeout(function(){ showPrimer(0); }, 450); }
 })();
 </script>
 </body>

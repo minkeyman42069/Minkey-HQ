@@ -27,6 +27,10 @@ import {
   spoilsDraftEligible,
   dailySeed,
   createSeededRng,
+  encodeLine,
+  decodeLine,
+  buildSetRoute,
+  LINE_LIMITS,
 } from '../agents/expedition-director.js';
 import { createAtlasArtisan } from '../agents/atlas-artisan.js';
 import { createSandboxSteward } from '../agents/sandbox-steward.js';
@@ -147,6 +151,10 @@ export function createKernel() {
         spoilsDraftEligible,
         dailySeed,
         createSeededRng,
+        encodeLine,
+        decodeLine,
+        LINE_LIMITS,
+        buildSetRoute: (spec) => buildSetRoute(spec, CONFIG, HazardWarden),
       },
     },
     atlas: atlasAgent,

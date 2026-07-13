@@ -81,6 +81,7 @@ Trail Chronicler:
 | Boons | Boon Architect catalog, live duos, seeded draft preview |
 | Route | Expedition Director `buildRoute` across three acts |
 | Study & Coach | Trail Scholar Leitner scheduler → Summit Sage readiness analytics |
+| Route Setter | Author a named line, grade it via Steward Monte Carlo (alpine grades F–ED), export a `LINE1:` code the trailhead import accepts |
 | Bestiary | Hazard Warden registry, scaled per act |
 | Bus Log | Trail Chronicler live hook telemetry |
 

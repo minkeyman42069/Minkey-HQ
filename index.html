@@ -817,7 +817,7 @@ body.lastlegs::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:
             <button id="resumeBtn" class="rbtn" onclick="resumeFromCode()">Import</button>
           </div>
           <div class="resume-msg" id="resumeMsg"></div>
-          <p class="note">Codes save <b>concept tiers</b> from finished climbs — not mid-run saves. Import to start ahead on weak spots.</p>
+          <p class="note">Codes save <b>concept tiers</b> from finished climbs — not mid-run saves. Import to start ahead on weak spots. A <b>LINE1:</b> code is a page from someone's guidebook — paste it to climb their set line.</p>
         </div>
       </details>
     </div>
@@ -1954,6 +1954,8 @@ var RENDER = {
   map:function(){
     var r=RUN.route, idx=RUN.nodeIdx;
     var pit=r.filter(function(n){return n.kind!=='rest';}).length;
+    var _mt=document.getElementById('mapTitle');
+    if(_mt) _mt.textContent = RUN.line ? '“'+RUN.line.name+'”' : 'The route ahead';
     var sub;
     if(typeof Trail!=='undefined'&&Trail.agents&&Trail.agents.atlas){
       sub=Trail.agents.atlas.api.mapSubline(RUN,{fmt:fmt});
@@ -2319,6 +2321,7 @@ function shareResult(){
   var G=gradeRun(); var acc=RUN.seen?Math.round(RUN.right/RUN.seen*100):0; var line='';
   for(var i=0;i<RUN.route.length;i++){ line += (i<RUN.nodeIdx? nodeEmoji(RUN.route[i].kind) : '⬛'); }
   var txt='🏔️ The RBT Trail'
+    +(RUN.line?'\n⛏️ “'+RUN.line.name+'” · set by '+RUN.line.setter:'')
     +'\nGrade '+G+' · '+acc+'% · '+(RUN.summited?'summit':'fell')
     +'\n'+line+'  '+RUN.nodeIdx+'/'+RUN.route.length
     +'\n🔥 streak '+RUN.bestStreak+' · '+fmt(RUN.altitude)+'m';
@@ -2326,10 +2329,29 @@ function shareResult(){
 }
 function openBestiary(){ RENDER.bestiary(); show('bestiary'); }
 /* ---------- resume, keyboard, atmosphere (master additions) ---------- */
+var PENDING_LINE=null;
+function beginSetLine(){
+  if(!PENDING_LINE) return;
+  if(CONFIG.AUDIO) AUDIO.unlock(); RNG.fn=Math.random; RNG.seeded=false;
+  RUN=freshRun(null);
+  RUN.route=buildSetRoute(PENDING_LINE, CONFIG);
+  RUN.line={name:PENDING_LINE.name, setter:PENDING_LINE.setter};
+  RENDER.map(); show('map');
+  setTimeout(function(){ banner('⛏️ '+RUN.line.name, 'set by '+RUN.line.setter+' — the guidebook is watching'); },350);
+}
 function resumeFromCode(){
   var el=document.getElementById('resumeIn'); var msg=document.getElementById('resumeMsg');
   var v=(el.value||'').trim();
   if(!v){ msg.className='resume-msg warn'; msg.textContent='Paste a trail-log code first.'; return; }
+  if(/^LINE1:/.test(v) && typeof decodeLine==='function'){
+    var line=decodeLine(v);
+    if(!line.ok){ msg.className='resume-msg warn'; msg.textContent=line.err; return; }
+    PENDING_LINE=line.spec;
+    var np=line.spec.pitches.filter(function(p){return p.kind!=='rest';}).length;
+    msg.className='resume-msg ok';
+    msg.innerHTML='⛏️ A page from the guidebook: <b>'+line.spec.name+'</b>, set by <b>'+line.spec.setter+'</b> — '+np+' pitches and the summit. <button class="rbtn" style="margin-left:8px" onclick="beginSetLine()">Climb the line →</button>';
+    return;
+  }
   var m=v.match(/RBT[45]:(.*)$/);
   if(!m){ msg.className='resume-msg warn'; msg.textContent="That doesn't look like a trail-log code."; return; }
   try{
@@ -2451,6 +2473,7 @@ function unlockAchievement(id){
 function checkAchievements(kind){
   if(kind==='summit'){
     unlockAchievement('first_summit');
+    if(RUN.line) unlockAchievement('first_ascent');
     if(META.summits>=5) unlockAchievement('summit_5');
     if(RUN.oath && RUN.oath!=='none') unlockAchievement('oath_summit');
     if(gradeRun()==='S') unlockAchievement('grade_s');

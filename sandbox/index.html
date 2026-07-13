@@ -210,6 +210,28 @@ td.num,th.num{text-align:right;font-family:'Space Mono',monospace}
     </div>
   </section>
 
+  <section class="tab" data-tab="setter">
+    <div class="panel">
+      <h2>⛏️ Route Setter</h2>
+      <p class="hint">Set a line of your own: place the pitches, let the <b>Sandbox Steward</b> Monte-Carlo it through the live bus, and cut a <b>LINE1:</b> code. Anyone who pastes that code at the trailhead climbs your named route — and gets the <b>First Ascent</b> badge for topping it out. Every line ends at the summit; the mountain insists.</p>
+      <div class="row">
+        <div class="field"><label>Line name</label><input type="text" id="ls_name" value="" placeholder="e.g. Widow's Rib" maxlength="36" size="20"></div>
+        <div class="field"><label>Set by</label><input type="text" id="ls_setter" value="" placeholder="your name" maxlength="36" size="14"></div>
+        <div class="field"><label>Add pitch</label><select id="ls_kind"></select></div>
+        <div class="field"><label>Need</label><input type="number" id="ls_need" value="4" min="3" max="7"></div>
+        <div class="field"><label>&nbsp;</label><button class="act" id="ls_add">+ Pitch</button></div>
+        <div class="field"><label>&nbsp;</label><button class="ghost" id="ls_rest">+ Camp</button></div>
+      </div>
+      <div class="row"><div class="field" style="flex:1;min-width:280px"><label>The line (top appended: Summit Push)</label><div class="chips" id="ls_list"></div></div></div>
+      <div class="row">
+        <div class="field"><label>&nbsp;</label><button class="act" id="ls_grade">Grade &amp; cut the code 📖</button></div>
+        <div class="field"><label>Sim accuracy %</label><input type="number" id="ls_acc" value="82" min="50" max="99"></div>
+        <div class="field"><label>Runs</label><input type="number" id="ls_runs" value="200" min="50" max="1000"></div>
+      </div>
+      <div class="out" id="ls_out"><div class="empty">Place at least 5 pitches, then grade the line.</div></div>
+    </div>
+  </section>
+
   <section class="tab" data-tab="bestiary">
     <div class="panel">
       <h2>⛈️ Hazard Warden — Bestiary</h2>
@@ -243,6 +265,7 @@ td.num,th.num{text-align:right;font-family:'Space Mono',monospace}
   var BOON = Trail.agents.boon.api;
   var HAZ = Trail.agents.hazard.api;
   var ECON = Trail.agents.economy.api;
+  var EXP = Trail.agents.expedition.api;
   var SCHOLAR = Trail.agents.scholar.api;
   var SAGE = Trail.agents.sage.api;
   var CHRON = Trail.agents.chronicler.api;
@@ -256,7 +279,7 @@ td.num,th.num{text-align:right;font-family:'Space Mono',monospace}
   /* ---------------- Tabs ---------------- */
   var TABS = [
     ['team','Staff Team'],['pitch','Pitch Lab'],['boons','Boons'],
-    ['route','Route'],['study','Study & Coach'],['bestiary','Bestiary'],['bus','Bus Log']
+    ['route','Route'],['setter','Route Setter'],['study','Study & Coach'],['bestiary','Bestiary'],['bus','Bus Log']
   ];
   function buildTabs(){
     var nav=$('tabs'); nav.innerHTML='';
@@ -535,12 +558,55 @@ td.num,th.num{text-align:right;font-family:'Space Mono',monospace}
     $('st_run').onclick=runSession;
     $('be_act').onchange=renderBestiary;
     $('bus_clear').onclick=function(){ CHRON.clear(); renderBus(); updateBusBadge(); };
+    $('ls_add').onclick=function(){ LS_LINE.push({kind:$('ls_kind').value, need:Math.max(3,Math.min(7,parseInt($('ls_need').value,10)||4))}); renderLine(); };
+    $('ls_rest').onclick=function(){ LS_LINE.push({kind:'rest'}); renderLine(); };
+    $('ls_grade').onclick=gradeLine;
+  }
+
+  /* ---------------- Route Setter ---------------- */
+  var LS_LINE=[{kind:'switchback',need:3},{kind:'traverse',need:4},{kind:'storm',need:5},{kind:'rest'},{kind:'gate',need:5},{kind:'icewall',need:5},{kind:'rest'},{kind:'whiteout',need:4},{kind:'serac',need:5}];
+  function fillSetterKinds(){
+    var sel=$('ls_kind'); sel.innerHTML='';
+    S.pitchKinds().filter(function(k){return k!=='summit';}).forEach(function(k){
+      var o=document.createElement('option'); o.value=k; o.textContent=HAZ.nodeEmoji(k)+'  '+k; sel.appendChild(o);
+    });
+    sel.value='crevasse';
+  }
+  function renderLine(){
+    var host=$('ls_list'); host.innerHTML='';
+    LS_LINE.forEach(function(p,i){
+      var el=document.createElement('span'); el.className='chip on';
+      el.innerHTML=(p.kind==='rest'?'🏕️ camp':HAZ.nodeEmoji(p.kind)+' '+p.kind+' · '+p.need)+' <b style="margin-left:4px;cursor:pointer">×</b>';
+      el.title='Pitch '+(i+1)+' — click × to remove';
+      el.querySelector('b').onclick=function(){ LS_LINE.splice(i,1); renderLine(); };
+      host.appendChild(el);
+    });
+    var cap=document.createElement('span'); cap.className='chip'; cap.innerHTML='🏔️ summit · 6'; cap.title='Appended automatically — every line ends here';
+    host.appendChild(cap);
+  }
+  function gradeLine(){
+    var real=LS_LINE.filter(function(p){return p.kind!=='rest';}).length;
+    var out=$('ls_out');
+    if(real<5){ out.innerHTML='<div class="empty">A line needs at least 5 pitches before the summit.</div>'; return; }
+    if(real>18){ out.innerHTML='<div class="empty">No line is that long — 18 pitches max.</div>'; return; }
+    var spec={ name:($('ls_name').value||'Unnamed Line').trim(), setter:($('ls_setter').value||'unknown').trim(), pitches:LS_LINE.slice() };
+    var g=S.gradeLine(Trail, spec, { seed:seed(), runs:Math.max(50,Math.min(1000,parseInt($('ls_runs').value,10)||200)), accuracy:Math.max(0.5,Math.min(0.99,(parseInt($('ls_acc').value,10)||82)/100)) });
+    var code=EXP.encodeLine(spec);
+    var h='<div class="nodehead"><span class="ne">📖</span><div><div class="nt">“'+esc(spec.name)+'”</div><div class="nk">set by '+esc(spec.setter)+' · graded <b>'+g.grade+'</b> ('+esc(g.gradeName)+') · summit rate '+(g.summitRate*100).toFixed(1)+'% over '+g.runs+' climbs</div></div></div>';
+    if(g.crux) h+='<div class="mini">Crux: <b>'+esc(g.crux.title)+'</b> (pitch '+(g.cruxIndex+1)+') — '+g.deaths[g.cruxIndex]+' of '+g.runs+' climbs end there'+(g.avgEndStamina?' · survivors top out at ~'+g.avgEndStamina+' stamina':'')+'</div>';
+    h+='<div class="mini" style="margin-top:8px">Route: '+g.route.map(function(n){return HAZ.nodeEmoji(n.kind);}).join(' ')+'</div>';
+    h+='<div class="mini" style="margin-top:10px">The page is cut. Hand this to another climber:</div>';
+    h+='<div class="mono" style="word-break:break-all;background:var(--bg2);border:1px solid var(--line);border-radius:9px;padding:9px;margin-top:6px;font-size:11px" id="ls_code">'+esc(code)+'</div>';
+    h+='<button class="act" style="margin-top:8px" id="ls_copy">Copy the line code</button>';
+    out.innerHTML=h;
+    $('ls_copy').onclick=function(){ var t=$('ls_code').textContent; if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(t); $('ls_copy').textContent='✓ Copied — first ascent pending'; } };
   }
 
   function init(){
     buildTabs();
     renderRoster();
     fillKinds();
+    fillSetterKinds(); renderLine();
     renderBoonPicker($('pl_boons'),plBoons);
     renderRelicPicker();
     renderBoonPicker($('bn_owned'),bnOwned,function(){ renderDuos(); });

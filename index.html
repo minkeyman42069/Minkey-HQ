@@ -1820,7 +1820,8 @@ function openLedge(node, mode){
         el.onclick=function(){ addStamina(15); AUDIO.correct(); draftWrap.style.display='none'; };
         box.appendChild(el); return;
       }
-      var b=BOONS[id]; var tag=b.tag||''; var tagMeta=BOON_TAGS&&BOON_TAGS[tag];
+      var b=resolveBoon(id); if(!b) return;
+      var tag=b.tag||''; var tagMeta=BOON_TAGS&&BOON_TAGS[tag];
       var el=document.createElement('button'); el.type='button'; el.className='boon'+(b.rare?' rare':'');
       el.innerHTML='<div class="bic">'+b.ic+'</div><div><div class="bt">'+b.name+(b.rare?' <span class=\"raretag\">RARE</span>':'')+'</div><div class="bd">'+b.desc+'</div>'
         +(tag?'<div class="btags"><span class="boon-tag '+tag+'">'+(tagMeta?tagMeta.label:tag)+'</span></div>':'')+'</div>';
@@ -1834,7 +1835,7 @@ function openLedge(node, mode){
 function renderHeld(){
   var w=document.getElementById('heldWrap');
   if(RUN.boons.size===0 && (!RUN.relics||RUN.relics.size===0)){ w.innerHTML=''; return; }
-  var rows=''; RUN.boons.forEach(function(id){ var b=BOONS[id]; var tag=b.tag||''; var tagMeta=BOON_TAGS&&BOON_TAGS[tag];
+  var rows=''; RUN.boons.forEach(function(id){ var b=resolveBoon(id); if(!b) return; var tag=b.tag||''; var tagMeta=BOON_TAGS&&BOON_TAGS[tag];
     rows+='<div class="held-boon'+(b.rare?' rare':'')+'"><span class="hb-ic">'+b.ic+'</span><div class="hb-txt"><div class="hb-n">'+b.name
       +(tag?'<span class="boon-tag '+tag+'" style="margin-left:6px;vertical-align:middle">'+(tagMeta?tagMeta.label:tag)+'</span>':'')
       +'</div><div class="hb-d">'+b.desc+'</div></div></div>'; });

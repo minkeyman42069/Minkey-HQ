@@ -74,7 +74,7 @@ function simPitch(node, stamina, acc, timeoutRate, boons) {
     const time = node.time || 16;
     const crux = node.need > 1 && done >= node.need - 1;
     let riseMult = crux ? BALANCE.CRUX_RISE_MULT : 1;
-    if (boons.updraft) riseMult *= 0.68;
+    if (boons.coldfront) riseMult *= 0.75;
 
     // passive threat per question: rise * 0.05 per 50ms tick ≈ rise * seconds
     threat += node.rise * time * riseMult;
@@ -85,7 +85,7 @@ function simPitch(node, stamina, acc, timeoutRate, boons) {
       done++;
       let ease = typeof node.ease === 'number' ? node.ease : BALANCE.EASE_ON_CORRECT;
       if (node.noBoonEase) ease = 0;
-      else if (boons.wildfire) ease += 2;
+      else if (boons.vent) ease += 2;
       threat = Math.max(0, threat - ease);
     } else {
       let cost = out.timeout ? BALANCE.TIMEOUT_COST : BALANCE.MISS_COST;
@@ -98,7 +98,7 @@ function simPitch(node, stamina, acc, timeoutRate, boons) {
     while (threat >= max && stamina > 0) {
       threat = Math.max(0, threat - BALANCE.THREAT_RESET);
       let hit = node.hit;
-      if (boons.anchor) hit = Math.round(hit * 0.62);
+      if (boons.pitanchor) hit = Math.round(hit * 0.62);
       stamina -= hit;
       strikes++;
     }

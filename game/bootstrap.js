@@ -55,6 +55,10 @@ window.SCHED = {
   grade: function(id, correct, viaTimeout){ return _sched.grade(id, correct, viaTimeout, RUN); }
 };
 
+window.resolveBoon = function (id) {
+  return Trail.agents.boon.api.resolve(id);
+};
+
 window.BOON = {
   has(id) {
     if (typeof ENC !== 'undefined' && ENC?.node?.suppress) return false;

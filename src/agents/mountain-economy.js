@@ -58,7 +58,7 @@ export function createEconomyApi() {
       }
 
       let hit = enc.node.hit;
-      if (boonHas(ctx, 'anchor')) hit = Math.round(hit * (hasDuo(ctx, 'Fortress') ? 0.55 : 0.62));
+      if (boonHas(ctx, 'pitanchor')) hit = Math.round(hit * (hasDuo(ctx, 'Fortress') ? 0.55 : 0.62));
       if (run.relics?.has('carabiner') && !enc.luckyUsed) {
         enc.luckyUsed = true;
         hit = Math.round(hit * 0.5);

@@ -12,12 +12,12 @@ for (const k of required) {
 }
 
 if (!Trail.economy?.grantRelic) throw new Error('Mountain economy API incomplete');
-if (Object.keys(Trail.agents.boon.api.catalog).length < 20) throw new Error('Boon catalog too small');
+if (Object.keys(Trail.agents.boon.api.catalog).length < 16) throw new Error('Boon catalog too small');
 if (Trail.agents.boon.api.duos.length < 8) throw new Error('Duo catalog too small');
 if (!Trail.meta || Trail.meta.length !== 6) throw new Error('Agent meta incomplete');
 
 const run = {
-  boons: new Set(['provisions', 'wildfire']),
+  boons: new Set(['provisions', 'vent']),
   stamina: 50,
   nodeIdx: 0,
   flares: 0,

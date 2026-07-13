@@ -80,41 +80,165 @@ var TrailBundle = (() => {
     study: { label: "Study", color: "#9b6fd0" }
   };
   var BOONS = {
-    surefoot: { ic: "\u{1F9B6}", name: "Sure Footing", tag: "safety", rare: false, desc: "Your first miss each pitch costs no stamina." },
-    steady: { ic: "\u231A", name: "Steady Nerves", tag: "safety", rare: false, desc: "The first timeout each pitch costs no stamina." },
-    piton: { ic: "\u{1F4CC}", name: "Piton Pair", tag: "safety", rare: false, desc: "Your first two misses each pitch cost no stamina." },
-    fieldnotes: { ic: "\u{1F516}", name: "Field Notes", tag: "study", rare: false, desc: "Once per pitch, rule out one wrong answer." },
-    routebook: { ic: "\u{1F4D6}", name: "Route Book", tag: "study", rare: false, desc: "Explanations linger longer so you can actually learn from them." },
-    momentum: { ic: "\u{1F525}", name: "Momentum", tag: "streak", rare: false, desc: "Each correct answer in a row calms the threat more. A miss resets the bonus." },
-    wildfire: { ic: "\u2728", name: "Wildfire", tag: "threat", rare: false, desc: "Every correct answer calms the threat \u2014 even without a streak." },
-    redline: { ic: "\u{1FA78}", name: "Red Line", tag: "streak", rare: false, desc: "On a 3+ streak, each correct answer restores 2 stamina." },
-    tailwind: { ic: "\u{1F32C}\uFE0F", name: "Tailwind", tag: "speed", rare: false, desc: "Adds 5 seconds to the focus timer." },
-    updraft: { ic: "\u{1F388}", name: "Updraft", tag: "threat", rare: false, desc: "Passive threat rises 32% slower all pitch long." },
-    provisions: { ic: "\u{1F392}", name: "Provisions", tag: "opening", rare: false, desc: "Begin every pitch with +5 stamina." },
-    alpinestart: { ic: "\u{1F305}", name: "Alpine Start", tag: "opening", rare: false, desc: "First question each pitch: +3 stamina and +3 seconds." },
-    secondwind: { ic: "\u{1F4A8}", name: "Second Wind", tag: "streak", rare: false, desc: "Every 4 correct in a row restores 8 stamina." },
-    rally: { ic: "\u{1F6A9}", name: "Rally", tag: "safety", rare: true, desc: "Once per pitch, a miss will not break your streak." },
-    bulwark: { ic: "\u{1F9F1}", name: "Bulwark", tag: "safety", rare: true, desc: "Once per pitch, the next mountain strike costs no stamina." },
-    anchor: { ic: "\u2693", name: "Storm Anchor", tag: "safety", rare: true, desc: "Mountain strikes cost 38% less stamina." },
-    cairn: { ic: "\u{1FAA8}", name: "Cairn Builder", tag: "streak", rare: true, desc: "Every 3 correct in a row banks stamina, paid when you clear the pitch." },
-    highcamp: { ic: "\u26FA", name: "High Camp", tag: "streak", rare: true, desc: "Clearing a pitch on a streak restores extra stamina." },
-    secondhand: { ic: "\u23F1\uFE0F", name: "Second Hand", tag: "speed", rare: true, desc: "Every correct answer adds time back to the clock." },
-    flare: { ic: "\u{1F9E8}", name: "Signal Flare", tag: "threat", rare: true, desc: "Twice per climb, fire a flare to calm the threat to zero." },
-    gambit: { ic: "\u{1F3B2}", name: "Gambit", tag: "threat", rare: true, desc: "Correct answers calm threat much more \u2014 wrong answers enrage it more." },
-    buddyrope: { ic: "\u{1FAA2}", name: "Buddy Rope", tag: "safety", rare: true, desc: "While above half stamina, mountain strikes deal 45% less damage." },
-    weathereye: { ic: "\u{1F441}\uFE0F", name: "Weather Eye", tag: "study", rare: true, desc: "On gust hazards, random gusts hit 40% softer." }
+    surefoot: {
+      ic: "\u{1F9CA}",
+      name: "Crampons",
+      tag: "safety",
+      rare: false,
+      desc: "First miss each pitch costs no stamina."
+    },
+    steady: {
+      ic: "\u{1FAC1}",
+      name: "Steady Breath",
+      tag: "safety",
+      rare: false,
+      desc: "First timeout each pitch costs no stamina."
+    },
+    fieldnotes: {
+      ic: "\u{1F516}",
+      name: "Field Notes",
+      tag: "study",
+      rare: false,
+      desc: "Once per pitch, remove one wrong answer."
+    },
+    momentum: {
+      ic: "\u{1F525}",
+      name: "Momentum",
+      tag: "streak",
+      rare: false,
+      desc: "Streaks calm the threat harder. A miss resets the bonus."
+    },
+    vent: {
+      ic: "\u{1F4A8}",
+      name: "Vent",
+      tag: "threat",
+      rare: false,
+      desc: "Every correct answer chips threat, streak or not."
+    },
+    tailwind: {
+      ic: "\u{1F32C}\uFE0F",
+      name: "Tailwind",
+      tag: "speed",
+      rare: false,
+      desc: "+5 seconds on the focus timer."
+    },
+    coldfront: {
+      ic: "\u2744\uFE0F",
+      name: "Cold Front",
+      tag: "threat",
+      rare: false,
+      desc: "Passive threat builds 25% slower for the whole pitch."
+    },
+    provisions: {
+      ic: "\u{1F392}",
+      name: "Provisions",
+      tag: "opening",
+      rare: false,
+      desc: "Start each pitch with +5 stamina."
+    },
+    firstlight: {
+      ic: "\u{1F305}",
+      name: "First Light",
+      tag: "opening",
+      rare: false,
+      desc: "Opening question each pitch: +3 stamina and +3 seconds."
+    },
+    summitsurge: {
+      ic: "\u26F0\uFE0F",
+      name: "Summit Surge",
+      tag: "streak",
+      rare: false,
+      desc: "Every 4 correct in a row restores 8 stamina."
+    },
+    rally: {
+      ic: "\u{1F6A9}",
+      name: "Rally",
+      tag: "safety",
+      rare: true,
+      desc: "Once per pitch, a miss does not break your streak."
+    },
+    bulwark: {
+      ic: "\u{1F9F1}",
+      name: "Bulwark",
+      tag: "safety",
+      rare: true,
+      desc: "Once per pitch, block the next mountain strike completely."
+    },
+    pitanchor: {
+      ic: "\u2693",
+      name: "Pit Anchor",
+      tag: "safety",
+      rare: true,
+      desc: "Mountain strikes cost 38% less stamina."
+    },
+    cairn: {
+      ic: "\u{1FAA8}",
+      name: "Cairn",
+      tag: "streak",
+      rare: true,
+      desc: "Every 3 correct in a row banks stamina, paid when you clear the pitch."
+    },
+    highcamp: {
+      ic: "\u26FA",
+      name: "High Camp",
+      tag: "streak",
+      rare: true,
+      desc: "Clearing a pitch on a streak restores extra stamina."
+    },
+    quickdraw: {
+      ic: "\u23F1\uFE0F",
+      name: "Quick Draw",
+      tag: "speed",
+      rare: true,
+      desc: "Each correct answer adds time back to the clock."
+    },
+    flare: {
+      ic: "\u{1F9E8}",
+      name: "Flare",
+      tag: "threat",
+      rare: true,
+      desc: "Twice per climb, zero out the threat meter."
+    },
+    allin: {
+      ic: "\u{1F3B2}",
+      name: "All In",
+      tag: "threat",
+      rare: true,
+      desc: "Correct answers calm threat much more; wrong answers spike it harder."
+    },
+    fixedline: {
+      ic: "\u{1FAA2}",
+      name: "Fixed Line",
+      tag: "safety",
+      rare: true,
+      desc: "Above half stamina, mountain strikes hit 45% softer."
+    }
+  };
+  var LEGACY_BOONS = {
+    piton: { ic: "\u{1F4CC}", name: "Piton Pair", tag: "safety", rare: false, desc: "Retired. Crampons covers the first miss now." },
+    updraft: { ic: "\u{1F388}", name: "Updraft", tag: "threat", rare: false, desc: "Retired. Now Cold Front." },
+    wildfire: { ic: "\u2728", name: "Wildfire", tag: "threat", rare: false, desc: "Retired. Now Vent." },
+    redline: { ic: "\u{1FA78}", name: "Red Line", tag: "streak", rare: false, desc: "Retired." },
+    routebook: { ic: "\u{1F4D6}", name: "Route Book", tag: "study", rare: false, desc: "Retired." },
+    weathereye: { ic: "\u{1F441}\uFE0F", name: "Weather Eye", tag: "study", rare: true, desc: "Retired." },
+    alpinestart: { ic: "\u{1F305}", name: "Alpine Start", tag: "opening", rare: false, desc: "Retired. Now First Light." },
+    secondwind: { ic: "\u{1F4A8}", name: "Second Wind", tag: "streak", rare: false, desc: "Retired. Now Summit Surge." },
+    secondhand: { ic: "\u23F1\uFE0F", name: "Second Hand", tag: "speed", rare: true, desc: "Retired. Now Quick Draw." },
+    gambit: { ic: "\u{1F3B2}", name: "Gambit", tag: "threat", rare: true, desc: "Retired. Now All In." },
+    buddyrope: { ic: "\u{1FAA2}", name: "Buddy Rope", tag: "safety", rare: true, desc: "Retired. Now Fixed Line." },
+    anchor: { ic: "\u2693", name: "Storm Anchor", tag: "safety", rare: true, desc: "Retired. Now Pit Anchor." }
   };
   var DUOS = [
-    { ids: ["momentum", "gambit"], name: "Avalanche", ic: "\u{1F3D4}\uFE0F", desc: "On a 5+ streak, a correct answer crushes the threat." },
-    { ids: ["wildfire", "momentum"], name: "Wildfire Spread", ic: "\u{1F525}", desc: "Each correct calms the threat more the longer your streak." },
-    { ids: ["cairn", "secondwind"], name: "Deep Reserves", ic: "\u{1F393}", desc: "Cairn banks more stamina per streak." },
-    { ids: ["provisions", "highcamp"], name: "Base Camp", ic: "\u26FA", desc: "Start each pitch with +9 stamina, and finish it stronger." },
-    { ids: ["rally", "bulwark"], name: "Unbreakable", ic: "\u{1F6E1}\uFE0F", desc: "Rally also refreshes your Bulwark." },
-    { ids: ["anchor", "bulwark"], name: "Fortress", ic: "\u{1F3F0}", desc: "Strikes that land are blunted even further." },
-    { ids: ["surefoot", "steady"], name: "Crampons", ic: "\u{1F9E6}", desc: "Your first mistake each pitch also calms the threat." },
-    { ids: ["tailwind", "secondhand"], name: "Slipstream", ic: "\u{1F300}", desc: "Time flows even more in your favor." },
-    { ids: ["piton", "buddyrope"], name: "Rope Team", ic: "\u{1F91D}", desc: "Piton misses also restore 3 stamina." },
-    { ids: ["alpinestart", "redline"], name: "Dawn Patrol", ic: "\u{1F304}", desc: "Alpine Start bonus also fires after your first correct answer." }
+    { ids: ["momentum", "allin"], name: "Runout", ic: "\u{1F3D4}\uFE0F", desc: "On a 5+ streak, correct answers shove threat back hard." },
+    { ids: ["vent", "momentum"], name: "Thermal", ic: "\u{1F525}", desc: "Vent chips more threat the longer your streak runs." },
+    { ids: ["cairn", "summitsurge"], name: "Deep Pockets", ic: "\u{1F392}", desc: "Cairn banks +3 extra stamina per stack." },
+    { ids: ["provisions", "highcamp"], name: "Base Camp", ic: "\u26FA", desc: "Open each pitch with +9 stamina; finish it stronger." },
+    { ids: ["rally", "bulwark"], name: "Unbreakable", ic: "\u{1F6E1}\uFE0F", desc: "Using Rally also resets Bulwark." },
+    { ids: ["pitanchor", "bulwark"], name: "Fortress", ic: "\u{1F3F0}", desc: "Strikes that get through hurt even less." },
+    { ids: ["surefoot", "steady"], name: "Solid Footing", ic: "\u{1F9CA}", desc: "Your first mistake each pitch also sheds threat." },
+    { ids: ["tailwind", "quickdraw"], name: "Slipstream", ic: "\u{1F300}", desc: "Quick Draw returns more time per correct." },
+    { ids: ["surefoot", "fixedline"], name: "Belay", ic: "\u{1F91D}", desc: "Crampons' free miss also restores 3 stamina." },
+    { ids: ["firstlight", "momentum"], name: "Dawn Line", ic: "\u{1F304}", desc: "First Light bonus fires again after your opening correct." }
   ];
   function hasDuo(ctx, name) {
     return (ctx.duos || []).some((d) => d.name === name);
@@ -123,9 +247,21 @@ var TrailBundle = (() => {
     if (ctx.enc?.node?.suppress) return false;
     return ctx.run?.boons?.has(id);
   }
+  function ownedTags(ctx) {
+    const tags = /* @__PURE__ */ new Set();
+    (ctx.run?.boons || /* @__PURE__ */ new Set()).forEach((id) => {
+      const t = BOONS[id]?.tag;
+      if (t) tags.add(t);
+    });
+    return tags;
+  }
   function createBoonArchitect() {
     const api = {
       catalog: BOONS,
+      legacy: LEGACY_BOONS,
+      resolve(id) {
+        return BOONS[id] || LEGACY_BOONS[id] || null;
+      },
       duos: DUOS,
       tags: BOON_TAGS,
       has: (ctx, id) => canUse(ctx, id),
@@ -137,17 +273,23 @@ var TrailBundle = (() => {
         return base + (canUse(ctx, "tailwind") ? 5 : 0);
       },
       riseMultiplier(ctx) {
-        return canUse(ctx, "updraft") ? 0.68 : 1;
+        return canUse(ctx, "coldfront") ? 0.75 : 1;
       },
       draftPool(ctx) {
         const owned = ctx.run.boons;
         const pool = Object.keys(BOONS).filter((id) => !owned.has(id));
+        const tags = ownedTags(ctx);
         const low = ctx.run.stamina < 40;
         const weights = pool.map((id) => {
           const b = BOONS[id];
           let weight = b.rare ? 1 : 3;
-          if (low && b.tag === "safety") weight *= 2.2;
-          if (ctx.run.nodeIdx >= 8 && b.tag === "threat") weight *= 1.4;
+          if (low && b.tag === "safety") weight *= 2;
+          if (ctx.run.nodeIdx >= 8 && b.tag === "threat") weight *= 1.35;
+          if (b.tag === "safety" && tags.has("safety")) {
+            const safetyCount = [...owned].filter((x) => BOONS[x]?.tag === "safety").length;
+            if (safetyCount >= 2) weight *= 0.3;
+            else if (safetyCount >= 1) weight *= 0.55;
+          }
           return weight;
         });
         return { pool, weights };
@@ -183,23 +325,22 @@ var TrailBundle = (() => {
           ctx.staminaDelta = (ctx.staminaDelta || 0) + bonus;
           banners.push({ title: "Provisions", sub: "+" + bonus + " stamina" });
         }
-        ctx.enc.alpineStartUsed = false;
-        ctx.enc.dawnPatrolUsed = false;
-        ctx.enc.pitonUsed = 0;
+        ctx.enc.firstLightUsed = false;
+        ctx.enc.dawnLineUsed = false;
         return { banners };
       },
       onQuestionStart(ctx) {
-        if (canUse(ctx, "alpinestart") && !ctx.enc.alpineStartUsed && ctx.enc.done === 0) {
-          ctx.enc.alpineStartUsed = true;
+        if (canUse(ctx, "firstlight") && !ctx.enc.firstLightUsed && ctx.enc.done === 0) {
+          ctx.enc.firstLightUsed = true;
           return {
             staminaDelta: 3,
             timeDelta: 3,
-            banners: [{ title: "Alpine Start", sub: "+3 stamina \xB7 +3s" }]
+            banners: [{ title: "First Light", sub: "+3 stamina \xB7 +3s" }]
           };
         }
-        if (canUse(ctx, "alpinestart") && hasDuo(ctx, "Dawn Patrol") && ctx.enc.done === 1 && ctx.enc.streak >= 1 && !ctx.enc.dawnPatrolUsed) {
-          ctx.enc.dawnPatrolUsed = true;
-          return { timeDelta: 2, banners: [{ title: "Dawn Patrol", sub: "+2s momentum" }] };
+        if (canUse(ctx, "firstlight") && hasDuo(ctx, "Dawn Line") && ctx.enc.done === 1 && ctx.enc.streak >= 1 && !ctx.enc.dawnLineUsed) {
+          ctx.enc.dawnLineUsed = true;
+          return { timeDelta: 2, banners: [{ title: "Dawn Line", sub: "+2s" }] };
         }
         return {};
       },
@@ -211,17 +352,16 @@ var TrailBundle = (() => {
         if (canUse(ctx, "momentum") && !ctx.enc.node.noBoonEase) {
           ctx.enc.streakEase = Math.min(7, (ctx.enc.streakEase || 0) + 1.4);
         }
-        if (canUse(ctx, "wildfire") && !ctx.enc.node.noBoonEase) {
-          threatDelta -= hasDuo(ctx, "Wildfire Spread") ? 2 + Math.min(5, ctx.enc.streak) : 2;
+        if (canUse(ctx, "vent") && !ctx.enc.node.noBoonEase) {
+          threatDelta -= hasDuo(ctx, "Thermal") ? 2 + Math.min(5, ctx.enc.streak) : 2;
         }
-        if (canUse(ctx, "redline") && ctx.enc.streak >= 3) staminaDelta += 2;
-        if (canUse(ctx, "secondwind") && ctx.enc.streak % 4 === 0) {
+        if (canUse(ctx, "summitsurge") && ctx.enc.streak % 4 === 0) {
           staminaDelta += 8;
-          banners.push({ title: "Second Wind", sub: "+8 stamina" });
+          banners.push({ title: "Summit Surge", sub: "+8 stamina" });
         }
-        if (canUse(ctx, "secondhand")) timeDelta += hasDuo(ctx, "Slipstream") ? 2.2 : 1.5;
+        if (canUse(ctx, "quickdraw")) timeDelta += hasDuo(ctx, "Slipstream") ? 2.2 : 1.5;
         if (canUse(ctx, "cairn") && ctx.enc.streak % 3 === 0) {
-          const cb = hasDuo(ctx, "Deep Reserves") ? 9 : 6;
+          const cb = hasDuo(ctx, "Deep Pockets") ? 9 : 6;
           ctx.enc.cairnBank = (ctx.enc.cairnBank || 0) + cb;
           banners.push({ title: "Cairn stacked", sub: "+" + cb + " at clear" });
         }
@@ -230,10 +370,10 @@ var TrailBundle = (() => {
           ease *= ctx.enc.easeMul || 1;
           ctx.enc.easeMul = Math.max(0.35, (ctx.enc.easeMul || 1) - 0.14);
         }
-        if (canUse(ctx, "gambit")) ease *= 1.45;
-        if (hasDuo(ctx, "Avalanche") && ctx.enc.streak >= 5) {
+        if (canUse(ctx, "allin")) ease *= 1.45;
+        if (hasDuo(ctx, "Runout") && ctx.enc.streak >= 5) {
           ease += 9;
-          banners.push({ title: "Avalanche", sub: "threat gives way" });
+          banners.push({ title: "Runout", sub: "threat gives way" });
         }
         if (ctx.enc.node.noBoonEase) ease = 0;
         threatDelta -= ease;
@@ -249,23 +389,16 @@ var TrailBundle = (() => {
           ctx.enc.firstTimeoutUsed = true;
           staminaCost = 0;
           freed = true;
-          banners.push({ title: "Steady nerves", sub: "no stamina lost" });
-        } else if (!ctx.viaTimeout) {
-          if (canUse(ctx, "piton") && (ctx.enc.pitonUsed || 0) < 2) {
-            ctx.enc.pitonUsed = (ctx.enc.pitonUsed || 0) + 1;
-            staminaCost = 0;
-            freed = true;
-            if (hasDuo(ctx, "Rope Team")) {
-              banners.push({ title: "Rope Team", sub: "piton holds \xB7 +3 stamina" });
-              return { threatDelta, staminaCost: 0, staminaDelta: 3, banners, keepStreak: false };
-            }
-            banners.push({ title: "Piton holds", sub: "no stamina lost" });
-          } else if (canUse(ctx, "surefoot") && !ctx.enc.firstMissUsed) {
-            ctx.enc.firstMissUsed = true;
-            staminaCost = 0;
-            freed = true;
-            banners.push({ title: "Sure footing", sub: "no stamina lost" });
+          banners.push({ title: "Steady Breath", sub: "no stamina lost" });
+        } else if (!ctx.viaTimeout && canUse(ctx, "surefoot") && !ctx.enc.firstMissUsed) {
+          ctx.enc.firstMissUsed = true;
+          staminaCost = 0;
+          freed = true;
+          if (hasDuo(ctx, "Belay")) {
+            banners.push({ title: "Belay", sub: "crampons hold \xB7 +3 stamina" });
+            return { threatDelta, staminaCost: 0, staminaDelta: 3, banners, keepStreak: false };
           }
+          banners.push({ title: "Crampons", sub: "no stamina lost" });
         }
         if (canUse(ctx, "rally") && !ctx.enc.rallyUsed && ctx.enc.streak > 0) {
           ctx.enc.rallyUsed = true;
@@ -275,35 +408,28 @@ var TrailBundle = (() => {
         }
         if (staminaCost > 0 && ctx.enc.node.escalate) staminaCost += ctx.enc.missCount * ctx.enc.node.escalate;
         ctx.enc.missCount++;
-        if (canUse(ctx, "gambit")) threatDelta *= 1.45;
-        if (freed && hasDuo(ctx, "Crampons")) threatDelta -= 9;
+        if (canUse(ctx, "allin")) threatDelta *= 1.45;
+        if (freed && hasDuo(ctx, "Solid Footing")) threatDelta -= 9;
         return { threatDelta, staminaCost, banners, keepStreak };
       },
       onStrike(ctx) {
         if (canUse(ctx, "bulwark") && !ctx.enc.bulwarkUsed) {
           ctx.enc.bulwarkUsed = true;
-          return { blocked: true, banners: [{ title: "Bulwark holds", sub: "no stamina lost" }] };
+          return { blocked: true, banners: [{ title: "Bulwark", sub: "strike blocked" }] };
         }
         let hit = ctx.enc.node.hit;
-        if (canUse(ctx, "anchor")) hit = Math.round(hit * (hasDuo(ctx, "Fortress") ? 0.52 : 0.62));
-        if (canUse(ctx, "buddyrope") && ctx.run.stamina > ctx.config.STAM_MAX * 0.5) hit = Math.round(hit * 0.55);
+        if (canUse(ctx, "pitanchor")) hit = Math.round(hit * (hasDuo(ctx, "Fortress") ? 0.52 : 0.62));
+        if (canUse(ctx, "fixedline") && ctx.run.stamina > ctx.config.STAM_MAX * 0.5) hit = Math.round(hit * 0.55);
         return { hit };
       },
       onGust(ctx) {
         const base = ctx.gust ?? 12 + Math.floor(ctx.rnd() * 10);
-        if (!canUse(ctx, "weathereye")) return { threatDelta: base };
-        return {
-          threatDelta: Math.round(base * 0.6),
-          banners: [{ title: "Weather Eye", sub: "you saw it coming" }]
-        };
+        return { threatDelta: base };
       },
       onPitchClear(ctx) {
         let bonus = ctx.enc.cairnBank || 0;
         if (canUse(ctx, "highcamp")) bonus += Math.min(18, ctx.enc.streak * (hasDuo(ctx, "Base Camp") ? 3 : 2));
         return { clearBonus: bonus };
-      },
-      explainLingerMs(ctx) {
-        return canUse(ctx, "routebook") ? 2800 : 0;
       }
     };
     return {
@@ -372,7 +498,7 @@ var TrailBundle = (() => {
           return { blocked: true };
         }
         let hit = enc.node.hit;
-        if (boonHas(ctx, "anchor")) hit = Math.round(hit * (hasDuo2(ctx, "Fortress") ? 0.55 : 0.62));
+        if (boonHas(ctx, "pitanchor")) hit = Math.round(hit * (hasDuo2(ctx, "Fortress") ? 0.55 : 0.62));
         if (run.relics?.has("carabiner") && !enc.luckyUsed) {
           enc.luckyUsed = true;
           hit = Math.round(hit * 0.5);
@@ -1708,6 +1834,9 @@ var TrailBundle = (() => {
     grade: function(id, correct, viaTimeout) {
       return _sched.grade(id, correct, viaTimeout, RUN);
     }
+  };
+  window.resolveBoon = function(id) {
+    return Trail.agents.boon.api.resolve(id);
   };
   window.BOON = {
     has(id) {

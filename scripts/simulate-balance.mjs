@@ -17,12 +17,12 @@ const base = runMonteCarlo(RUNS, { accuracy: 0.82, timeoutRate: 0.06 });
 const boon = runMonteCarlo(RUNS, {
   accuracy: 0.82,
   timeoutRate: 0.05,
-  boons: { provisions: true, wildfire: true },
+  boons: { provisions: true, vent: true },
 });
 const stacked = runMonteCarlo(RUNS, {
   accuracy: 0.82,
   timeoutRate: 0.05,
-  boons: { provisions: true, anchor: true, wildfire: true },
+  boons: { provisions: true, pitanchor: true, vent: true },
 });
 const skilled = runMonteCarlo(RUNS, { accuracy: 0.88, timeoutRate: 0.04 });
 const struggling = runMonteCarlo(RUNS, { accuracy: 0.72, timeoutRate: 0.10 });

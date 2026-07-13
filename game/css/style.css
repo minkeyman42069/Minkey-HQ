@@ -1,0 +1,47 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at 50% 30%, #14351f 0%, #08170d 70%);
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+}
+
+.stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+canvas {
+  max-width: 96vw;
+  height: auto;
+  border-radius: 12px;
+  box-shadow:
+    0 0 0 4px #2c5e3a,
+    0 24px 60px rgba(0, 0, 0, 0.6);
+  image-rendering: auto;
+}
+
+.controls-hint {
+  display: flex;
+  gap: 22px;
+  color: #9fd6ae;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+}
+
+.controls-hint b {
+  color: #ffe07a;
+}

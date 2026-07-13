@@ -1617,7 +1617,7 @@ function freshRun(topic){
     seen:0, right:0, bestStreak:0, nodeCleared:0, summited:false, stones:{}, stoneNow:null, recovered:0,
     weather:(CONFIG.MODS.weather?WEATHERS[Math.floor(rnd()*WEATHERS.length)]:WEATHERS[0]), relics:new Set(), relicLog:[], iceaxeUsed:false, clutch:0, lastLegsTold:false,
     busy:false, current:null, view:null, timer:null, timeLeft:0, maxTime:0 };
-  Object.keys(mb).forEach(function(id){ if(+id>=0 && +id<BANK.length){ _r.prog[id]={tier:mb[id],seen:0,right:0,wrong:0}; } });
+  Object.keys(mb).forEach(function(id){ if(+id>=0 && +id<BANK.length){ _r.prog[id]={tier:mb[id],seen:0,right:0,wrong:0,ease:CONFIG.EASE_START||2.5,cstreak:0,nextDue:0,dom:domainOf(BANK[id])}; } });
   return _r;
 }
 function beginRun(topic){ if(CONFIG.AUDIO) AUDIO.unlock(); RNG.fn=Math.random; RNG.seeded=false; RUN=freshRun(topic); RENDER.map(); show('map'); if(RUN.weather && RUN.weather.name!=='Clear Dawn') setTimeout(function(){ banner(RUN.weather.ic+' '+RUN.weather.name, RUN.weather.desc); },350); }

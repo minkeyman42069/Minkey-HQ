@@ -45,6 +45,29 @@ if (correct.threatDelta === undefined) throw new Error('answer:correct hook miss
 const draft = Trail.agents.boon.api.pickDraft(Trail.makeCtx({ ...run, boons: new Set() }, enc), () => 0.2);
 if (!Array.isArray(draft) || !draft.length) throw new Error('draft pick failed');
 
+// --- Adaptive scheduler (SM-2-lite spacing, lapse, gated promotion) ---
+const sched = Trail.createScheduler();
+const sr = { prog: {}, locked: new Set(), mastered: new Set(), recent: [], seen: 0 };
+// Gated promotion: a single correct at Familiar (tier 2) must NOT reach Solid.
+sr.prog[0] = { tier: 2, seen: 0, right: 0, wrong: 0 };
+sched.grade(0, true, false, sr); sr.seen++;
+if (sr.prog[0].tier !== 2) throw new Error('Scheduler promoted tier 2→3 on a single correct (should need 2)');
+sched.grade(0, true, false, sr); sr.seen++;
+if (sr.prog[0].tier !== 3) throw new Error('Scheduler did not promote after 2 consecutive correct');
+if (!sr.locked.has(0)) throw new Error('Scheduler did not lock a board-ready concept');
+if (sr.prog[0].nextDue <= sr.prog[0].lastSeen) throw new Error('Scheduler did not schedule a future due');
+// Lapse: a board-ready miss drops into relearning (LOCK_TIER-1), not free-fall.
+sched.grade(0, false, false, sr); sr.seen++;
+if (sr.prog[0].tier !== Trail.CONFIG.LOCK_TIER - 1) throw new Error('Lapse from board-ready did not enter relearning');
+if (sr.locked.has(0)) throw new Error('Lapsed concept still marked locked');
+if (sr.prog[0].ease >= (Trail.CONFIG.EASE_START || 2.5)) throw new Error('Ease did not drop on a lapse');
+// Due-aware selection: an overdue weak item should out-weight a not-yet-due fresh item.
+sched.grade(0, false, false, sr); sr.seen = 40;
+sr.prog[1] = { tier: 4, seen: 1, right: 1, wrong: 0, ease: 2.9, nextDue: 999, dom: 'C' };
+let hit0 = 0;
+for (let i = 0; i < 200; i++) if (sched.pick([0, 1], -1, sr, () => Math.random()) === 0) hit0++;
+if (hit0 < 150) throw new Error('Scheduler did not prioritize the overdue weak concept');
+
 // --- Summit Sage analytics ---
 const sageBank = [
   { id: 0, cat: 'Reinforcement' },

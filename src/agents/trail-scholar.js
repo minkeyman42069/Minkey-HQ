@@ -184,14 +184,56 @@ TYPES.tf = {
   },
 };
 
+/**
+ * Adaptive scheduler — Leitner tiers upgraded with SM-2-lite per-item spacing.
+ *
+ * Evidence base (Anki/SM-2/FSRS, retrieval-practice + interleaving research):
+ *  - Spacing: each item gets a `nextDue` in "questions seen" units; due items
+ *    are surfaced first, overdue items harder.
+ *  - Per-item ease: correct recalls lengthen the interval, lapses shorten it.
+ *  - Lapse handling: missing a board-ready item drops it into relearning.
+ *  - Desirable difficulty: high tiers need 2 consecutive correct to promote,
+ *    so a lucky guess can't fake mastery.
+ *  - Interleaving: items sharing the previous item's TCO domain are down-weighted.
+ *
+ * Preserves the interface: pick(ids,last,run,rnd) / grade(id,correct,viaTimeout,run)
+ * and the run.prog[id] = {tier,seen,right,wrong} shape (adds ease/nextDue/cstreak/dom).
+ */
 export function createScheduler(config) {
+  const GAP = config.DUE_GAP || [0, 2, 5, 12, 26];
+  const promoteFrom = config.PROMOTE_STREAK_FROM != null ? config.PROMOTE_STREAK_FROM : 2;
+
+  function ensure(run, id) {
+    let p = run.prog[id];
+    if (!p) p = run.prog[id] = { tier: 0, seen: 0, right: 0, wrong: 0 };
+    if (p.ease == null) p.ease = config.EASE_START || 2.5;
+    if (p.cstreak == null) p.cstreak = 0;
+    return p;
+  }
+
   return {
     pick(ids, last, run, rnd) {
       if (ids.length === 1) return ids[0];
       const recent = run.recent || [];
+      const seen = run.seen || 0;
+      const prevId = recent.length ? recent[recent.length - 1] : null;
+      const prevDom = prevId != null && run.prog[prevId] ? run.prog[prevId].dom : null;
       let total = 0;
       const w = ids.map((id) => {
-        let wt = config.BOX_WEIGHTS[run.prog[id] ? run.prog[id].tier : 0];
+        const p = run.prog[id];
+        const tier = p ? p.tier : 0;
+        let wt = config.BOX_WEIGHTS[tier] || 1;
+        // Surface missed concepts harder (retrieval practice on weak points).
+        if (p && p.wrong) wt *= 1 + Math.min(1.5, 0.35 * p.wrong);
+        // Spacing: due/overdue items get priority; not-yet-due items are damped.
+        if (p && p.nextDue != null) {
+          if (p.nextDue <= seen) wt *= 1 + Math.min(2, (seen - p.nextDue) * 0.15);
+          else wt *= 0.25;
+        }
+        // Prioritize concepts that aren't board-ready yet.
+        if (tier < config.LOCK_TIER) wt *= 1.25;
+        // Interleaving: avoid clustering the same TCO domain back-to-back.
+        if (p && prevDom && p.dom === prevDom) wt *= config.INTERLEAVE_PENALTY || 0.55;
         if (id === last) wt = 0;
         else if (recent.indexOf(id) >= 0) wt *= 0.12;
         total += wt;
@@ -206,19 +248,43 @@ export function createScheduler(config) {
       return ids[ids.length - 1];
     },
     grade(id, correct, viaTimeout, run) {
-      const p = run.prog[id] || (run.prog[id] = { tier: 0, seen: 0, right: 0, wrong: 0 });
+      const p = ensure(run, id);
+      const now = run.seen || 0; // pre-increment index used for spacing
       p.seen++;
+      p.lastSeen = now;
       const lt = config.LOCK_TIER;
+      const mt = config.MASTER_TIER;
+      const eMin = config.EASE_MIN || 1.3;
+      const eMax = config.EASE_MAX || 2.9;
+
       if (correct) {
         p.right++;
-        p.tier = Math.min(config.MASTER_TIER, p.tier + 1);
+        p.cstreak = (p.cstreak || 0) + 1;
+        p.ease = Math.min(eMax, p.ease + (config.EASE_UP || 0.12));
+        // Desirable difficulty: leaving Familiar+ needs 2 consecutive correct.
+        const needStreak = p.tier >= promoteFrom;
+        if (!needStreak || p.cstreak >= 2) {
+          p.tier = Math.min(mt, p.tier + 1);
+          if (needStreak) p.cstreak = 0;
+        }
+        const base = GAP[p.tier] != null ? GAP[p.tier] : GAP[GAP.length - 1];
+        p.nextDue = now + Math.max(1, Math.round(base * (p.ease / (config.EASE_START || 2.5))));
       } else {
         p.wrong++;
-        p.tier = viaTimeout ? Math.max(0, p.tier - 1) : Math.max(0, p.tier - 2);
+        p.cstreak = 0;
+        p.ease = Math.max(
+          eMin,
+          p.ease - (viaTimeout ? config.EASE_DOWN_TIMEOUT || 0.15 : config.EASE_DOWN_MISS || 0.25),
+        );
+        // Lapse: a board-ready miss drops into relearning rather than free-fall.
+        if (p.tier >= lt) p.tier = lt - 1;
+        else p.tier = viaTimeout ? Math.max(0, p.tier - 1) : Math.max(0, p.tier - 2);
+        p.nextDue = now + (viaTimeout ? 2 : 1);
       }
+
       if (p.tier >= lt) run.locked.add(id);
       else run.locked.delete(id);
-      if (p.tier >= config.MASTER_TIER) run.mastered.add(id);
+      if (p.tier >= mt) run.mastered.add(id);
       return p;
     },
   };

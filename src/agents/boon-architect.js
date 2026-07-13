@@ -3,6 +3,8 @@
  * Tight roster: every boon does one clear job, no stacked safety clones.
  */
 
+import { oathStamMult } from './expedition-director.js';
+
 export const BOON_TAGS = {
   safety: { label: 'Safety', color: '#5fce9f' },
   speed: { label: 'Speed', color: '#8fc4dd' },
@@ -34,6 +36,13 @@ export const BOONS = {
     tag: 'study',
     rare: false,
     desc: 'Once per pitch, remove one wrong answer.',
+  },
+  headlamp: {
+    ic: '🔦',
+    name: 'Headlamp',
+    tag: 'study',
+    rare: false,
+    desc: 'Every question reveals its TCO exam domain.',
   },
   momentum: {
     ic: '🔥',
@@ -176,6 +185,7 @@ export const DUOS = [
   { ids: ['tailwind', 'quickdraw'], name: 'Slipstream', ic: '🌀', desc: 'Quick Draw returns more time per correct.' },
   { ids: ['surefoot', 'fixedline'], name: 'Belay', ic: '🤝', desc: 'Crampons\' free miss also restores 3 stamina.' },
   { ids: ['firstlight', 'momentum'], name: 'Dawn Line', ic: '🌄', desc: 'First Light bonus fires again after your opening correct.' },
+  { ids: ['headlamp', 'fieldnotes'], name: 'Night School', ic: '🌙', desc: 'Headlamp also tags the question type on each stem.' },
 ];
 
 function hasDuo(ctx, name) {
@@ -354,6 +364,7 @@ export function createBoonArchitect() {
       }
 
       if (staminaCost > 0 && ctx.enc.node.escalate) staminaCost += ctx.enc.missCount * ctx.enc.node.escalate;
+      if (staminaCost > 0) staminaCost = Math.round(staminaCost * oathStamMult(ctx.run));
       ctx.enc.missCount++;
       if (canUse(ctx, 'allin')) threatDelta *= 1.45;
       if (freed && hasDuo(ctx, 'Solid Footing')) threatDelta -= 9;

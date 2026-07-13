@@ -54,7 +54,7 @@ game/trail.bundle.js
 
 | Screen ID | Purpose |
 |-----------|---------|
-| `menu` | Trailhead — climb CTA, Board Sim, Bestiary, import |
+| `menu` | Trailhead — climb CTA, Today's Ridge, oaths, Board Sim, Bestiary, badges |
 | `map` | Route map between encounters |
 | `encounter` | Question + hazard chrome |
 | `ledge` | Boon draft camp |
@@ -67,6 +67,13 @@ game/trail.bundle.js
 - `scripts/simulate-balance.mjs` — Monte Carlo climb outcomes
 - `scripts/quality-audit.mjs` — BACB-aligned question scoring
 - `playground/index.html` — browse flagged questions visually
+
+## Expedition systems (`expedition-director.js`)
+
+- **Oaths** — pre-run modifiers (Swift Line, Iron Lungs, Scholar's Vow)
+- **Today's Ridge** — date-seeded RNG for a shared daily route
+- **Achievements** — persistent badges in `META.achievements`
+- **Spoils drafts** — ~42% chance of a boon pick after hard pitch clears (Act II+)
 
 ## Deploy
 

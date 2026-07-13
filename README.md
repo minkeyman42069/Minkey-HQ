@@ -29,8 +29,9 @@ You can also open `index.html` directly in a browser — works offline after the
 | Mode | What it does |
 |------|----------------|
 | **Climb the mountain** | Full roguelike run with Leitner scheduling, boon drafts, and hazard encounters |
+| **Today's Ridge** | Daily seeded route — same line for every climber each day |
 | **Board Sim** | 40-question mock exam weighted to TCO domains |
-| **Bestiary** | Hazard reference — what each node does and how to beat it |
+| **Bestiary** | Hazard reference + duo synergy codex |
 
 After each run you receive an `RBT5:…` trail-log code. Paste it on the trailhead to import concept tiers from finished climbs.
 

@@ -1,16 +1,20 @@
 /**
- * Bootstrap — loads the five Trail agents and bridges legacy globals for index.html onclick handlers.
+ * Bootstrap — loads the Trail agents and bridges legacy globals for index.html onclick handlers.
  */
 import { createKernel } from '../src/core/kernel.js';
 
 const Trail = createKernel();
 window.Trail = Trail;
 
+const Exp = Trail.agents.expedition.api;
+
 // Legacy globals (index.html engine references these)
 window.CONFIG = Trail.CONFIG;
 window.BOONS = Trail.agents.boon.api.catalog;
 window.BOON_TAGS = Trail.agents.boon.api.tags;
 window.DUOS = Trail.agents.boon.api.duos;
+window.OATHS = Exp.OATHS;
+window.ACHIEVEMENTS = Exp.ACHIEVEMENTS;
 window.WEATHERS = Trail.agents.economy.api.WEATHERS;
 window.RELICS = Trail.agents.economy.api.RELICS;
 window.DOMAINS = Trail.agents.scholar.api.DOMAINS;
@@ -25,6 +29,14 @@ window.foeColor = Trail.agents.hazard.api.foeColor;
 window.nodeSub = Trail.agents.hazard.api.nodeSub;
 window.nodeEmoji = Trail.agents.hazard.api.nodeEmoji;
 window.scaleNode = Trail.agents.hazard.api.scaleNode;
+window.spoilsDraftEligible = Exp.spoilsDraftEligible;
+window.dailySeed = Exp.dailySeed;
+window.createSeededRng = Exp.createSeededRng;
+window.applyOathMods = Exp.applyOathMods;
+window.oathStamMult = Exp.oathStamMult;
+window.oathHealMult = Exp.oathHealMult;
+window.oathRiseMult = Exp.oathRiseMult;
+window.oathGateHitMult = Exp.oathGateHitMult;
 
 // Node factories on window for any inline references
 const H = Trail.agents.hazard.api;
@@ -40,7 +52,12 @@ window.weakestDomainLetter = function () {
 };
 
 window.pitchRestore = function (node, mode) {
-  return Trail.pitchRestore(node, mode, typeof RUN !== 'undefined' ? RUN : { weather: null });
+  const run = typeof RUN !== 'undefined' ? RUN : { weather: null };
+  const base = Trail.pitchRestore(node, mode, run);
+  if (mode === 'rest' || mode === 'clear') {
+    return Math.round(base * (typeof oathHealMult === 'function' ? oathHealMult(run) : 1));
+  }
+  return base;
 };
 
 window.buildRoute = function (topic) {
@@ -65,7 +82,8 @@ window.BOON = {
     return typeof RUN !== 'undefined' && RUN.boons && RUN.boons.has(id);
   },
   focusTime(base) {
-    return Trail.agents.boon.api.focusTime(Trail.makeCtx(typeof RUN !== 'undefined' ? RUN : {}, typeof ENC !== 'undefined' ? ENC : {}), base);
+    const t = Trail.agents.boon.api.focusTime(Trail.makeCtx(typeof RUN !== 'undefined' ? RUN : {}, typeof ENC !== 'undefined' ? ENC : {}), base);
+    return typeof applyOathMods === 'function' ? applyOathMods(typeof RUN !== 'undefined' ? RUN : {}, t) : t;
   },
 };
 

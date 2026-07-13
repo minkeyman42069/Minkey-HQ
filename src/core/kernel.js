@@ -13,7 +13,21 @@ import {
   configureTypes,
 } from '../agents/trail-scholar.js';
 import * as HazardWarden from '../agents/hazard-warden.js';
-import { buildRoute, ACTS as ROUTE_ACTS } from '../agents/expedition-director.js';
+import {
+  buildRoute,
+  ACTS as ROUTE_ACTS,
+  OATHS,
+  ACHIEVEMENTS,
+  oathById,
+  applyOathMods,
+  oathStamMult,
+  oathHealMult,
+  oathRiseMult,
+  oathGateHitMult,
+  spoilsDraftEligible,
+  dailySeed,
+  createSeededRng,
+} from '../agents/expedition-director.js';
 import { createAtlasArtisan } from '../agents/atlas-artisan.js';
 
 const AGENT_META = [
@@ -90,7 +104,21 @@ export function createKernel() {
     expedition: {
       id: 'expedition-director',
       name: 'Expedition Director',
-      api: { buildRoute, ACTS: ROUTE_ACTS },
+      api: {
+        buildRoute,
+        ACTS: ROUTE_ACTS,
+        OATHS,
+        ACHIEVEMENTS,
+        oathById,
+        applyOathMods,
+        oathStamMult,
+        oathHealMult,
+        oathRiseMult,
+        oathGateHitMult,
+        spoilsDraftEligible,
+        dailySeed,
+        createSeededRng,
+      },
     },
     atlas: atlasAgent,
   };

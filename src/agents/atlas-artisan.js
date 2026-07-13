@@ -92,6 +92,23 @@ export const DEBRIEF_COPY = {
   },
 };
 
+export const ACT_TRANSITIONS = {
+  2: {
+    title: 'The Headwall',
+    sub: 'Easy ground is gone. The face rears up and every pitch wants nerve under pressure.',
+    ic: '🧗',
+  },
+  3: {
+    title: 'The Death Zone',
+    sub: 'Above the last camp the air turns to knives. Everything saved for the summit — thrown at once.',
+    ic: '☠️',
+  },
+};
+
+export const DAILY_RIDGE_COPY = {
+  label: "Today's Ridge",
+  sub: 'Same route & weather for every climber today. One shot at the daily line.',
+};
 export const SECONDARY_ACTIONS = [
   { id: 'exam', label: 'Board Sim', icon: '\u{1F4CB}', action: 'startExam()' },
   { id: 'bestiary', label: 'Bestiary', icon: '\u{1F4D6}', action: 'openBestiary()' },
@@ -114,7 +131,20 @@ export function applyDesignTokens() {
 export function createAtlasArtisan() {
   const api = {
     tokens: ATLAS_TOKENS,
-    copy: { menu: MENU_COPY, screens: SCREEN_COPY, debrief: DEBRIEF_COPY },
+    copy: { menu: MENU_COPY, screens: SCREEN_COPY, debrief: DEBRIEF_COPY, actTransitions: ACT_TRANSITIONS, daily: DAILY_RIDGE_COPY },
+    achievementsMarkup(unlocked, total) {
+      const n = unlocked.length;
+      return (
+        '<div class="achieve-hd"><span class="achieve-title">Expedition badges</span>' +
+        '<span class="achieve-count">' + n + '/' + total + '</span></div>' +
+        '<div class="achieve-grid">' +
+        unlocked.slice(-6).map(function (a) {
+          return '<span class="achieve-chip" title="' + a.desc + '">' + a.ic + ' ' + a.name + '</span>';
+        }).join('') +
+        (n === 0 ? '<span class="achieve-empty">Climb to earn your first badge</span>' : '') +
+        '</div>'
+      );
+    },
     secondaryActions: SECONDARY_ACTIONS,
     applyDesignTokens,
     debriefFor(kind) {

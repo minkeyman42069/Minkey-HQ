@@ -1746,7 +1746,7 @@ function startTick(){
     if(ENC.node.gust && rnd()<ENC.node.gust*0.05){ var gustAmt=12+Math.floor(rnd()*10); var gout=Trail.emit('hazard:gust', trailCtx({ gust: gustAmt })); raiseThreat(gout.threatDelta!=null?gout.threatDelta:gustAmt); showBanners(gout.banners); }
     if(ENC.node.drain) addStamina(-ENC.node.drain*0.05);
     if(ENC.node.spike){ ENC.spikeT+=0.05; if(ENC.spikeT>=(ENC.node.spikeEvery||3.5)){ ENC.spikeT=0; AUDIO.tick(); raiseThreat(ENC.node.spike); } }
-    if(frac<=0.28){ wrap.classList.add('low'); AUDIO.tick(); }
+    if(frac<=0.28){ wrap.classList.add('low'); }
     if(RUN.timeLeft<=0){ clearInterval(RUN.timer); onTimeout(); }
   },50);
 }

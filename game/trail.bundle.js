@@ -55,7 +55,7 @@ var TrailBundle = (() => {
     STAM_MAX: 100,
     MISS_COST: 14,
     TIMEOUT_COST: 10,
-    REST_RESTORE: 36,
+    REST_RESTORE: 38,
     CLEAR_RESTORE_MULT: 0.92,
     THREAT_RESET: 75,
     CRUX_RISE_MULT: 1.2,

@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-07-13T11:16:55.264Z",
-  "runsPerScenario": 20000,
+  "generatedAt": "2026-07-13T11:19:21.870Z",
+  "runsPerScenario": 4000,
   "balance": {
     "STAM_MAX": 100,
     "MISS_COST": 14,
     "TIMEOUT_COST": 10,
-    "REST_RESTORE": 36,
+    "REST_RESTORE": 38,
     "CLEAR_RESTORE_MULT": 0.92,
     "EASE_ON_CORRECT": 6,
     "THREAT_RESET": 75,
@@ -26,19 +26,19 @@
   },
   "scenarios": {
     "base": {
-      "runs": 20000,
-      "summitRate": 0.33,
-      "act3Survival": 0.771,
-      "avgStrikes": 6.67,
+      "runs": 4000,
+      "summitRate": 0.344,
+      "act3Survival": 0.768,
+      "avgStrikes": 6.68,
       "opts": {
         "accuracy": 0.82,
         "timeoutRate": 0.06
       }
     },
     "boon": {
-      "runs": 20000,
-      "summitRate": 0.565,
-      "act3Survival": 0.881,
+      "runs": 4000,
+      "summitRate": 0.567,
+      "act3Survival": 0.882,
       "avgStrikes": 6.94,
       "opts": {
         "accuracy": 0.82,
@@ -50,10 +50,10 @@
       }
     },
     "stacked": {
-      "runs": 20000,
-      "summitRate": 0.88,
-      "act3Survival": 0.964,
-      "avgStrikes": 7.91,
+      "runs": 4000,
+      "summitRate": 0.881,
+      "act3Survival": 0.965,
+      "avgStrikes": 7.93,
       "opts": {
         "accuracy": 0.82,
         "timeoutRate": 0.05,
@@ -65,20 +65,20 @@
       }
     },
     "skilled": {
-      "runs": 20000,
-      "summitRate": 0.718,
-      "act3Survival": 0.947,
-      "avgStrikes": 7.04,
+      "runs": 4000,
+      "summitRate": 0.726,
+      "act3Survival": 0.953,
+      "avgStrikes": 7.06,
       "opts": {
         "accuracy": 0.88,
         "timeoutRate": 0.04
       }
     },
     "struggling": {
-      "runs": 20000,
-      "summitRate": 0.028,
-      "act3Survival": 0.337,
-      "avgStrikes": 4.98,
+      "runs": 4000,
+      "summitRate": 0.032,
+      "act3Survival": 0.349,
+      "avgStrikes": 5.08,
       "opts": {
         "accuracy": 0.72,
         "timeoutRate": 0.1

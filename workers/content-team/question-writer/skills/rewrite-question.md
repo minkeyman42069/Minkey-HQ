@@ -1,0 +1,3 @@
+# rewrite-question
+
+Content skill for `question-writer`. Args: `$ARGUMENTS`

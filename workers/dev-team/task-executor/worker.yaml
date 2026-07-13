@@ -1,0 +1,42 @@
+worker:
+  id: task-executor
+  name: "Task Executor"
+  type: CodeWorker
+  version: "1.0"
+
+execution:
+  mode: on_demand
+  max_runtime: 45m
+  retry_attempts: 2
+
+context:
+  base:
+    - workers/dev-team/task-executor/
+    - workers/dev-team/task-executor/skills/
+    - knowledge/rbt-trail/
+    - workers/registry.yaml
+    - knowledge/rbt-trail/
+
+verification:
+  post_execute:
+    - check: check
+      command: npm run check
+
+output:
+  destination: workspace/reports/dev-team/task-executor/
+  format: markdown
+
+instructions: |
+  # Task Executor
+  
+  Analyze issue, route workers, validate completion
+  
+  See `docs/TEAM.md` for routing and `knowledge/rbt-trail/GOTCHAS.md` for pitfalls.
+
+skills:
+  - id: execute
+    file: skills/execute.md
+  - id: analyze-issue
+    file: skills/analyze-issue.md
+  - id: validate-completion
+    file: skills/validate-completion.md

@@ -1,0 +1,42 @@
+worker:
+  id: game-engine-dev
+  name: "Game Engine Dev"
+  type: CodeWorker
+  version: "1.0"
+
+execution:
+  mode: on_demand
+  max_runtime: 45m
+  retry_attempts: 2
+
+context:
+  base:
+    - workers/dev-team/game-engine-dev/
+    - workers/dev-team/game-engine-dev/skills/
+    - knowledge/rbt-trail/
+    - index.html
+    - game/bootstrap.js
+
+verification:
+  post_execute:
+    - check: check
+      command: npm run check
+
+output:
+  destination: workspace/reports/dev-team/game-engine-dev/
+  format: markdown
+
+instructions: |
+  # Game Engine Dev
+  
+  index.html encounter engine, RUN state, rendering
+  
+  See `docs/TEAM.md` for routing and `knowledge/rbt-trail/GOTCHAS.md` for pitfalls.
+
+skills:
+  - id: edit-encounter
+    file: skills/edit-encounter.md
+  - id: edit-screen
+    file: skills/edit-screen.md
+  - id: fix-engine-bug
+    file: skills/fix-engine-bug.md

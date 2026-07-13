@@ -1,0 +1,58 @@
+worker:
+  id: expedition-director
+  name: "Expedition Director"
+  type: GameWorker
+  version: "1.0"
+  source: src/agents/expedition-director.js
+
+execution:
+  mode: on_demand
+  max_runtime: 30m
+  retry_attempts: 1
+
+context:
+  base:
+    - workers/trail-team/expedition-director/
+    - workers/trail-team/expedition-director/skills/
+    - src/agents/expedition-director.js
+    - src/core/config.js
+    - src/core/agent-bus.js
+    - knowledge/rbt-trail/
+  dynamic:
+    - pattern: "index.html"
+      when: ui_hooks
+
+verification:
+  post_execute:
+    - check: build-trail
+      command: npm run build:trail
+    - check: verify-trail
+      command: npm run verify:trail
+    - check: balance
+      command: npm run balance
+      optional: true
+
+output:
+  destination: workspace/reports/trail-team/expedition-director/
+  format: markdown
+
+instructions: |
+  # Expedition Director
+  
+  Maintains `src/agents/expedition-director.js` — Three-act route assembly, camp pacing
+  
+  After any edit: `npm run build:trail && npm run verify:trail`
+  Balance-sensitive changes: also `npm run balance` (stochastic output).
+  
+  ## Skills
+  - `audit-route`
+  - `tune-acts`
+  - `add-node-slot`
+
+skills:
+  - id: audit-route
+    file: skills/audit-route.md
+  - id: tune-acts
+    file: skills/tune-acts.md
+  - id: add-node-slot
+    file: skills/add-node-slot.md

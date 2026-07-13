@@ -1,0 +1,47 @@
+worker:
+  id: domain-auditor
+  name: "Domain Auditor"
+  type: ContentWorker
+  version: "1.0"
+
+execution:
+  mode: on_demand
+  max_runtime: 60m
+
+context:
+  base:
+    - workers/content-team/domain-auditor/
+    - workers/content-team/domain-auditor/skills/
+    - data/questions.json
+    - scripts/lib/quality-rubric.mjs
+    - knowledge/rbt-trail/TCO-DOMAINS.md
+    - playground/index.html
+
+verification:
+  post_execute:
+    - check: validate
+      command: npm run validate
+    - check: audit
+      command: npm run audit
+      optional: true
+
+output:
+  destination: workspace/reports/content-team/domain-auditor/
+  format: markdown
+
+instructions: |
+  # Domain Auditor
+  TCO domain A-F coverage and distribution
+  
+  Question schema: { id, q, a[], c, cat, dom, type, expl }
+  dom = TCO domain letter A-F
+  
+  After bank edits: `npm run sync` (content-bank-editor)
+
+skills:
+  - id: audit-coverage
+    file: skills/audit-coverage.md
+  - id: rebalance-domains
+    file: skills/rebalance-domains.md
+  - id: domain-report
+    file: skills/domain-report.md

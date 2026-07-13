@@ -1,0 +1,41 @@
+worker:
+  id: infra-dev
+  name: "Infra Dev"
+  type: CodeWorker
+  version: "1.0"
+
+execution:
+  mode: on_demand
+  max_runtime: 45m
+  retry_attempts: 2
+
+context:
+  base:
+    - workers/dev-team/infra-dev/
+    - workers/dev-team/infra-dev/skills/
+    - knowledge/rbt-trail/
+    - .github/workflows/
+
+verification:
+  post_execute:
+    - check: check
+      command: npm run check
+
+output:
+  destination: workspace/reports/dev-team/infra-dev/
+  format: markdown
+
+instructions: |
+  # Infra Dev
+  
+  GitHub Actions CI, Pages deploy
+  
+  See `docs/TEAM.md` for routing and `knowledge/rbt-trail/GOTCHAS.md` for pitfalls.
+
+skills:
+  - id: fix-ci
+    file: skills/fix-ci.md
+  - id: update-workflow
+    file: skills/update-workflow.md
+  - id: check-pages
+    file: skills/check-pages.md

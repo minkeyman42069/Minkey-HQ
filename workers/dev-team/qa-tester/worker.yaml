@@ -1,0 +1,41 @@
+worker:
+  id: qa-tester
+  name: "QA Tester"
+  type: CodeWorker
+  version: "1.0"
+
+execution:
+  mode: on_demand
+  max_runtime: 45m
+  retry_attempts: 2
+
+context:
+  base:
+    - workers/dev-team/qa-tester/
+    - workers/dev-team/qa-tester/skills/
+    - knowledge/rbt-trail/
+    - scripts/verify-trail.mjs
+
+verification:
+  post_execute:
+    - check: check
+      command: npm run check
+
+output:
+  destination: workspace/reports/dev-team/qa-tester/
+  format: markdown
+
+instructions: |
+  # QA Tester
+  
+  npm run check, browser smoke tests, verify-trail
+  
+  See `docs/TEAM.md` for routing and `knowledge/rbt-trail/GOTCHAS.md` for pitfalls.
+
+skills:
+  - id: run-check
+    file: skills/run-check.md
+  - id: smoke-test
+    file: skills/smoke-test.md
+  - id: verify-agents
+    file: skills/verify-agents.md

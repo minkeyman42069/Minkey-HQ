@@ -1,0 +1,58 @@
+worker:
+  id: atlas-artisan
+  name: "Atlas Artisan"
+  type: GameWorker
+  version: "1.0"
+  source: src/agents/atlas-artisan.js
+
+execution:
+  mode: on_demand
+  max_runtime: 30m
+  retry_attempts: 1
+
+context:
+  base:
+    - workers/trail-team/atlas-artisan/
+    - workers/trail-team/atlas-artisan/skills/
+    - src/agents/atlas-artisan.js
+    - src/core/config.js
+    - src/core/agent-bus.js
+    - knowledge/rbt-trail/
+  dynamic:
+    - pattern: "index.html"
+      when: ui_hooks
+
+verification:
+  post_execute:
+    - check: build-trail
+      command: npm run build:trail
+    - check: verify-trail
+      command: npm run verify:trail
+    - check: balance
+      command: npm run balance
+      optional: true
+
+output:
+  destination: workspace/reports/trail-team/atlas-artisan/
+  format: markdown
+
+instructions: |
+  # Atlas Artisan
+  
+  Maintains `src/agents/atlas-artisan.js` — UI tokens, screen copy, menu stats, polish hooks
+  
+  After any edit: `npm run build:trail && npm run verify:trail`
+  Balance-sensitive changes: also `npm run balance` (stochastic output).
+  
+  ## Skills
+  - `audit-ui`
+  - `update-copy`
+  - `add-token`
+
+skills:
+  - id: audit-ui
+    file: skills/audit-ui.md
+  - id: update-copy
+    file: skills/update-copy.md
+  - id: add-token
+    file: skills/add-token.md

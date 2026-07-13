@@ -1,0 +1,61 @@
+worker:
+  id: boon-architect
+  name: "Boon Architect"
+  type: GameWorker
+  version: "1.0"
+  source: src/agents/boon-architect.js
+
+execution:
+  mode: on_demand
+  max_runtime: 30m
+  retry_attempts: 1
+
+context:
+  base:
+    - workers/trail-team/boon-architect/
+    - workers/trail-team/boon-architect/skills/
+    - src/agents/boon-architect.js
+    - src/core/config.js
+    - src/core/agent-bus.js
+    - knowledge/rbt-trail/
+  dynamic:
+    - pattern: "index.html"
+      when: ui_hooks
+
+verification:
+  post_execute:
+    - check: build-trail
+      command: npm run build:trail
+    - check: verify-trail
+      command: npm run verify:trail
+    - check: balance
+      command: npm run balance
+      optional: true
+
+output:
+  destination: workspace/reports/trail-team/boon-architect/
+  format: markdown
+
+instructions: |
+  # Boon Architect
+  
+  Maintains `src/agents/boon-architect.js` — Boon catalog (18), duos (10), draft weighting, hook effects
+  
+  After any edit: `npm run build:trail && npm run verify:trail`
+  Balance-sensitive changes: also `npm run balance` (stochastic output).
+  
+  ## Skills
+  - `audit-boons`
+  - `add-boon`
+  - `tune-draft`
+  - `add-duo`
+
+skills:
+  - id: audit-boons
+    file: skills/audit-boons.md
+  - id: add-boon
+    file: skills/add-boon.md
+  - id: tune-draft
+    file: skills/tune-draft.md
+  - id: add-duo
+    file: skills/add-duo.md

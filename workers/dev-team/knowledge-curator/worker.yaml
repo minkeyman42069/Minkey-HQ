@@ -1,0 +1,42 @@
+worker:
+  id: knowledge-curator
+  name: "Knowledge Curator"
+  type: CodeWorker
+  version: "1.0"
+
+execution:
+  mode: on_demand
+  max_runtime: 45m
+  retry_attempts: 2
+
+context:
+  base:
+    - workers/dev-team/knowledge-curator/
+    - workers/dev-team/knowledge-curator/skills/
+    - knowledge/rbt-trail/
+    - knowledge/
+    - docs/
+
+verification:
+  post_execute:
+    - check: check
+      command: npm run check
+
+output:
+  destination: workspace/reports/dev-team/knowledge-curator/
+  format: markdown
+
+instructions: |
+  # Knowledge Curator
+  
+  Update knowledge/, capture learnings
+  
+  See `docs/TEAM.md` for routing and `knowledge/rbt-trail/GOTCHAS.md` for pitfalls.
+
+skills:
+  - id: update-docs
+    file: skills/update-docs.md
+  - id: capture-learning
+    file: skills/capture-learning.md
+  - id: check-drift
+    file: skills/check-drift.md

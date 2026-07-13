@@ -1,0 +1,42 @@
+worker:
+  id: balance-analyst
+  name: "Balance Analyst"
+  type: OpsWorker
+  version: "1.0"
+
+execution:
+  mode: on_demand
+  max_runtime: 45m
+  retry_attempts: 2
+
+context:
+  base:
+    - workers/dev-team/balance-analyst/
+    - workers/dev-team/balance-analyst/skills/
+    - knowledge/rbt-trail/
+    - scripts/simulate-balance.mjs
+    - data/balance-report.json
+
+verification:
+  post_execute:
+    - check: balance
+      command: npm run balance
+
+output:
+  destination: workspace/reports/dev-team/balance-analyst/
+  format: markdown
+
+instructions: |
+  # Balance Analyst
+  
+  Monte Carlo balance sim, CONFIG tuning targets
+  
+  See `docs/TEAM.md` for routing and `knowledge/rbt-trail/GOTCHAS.md` for pitfalls.
+
+skills:
+  - id: run-sim
+    file: skills/run-sim.md
+  - id: compare-runs
+    file: skills/compare-runs.md
+  - id: set-targets
+    file: skills/set-targets.md

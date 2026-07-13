@@ -1,0 +1,58 @@
+worker:
+  id: mountain-economy
+  name: "Mountain Economist"
+  type: GameWorker
+  version: "1.0"
+  source: src/agents/mountain-economy.js
+
+execution:
+  mode: on_demand
+  max_runtime: 30m
+  retry_attempts: 1
+
+context:
+  base:
+    - workers/trail-team/mountain-economy/
+    - workers/trail-team/mountain-economy/skills/
+    - src/agents/mountain-economy.js
+    - src/core/config.js
+    - src/core/agent-bus.js
+    - knowledge/rbt-trail/
+  dynamic:
+    - pattern: "index.html"
+      when: ui_hooks
+
+verification:
+  post_execute:
+    - check: build-trail
+      command: npm run build:trail
+    - check: verify-trail
+      command: npm run verify:trail
+    - check: balance
+      command: npm run balance
+      optional: true
+
+output:
+  destination: workspace/reports/trail-team/mountain-economy/
+  format: markdown
+
+instructions: |
+  # Mountain Economist
+  
+  Maintains `src/agents/mountain-economy.js` — Stamina, threat, weather, relics, CONFIG tuning
+  
+  After any edit: `npm run build:trail && npm run verify:trail`
+  Balance-sensitive changes: also `npm run balance` (stochastic output).
+  
+  ## Skills
+  - `tune-config`
+  - `audit-weather`
+  - `audit-relics`
+
+skills:
+  - id: tune-config
+    file: skills/tune-config.md
+  - id: audit-weather
+    file: skills/audit-weather.md
+  - id: audit-relics
+    file: skills/audit-relics.md

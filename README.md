@@ -32,6 +32,29 @@ You can also open `index.html` directly in a browser — works offline after the
 
 After each run you receive an `RBT5:…` trail-log code. Paste it on the trailhead to import concept tiers from finished climbs.
 
+## Agent worker team
+
+Minkey-HQ ships a full **22-worker agent team** for developing and maintaining the game. Boot it in Cursor:
+
+```
+/run team-orchestrator start-team
+```
+
+| Team | Workers | Purpose |
+|------|---------|---------|
+| **Orchestration** | 2 | Boot team, route tasks, shared context |
+| **Trail Team** | 6 | One worker per in-game agent (`src/agents/`) |
+| **Dev Team** | 11 | Engine, QA, balance, CI, PRs |
+| **Content Team** | 3 | Question writing, TCO domains, quality |
+
+**Full playbook:** [docs/TEAM.md](docs/TEAM.md) · Registry: [workers/registry.yaml](workers/registry.yaml)
+
+Cloud/self-hosted agents:
+```bash
+agent worker start --worker-dir /workspace
+/run team-orchestrator agent-worker-start
+```
+
 ## Repo layout
 
 ```
@@ -46,8 +69,11 @@ data/
 src/
   core/                    # Agent bus, kernel, shared config
   agents/                  # Modular game systems (see docs/ARCHITECTURE.md)
+workers/                   # 22 AI workers (trail-team, dev-team, content-team)
+knowledge/rbt-trail/       # Shared context for all workers
 playground/index.html      # Visual question-quality reviewer
 scripts/                   # Bank tooling, balance sim, bundle build
+docs/TEAM.md               # Full worker team reference
 docs/ARCHITECTURE.md       # How the codebase is organized
 ```
 

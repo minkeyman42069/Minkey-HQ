@@ -1,0 +1,40 @@
+worker:
+  id: code-reviewer
+  name: "Code Reviewer"
+  type: CodeWorker
+  version: "1.0"
+
+execution:
+  mode: on_demand
+  max_runtime: 45m
+  retry_attempts: 2
+
+context:
+  base:
+    - workers/dev-team/code-reviewer/
+    - workers/dev-team/code-reviewer/skills/
+    - knowledge/rbt-trail/
+
+verification:
+  post_execute:
+    - check: check
+      command: npm run check
+
+output:
+  destination: workspace/reports/dev-team/code-reviewer/
+  format: markdown
+
+instructions: |
+  # Code Reviewer
+  
+  PR review, sync-check gate, bundle freshness
+  
+  See `docs/TEAM.md` for routing and `knowledge/rbt-trail/GOTCHAS.md` for pitfalls.
+
+skills:
+  - id: review-pr
+    file: skills/review-pr.md
+  - id: check-bundle
+    file: skills/check-bundle.md
+  - id: check-sync
+    file: skills/check-sync.md

@@ -1,0 +1,47 @@
+worker:
+  id: quality-reviewer
+  name: "Quality Reviewer"
+  type: ContentWorker
+  version: "1.0"
+
+execution:
+  mode: on_demand
+  max_runtime: 60m
+
+context:
+  base:
+    - workers/content-team/quality-reviewer/
+    - workers/content-team/quality-reviewer/skills/
+    - data/questions.json
+    - scripts/lib/quality-rubric.mjs
+    - knowledge/rbt-trail/TCO-DOMAINS.md
+    - playground/index.html
+
+verification:
+  post_execute:
+    - check: validate
+      command: npm run validate
+    - check: audit
+      command: npm run audit
+      optional: true
+
+output:
+  destination: workspace/reports/content-team/quality-reviewer/
+  format: markdown
+
+instructions: |
+  # Quality Reviewer
+  quality-audit scoring, playground review
+  
+  Question schema: { id, q, a[], c, cat, dom, type, expl }
+  dom = TCO domain letter A-F
+  
+  After bank edits: `npm run sync` (content-bank-editor)
+
+skills:
+  - id: run-audit
+    file: skills/run-audit.md
+  - id: review-flagged
+    file: skills/review-flagged.md
+  - id: create-overhaul-batch
+    file: skills/create-overhaul-batch.md

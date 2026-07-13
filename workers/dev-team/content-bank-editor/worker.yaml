@@ -1,0 +1,44 @@
+worker:
+  id: content-bank-editor
+  name: "Content Bank Editor"
+  type: ContentWorker
+  version: "1.0"
+
+execution:
+  mode: on_demand
+  max_runtime: 45m
+  retry_attempts: 2
+
+context:
+  base:
+    - workers/dev-team/content-bank-editor/
+    - workers/dev-team/content-bank-editor/skills/
+    - knowledge/rbt-trail/
+    - data/questions.json
+    - scripts/
+
+verification:
+  post_execute:
+    - check: validate
+      command: npm run validate
+    - check: sync-check
+      command: npm run sync-check
+
+output:
+  destination: workspace/reports/dev-team/content-bank-editor/
+  format: markdown
+
+instructions: |
+  # Content Bank Editor
+  
+  questions.json edits, sync pipeline
+  
+  See `docs/TEAM.md` for routing and `knowledge/rbt-trail/GOTCHAS.md` for pitfalls.
+
+skills:
+  - id: edit-question
+    file: skills/edit-question.md
+  - id: sync-bank
+    file: skills/sync-bank.md
+  - id: validate-bank
+    file: skills/validate-bank.md

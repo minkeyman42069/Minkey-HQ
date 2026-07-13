@@ -1,0 +1,42 @@
+worker:
+  id: project-manager
+  name: "Project Manager"
+  type: CodeWorker
+  version: "1.0"
+
+execution:
+  mode: on_demand
+  max_runtime: 45m
+  retry_attempts: 2
+
+context:
+  base:
+    - workers/dev-team/project-manager/
+    - workers/dev-team/project-manager/skills/
+    - knowledge/rbt-trail/
+    - knowledge/rbt-trail/
+    - projects/
+
+verification:
+  post_execute:
+    - check: check
+      command: npm run check
+
+output:
+  destination: workspace/reports/dev-team/project-manager/
+  format: markdown
+
+instructions: |
+  # Project Manager
+  
+  PRD lifecycle, issue selection, learning aggregation
+  
+  See `docs/TEAM.md` for routing and `knowledge/rbt-trail/GOTCHAS.md` for pitfalls.
+
+skills:
+  - id: create-prd
+    file: skills/create-prd.md
+  - id: next-issue
+    file: skills/next-issue.md
+  - id: update-learnings
+    file: skills/update-learnings.md

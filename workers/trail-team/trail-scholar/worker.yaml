@@ -1,0 +1,58 @@
+worker:
+  id: trail-scholar
+  name: "Trail Scholar"
+  type: GameWorker
+  version: "1.0"
+  source: src/agents/trail-scholar.js
+
+execution:
+  mode: on_demand
+  max_runtime: 30m
+  retry_attempts: 1
+
+context:
+  base:
+    - workers/trail-team/trail-scholar/
+    - workers/trail-team/trail-scholar/skills/
+    - src/agents/trail-scholar.js
+    - src/core/config.js
+    - src/core/agent-bus.js
+    - knowledge/rbt-trail/
+  dynamic:
+    - pattern: "index.html"
+      when: ui_hooks
+
+verification:
+  post_execute:
+    - check: build-trail
+      command: npm run build:trail
+    - check: verify-trail
+      command: npm run verify:trail
+    - check: balance
+      command: npm run balance
+      optional: true
+
+output:
+  destination: workspace/reports/trail-team/trail-scholar/
+  format: markdown
+
+instructions: |
+  # Trail Scholar
+  
+  Maintains `src/agents/trail-scholar.js` — TCO domains A-F, Leitner scheduler, question types
+  
+  After any edit: `npm run build:trail && npm run verify:trail`
+  Balance-sensitive changes: also `npm run balance` (stochastic output).
+  
+  ## Skills
+  - `audit-domains`
+  - `tune-scheduler`
+  - `add-question-type`
+
+skills:
+  - id: audit-domains
+    file: skills/audit-domains.md
+  - id: tune-scheduler
+    file: skills/tune-scheduler.md
+  - id: add-question-type
+    file: skills/add-question-type.md

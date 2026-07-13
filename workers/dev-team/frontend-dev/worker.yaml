@@ -1,0 +1,42 @@
+worker:
+  id: frontend-dev
+  name: "Frontend Dev"
+  type: CodeWorker
+  version: "1.0"
+
+execution:
+  mode: on_demand
+  max_runtime: 45m
+  retry_attempts: 2
+
+context:
+  base:
+    - workers/dev-team/frontend-dev/
+    - workers/dev-team/frontend-dev/skills/
+    - knowledge/rbt-trail/
+    - index.html
+    - src/agents/atlas-artisan.js
+
+verification:
+  post_execute:
+    - check: check
+      command: npm run check
+
+output:
+  destination: workspace/reports/dev-team/frontend-dev/
+  format: markdown
+
+instructions: |
+  # Frontend Dev
+  
+  Screens, CSS, mobile layout, accessibility
+  
+  See `docs/TEAM.md` for routing and `knowledge/rbt-trail/GOTCHAS.md` for pitfalls.
+
+skills:
+  - id: style-screen
+    file: skills/style-screen.md
+  - id: fix-layout
+    file: skills/fix-layout.md
+  - id: a11y-pass
+    file: skills/a11y-pass.md

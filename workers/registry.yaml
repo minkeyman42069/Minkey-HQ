@@ -1,0 +1,189 @@
+# Minkey-HQ Workers Registry
+# The RBT Trail — full agent worker team
+# Usage: /run {worker-id} {skill}  or  see docs/TEAM.md
+
+version: "1.0"
+updated: "2026-07-13"
+product: "The RBT Trail"
+repo: "github.com/minkeyman42069/Minkey-HQ"
+
+# Worker Types:
+# - CodeWorker: implements features, fixes bugs, refactors
+# - ContentWorker: question bank, explanations, TCO alignment
+# - GameWorker: maintains one in-game agent subsystem
+# - OpsWorker: CI, balance sims, audits, reports
+# - Library: shared utilities (not executable)
+
+workers:
+  # ===================
+  # Orchestration (2)
+  # ===================
+  - id: team-orchestrator
+    path: workers/orchestration/team-orchestrator/
+    type: OpsWorker
+    team: orchestration
+    status: active
+    description: "Start the full team, route multi-worker jobs, daily standup brief"
+
+  - id: trail-kernel
+    path: workers/orchestration/trail-kernel/
+    type: Library
+    team: orchestration
+    status: active
+    description: "Shared context: agent bus events, CONFIG, file map, verification commands"
+
+  # ===================
+  # Trail Team — 6 in-game agent maintainers
+  # Maps 1:1 to src/agents/*.js
+  # ===================
+  - id: boon-architect
+    path: workers/trail-team/boon-architect/
+    type: GameWorker
+    team: trail-team
+    status: active
+    source: src/agents/boon-architect.js
+    description: "Boon catalog, duos, draft weighting, hook-driven effects"
+
+  - id: hazard-warden
+    path: workers/trail-team/hazard-warden/
+    type: GameWorker
+    team: trail-team
+    status: active
+    source: src/agents/hazard-warden.js
+    description: "Encounter factories, bestiary, act scaling, node definitions"
+
+  - id: trail-scholar
+    path: workers/trail-team/trail-scholar/
+    type: GameWorker
+    team: trail-team
+    status: active
+    source: src/agents/trail-scholar.js
+    description: "TCO domains A–F, Leitner scheduler, question type renderers"
+
+  - id: mountain-economy
+    path: workers/trail-team/mountain-economy/
+    type: GameWorker
+    team: trail-team
+    status: active
+    source: src/agents/mountain-economy.js
+    description: "Stamina, threat, weather, relics, pitch restore tuning"
+
+  - id: expedition-director
+    path: workers/trail-team/expedition-director/
+    type: GameWorker
+    team: trail-team
+    status: active
+    source: src/agents/expedition-director.js
+    description: "Three-act route assembly, camp pacing, summit sequencing"
+
+  - id: atlas-artisan
+    path: workers/trail-team/atlas-artisan/
+    type: GameWorker
+    team: trail-team
+    status: active
+    source: src/agents/atlas-artisan.js
+    description: "UI tokens, screen copy, menu stats, visual polish hooks"
+
+  # ===================
+  # Dev Team — 11 workers
+  # ===================
+  - id: project-manager
+    path: workers/dev-team/project-manager/
+    type: CodeWorker
+    team: dev-team
+    status: active
+    description: "PRD lifecycle, issue selection, learning aggregation"
+
+  - id: task-executor
+    path: workers/dev-team/task-executor/
+    type: CodeWorker
+    team: dev-team
+    status: active
+    description: "Analyze issue, route to workers, validate completion"
+
+  - id: game-engine-dev
+    path: workers/dev-team/game-engine-dev/
+    type: CodeWorker
+    team: dev-team
+    status: active
+    description: "index.html encounter engine, run state, rendering, audio"
+
+  - id: agent-dev
+    path: workers/dev-team/agent-dev/
+    type: CodeWorker
+    team: dev-team
+    status: active
+    description: "src/agents/, kernel, agent-bus, build:trail pipeline"
+
+  - id: frontend-dev
+    path: workers/dev-team/frontend-dev/
+    type: CodeWorker
+    team: dev-team
+    status: active
+    description: "Screens, CSS, mobile layout, accessibility in index.html"
+
+  - id: qa-tester
+    path: workers/dev-team/qa-tester/
+    type: CodeWorker
+    team: dev-team
+    status: active
+    description: "npm run check, browser smoke tests, verify-trail"
+
+  - id: balance-analyst
+    path: workers/dev-team/balance-analyst/
+    type: OpsWorker
+    team: dev-team
+    status: active
+    description: "Monte Carlo balance sim, CONFIG tuning, win-rate targets"
+
+  - id: content-bank-editor
+    path: workers/dev-team/content-bank-editor/
+    type: ContentWorker
+    team: dev-team
+    status: active
+    description: "questions.json edits, sync pipeline, validate/analyze bank"
+
+  - id: infra-dev
+    path: workers/dev-team/infra-dev/
+    type: CodeWorker
+    team: dev-team
+    status: active
+    description: "GitHub Actions CI, Pages deploy, workflow hardening"
+
+  - id: code-reviewer
+    path: workers/dev-team/code-reviewer/
+    type: CodeWorker
+    team: dev-team
+    status: active
+    description: "PR review, sync-check gate, bundle freshness checks"
+
+  - id: knowledge-curator
+    path: workers/dev-team/knowledge-curator/
+    type: CodeWorker
+    team: dev-team
+    status: active
+    description: "Update knowledge/, capture learnings, docs drift checks"
+
+  # ===================
+  # Content Team — 3 workers
+  # ===================
+  - id: question-writer
+    path: workers/content-team/question-writer/
+    type: ContentWorker
+    team: content-team
+    status: active
+    description: "Draft new RBT exam questions with BACB-aligned explanations"
+
+  - id: domain-auditor
+    path: workers/content-team/domain-auditor/
+    type: ContentWorker
+    team: content-team
+    status: active
+    description: "TCO domain A–F coverage, distribution, weak-domain targeting"
+
+  - id: quality-reviewer
+    path: workers/content-team/quality-reviewer/
+    type: ContentWorker
+    team: content-team
+    status: active
+    description: "quality-audit scoring, playground review, overhaul batches"

@@ -1,0 +1,58 @@
+worker:
+  id: hazard-warden
+  name: "Hazard Warden"
+  type: GameWorker
+  version: "1.0"
+  source: src/agents/hazard-warden.js
+
+execution:
+  mode: on_demand
+  max_runtime: 30m
+  retry_attempts: 1
+
+context:
+  base:
+    - workers/trail-team/hazard-warden/
+    - workers/trail-team/hazard-warden/skills/
+    - src/agents/hazard-warden.js
+    - src/core/config.js
+    - src/core/agent-bus.js
+    - knowledge/rbt-trail/
+  dynamic:
+    - pattern: "index.html"
+      when: ui_hooks
+
+verification:
+  post_execute:
+    - check: build-trail
+      command: npm run build:trail
+    - check: verify-trail
+      command: npm run verify:trail
+    - check: balance
+      command: npm run balance
+      optional: true
+
+output:
+  destination: workspace/reports/trail-team/hazard-warden/
+  format: markdown
+
+instructions: |
+  # Hazard Warden
+  
+  Maintains `src/agents/hazard-warden.js` — Encounter node factories, bestiary, act scaling
+  
+  After any edit: `npm run build:trail && npm run verify:trail`
+  Balance-sensitive changes: also `npm run balance` (stochastic output).
+  
+  ## Skills
+  - `audit-bestiary`
+  - `add-hazard`
+  - `tune-scaling`
+
+skills:
+  - id: audit-bestiary
+    file: skills/audit-bestiary.md
+  - id: add-hazard
+    file: skills/add-hazard.md
+  - id: tune-scaling
+    file: skills/tune-scaling.md

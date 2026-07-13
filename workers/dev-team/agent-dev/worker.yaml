@@ -1,0 +1,42 @@
+worker:
+  id: agent-dev
+  name: "Agent Dev"
+  type: CodeWorker
+  version: "1.0"
+
+execution:
+  mode: on_demand
+  max_runtime: 45m
+  retry_attempts: 2
+
+context:
+  base:
+    - workers/dev-team/agent-dev/
+    - workers/dev-team/agent-dev/skills/
+    - knowledge/rbt-trail/
+    - src/
+    - game/
+
+verification:
+  post_execute:
+    - check: check
+      command: npm run check
+
+output:
+  destination: workspace/reports/dev-team/agent-dev/
+  format: markdown
+
+instructions: |
+  # Agent Dev
+  
+  src/agents/, kernel, agent-bus, build pipeline
+  
+  See `docs/TEAM.md` for routing and `knowledge/rbt-trail/GOTCHAS.md` for pitfalls.
+
+skills:
+  - id: edit-agent
+    file: skills/edit-agent.md
+  - id: add-hook
+    file: skills/add-hook.md
+  - id: rebuild-bundle
+    file: skills/rebuild-bundle.md

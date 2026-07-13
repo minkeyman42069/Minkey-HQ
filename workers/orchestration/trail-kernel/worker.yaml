@@ -1,0 +1,55 @@
+worker:
+  id: trail-kernel
+  name: "Trail Kernel"
+  type: Library
+  version: "1.0"
+
+instructions: |
+  # Trail Kernel — shared context for all workers
+
+  This is a **library worker** (not directly executable). Other workers load
+  `knowledge/rbt-trail/` and this file for shared game context.
+
+  ## File map
+
+  | Path | What lives here |
+  |------|-----------------|
+  | `index.html` | UI, encounter engine, run state, embedded BANK |
+  | `src/agents/*.js` | Six modular game agents |
+  | `src/core/kernel.js` | Agent registration + `Trail.emit()` |
+  | `src/core/agent-bus.js` | Hook pub/sub (`pitch:enter`, `answer:correct`, …) |
+  | `src/core/config.js` | Economy knobs (CONFIG) |
+  | `data/questions.json` | Question bank source of truth |
+  | `game/trail.bundle.js` | Built IIFE bundle (commit after `build:trail`) |
+  | `scripts/*.mjs` | Bank tooling, balance sim, verify |
+
+  ## Agent bus events
+
+  - `pitch:enter` — new pitch started
+  - `question:start` — question displayed
+  - `answer:correct` / `answer:wrong` — grading
+  - `mountain:strike` — stamina hit
+  - `hazard:gust` — hazard proc
+  - `pitch:clear` — pitch completed
+
+  ## Verification commands (run after code changes)
+
+  ```bash
+  npm run build:trail    # after src/ edits
+  npm run verify:trail   # smoke-test all 6 agents
+  npm run sync           # after data/questions.json edits
+  npm run check          # full CI gate locally
+  npm run balance        # stochastic — don't commit unless intentional
+  npm run audit          # regenerates quality-report.json
+  ```
+
+  ## Six in-game agents → trail-team workers
+
+  | Agent | Worker ID | Source |
+  |-------|-----------|--------|
+  | Boon Architect | `boon-architect` | `src/agents/boon-architect.js` |
+  | Hazard Warden | `hazard-warden` | `src/agents/hazard-warden.js` |
+  | Trail Scholar | `trail-scholar` | `src/agents/trail-scholar.js` |
+  | Mountain Economist | `mountain-economy` | `src/agents/mountain-economy.js` |
+  | Expedition Director | `expedition-director` | `src/agents/expedition-director.js` |
+  | Atlas Artisan | `atlas-artisan` | `src/agents/atlas-artisan.js` |

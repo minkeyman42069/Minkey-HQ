@@ -1,0 +1,47 @@
+worker:
+  id: question-writer
+  name: "Question Writer"
+  type: ContentWorker
+  version: "1.0"
+
+execution:
+  mode: on_demand
+  max_runtime: 60m
+
+context:
+  base:
+    - workers/content-team/question-writer/
+    - workers/content-team/question-writer/skills/
+    - data/questions.json
+    - scripts/lib/quality-rubric.mjs
+    - knowledge/rbt-trail/TCO-DOMAINS.md
+    - playground/index.html
+
+verification:
+  post_execute:
+    - check: validate
+      command: npm run validate
+    - check: audit
+      command: npm run audit
+      optional: true
+
+output:
+  destination: workspace/reports/content-team/question-writer/
+  format: markdown
+
+instructions: |
+  # Question Writer
+  Draft new RBT exam questions with BACB-aligned explanations
+  
+  Question schema: { id, q, a[], c, cat, dom, type, expl }
+  dom = TCO domain letter A-F
+  
+  After bank edits: `npm run sync` (content-bank-editor)
+
+skills:
+  - id: draft-question
+    file: skills/draft-question.md
+  - id: rewrite-question
+    file: skills/rewrite-question.md
+  - id: batch-draft
+    file: skills/batch-draft.md

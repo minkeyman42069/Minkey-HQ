@@ -1,0 +1,80 @@
+worker:
+  id: team-orchestrator
+  name: "Team Orchestrator"
+  type: OpsWorker
+  version: "1.0"
+
+execution:
+  mode: on_demand
+  max_runtime: 60m
+  retry_attempts: 1
+  spawn_method: task_tool
+
+context:
+  base:
+    - workers/orchestration/team-orchestrator/
+    - workers/orchestration/team-orchestrator/skills/
+    - workers/registry.yaml
+    - knowledge/rbt-trail/
+  dynamic:
+    - pattern: "docs/TEAM.md"
+      when: always
+
+verification:
+  post_execute:
+    - check: trail-verify
+      command: npm run verify:trail
+      when: code_changed
+    - check: sync-check
+      command: npm run sync-check
+      when: bank_changed
+
+output:
+  destination: workspace/reports/orchestration/
+  format: markdown
+  naming: "{date}-orchestrator-{skill}.md"
+
+instructions: |
+  # Team Orchestrator
+
+  Boots and coordinates the full Minkey-HQ worker team for The RBT Trail.
+
+  ## Teams
+
+  | Team | Workers | When to use |
+  |------|---------|-------------|
+  | **trail-team** | 6 game-agent maintainers | Changing boons, hazards, scheduling, economy, routes, UI |
+  | **dev-team** | 11 dev workers | Engine work, CI, QA, balance, PRs |
+  | **content-team** | 3 content workers | Question bank, TCO coverage, quality audits |
+
+  ## Skills
+
+  | Skill | Description |
+  |-------|-------------|
+  | `start-team` | Print full roster, health checks, suggested first commands |
+  | `route-task` | Given a task description, recommend worker sequence |
+  | `daily-brief` | Repo status, open issues, last CI, bank stats |
+  | `full-check` | Run check + audit summary + balance snapshot |
+  | `agent-worker-start` | Cursor Cloud agent bootstrap checklist |
+
+  ## Routing cheat sheet
+
+  - New boon or duo → `boon-architect` → `balance-analyst` → `qa-tester`
+  - New hazard node → `hazard-warden` → `game-engine-dev` → `qa-tester`
+  - CONFIG tuning → `mountain-economy` → `balance-analyst`
+  - New questions → `question-writer` → `domain-auditor` → `content-bank-editor` → `quality-reviewer`
+  - UI screen polish → `atlas-artisan` or `frontend-dev`
+  - CI failure → `infra-dev` → `qa-tester`
+  - Big feature → `project-manager` → `task-executor` → specialists
+
+skills:
+  - id: start-team
+    file: skills/start-team.md
+  - id: route-task
+    file: skills/route-task.md
+  - id: daily-brief
+    file: skills/daily-brief.md
+  - id: full-check
+    file: skills/full-check.md
+  - id: agent-worker-start
+    file: skills/agent-worker-start.md

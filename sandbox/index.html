@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The RBT Trail — Staff Sandbox</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏔️</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@600;700&family=Space+Mono&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -200,8 +201,8 @@ td.num,th.num{text-align:right;font-family:'Space Mono',monospace}
       <h2>📚 Trail Scholar × 🧠 Summit Sage</h2>
       <p class="hint">The <b>Trail Scholar</b> Leitner scheduler runs a study session at a target accuracy; the <b>Summit Sage</b> then reads the resulting progress and coaches you.</p>
       <div class="row">
-        <div class="field"><label>Questions</label><input type="number" id="st_n" value="120" min="10" max="600"></div>
-        <div class="field"><label>Accuracy %</label><input type="number" id="st_acc" value="72" min="0" max="100"></div>
+        <div class="field"><label>Questions</label><input type="number" id="st_n" value="300" min="10" max="800"></div>
+        <div class="field"><label>Accuracy %</label><input type="number" id="st_acc" value="85" min="0" max="100"></div>
         <div class="field"><label>Focus domain</label><select id="st_dom"><option value="">All domains</option></select></div>
         <div class="field"><label>&nbsp;</label><button class="act" id="st_run">Run session ▶</button></div>
       </div>
@@ -444,6 +445,7 @@ td.num,th.num{text-align:right;font-family:'Space Mono',monospace}
   function fillDomains(){
     var sel=$('st_dom');
     Object.keys(SCHOLAR.DOMAINS).forEach(function(d){ var o=document.createElement('option'); o.value=d; o.textContent=d+' — '+SCHOLAR.DOMAINS[d].n; sel.appendChild(o); });
+    sel.value='A';
   }
   function runSession(){
     var n=parseInt($('st_n').value,10), acc=(parseInt($('st_acc').value,10)||0)/100, dom=$('st_dom').value;
@@ -459,14 +461,17 @@ td.num,th.num{text-align:right;font-family:'Space Mono',monospace}
       var correct=rnd()<acc;
       sched.grade(id,correct,false,run); run.seen++; if(correct) run.right++;
     }
-    var read=SAGE.readiness(run,BANK,CFG);
+    // Headline readiness is scoped to the studied pool; the breakdown/coaching
+    // always span the full bank so neglected domains still surface.
+    var focusBank = dom ? BANK.filter(function(q){ return SCHOLAR.domainOf(q)===dom; }) : BANK;
+    var read=SAGE.readiness(run,focusBank,CFG);
     var rows=SAGE.domainBreakdown(run,BANK,CFG);
     var tips=SAGE.recommend(run,BANK,CFG);
     var tierCount=[0,0,0,0,0];
     Object.keys(run.prog).forEach(function(k){ var t=run.prog[k].tier; tierCount[t]=(tierCount[t]||0)+1; });
 
     var h='<div class="tiles">'+
-      tile(read.readyPct+'%','Board-ready')+
+      tile(read.readyPct+'%','Board-ready'+(dom?' ('+dom+')':''))+
       tile(read.ready+' / '+read.total,'Concepts locked')+
       tile(read.mastered,'Mastered (tier 4)')+
       tile(run.seen,'Questions answered')+

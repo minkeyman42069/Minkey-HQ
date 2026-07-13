@@ -7,6 +7,7 @@ import { readFileSync, writeFileSync } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import { domainOf, normalizeBank } from './lib/load-bank.mjs';
+import { ensureExplanationContrast } from './lib/explanation-contrast.mjs';
 import { BACB_SAMPLES } from './lib/quality-rubric.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -22,15 +23,7 @@ const FUNCTION_OPTS = [
 ];
 
 function improveExplanation(q) {
-  let e = q.e || '';
-  if (e.length < 60 && q.type === 'mc' && q.a) {
-    const correct = q.a[q.c];
-    const wrong = q.a.filter((_, i) => i !== q.c).slice(0, 1)[0];
-    if (wrong && !/not\b/i.test(e)) {
-      e = e.replace(/\.$/, '') + `. This is not <b>${wrong}</b> because it does not match the scenario.`;
-    }
-  }
-  return e;
+  return ensureExplanationContrast(q);
 }
 
 function scenarioReinforcement(q, idx) {

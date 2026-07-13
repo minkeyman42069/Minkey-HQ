@@ -1,0 +1,197 @@
+[
+  {
+    "id": 169,
+    "q": "An RBT is comparing DRA and DRI for a hitting reduction plan. Which statement correctly describes the difference?",
+    "a": [
+      "DRI requires an incompatible replacement; DRA only needs an appropriate alternative",
+      "DRA reinforces absence of hitting; DRI reinforces any other behavior",
+      "DRA is for high-rate behavior; DRI is for low-rate behavior",
+      "There is no meaningful difference between the two"
+    ],
+    "c": 0,
+    "e": "<b>DRI</b> requires the replacement behavior to be physically incompatible with hitting (e.g., hands in lap). <b>DRA</b> only requires an appropriate alternative and does not require incompatibility. Reinforcing absence of hitting describes <b>DRO</b>, not DRA."
+  },
+  {
+    "id": 194,
+    "q": "A BCBA asks how response cost differs from time-out from reinforcement. The best answer is:",
+    "a": [
+      "Response cost removes an earned reinforcer; time-out blocks access to reinforcement for a period",
+      "Response cost adds an aversive; time-out removes one",
+      "Response cost is reinforcement; time-out is extinction",
+      "They are identical negative-punishment procedures"
+    ],
+    "c": 0,
+    "e": "<b>Response cost</b> removes a specific reinforcer the learner already earned (e.g., tokens). <b>Time-out</b> temporarily removes access to the reinforcing environment or activity. Adding an aversive would be punishment, not response cost."
+  },
+  {
+    "id": 235,
+    "q": "During supervision, an RBT confuses scope of practice with scope of competence. The correct distinction is:",
+    "a": [
+      "Practice is what the credential permits; competence is what the individual is trained to perform",
+      "They mean the same thing in ethics codes",
+      "Competence is always broader than practice",
+      "Practice is determined by each family, not the certifying body"
+    ],
+    "c": 0,
+    "e": "<b>Scope of practice</b> is defined by the credential and regulations (what an RBT may do). <b>Scope of competence</b> is individual — what you are actually trained and able to perform, which may be narrower. Families do not set legal scope of practice."
+  },
+  {
+    "id": 5,
+    "q": "A BCBA asks why a client keeps leaving the table during demands. The RBT should identify the behavior's:",
+    "a": ["Topography", "Function", "Antecedent", "Dimension"],
+    "c": 1,
+    "e": "The <b>function</b> is the purpose the behavior serves (why it is reinforced). <b>Topography</b> describes form, not purpose; antecedents and dimensions are measurement concepts, not the maintaining reason."
+  },
+  {
+    "id": 76,
+    "q": "An RBT reinforces closer and closer approximations toward a target mand. This teaching method is:",
+    "a": ["Chaining", "Shaping", "Fading", "Pairing"],
+    "c": 1,
+    "e": "<b>Shaping</b> reinforces successive approximations toward a terminal behavior. <b>Chaining</b> links separate steps; fading reduces prompts; pairing associates neutral stimuli with reinforcement."
+  },
+  {
+    "id": 126,
+    "q": "While reviewing a client's graph, the RBT needs a quick measure of spread across data points. The best approach is to:",
+    "a": [
+      "Count the number of sessions plotted",
+      "Subtract the lowest point from the highest",
+      "Read only the x-axis labels",
+      "Calculate the mean and ignore extremes"
+    ],
+    "c": 1,
+    "e": "<b>Variability</b> is often summarized as the range: highest data point minus lowest. Session count and axis labels do not measure spread; the mean alone hides how far points deviate."
+  },
+  {
+    "id": 184,
+    "q": "A learner says 'juice' only when thirsty and gets juice, but labels 'cup' when a cup is visible without requesting it. This illustrates:",
+    "a": [
+      "Mand under motivation; tact under stimulus control",
+      "Tact under motivation; mand under stimulus control",
+      "Written mand versus spoken tact",
+      "The same operant with different words"
+    ],
+    "c": 0,
+    "e": "A <b>mand</b> is a request maintained by motivating operations (get what you want). A <b>tact</b> labels a present stimulus. The second option reverses the definitions; modality does not define the operant."
+  },
+  {
+    "id": 223,
+    "q": "Before shaping a new skill, the RBT should first reinforce:",
+    "a": [
+      "The closest unprompted approximation already in the repertoire",
+      "The final terminal behavior on the first trial",
+      "A completely novel behavior never observed",
+      "Only the last step of an existing chain"
+    ],
+    "c": 0,
+    "e": "Shaping starts at <b>baseline</b> — the nearest approximation the learner already performs without prompts — then builds toward the terminal behavior. Starting at the terminal goal or a novel behavior skips the learner's current repertoire."
+  },
+  {
+    "id": 289,
+    "q": "When opening a new shaping program, the first reinforced response should be:",
+    "a": [
+      "The closest approximation the learner already does without prompts",
+      "The full terminal behavior immediately",
+      "A brand-new behavior never demonstrated",
+      "The final chain step only"
+    ],
+    "c": 0,
+    "e": "Begin at <b>baseline</b>: reinforce the nearest unprompted approximation, then raise criteria gradually. Reinforcing only the terminal behavior or a never-seen behavior is not shaping."
+  },
+  {
+    "id": 322,
+    "q": "An RBT delivers a reinforcer after every fourth correct tact trial. This schedule is a:",
+    "a": ["Fixed ratio", "Variable ratio", "Fixed interval", "Variable interval"],
+    "c": 0,
+    "e": "<b>Fixed ratio (FR)</b> delivers reinforcement after a set number of responses. Interval schedules are time-based, not response-count-based; variable schedules change the requirement unpredictably."
+  },
+  {
+    "id": 329,
+    "q": "A BCBA instructs the team to master step 1 before introducing step 2 in a tooth-brushing chain. This is:",
+    "a": ["Forward chaining", "Backward chaining", "Total task presentation", "Discrimination training"],
+    "c": 0,
+    "e": "<b>Forward chaining</b> teaches the first step to criterion, then adds later steps in order. Backward chaining starts with the last step; total task presents the whole sequence with support."
+  },
+  {
+    "id": 337,
+    "q": "In a classroom token economy, earned tokens are later traded for:",
+    "a": ["Backup reinforcers", "Punishers", "Prompts", "Data sheets"],
+    "c": 0,
+    "e": "Tokens are conditioned reinforcers exchanged for <b>backup reinforcers</b> (preferred items/activities). Punishers, prompts, and data sheets are not the backup menu in a token economy."
+  },
+  {
+    "id": 343,
+    "q": "An RBT delivers reinforcement when no aggression occurs for a 2-minute interval. This procedure is:",
+    "a": ["DRO", "DRA", "DRI", "DRL"],
+    "c": 0,
+    "e": "<b>DRO</b> reinforces the absence of the target behavior across an interval. DRA reinforces an alternative; DRI requires an incompatible replacement; DRL targets reduced rate of the same behavior."
+  },
+  {
+    "id": 345,
+    "q": "A BCBA stops delivering attention after a client whines for help, and whining decreases. This intervention is:",
+    "a": [
+      "Extinction of attention-maintained behavior",
+      "Positive punishment",
+      "DRA with a replacement behavior",
+      "Permanent ignoring of all behavior"
+    ],
+    "c": 0,
+    "e": "<b>Extinction</b> withholds the reinforcer that maintained the behavior (here, attention). Punishment adds an aversive; DRA would reinforce a replacement; extinction is procedure-specific, not global ignoring."
+  },
+  {
+    "id": 67,
+    "q": "Before teaching shoe-tying, the BCBA lists each knot-and-loop step in order. This document is a:",
+    "a": ["Task analysis", "Shaping plan", "Preference assessment", "Functional analysis"],
+    "c": 0,
+    "e": "A <b>task analysis</b> breaks a multi-step skill into ordered teachable steps. A shaping plan refines one behavior; preference and functional analyses serve different assessment purposes."
+  },
+  {
+    "id": 68,
+    "q": "The team teaches step 1 of a dressing chain to mastery, then adds step 2. This approach is:",
+    "a": ["Backward chaining", "Forward chaining", "Total task chaining", "Shaping"],
+    "c": 1,
+    "e": "<b>Forward chaining</b> starts with the first step and adds later steps as each is mastered. Backward chaining begins with the last step; shaping refines one behavior, not a step sequence."
+  },
+  {
+    "id": 73,
+    "q": "During forward chaining of a morning routine, trial-by-trial data should focus on:",
+    "a": [
+      "Every step on every trial",
+      "The step currently being taught",
+      "Only the final step in the chain",
+      "No steps until the chain is complete"
+    ],
+    "c": 1,
+    "e": "In <b>forward chaining</b>, data target the <b>step currently being taught</b> while earlier steps are already mastered. Collecting only the last step describes backward chaining focus; skipping data loses instructional control."
+  },
+  {
+    "id": 78,
+    "q": "A supervisor asks how shaping differs from chaining. The best answer is:",
+    "a": [
+      "Shaping links separate steps; chaining refines one behavior",
+      "Shaping refines one behavior toward a target; chaining links separate steps",
+      "They are identical procedures",
+      "Shaping never uses reinforcement"
+    ],
+    "c": 1,
+    "e": "<b>Shaping</b> molds a single behavior through successive approximations. <b>Chaining</b> links distinct steps into a sequence. The first option reverses the definitions; both procedures use reinforcement."
+  },
+  {
+    "id": 81,
+    "q": "A BCBA trains staff using explain → model → practice → feedback. This training package is:",
+    "a": ["BST", "DTT", "FCT", "MSWO"],
+    "c": 0,
+    "e": "<b>BST</b> (behavioral skills training) follows explain, model, practice, and feedback. DTT is a learner teaching format; FCT builds communication replacements; MSWO is a preference assessment."
+  },
+  {
+    "id": 82,
+    "q": "During DTT, each trial includes which three components in order?",
+    "a": [
+      "Prompt, delay, reinforcer",
+      "Antecedent, response, consequence",
+      "Baseline, trend, mastery",
+      "EO, MO, AO"
+    ],
+    "c": 1,
+    "e": "A discrete trial is structured as <b>antecedent (SD), response, consequence</b>. Prompt-delay-reinforcer is not the three-term contingency; baseline/trend/mastery and EO/MO/AO are different frameworks."
+  }
+]

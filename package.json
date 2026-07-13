@@ -14,6 +14,8 @@
     "extract": "node scripts/extract-bank.mjs",
     "overhaul": "node scripts/overhaul-bank.mjs",
     "apply-batch": "node scripts/apply-overhaul-batch.mjs",
+    "apply-batch3": "node scripts/apply-overhaul-batch3.mjs",
+    "fix:contrast": "node scripts/fix-explanation-contrast.mjs",
     "sync": "node scripts/inject-bank.mjs",
     "build:trail": "node scripts/build-trail.mjs",
     "verify:trail": "node scripts/verify-trail.mjs",

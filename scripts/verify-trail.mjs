@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 /**
- * Smoke-test the five Trail agents and hook bus without a browser.
+ * Smoke-test the Trail staff team and hook bus without a browser.
  */
 import { createKernel } from '../src/core/kernel.js';
 
 const Trail = createKernel();
 
-const required = ['boon', 'hazard', 'scholar', 'economy', 'expedition'];
+const required = ['boon', 'hazard', 'scholar', 'economy', 'expedition', 'atlas', 'sage', 'steward', 'chronicler'];
 for (const k of required) {
   if (!Trail.agents[k]) throw new Error(`Missing agent: ${k}`);
 }
@@ -14,7 +14,10 @@ for (const k of required) {
 if (!Trail.economy?.grantRelic) throw new Error('Mountain economy API incomplete');
 if (Object.keys(Trail.agents.boon.api.catalog).length < 16) throw new Error('Boon catalog too small');
 if (Trail.agents.boon.api.duos.length < 8) throw new Error('Duo catalog too small');
-if (!Trail.meta || Trail.meta.length !== 6) throw new Error('Agent meta incomplete');
+if (!Trail.meta || Trail.meta.length !== 9) throw new Error('Agent meta incomplete');
+for (const m of Trail.meta) {
+  if (!m.id || !m.name || !m.icon || !m.blurb) throw new Error(`Agent meta entry incomplete: ${m.id}`);
+}
 
 const run = {
   boons: new Set(['provisions', 'vent']),
@@ -42,4 +45,42 @@ if (correct.threatDelta === undefined) throw new Error('answer:correct hook miss
 const draft = Trail.agents.boon.api.pickDraft(Trail.makeCtx({ ...run, boons: new Set() }, enc), () => 0.2);
 if (!Array.isArray(draft) || !draft.length) throw new Error('draft pick failed');
 
-console.log('Trail agents OK:', Trail.meta.map((m) => m.id).join(', '));
+// --- Summit Sage analytics ---
+const sageBank = [
+  { id: 0, cat: 'Reinforcement' },
+  { id: 1, cat: 'Ethics & Scope' },
+  { id: 2, cat: 'Documentation & Reporting' },
+];
+const sageRun = { prog: { 0: { tier: 4, seen: 3, right: 3, wrong: 0 }, 1: { tier: 1, seen: 2, right: 1, wrong: 1 } } };
+const breakdown = Trail.agents.sage.api.domainBreakdown(sageRun, sageBank, Trail.CONFIG);
+if (!Array.isArray(breakdown) || breakdown.length !== 6) throw new Error('Sage breakdown incomplete');
+const readiness = Trail.agents.sage.api.readiness(sageRun, sageBank, Trail.CONFIG);
+if (readiness.ready !== 1) throw new Error('Sage readiness miscount');
+if (!Trail.agents.sage.api.recommend(sageRun, sageBank, Trail.CONFIG).length) throw new Error('Sage produced no tips');
+
+// --- Sandbox Steward deterministic simulation ---
+const steward = Trail.agents.steward.api;
+if (steward.pitchKinds().length < 20) throw new Error('Steward exposes too few pitch kinds');
+const spawned = steward.spawnNode(Trail, { kind: 'gate', act: 3, need: 5 });
+if (spawned.kind !== 'gate' || spawned.act !== 3) throw new Error('Steward spawnNode failed');
+const simA = steward.simulatePitch(Trail, {
+  kind: 'switchback', act: 1, need: 3, boons: ['vent', 'provisions'], seed: 7,
+  answers: [true, true, true],
+});
+const simB = steward.simulatePitch(Trail, {
+  kind: 'switchback', act: 1, need: 3, boons: ['vent', 'provisions'], seed: 7,
+  answers: [true, true, true],
+});
+if (!simA.cleared) throw new Error('Steward sim should clear an easy pitch');
+if (simA.final.stamina !== simB.final.stamina) throw new Error('Steward sim is not deterministic');
+const draftPrev = steward.previewDraft(Trail, { owned: [], seed: 3, count: 3 });
+if (draftPrev.length !== 3) throw new Error('Steward previewDraft failed');
+
+// --- Trail Chronicler telemetry ---
+const chron = Trail.agents.chronicler.api;
+chron.clear();
+Trail.emit('answer:correct', Trail.makeCtx(run, { ...enc, streak: 1 }, { rnd: () => 0.5 }));
+if (chron.log().length < 1) throw new Error('Chronicler recorded nothing');
+if ((chron.stats()['answer:correct'] || 0) < 1) throw new Error('Chronicler stats missing event');
+
+console.log('Trail staff OK:', Trail.meta.map((m) => m.id).join(', '));

@@ -26,6 +26,11 @@ index.html
 | **Mountain Economy** | `mountain-economy.js` | Weather, relics, stamina/threat tuning |
 | **Expedition Director** | `expedition-director.js` | Route assembly across acts |
 | **Atlas Artisan** | `atlas-artisan.js` | UI tokens, screen copy, codex tiers, menu stats |
+| **Summit Sage** | `summit-sage.js` | Study coach — domain readiness, mastery analytics, review planning (pure) |
+| **Trail Chronicler** | `trail-chronicler.js` | Passive hook telemetry into a capped ring buffer (never mutates ctx) |
+| **Sandbox Steward** | `sandbox-steward.js` | Deterministic control surface: spawn pitches, preview drafts, simulate climbs through the real bus |
+
+The last three staff members are additive: **Summit Sage** and **Sandbox Steward** are pure helper agents (empty `register`), and **Trail Chronicler** only records hooks (its handlers always return `{}`), so none of them can change what a live climb does.
 
 Core wiring lives in `src/core/`:
 
@@ -62,11 +67,32 @@ game/trail.bundle.js
 | `debrief` | Run summary + trail-log export |
 | `bestiary` | Hazard codex |
 
+## Staff Sandbox
+
+`sandbox/index.html` is an interactive control room for the whole staff team. It
+loads `game/trail.bundle.js` and drives the **real** agent bus, so nothing in it
+can drift from actual gameplay. Powered by the Sandbox Steward, Summit Sage, and
+Trail Chronicler:
+
+| Panel | Staff exercised |
+|-------|-----------------|
+| Staff Team | roster gallery from `Trail.meta` |
+| Pitch Lab | Hazard Warden node + Boon Architect loadout + Mountain Economy → Steward `simulatePitch` |
+| Boons | Boon Architect catalog, live duos, seeded draft preview |
+| Route | Expedition Director `buildRoute` across three acts |
+| Study & Coach | Trail Scholar Leitner scheduler → Summit Sage readiness analytics |
+| Bestiary | Hazard Warden registry, scaled per act |
+| Bus Log | Trail Chronicler live hook telemetry |
+
+Everything is deterministic from the shared **seed** control. Run it with
+`npm run sandbox` (port 4175, then open `/sandbox/`).
+
 ## Balance & quality tooling
 
 - `scripts/simulate-balance.mjs` — Monte Carlo climb outcomes
 - `scripts/quality-audit.mjs` — BACB-aligned question scoring
 - `playground/index.html` — browse flagged questions visually
+- `sandbox/index.html` — interactive staff-team control room (`npm run sandbox`)
 
 ## Deploy
 

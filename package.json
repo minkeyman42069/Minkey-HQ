@@ -1,0 +1,22 @@
+{
+  "name": "minkey-hq",
+  "version": "1.0.0",
+  "description": "Minkey HQ — assemble your elite squad of monkey agents and battle through the ranks.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --host"
+  },
+  "keywords": [
+    "game",
+    "monkey",
+    "team",
+    "battle",
+    "vite"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "vite": "^5.4.0"
+  }
+}

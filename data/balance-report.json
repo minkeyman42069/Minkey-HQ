@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-07-13T01:15:14.475Z",
-  "runsPerScenario": 4000,
+  "generatedAt": "2026-07-13T11:16:55.264Z",
+  "runsPerScenario": 20000,
   "balance": {
     "STAM_MAX": 100,
     "MISS_COST": 14,
     "TIMEOUT_COST": 10,
-    "REST_RESTORE": 28,
-    "CLEAR_RESTORE_MULT": 0.85,
+    "REST_RESTORE": 36,
+    "CLEAR_RESTORE_MULT": 0.92,
     "EASE_ON_CORRECT": 6,
     "THREAT_RESET": 75,
     "CRUX_RISE_MULT": 1.2,
@@ -26,20 +26,20 @@
   },
   "scenarios": {
     "base": {
-      "runs": 4000,
-      "summitRate": 0.321,
-      "act3Survival": 0.844,
-      "avgStrikes": 5.81,
+      "runs": 20000,
+      "summitRate": 0.33,
+      "act3Survival": 0.771,
+      "avgStrikes": 6.67,
       "opts": {
         "accuracy": 0.82,
         "timeoutRate": 0.06
       }
     },
     "boon": {
-      "runs": 4000,
-      "summitRate": 0.571,
-      "act3Survival": 0.924,
-      "avgStrikes": 6.09,
+      "runs": 20000,
+      "summitRate": 0.565,
+      "act3Survival": 0.881,
+      "avgStrikes": 6.94,
       "opts": {
         "accuracy": 0.82,
         "timeoutRate": 0.05,
@@ -50,10 +50,10 @@
       }
     },
     "stacked": {
-      "runs": 4000,
-      "summitRate": 0.903,
-      "act3Survival": 0.978,
-      "avgStrikes": 6.82,
+      "runs": 20000,
+      "summitRate": 0.88,
+      "act3Survival": 0.964,
+      "avgStrikes": 7.91,
       "opts": {
         "accuracy": 0.82,
         "timeoutRate": 0.05,
@@ -65,20 +65,20 @@
       }
     },
     "skilled": {
-      "runs": 4000,
-      "summitRate": 0.723,
-      "act3Survival": 0.968,
-      "avgStrikes": 5.94,
+      "runs": 20000,
+      "summitRate": 0.718,
+      "act3Survival": 0.947,
+      "avgStrikes": 7.04,
       "opts": {
         "accuracy": 0.88,
         "timeoutRate": 0.04
       }
     },
     "struggling": {
-      "runs": 4000,
+      "runs": 20000,
       "summitRate": 0.028,
-      "act3Survival": 0.431,
-      "avgStrikes": 4.37,
+      "act3Survival": 0.337,
+      "avgStrikes": 4.98,
       "opts": {
         "accuracy": 0.72,
         "timeoutRate": 0.1

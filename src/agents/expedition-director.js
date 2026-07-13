@@ -50,7 +50,7 @@ export const ACHIEVEMENTS = [
 
 const HARD_KINDS = new Set([
   'void', 'knife', 'icewall', 'tempest', 'avalanche', 'frozentitan', 'whiteout',
-  'closing', 'corniceridge', 'sealedface', 'longwall', 'thinair', 'icefall',
+  'closing', 'corniceridge', 'sealedface', 'longwall', 'thinair', 'icefall', 'verglas',
 ]);
 
 export function oathById(id) {
@@ -123,9 +123,9 @@ function shuffle(a, rnd) {
 export function buildRoute(rnd, topic, config, hazards = defaultHazards) {
   const {
     scaleNode,
-    nSwitch, nTraverse, nSnowfield,
+    nSwitch, nTraverse, nSnowfield, nRockfall,
     nCrevasse, nBergschrund, nStorm, nCouloir, nWindslab,
-    nVoid, nKnife, nIcewall, nSealedFace, nLongWall, nCorniceRidge,
+    nVoid, nKnife, nIcewall, nSealedFace, nLongWall, nCorniceRidge, nVerglas,
     nWhiteout, nThinAir, nIcefall, nTempest, nClosing, nAvalanche, nFrozenTitan,
     nGate, nRest, nShrine, nSerac, nSummit,
   } = hazards;
@@ -137,14 +137,14 @@ export function buildRoute(rnd, topic, config, hazards = defaultHazards) {
   const pick = (pool, k) => shuffle(pool.slice(), rnd).slice(0, k);
   const nd = (base) => base + Math.floor(rnd() * 2);
 
-  const T1 = [nSwitch, nTraverse, nSnowfield];
+  const T1 = [nSwitch, nTraverse, nSnowfield, nRockfall];
   const T2 = [nCrevasse, nBergschrund, nStorm, nCouloir, nWindslab];
-  const T3 = [nVoid, nKnife, nIcewall, nSealedFace, nLongWall, nCorniceRidge];
+  const T3 = [nVoid, nKnife, nIcewall, nSealedFace, nLongWall, nCorniceRidge, nVerglas];
   const T4 = [nWhiteout, nThinAir, nIcefall, nTempest, nClosing, nAvalanche, nFrozenTitan];
 
   // ACT I - The Approach: T1 hazards + a single taste of T2
   A(nSwitch(nd(3), step(215)), 1);
-  pick([nTraverse, nSnowfield], 1).forEach((fn) => { A(fn(nd(3), step(220)), 1); });
+  pick([nTraverse, nSnowfield, nRockfall], 1).forEach((fn) => { A(fn(nd(3), step(220)), 1); });
   A(pick(T2, 1)[0](nd(4), step(240)), 1);
   A(nGate(nd(4), step(235), null), 1);
   A(nRest(step(150), config), 1);

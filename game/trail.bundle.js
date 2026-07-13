@@ -55,8 +55,8 @@ var TrailBundle = (() => {
     STAM_MAX: 100,
     MISS_COST: 14,
     TIMEOUT_COST: 10,
-    REST_RESTORE: 28,
-    CLEAR_RESTORE_MULT: 0.85,
+    REST_RESTORE: 36,
+    CLEAR_RESTORE_MULT: 0.92,
     THREAT_RESET: 75,
     CRUX_RISE_MULT: 1.2,
     MAX_BOONS: 5,
@@ -90,6 +90,7 @@ var TrailBundle = (() => {
     nKnife: () => nKnife,
     nLongWall: () => nLongWall,
     nRest: () => nRest,
+    nRockfall: () => nRockfall,
     nSealedFace: () => nSealedFace,
     nSerac: () => nSerac,
     nShrine: () => nShrine,
@@ -100,6 +101,7 @@ var TrailBundle = (() => {
     nTempest: () => nTempest,
     nThinAir: () => nThinAir,
     nTraverse: () => nTraverse,
+    nVerglas: () => nVerglas,
     nVoid: () => nVoid,
     nWhiteout: () => nWhiteout,
     nWindslab: () => nWindslab,
@@ -132,6 +134,8 @@ var TrailBundle = (() => {
     avalanche: "#b3bcc6",
     corniceridge: "#9fb4c8",
     frozentitan: "#7fd4e8",
+    rockfall: "#c2a178",
+    verglas: "#8fd0e8",
     shrine: "#c9a86a",
     rest: "#d89b52"
   };
@@ -166,11 +170,11 @@ var TrailBundle = (() => {
       blurb: "A squall building by the second. Correct answers won't calm it \u2014 only speed clears the ridge.",
       need,
       time: 12,
-      rise: 2,
+      rise: 1.85,
       miss: 15,
       ease: 0,
       max: 100,
-      hit: 16,
+      hit: 15,
       restore: 16,
       boon: true,
       noBoonEase: true,
@@ -186,10 +190,10 @@ var TrailBundle = (() => {
       title: "Gatekeeper",
       blurb: domain ? "It tests you on " + domain + ". Every wrong answer emboldens it; every right one drives it back." : "It tests your weakest exam domain. Every wrong answer emboldens it; every right one drives it back.",
       need,
-      time: 17,
-      rise: 1.35,
+      time: 16,
+      rise: 1.55,
       miss: 30,
-      ease: 12,
+      ease: 10,
       max: 100,
       hit: 20,
       restore: 22,
@@ -241,8 +245,8 @@ var TrailBundle = (() => {
       blurb: "A wall of unstable ice \u2014 it can go at any second. Fast, punishing, and it hits hard.",
       need,
       time: 13,
-      rise: 2.5,
-      miss: 24,
+      rise: 2.35,
+      miss: 22,
       ease: 10,
       max: 100,
       hit: 22,
@@ -281,9 +285,9 @@ var TrailBundle = (() => {
       blurb: "A snow bridge over a black drop. Only a few steps to cross \u2014 but one wrong step and the mountain takes you.",
       need,
       time: 15,
-      rise: 1,
-      miss: 28,
-      ease: 12,
+      rise: 1.25,
+      miss: 32,
+      ease: 11,
       max: 100,
       hit: 24,
       restore: 18,
@@ -321,14 +325,14 @@ var TrailBundle = (() => {
       blurb: "The air is too thin to breathe. Standing still costs you now \u2014 every second up here bleeds you dry. Keep moving.",
       need,
       time: 16,
-      rise: 1,
+      rise: 1.1,
       miss: 18,
       ease: 8,
       max: 100,
-      hit: 12,
+      hit: 13,
       restore: 16,
       boon: true,
-      drain: 0.2,
+      drain: 0.28,
       alt,
       tname: "Thin air",
       tic: "\u{1FAC1}"
@@ -349,8 +353,8 @@ var TrailBundle = (() => {
       hit: 15,
       restore: 16,
       boon: true,
-      spike: 13,
-      spikeEvery: 5,
+      spike: 12,
+      spikeEvery: 5.5,
       alt,
       tname: "The icefall",
       tic: "\u2604\uFE0F"
@@ -364,11 +368,11 @@ var TrailBundle = (() => {
       blurb: "Up here nothing works \u2014 no flare, no field notes, no tricks. Just you and what you actually know.",
       need,
       time: 15,
-      rise: 1.4,
-      miss: 20,
-      ease: 10,
+      rise: 1.6,
+      miss: 22,
+      ease: 9,
       max: 100,
-      hit: 16,
+      hit: 17,
       restore: 18,
       boon: false,
       suppress: true,
@@ -406,14 +410,14 @@ var TrailBundle = (() => {
       blurb: "The gap between snow and ice widens with every slip. Stumble once and it yawns; stumble again and it swallows.",
       need,
       time: 15,
-      rise: 1,
-      miss: 14,
-      ease: 10,
+      rise: 1.2,
+      miss: 17,
+      ease: 9,
       max: 100,
       hit: 16,
       restore: 18,
       boon: true,
-      escalate: 4,
+      escalate: 6,
       alt,
       tname: "The widening crack",
       tic: "\u26CF\uFE0F"
@@ -494,7 +498,7 @@ var TrailBundle = (() => {
       hit: 16,
       restore: 16,
       boon: true,
-      gust: 0.5,
+      gust: 0.08,
       alt,
       tname: "The gust field",
       tic: "\u{1F300}"
@@ -529,9 +533,9 @@ var TrailBundle = (() => {
       blurb: "A wall with no top in sight. The longer you are on it, the less each breather gives back \u2014 and it knows it.",
       need,
       time: 16,
-      rise: 1.3,
-      miss: 18,
-      ease: 12,
+      rise: 1.5,
+      miss: 20,
+      ease: 11,
       max: 100,
       hit: 16,
       restore: 16,
@@ -550,8 +554,8 @@ var TrailBundle = (() => {
       blurb: "A storm that feeds on chaos. The closer you are to the edge, the harder it drives you toward it.",
       need,
       time: 13,
-      rise: 1.4,
-      miss: 20,
+      rise: 1.55,
+      miss: 22,
       ease: 8,
       max: 100,
       hit: 18,
@@ -570,10 +574,10 @@ var TrailBundle = (() => {
       title: "The Closing Window",
       blurb: "The weather window is slamming shut. Every second you are given is shorter than the last \u2014 climb.",
       need,
-      time: 16,
-      rise: 1.2,
-      miss: 18,
-      ease: 9,
+      time: 14,
+      rise: 2,
+      miss: 24,
+      ease: 7,
       max: 100,
       hit: 17,
       restore: 18,
@@ -592,8 +596,8 @@ var TrailBundle = (() => {
       blurb: "The whole slope is loaded and silent. It waits, and waits \u2014 then lets go all at once. Be past it when it does.",
       need,
       time: 15,
-      rise: 1,
-      miss: 20,
+      rise: 1.25,
+      miss: 22,
       ease: 9,
       max: 100,
       hit: 20,
@@ -603,6 +607,49 @@ var TrailBundle = (() => {
       alt,
       tname: "The avalanche",
       tic: "\u{1F4A5}"
+    };
+  }
+  function nRockfall(need, alt) {
+    return {
+      kind: "rockfall",
+      icon: "\u{1F94C}",
+      title: "Rockfall Gully",
+      blurb: "Small stones skip down the gully in waves. Nothing up here hits hard yet \u2014 learn to move between the volleys, before the mountain finds bigger rocks.",
+      need,
+      time: 18,
+      rise: 0.7,
+      miss: 14,
+      ease: 8,
+      max: 100,
+      hit: 12,
+      restore: 15,
+      boon: true,
+      spike: 7,
+      spikeEvery: 7,
+      alt,
+      tname: "The rockfall",
+      tic: "\u{1F94C}"
+    };
+  }
+  function nVerglas(need, alt) {
+    return {
+      kind: "verglas",
+      icon: "\u{1FA9E}",
+      title: "The Verglas",
+      blurb: "A face glazed in mirror-thin ice. Answer while your footing is fresh and the strain sheds \u2014 hesitate, and the glaze refreezes ahead of you.",
+      need,
+      time: 15,
+      rise: 1.9,
+      miss: 18,
+      ease: 4,
+      max: 100,
+      hit: 17,
+      restore: 18,
+      boon: true,
+      swift: 9,
+      alt,
+      tname: "The verglas",
+      tic: "\u{1FA9E}"
     };
   }
   function nShrine(alt) {
@@ -625,14 +672,14 @@ var TrailBundle = (() => {
       blurb: "A wind-carved lip of snow over empty air. Gusts hammer it, and one wrong step sends you sliding back.",
       need,
       time: 15,
-      rise: 1.1,
-      miss: 18,
+      rise: 0.9,
+      miss: 14,
       ease: 9,
       max: 100,
-      hit: 17,
-      restore: 16,
+      hit: 15,
+      restore: 18,
       boon: true,
-      gust: 0.4,
+      gust: 0.03,
       streakGate: true,
       alt,
       tname: "The wind lip",
@@ -647,11 +694,11 @@ var TrailBundle = (() => {
       blurb: "A pillar of ancient blue ice. Break through three frozen layers \u2014 then it rages when the threat runs high.",
       need,
       time: 14,
-      rise: 1.2,
-      miss: 20,
+      rise: 1.1,
+      miss: 19,
       ease: 9,
       max: 100,
-      hit: 18,
+      hit: 17,
       restore: 20,
       boon: true,
       shield: 3,
@@ -680,6 +727,7 @@ var TrailBundle = (() => {
     { fn: nSwitch, t: 1, a: "Accuracy", m: "Loose footing. Time barely matters here \u2014 it is all about getting the answer right." },
     { fn: nTraverse, t: 1, a: "Endurance", m: "Nothing is hard, but it never ends and the wind never stops. Steady, grinding pressure." },
     { fn: nSnowfield, t: 1, a: "Accuracy", m: "Deep, forgiving snow. Slow going, but it lets a stumble slide. A place to find your rhythm." },
+    { fn: nRockfall, t: 1, a: "Timing", m: "Pebbles rattle down the gully in waves. A gentle first lesson in moving between the falls." },
     { fn: nCrevasse, t: 2, a: "Precision", m: "A snow bridge over a black drop. Few steps to cross, but a single miss is punishing." },
     { fn: nBergschrund, t: 2, a: "Escalating", m: "A widening crack. Every slip costs more stamina than the one before it." },
     { fn: nStorm, t: 2, a: "Speed", m: "A squall building by the second. Correct answers will not calm it \u2014 only speed clears the ridge." },
@@ -690,6 +738,7 @@ var TrailBundle = (() => {
     { fn: nIcewall, t: 3, a: "Precision", m: "Vertical ice. Every placement matters, and it does not forgive hesitation." },
     { fn: nSealedFace, t: 3, a: "Armored", m: "Hard blue ice shell. Your first correct answers break the layers before any climbing counts." },
     { fn: nLongWall, t: 3, a: "Attrition", m: "A wall with no top in sight. The longer you are on it, the less each breather gives back." },
+    { fn: nVerglas, t: 3, a: "Fluency", m: "Mirror-thin ice that refreezes fast. Quick correct answers shed extra threat \u2014 hesitation lets it build." },
     { fn: nWhiteout, t: 4, a: "Speed", m: "The cloud swallows the ridge. You climb blind and fast, before it closes for good." },
     { fn: nThinAir, t: 4, a: "Attrition", m: "Air too thin to breathe. Standing still bleeds you dry \u2014 keep moving or waste away." },
     { fn: nIcefall, t: 4, a: "Timing", m: "Ice comes down in volleys on its own grim schedule. Read the rhythm; move between the falls." },
@@ -704,6 +753,7 @@ var TrailBundle = (() => {
   ];
   function nodeEmoji(kind) {
     const m = {
+      switchback: "\u{1FAA8}",
       storm: "\u26C8\uFE0F",
       gate: "\u{1F6E1}\uFE0F",
       rest: "\u{1F3D5}\uFE0F",
@@ -728,6 +778,8 @@ var TrailBundle = (() => {
       avalanche: "\u{1F4A5}",
       corniceridge: "\u{1F32C}\uFE0F",
       frozentitan: "\u{1F9CA}",
+      rockfall: "\u{1F94C}",
+      verglas: "\u{1FA9E}",
       shrine: "\u26E9\uFE0F"
     };
     return m[kind] || "\u26F0\uFE0F";
@@ -760,6 +812,8 @@ var TrailBundle = (() => {
     if (node.kind === "avalanche") return "It waits, then breaks \u2014 " + n + " before the slope goes";
     if (node.kind === "corniceridge") return "Gusts + setbacks \u2014 " + n + " across the wind lip";
     if (node.kind === "frozentitan") return "Break 3 ice layers \u2014 " + n + " past the glacier block";
+    if (node.kind === "rockfall") return "Move between the volleys \u2014 " + n + " to clear";
+    if (node.kind === "verglas") return "Answer fast, shed threat \u2014 " + n + " across the glaze";
     return n + " to clear";
   }
 
@@ -818,7 +872,8 @@ var TrailBundle = (() => {
     "sealedface",
     "longwall",
     "thinair",
-    "icefall"
+    "icefall",
+    "verglas"
   ]);
   function oathById(id) {
     return OATHS.find((o) => o.id === id) || OATHS[0];
@@ -877,6 +932,7 @@ var TrailBundle = (() => {
       nSwitch: nSwitch2,
       nTraverse: nTraverse2,
       nSnowfield: nSnowfield2,
+      nRockfall: nRockfall2,
       nCrevasse: nCrevasse2,
       nBergschrund: nBergschrund2,
       nStorm: nStorm2,
@@ -888,6 +944,7 @@ var TrailBundle = (() => {
       nSealedFace: nSealedFace2,
       nLongWall: nLongWall2,
       nCorniceRidge: nCorniceRidge2,
+      nVerglas: nVerglas2,
       nWhiteout: nWhiteout2,
       nThinAir: nThinAir2,
       nIcefall: nIcefall2,
@@ -913,12 +970,12 @@ var TrailBundle = (() => {
     };
     const pick = (pool, k) => shuffle(pool.slice(), rnd2).slice(0, k);
     const nd = (base) => base + Math.floor(rnd2() * 2);
-    const T1 = [nSwitch2, nTraverse2, nSnowfield2];
+    const T1 = [nSwitch2, nTraverse2, nSnowfield2, nRockfall2];
     const T2 = [nCrevasse2, nBergschrund2, nStorm2, nCouloir2, nWindslab2];
-    const T3 = [nVoid2, nKnife2, nIcewall2, nSealedFace2, nLongWall2, nCorniceRidge2];
+    const T3 = [nVoid2, nKnife2, nIcewall2, nSealedFace2, nLongWall2, nCorniceRidge2, nVerglas2];
     const T4 = [nWhiteout2, nThinAir2, nIcefall2, nTempest2, nClosing2, nAvalanche2, nFrozenTitan2];
     A(nSwitch2(nd(3), step(215)), 1);
-    pick([nTraverse2, nSnowfield2], 1).forEach((fn) => {
+    pick([nTraverse2, nSnowfield2, nRockfall2], 1).forEach((fn) => {
       A(fn(nd(3), step(220)), 1);
     });
     A(pick(T2, 1)[0](nd(4), step(240)), 1);
@@ -1249,6 +1306,13 @@ var TrailBundle = (() => {
         if (ctx.enc.node.fatigue) {
           ease *= ctx.enc.easeMul || 1;
           ctx.enc.easeMul = Math.max(0.35, (ctx.enc.easeMul || 1) - 0.14);
+        }
+        if (ctx.enc.node.swift && ctx.run.maxTime > 0 && ctx.run.timeLeft / ctx.run.maxTime >= (ctx.enc.node.swiftFrac ?? 0.5)) {
+          ease += ctx.enc.node.swift;
+          if (!ctx.enc.swiftTold) {
+            ctx.enc.swiftTold = true;
+            banners.push({ title: "Quick placement", sub: "the ice holds while you move fast" });
+          }
         }
         if (canUse(ctx, "allin")) ease *= 1.45;
         if (hasDuo(ctx, "Runout") && ctx.enc.streak >= 5) {
@@ -1813,7 +1877,9 @@ var TrailBundle = (() => {
     closing: "nClosing",
     avalanche: "nAvalanche",
     corniceridge: "nCorniceRidge",
-    frozentitan: "nFrozenTitan"
+    frozentitan: "nFrozenTitan",
+    rockfall: "nRockfall",
+    verglas: "nVerglas"
   };
   function seededRng(seed) {
     let a = seed >>> 0 || 1;
@@ -2477,7 +2543,9 @@ var TrailBundle = (() => {
     "nAvalanche",
     "nShrine",
     "nCorniceRidge",
-    "nFrozenTitan"
+    "nFrozenTitan",
+    "nRockfall",
+    "nVerglas"
   ].forEach((k) => {
     window[k] = H[k];
   });

@@ -13,7 +13,7 @@ export const NODE_FACTORIES = {
   icefall: 'nIcefall', void: 'nVoid', knife: 'nKnife', berg: 'nBergschrund', snowfield: 'nSnowfield',
   couloir: 'nCouloir', icewall: 'nIcewall', windslab: 'nWindslab', sealedface: 'nSealedFace',
   longwall: 'nLongWall', tempest: 'nTempest', closing: 'nClosing', avalanche: 'nAvalanche',
-  corniceridge: 'nCorniceRidge', frozentitan: 'nFrozenTitan',
+  corniceridge: 'nCorniceRidge', frozentitan: 'nFrozenTitan', rockfall: 'nRockfall', verglas: 'nVerglas',
 };
 
 /** Small deterministic PRNG (mulberry32) so every sandbox run is reproducible. */

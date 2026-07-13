@@ -90,6 +90,7 @@ Everything is deterministic from the shared **seed** control. Run it with
 ## Balance & quality tooling
 
 - `scripts/simulate-balance.mjs` — Monte Carlo climb outcomes
+- `scripts/simulate-hazards.mjs` — per-hazard Monte Carlo at 50ms tick fidelity (gusts, spikes, decay, shields, streak gates); ranks every enemy within its tier and flags outliers
 - `scripts/quality-audit.mjs` — BACB-aligned question scoring
 - `playground/index.html` — browse flagged questions visually
 - `sandbox/index.html` — interactive staff-team control room (`npm run sandbox`)

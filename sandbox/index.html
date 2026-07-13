@@ -346,7 +346,7 @@ td.num,th.num{text-align:right;font-family:'Space Mono',monospace}
     });
     var n=res.node;
     var flags=[];
-    ['suppress','noBoonEase','shield','streakGate','escalate','fatigue','enrage','phase','decay','drain','spike','gust'].forEach(function(f){
+    ['suppress','noBoonEase','shield','streakGate','escalate','fatigue','enrage','phase','decay','drain','spike','gust','swift'].forEach(function(f){
       if(n[f]) flags.push(f+(typeof n[f]==='number'&&n[f]!==true?(':'+n[f]):''));
     });
     var h='<div class="nodehead"><span class="ne">'+n.icon+'</span><div><div class="nt">'+esc(n.title)+'</div>'+

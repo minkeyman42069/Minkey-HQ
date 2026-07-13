@@ -81,6 +81,7 @@ from one seed. See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#staff-sandbox).
 | `npm run sandbox` | Staff-team control room (port 4175, open `/sandbox/`) |
 | `npm run check` | Validate bank, sync, build bundle, verify trail |
 | `npm run balance` | Run climb balance simulator |
+| `npm run balance:hazards` | Per-hazard Monte Carlo — ranks every enemy within its tier |
 | `npm run audit` | Score every question → `data/quality-report.json` |
 | `npm run sync` | Inject `data/questions.json` into `index.html` |
 | `npm run build:trail` | Rebuild `game/trail.bundle.js` from `src/` |

@@ -2013,7 +2013,7 @@ var RENDER = {
   },
   encChrome:function(){
     var n=ENC.node;
-    document.getElementById('encKind').textContent = ({switchback:'Accuracy',storm:'Speed · no relief',gate:'Competence duel',serac:'Elite',summit:'Final pitch',whiteout:'Speed · blind',crevasse:'Precision',traverse:'Endurance',thinair:'Attrition',icefall:'Timing',void:'No boons',knife:'Consistency',berg:'Escalating',snowfield:'Accuracy',couloir:'Speed',icewall:'Precision',windslab:'Chaos',sealedface:'Armored',longwall:'Attrition',tempest:'Enrage',closing:'Countdown',avalanche:'Release',corniceridge:'Chaos ridge',frozentitan:'Armored elite'}[n.kind]||'Trial');
+    document.getElementById('encKind').textContent = ({switchback:'Accuracy',storm:'Speed · no relief',gate:'Competence duel',serac:'Elite',summit:'Final pitch',whiteout:'Speed · blind',crevasse:'Precision',traverse:'Endurance',thinair:'Attrition',icefall:'Timing',void:'No boons',knife:'Consistency',berg:'Escalating',snowfield:'Accuracy',couloir:'Speed',icewall:'Precision',windslab:'Chaos',sealedface:'Armored',longwall:'Attrition',tempest:'Enrage',closing:'Countdown',avalanche:'Release',corniceridge:'Chaos ridge',frozentitan:'Armored elite',rockfall:'Timing',verglas:'Fluency'}[n.kind]||'Trial');
     document.getElementById('encTitle').innerHTML = n.title + (n.domain? ' <span style="color:var(--mut);font-weight:500;font-size:14px">('+n.domain+')</span>':'');
     document.getElementById('encBlurb').textContent = n.blurb||'';
     document.getElementById('encAlt').textContent=fmt(n.alt)+' m';
@@ -2419,6 +2419,8 @@ function nodeSub(node){
   if(node.kind==='avalanche') return 'It waits, then breaks — '+n+' before the slope goes';
   if(node.kind==='corniceridge') return 'Gusts + setbacks — '+n+' across the wind lip';
   if(node.kind==='frozentitan') return 'Break 3 ice layers — '+n+' past the glacier block';
+  if(node.kind==='rockfall') return 'Move between the volleys — '+n+' to clear';
+  if(node.kind==='verglas') return 'Answer fast, shed threat — '+n+' across the glaze';
   return n+' to clear';
 }
 /* ---------- META-PROGRESSION (permanent bank so a fall is never a reset) ---------- */

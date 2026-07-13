@@ -44,7 +44,7 @@ const H = Trail.agents.hazard.api;
   'nSwitch', 'nStorm', 'nGate', 'nRest', 'nSummit', 'nSerac', 'nWhiteout', 'nCrevasse',
   'nTraverse', 'nThinAir', 'nIcefall', 'nVoid', 'nKnife', 'nBergschrund', 'nSnowfield',
   'nCouloir', 'nIcewall', 'nWindslab', 'nSealedFace', 'nLongWall', 'nTempest', 'nClosing',
-  'nAvalanche', 'nShrine', 'nCorniceRidge', 'nFrozenTitan',
+  'nAvalanche', 'nShrine', 'nCorniceRidge', 'nFrozenTitan', 'nRockfall', 'nVerglas',
 ].forEach((k) => { window[k] = H[k]; });
 
 window.weakestDomainLetter = function () {

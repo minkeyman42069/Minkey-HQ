@@ -323,6 +323,16 @@ export function createBoonArchitect() {
         ease *= ctx.enc.easeMul || 1;
         ctx.enc.easeMul = Math.max(0.35, (ctx.enc.easeMul || 1) - 0.14);
       }
+      // Fluency window (verglas): a correct answer with at least half the
+      // focus clock still standing sheds bonus threat.
+      if (ctx.enc.node.swift && ctx.run.maxTime > 0 &&
+          ctx.run.timeLeft / ctx.run.maxTime >= (ctx.enc.node.swiftFrac ?? 0.5)) {
+        ease += ctx.enc.node.swift;
+        if (!ctx.enc.swiftTold) {
+          ctx.enc.swiftTold = true;
+          banners.push({ title: 'Quick placement', sub: 'the ice holds while you move fast' });
+        }
+      }
       if (canUse(ctx, 'allin')) ease *= 1.45;
       if (hasDuo(ctx, 'Runout') && ctx.enc.streak >= 5) {
         ease += 9;

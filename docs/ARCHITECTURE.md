@@ -22,7 +22,7 @@ index.html
 |-------|------|----------------|
 | **Boon Architect** | `boon-architect.js` | Boon catalog, duos, draft weighting, hook-driven effects |
 | **Hazard Warden** | `hazard-warden.js` | Node factories, bestiary, act scaling |
-| **Trail Scholar** | `trail-scholar.js` | TCO domains, Leitner scheduler, question types |
+| **Trail Scholar** | `trail-scholar.js` | TCO domains, adaptive SM-2-lite spaced-repetition scheduler, question types |
 | **Mountain Economy** | `mountain-economy.js` | Weather, relics, stamina/threat tuning |
 | **Expedition Director** | `expedition-director.js` | Route assembly across acts |
 | **Atlas Artisan** | `atlas-artisan.js` | UI tokens, screen copy, codex tiers, menu stats |
@@ -48,12 +48,31 @@ game/trail.bundle.js
 
 `trail.bundle.js` is committed so GitHub Pages and raw `index.html` work without a build step.
 
+## Adaptive scheduler (Trail Scholar)
+
+`createScheduler(config)` in `trail-scholar.js` keeps the `SCHED.pick(ids,last,run,rnd)` /
+`SCHED.grade(id,correct,viaTimeout,run)` interface but upgrades the fixed Leitner boxes to an
+**SM-2-lite** model. Each `run.prog[id]` gains `ease`, `nextDue` (in "questions seen" units),
+`cstreak`, and `dom`. Tuning knobs live in `src/core/config.js` (`DUE_GAP`, `EASE_*`,
+`PROMOTE_STREAK_FROM`, `INTERLEAVE_PENALTY`):
+
+- **Spacing** — due/overdue items surface first; not-yet-due items are damped.
+- **Per-item ease** — correct recalls lengthen intervals, lapses shorten them.
+- **Lapse handling** — missing a board-ready concept drops it into relearning, not free-fall.
+- **Gated promotion** — reaching Solid/Mastered needs 2 consecutive correct (no lucky-guess locks).
+- **Interleaving** — items sharing the previous item's TCO domain are down-weighted.
+
+The balance simulator (`scripts/lib/climb-balance.mjs`) is intentionally decoupled from the
+scheduler, so these changes never affect `npm run balance`. Scheduler behavior is covered by
+deterministic assertions in `scripts/verify-trail.mjs`.
+
 ## Question bank
 
 - **Source:** `data/questions.json`
 - **Runtime:** embedded `BANK` array inside `index.html`
 - **Sync:** `npm run inject-bank.mjs` (`npm run sync`)
 - **CI:** `npm run sync-check` fails if bank and HTML drift
+- **Quality:** `npm run audit` scores every item and reports **TCO domain coverage** vs. the exam blueprint (`data/quality-report.json`)
 
 ## Screens (`index.html`)
 

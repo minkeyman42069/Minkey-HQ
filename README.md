@@ -28,9 +28,16 @@ You can also open `index.html` directly in a browser — works offline after the
 
 | Mode | What it does |
 |------|----------------|
-| **Climb the mountain** | Full roguelike run with Leitner scheduling, boon drafts, and hazard encounters |
+| **Climb the mountain** | Full roguelike run with adaptive spaced-repetition scheduling, boon drafts, and hazard encounters |
+| **Today's climb** | A seeded **Daily Climb** — the same route and weather for every climber that day |
 | **Board Sim** | 40-question mock exam weighted to TCO domains |
 | **Bestiary** | Hazard reference — what each node does and how to beat it |
+
+**Adaptive learning core.** Questions are scheduled by an SM-2-lite spaced-repetition engine: each concept tracks its own ease and next-due spacing, lapses drop board-ready concepts into relearning, mastery needs consecutive correct answers (no lucky-guess locks), and domains interleave. Grounded in the evidence base behind Anki/FSRS, retrieval practice, and interleaving.
+
+**Habit loop.** A compassionate study streak, career ranks, achievements, and a Summit Sage coach line + per-domain readiness dashboard live on the trailhead. What you master banks forever — falling never erases learning.
+
+**Accessible & tunable.** A Settings panel persists sound/volume, a **relaxed or untimed** focus timer, reduced-motion, and haptics. Pinch-zoom is allowed, answers show ✓/✗ (not color alone), controls have visible keyboard focus, and a first-run primer teaches the loop.
 
 After each run you receive an `RBT5:…` trail-log code. Paste it on the trailhead to import concept tiers from finished climbs.
 

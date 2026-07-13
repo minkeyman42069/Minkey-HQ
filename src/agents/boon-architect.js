@@ -330,7 +330,7 @@ export function createBoonArchitect() {
         ease += ctx.enc.node.swift;
         if (!ctx.enc.swiftTold) {
           ctx.enc.swiftTold = true;
-          banners.push({ title: 'Quick placement', sub: 'the ice holds while you move fast' });
+          banners.push({ title: 'Quick placement', sub: 'fast answers shed extra threat' });
         }
       }
       if (canUse(ctx, 'allin')) ease *= 1.45;

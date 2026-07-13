@@ -786,7 +786,7 @@ body.lastlegs::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:
         </div>
         <h1 class="title">THE RBT <span class="k">TRAIL</span></h1>
         <p class="trail-tag">Know your terms, or the mountain wins.</p>
-        <p class="trail-lore">Draft boons at ledge camps. Survive hazards that punish what you haven&rsquo;t locked in. What you master on the climb stays learned when you fall.</p>
+        <p class="trail-lore">The hazards up there test what you can still recall with the wind up, and every camp offers help you must choose between. Fall as often as it takes &mdash; the ledger keeps each concept you lock in.</p>
       </div>
       <div class="trail-cta">
         <button class="cta big prime" id="climbBtn" onclick="beginRun(null)">&#129406; Climb the mountain</button>
@@ -828,7 +828,7 @@ body.lastlegs::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:
       <div class="codex-hd glass-hd">
         <div class="glass-kicker"><span class="pip"></span> Mountain codex</div>
         <h2 class="glass-title">The Bestiary</h2>
-        <p class="glass-sub">Every hazard on the climb — what it costs, how it kills, and what beats it.</p>
+        <p class="glass-sub">Every hazard between the trailhead and the summit, and the particular way each one wants to stop you.</p>
       </div>
       <div id="bestList"></div>
       <button type="button" class="back-link" onclick="toMenu()">&#129406; Back to trailhead</button>
@@ -962,7 +962,7 @@ body.lastlegs::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:
       <div class="glass-panel debrief-export">
         <div class="sect">Copy trail log</div>
         <div class="codebox">
-          <div class="cl">Paste this anywhere to save your progress</div>
+          <div class="cl">Your trail log. Paste it at the trailhead of any future climb to carry your progress.</div>
           <div class="code" id="code"></div>
           <button class="copybtn" id="copybtn" onclick="copyCode()">&#128203; Copy trail log</button>
         </div>
@@ -1717,16 +1717,16 @@ function _enterCurrentNode(node){
   ENC={ node:node, need:node.need, done:0, threat:0, max:node.max, lifelineUsed:false, firstMissUsed:false, firstTimeoutUsed:false, rallyUsed:false, bulwarkUsed:false, streakEase:0, cairnBank:0, missCount:0, spikeT:0, shieldLeft:(node.shield||0), easeMul:1, timeMul:1, phaseMul:1, phased:false, luckyUsed:false, cruxTold:false, streak:0, lastId:-1 };
   RUN.altitude=node.alt; RUN.ending=false;
   if(node.kind==='gate'){
-    if(RUN.topic){ ENC.node.domain=RUN.topic; ENC.node.blurb="It tests you on "+RUN.topic+". Every wrong answer emboldens it; every right one drives it back."; }
+    if(RUN.topic){ ENC.node.domain=RUN.topic; ENC.node.blurb="It stands where the route narrows, and it has read your ledger. It will ask about "+RUN.topic+". Wrong answers feed it. Right ones back it off."; }
     else {
     var gd=weakestDomainLetter(); ENC.node.gateDomain=gd; ENC.node.domain=DOMAINS[gd].n;
-    ENC.node.blurb="It tests you on "+DOMAINS[gd].n+" — your weakest exam domain so far. Every wrong answer emboldens it; every right one drives it back.";
+    ENC.node.blurb="It stands where the route narrows, and it has read your ledger. It will ask about "+DOMAINS[gd].n+" — the trail where you are thinnest. Wrong answers feed it. Right ones back it off.";
     setTimeout(function(){ banner('Gatekeeper waits','Domain '+gd+': '+DOMAINS[gd].n); },200);
     }
   }
   if(node.kind==='serac'){ ENC.threat=25; setTimeout(function(){ banner('The ice groans','it was waiting for you'); },250); }
   if(node.kind==='storm'){ setTimeout(function(){ banner('Rising squall','only speed clears this ridge'); },250); }
-  if(node.kind==='summit'){ ENC.threat=20; setTimeout(function(){ banner('The final pitch','everything the mountain has'); },250); }
+  if(node.kind==='summit'){ ENC.threat=20; setTimeout(function(){ banner('The final pitch','all that is left is what you know'); },250); }
   var pent=Trail.emit('pitch:enter', trailCtx());
   if(pent.staminaDelta) addStamina(pent.staminaDelta);
   showBanners(pent.banners);
@@ -1761,7 +1761,7 @@ function resolve(correct, viaTimeout, srcEl){
   RUN.stoneNow=null;
   if(correct){
     RUN.right++; ENC.streak++; RUN.bestStreak=Math.max(RUN.bestStreak,ENC.streak);
-    if(ENC.shieldLeft>0){ ENC.shieldLeft--; banner('The face cracks', ENC.shieldLeft>0?(ENC.shieldLeft+' layer'+(ENC.shieldLeft>1?'s':'')+' to break'):'shield broken \u2014 climb!'); }
+    if(ENC.shieldLeft>0){ ENC.shieldLeft--; banner('The face cracks', ENC.shieldLeft>0?(ENC.shieldLeft+' layer'+(ENC.shieldLeft>1?'s':'')+' to break'):'the shell gives way \u2014 climb'); }
     else { ENC.done++; if(ENC.node.phase && !ENC.phased && ENC.done>=Math.ceil(ENC.need/2)){ ENC.phased=true; ENC.phaseMul=1.5; raiseThreat(22); banner('The slope lets go','it releases all at once'); }
       if(ENC.need>1 && ENC.done===ENC.need-1 && !ENC.cruxTold){ ENC.cruxTold=true; banner('The crux','one hard move from the ledge'); } }
     AUDIO.correct(); flash('ok'); if(srcEl) burst(srcEl);
@@ -1814,7 +1814,7 @@ function mountainStrikes(){
   addStamina(-_hit); AUDIO.strike();
   RENDER.encChrome(); banner('The mountain pushes back', '&#8722;'+_hit+' stamina'); }
 function addStamina(x){ RUN.stamina=Math.max(0,Math.min(CONFIG.STAM_MAX, RUN.stamina+x)); RENDER.stam();
-  if(typeof document!=='undefined' && document.body && document.body.classList){ var _ll=(RUN.stamina>0 && RUN.stamina<=25 && !!ENC); document.body.classList.toggle('lastlegs', _ll); if(_ll && !RUN.lastLegsTold){ RUN.lastLegsTold=true; banner('Last legs','every step matters now'); } }
+  if(typeof document!=='undefined' && document.body && document.body.classList){ var _ll=(RUN.stamina>0 && RUN.stamina<=25 && !!ENC); document.body.classList.toggle('lastlegs', _ll); if(_ll && !RUN.lastLegsTold){ RUN.lastLegsTold=true; banner('Last legs','no room left for a slip'); } }
   if(RUN.stamina<=0 && ENC && !RUN.ending){
     if(CONFIG.MODS.relics && RUN.relics && RUN.relics.has('iceaxe') && !RUN.iceaxeUsed){ RUN.iceaxeUsed=true; RUN.stamina=1; RENDER.stam(); banner('\u26CF\uFE0F The ice axe bites','you arrest the fall \u2014 1 stamina'); return; }
     RUN.ending=true; if(RUN.timer) clearInterval(RUN.timer); setTimeout(function(){ endRun('fell'); }, 650); } }
@@ -1869,7 +1869,7 @@ function openShrine(node){
   clearInterval(RUN.timer); RUN.altitude=node.alt||RUN.altitude;
   document.getElementById('ledgeIc').innerHTML='&#9961;&#65039;';
   document.getElementById('ledgeTitle').textContent='Weathered Shrine';
-  document.getElementById('ledgeSub').textContent='Cairns and faded prayer flags. Leave an offering, and the mountain may give something back.';
+  document.getElementById('ledgeSub').textContent='Cairns and faded prayer flags, older than any name in the ledger. Leave something, and the mountain may answer.';
   document.getElementById('rewardRow').innerHTML='<span class="pill ice">&#9968;&#65039; '+fmt(node.alt||RUN.altitude)+' m</span>';
   var draftWrap=document.getElementById('draftWrap'); draftWrap.style.display='block';
   document.getElementById('draftLabel').textContent='What do you do?';
@@ -2170,12 +2170,12 @@ function examEnd(early){
   var missRows=EXAM.missed.slice(0,12).map(function(id){ var q=BANK[id]; var ans=q.type==='tf'?(q.correct?'True':'False'):(q.a&&q.a[q.c]!=null?q.a[q.c]:''); return '<div class="missrow"><div class="mq">'+q.q+'</div><div class="ma">&#10003; '+ans+'</div>'+(q.e?'<div class="me">'+q.e+'</div>':'')+'</div>'; }).join('');
   var el=document.getElementById('examResult'); el.style.display='flex';
   var _et=document.querySelector('#exam .examtop'), _qb=document.querySelector('#exam .qbar'); if(_et)_et.style.display='none'; if(_qb)_qb.style.display='none';
-  el.innerHTML='<div class="examverdict '+(pass?'pass':'fail')+'">'+(pass?'&#127881; PASS':'KEEP CLIMBING')+'</div>'
+  el.innerHTML='<div class="examverdict '+(pass?'pass':'fail')+'">'+(pass?'&#10003; PASS':'KEEP CLIMBING')+'</div>'
     +'<div class="exambig">'+pct+'%</div>'
     +'<div class="examsub">'+EXAM.right+' of '+EXAM.seen+' correct \u00b7 ~'+(CONFIG.EXAM_PASS||80)+'% readiness target \u00b7 weighted to the RBT 3rd-ed blueprint'+(early?' \u00b7 ended early':'')+'</div>'
     +'<div class="examdoms">'+rows+'</div>'
     +(missRows?'<details class="missdetails" style="margin-top:14px"><summary>Review the '+EXAM.missed.length+' you missed &mdash; tap to open</summary><div class="misswrap">'+missRows+(EXAM.missed.length>12?'<div class="mmore">+'+(EXAM.missed.length-12)+' more</div>':'')+'</div></details>':'')
-    +'<button class="cta big" style="margin-top:16px" onclick="toMenu()">Back to base camp</button>';
+    +'<button class="cta big" style="margin-top:16px" onclick="toMenu()">Back to the trailhead</button>';
   document.getElementById('examHost').innerHTML=''; document.getElementById('examQ').innerHTML='';
   document.getElementById('examCat').textContent=''; var ex=document.getElementById('examEx'); ex.className='explain'; ex.innerHTML='';
   document.getElementById('examNext').classList.remove('show'); document.getElementById('examQuit').style.display='none';
@@ -2231,14 +2231,14 @@ function endRun(kind){
   var wc=document.getElementById('weakcard');
   if(!rows.length){ wc.style.display='none'; }
   else if(weak.length){ wc.className='weakcard'; wc.style.display='block';
-    wc.innerHTML='<b>Still shaky:</b> '+weak.map(function(r){return r.c;}).join(', ')+'. Paste your trail log below and I\u2019ll cut fresh questions here.'; }
+    wc.innerHTML='<b>Still shaky:</b> '+weak.map(function(r){return r.c;}).join(', ')+'. The Gatekeeper reads this ledger too. Expect to be asked.'; }
   else { wc.className='weakcard clean'; wc.style.display='block';
-    wc.innerHTML='<b>Every trail is holding.</b> Paste your log and we can push into harder discriminations.'; }
+    wc.innerHTML='<b>Every trail is holding.</b> Push the pace next climb and see what the thin air shakes loose.'; }
 
   document.getElementById('code').textContent=buildCode(kind,acc,top);
   renderMissed();
   var _brB=boardReady(); commitRun(kind); checkAchievements(kind); var _brA=boardReady(); var _bl=document.getElementById('bankline');
-  if(_bl){ var _d=_brA-_brB; _bl.innerHTML='&#9968;\uFE0F Banked to your expedition log \u2014 <b>'+(_d>0?'+'+_d:_d)+'</b> newly board-ready, now <b>'+_brA+'/'+BANK.length+'</b> \u00b7 +'+fmt(Math.max(0,Math.round(RUN.altitude-1600)))+' trail miles'; }
+  if(_bl){ var _d=_brA-_brB; _bl.innerHTML='&#9968;\uFE0F Written to the ledger \u2014 <b>'+(_d>0?'+'+_d:_d)+'</b> newly board-ready, now <b>'+_brA+'/'+BANK.length+'</b> \u00b7 +'+fmt(Math.max(0,Math.round(RUN.altitude-1600)))+' trail miles'; }
   var cb=document.getElementById('copybtn'); cb.className='copybtn'; cb.innerHTML='&#128203; Copy trail log';
   show('debrief');
 }
@@ -2256,7 +2256,7 @@ function buildCode(kind,acc,top){
 }
 function copyCode(){
   var txt=document.getElementById('code').textContent;
-  var done=function(){ var b=document.getElementById('copybtn'); b.classList.add('done'); b.innerHTML='&#10003; Copied \u2014 paste it to me'; };
+  var done=function(){ var b=document.getElementById('copybtn'); b.classList.add('done'); b.innerHTML='&#10003; Copied \u2014 see you at the trailhead'; };
   if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(done).catch(function(){fb(txt,done);}); } else fb(txt,done);
 }
 function fb(txt,done){ var t=document.createElement('textarea'); t.value=txt; t.style.position='fixed'; t.style.opacity='0'; document.body.appendChild(t); t.select(); try{document.execCommand('copy');done();}catch(e){} t.remove(); }

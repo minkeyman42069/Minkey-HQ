@@ -147,7 +147,7 @@ var TrailBundle = (() => {
       kind: "switchback",
       icon: "\u{1FAA8}",
       title: "Scree Slope",
-      blurb: "Loose scree \u2014 it slides when you misstep. Time barely matters here; footing is everything.",
+      blurb: "A slope of broken rock that moves underfoot. Slow is fine. Wrong is what slides.",
       need,
       time: 18,
       rise: 0.8,
@@ -167,7 +167,7 @@ var TrailBundle = (() => {
       kind: "storm",
       icon: "\u{1F329}\uFE0F",
       title: "Rising Squall",
-      blurb: "A squall building by the second. Correct answers won't calm it \u2014 only speed clears the ridge.",
+      blurb: "Snow coming in sideways and worse by the second. Nothing you know will quiet it. Outrun it or wear it.",
       need,
       time: 12,
       rise: 1.85,
@@ -188,7 +188,7 @@ var TrailBundle = (() => {
       kind: "gate",
       icon: "\u{1F6E1}\uFE0F",
       title: "Gatekeeper",
-      blurb: domain ? "It tests you on " + domain + ". Every wrong answer emboldens it; every right one drives it back." : "It tests your weakest exam domain. Every wrong answer emboldens it; every right one drives it back.",
+      blurb: domain ? "It stands where the route narrows, and it has read your ledger. It will ask about " + domain + ". Wrong answers feed it. Right ones back it off." : "It stands where the route narrows, and it has read your ledger. It will ask what you least want asked. Wrong answers feed it. Right ones back it off.",
       need,
       time: 16,
       rise: 1.55,
@@ -222,7 +222,7 @@ var TrailBundle = (() => {
       kind: "summit",
       icon: "\u{1F3D4}\uFE0F",
       title: "Summit Push",
-      blurb: "The last pitch \u2014 wind, ice, and everything the mountain has saved for the top.",
+      blurb: "The last pitch. Wind you lean into, cold in your teeth, the dark starting to thin. All that stands between you and the top is everything you know.",
       need,
       time: 15,
       rise: 2.1,
@@ -242,7 +242,7 @@ var TrailBundle = (() => {
       kind: "serac",
       icon: "\u{1F9CA}",
       title: "Falling Serac",
-      blurb: "A wall of unstable ice \u2014 it can go at any second. Fast, punishing, and it hits hard.",
+      blurb: "A hanging wall of ice, creaking before you even rope up. It was falling today with or without you. Be quick, and be elsewhere.",
       need,
       time: 13,
       rise: 2.35,
@@ -262,7 +262,7 @@ var TrailBundle = (() => {
       kind: "whiteout",
       icon: "\u{1F32B}\uFE0F",
       title: "Blinding Whiteout",
-      blurb: "The cloud swallows the ridge whole. You climb by feel now \u2014 and you climb fast, before it closes for good.",
+      blurb: "The cloud comes up the face and the world goes to milk. No ridge, no sky, no down. Climb by feel, and climb now.",
       need,
       time: 10,
       rise: 2.4,
@@ -282,7 +282,7 @@ var TrailBundle = (() => {
       kind: "crevasse",
       icon: "\u{1F573}\uFE0F",
       title: "Snow Bridge",
-      blurb: "A snow bridge over a black drop. Only a few steps to cross \u2014 but one wrong step and the mountain takes you.",
+      blurb: "A rib of old snow over a dark with no bottom. A few careful steps and you are across. It only counts the wrong ones.",
       need,
       time: 15,
       rise: 1.25,
@@ -302,7 +302,7 @@ var TrailBundle = (() => {
       kind: "traverse",
       icon: "\u{1F9D7}",
       title: "Exposed Traverse",
-      blurb: "A long, exposed line across the face. Nothing here is hard \u2014 but it never ends, and the wind never once stops.",
+      blurb: "Ledges strung across the face for the better part of a mile. None of it is hard. All of it is long, and the wind leans on you the whole way.",
       need,
       time: 16,
       rise: 1.5,
@@ -322,7 +322,7 @@ var TrailBundle = (() => {
       kind: "thinair",
       icon: "\u{1FAC1}",
       title: "The Thin Air",
-      blurb: "The air is too thin to breathe. Standing still costs you now \u2014 every second up here bleeds you dry. Keep moving.",
+      blurb: "The air up here is a rumor. Your body burns whether you move or not \u2014 so move.",
       need,
       time: 16,
       rise: 1.1,
@@ -343,7 +343,7 @@ var TrailBundle = (() => {
       kind: "icefall",
       icon: "\u2604\uFE0F",
       title: "The Icefall",
-      blurb: "Ice comes down the couloir in volleys, on its own grim schedule. Read the rhythm \u2014 move between the falls.",
+      blurb: "The serac field above calves on its own clock, tons at a time. Watch. Count. Cross. The ice does not aim, and it does not need to.",
       need,
       time: 14,
       rise: 0.8,
@@ -365,7 +365,7 @@ var TrailBundle = (() => {
       kind: "void",
       icon: "\u{1F311}",
       title: "Bare Ridge",
-      blurb: "Up here nothing works \u2014 no flare, no field notes, no tricks. Just you and what you actually know.",
+      blurb: "Rock scoured bare by a hundred winters. Nothing in your pack works this high \u2014 no boons, no notes, no flare. Just you, and whatever stuck.",
       need,
       time: 15,
       rise: 1.6,
@@ -386,7 +386,7 @@ var TrailBundle = (() => {
       kind: "knife",
       icon: "\u{1F5E1}\uFE0F",
       title: "The Knife-Edge",
-      blurb: "A ridge one boot wide, a clean fall on either side. Falter and you slide back \u2014 the edge forgives nothing.",
+      blurb: "A crest the width of your boot with air on both sides. There is no standing still here. One bad step puts you back where the move began.",
       need,
       time: 15,
       rise: 1.2,
@@ -407,7 +407,7 @@ var TrailBundle = (() => {
       kind: "berg",
       icon: "\u26CF\uFE0F",
       title: "Widening Crack",
-      blurb: "The gap between snow and ice widens with every slip. Stumble once and it yawns; stumble again and it swallows.",
+      blurb: "The crack between glacier and mountain runs right beside your line. Every stumble feeds it, and the next one always costs more.",
       need,
       time: 15,
       rise: 1.2,
@@ -428,7 +428,7 @@ var TrailBundle = (() => {
       kind: "snowfield",
       icon: "\u{1F328}\uFE0F",
       title: "The Snowfield",
-      blurb: "Deep, soft snow \u2014 slow and plodding, but it forgives a stumble. Find your pace.",
+      blurb: "Thigh-deep powder that swallows your mistakes along with your boots. Slow going. Kind going. Find a rhythm and keep it.",
       need,
       time: 18,
       rise: 0.7,
@@ -448,7 +448,7 @@ var TrailBundle = (() => {
       kind: "couloir",
       icon: "\u{1F5FB}",
       title: "The Couloir",
-      blurb: "A steep gully that funnels everything downward. Keep pace, or the mountain wears you down.",
+      blurb: "A chute of ice between rock walls. Everything the mountain sheds comes down through here, and your route goes up it. Do not linger.",
       need,
       time: 13,
       rise: 1.9,
@@ -468,7 +468,7 @@ var TrailBundle = (() => {
       kind: "icewall",
       icon: "\u{1F4A0}",
       title: "The Ice Wall",
-      blurb: "Vertical ice. Every placement matters, and it does not forgive hesitation.",
+      blurb: "Ninety degrees of blue ice. Swing, test, trust, step up. Rush one placement and the whole pitch knows it.",
       need,
       time: 14,
       rise: 1.6,
@@ -488,7 +488,7 @@ var TrailBundle = (() => {
       kind: "windslab",
       icon: "\u{1F300}",
       title: "Gust Field",
-      blurb: "Wind-loaded snow, primed to release. Gusts of threat come without warning \u2014 brace and keep moving through them.",
+      blurb: "Wind-packed slabs that boom underfoot. The gusts keep no schedule and send no warning. Stay low and keep moving.",
       need,
       time: 14,
       rise: 1,
@@ -509,7 +509,7 @@ var TrailBundle = (() => {
       kind: "sealedface",
       icon: "\u{1F512}",
       title: "Ice Shell",
-      blurb: "A face sealed in hard blue ice. Your first correct answers break the shell \u2014 then you can climb for real.",
+      blurb: "Overnight melt froze the face into a single blue glaze. Break the shell first. The climbing starts underneath.",
       need,
       time: 15,
       rise: 1.2,
@@ -530,7 +530,7 @@ var TrailBundle = (() => {
       kind: "longwall",
       icon: "\u{1FA9C}",
       title: "The Long Wall",
-      blurb: "A wall with no top in sight. The longer you are on it, the less each breather gives back \u2014 and it knows it.",
+      blurb: "You cannot see the top from the bottom, and not from halfway either. The first breather on this wall helps. The fifth barely does.",
       need,
       time: 16,
       rise: 1.5,
@@ -551,7 +551,7 @@ var TrailBundle = (() => {
       kind: "tempest",
       icon: "\u{1F32A}\uFE0F",
       title: "The Tempest",
-      blurb: "A storm that feeds on chaos. The closer you are to the edge, the harder it drives you toward it.",
+      blurb: "A storm with an appetite. Let the danger build and the wind rises to meet it, driving you toward the edge it wants you over. Starve it calm.",
       need,
       time: 13,
       rise: 1.55,
@@ -572,7 +572,7 @@ var TrailBundle = (() => {
       kind: "closing",
       icon: "\u23F3",
       title: "The Closing Window",
-      blurb: "The weather window is slamming shut. Every second you are given is shorter than the last \u2014 climb.",
+      blurb: "The forecast bought you an hour and the mountain is spending it fast. Each chance you get is briefer than the last. Go.",
       need,
       time: 14,
       rise: 2,
@@ -593,7 +593,7 @@ var TrailBundle = (() => {
       kind: "avalanche",
       icon: "\u{1F4A5}",
       title: "The Avalanche",
-      blurb: "The whole slope is loaded and silent. It waits, and waits \u2014 then lets go all at once. Be past it when it does.",
+      blurb: "A loaded slope, quiet the way held breath is quiet. Somewhere past the middle it lets go. Where you stand when it does is up to you.",
       need,
       time: 15,
       rise: 1.25,
@@ -614,7 +614,7 @@ var TrailBundle = (() => {
       kind: "rockfall",
       icon: "\u{1F94C}",
       title: "Rockfall Gully",
-      blurb: "Small stones skip down the gully in waves. Nothing up here hits hard yet \u2014 learn to move between the volleys, before the mountain finds bigger rocks.",
+      blurb: "Pebbles come down the gully in bursts, rattling off the walls ahead of you. Count the quiet between volleys. That is when you move.",
       need,
       time: 18,
       rise: 0.7,
@@ -636,7 +636,7 @@ var TrailBundle = (() => {
       kind: "verglas",
       icon: "\u{1FA9E}",
       title: "The Verglas",
-      blurb: "A face glazed in mirror-thin ice. Answer while your footing is fresh and the strain sheds \u2014 hesitate, and the glaze refreezes ahead of you.",
+      blurb: "Meltwater froze over the rock in a skin too thin to see. Your edges bite for a moment after every move. Move again before they skate.",
       need,
       time: 15,
       rise: 1.9,
@@ -657,7 +657,7 @@ var TrailBundle = (() => {
       kind: "shrine",
       icon: "\u26E9\uFE0F",
       title: "Weathered Shrine",
-      blurb: "Cairns and faded prayer flags. Climbers leave something here, and the mountain remembers.",
+      blurb: "Cairns and faded prayer flags, older than any name in the ledger. Climbers leave something here. The mountain remembers.",
       need: 0,
       restore: 0,
       boon: false,
@@ -669,7 +669,7 @@ var TrailBundle = (() => {
       kind: "corniceridge",
       icon: "\u{1F32C}\uFE0F",
       title: "Wind Lip",
-      blurb: "A wind-carved lip of snow over empty air. Gusts hammer it, and one wrong step sends you sliding back.",
+      blurb: "A lip of snow curled over empty air by wind that has not stopped in years. It bucks without warning, and a slip undoes honest work.",
       need,
       time: 15,
       rise: 0.9,
@@ -691,7 +691,7 @@ var TrailBundle = (() => {
       kind: "frozentitan",
       icon: "\u{1F9CA}",
       title: "Glacier Block",
-      blurb: "A pillar of ancient blue ice. Break through three frozen layers \u2014 then it rages when the threat runs high.",
+      blurb: "A pillar of glacier ice three winters thick. All three layers break before the climbing counts, and old ice splinters hard when it starts to lose.",
       need,
       time: 14,
       rise: 1.1,
@@ -709,9 +709,9 @@ var TrailBundle = (() => {
     };
   }
   var ACTS = [
-    { name: "The Approach", flavor: "Warm rock, open glacier. The mountain lets you find your rhythm before it shows its teeth." },
-    { name: "The Headwall", flavor: "The face rears up. Easy ground is gone \u2014 every pitch wants technique, nerve, and recall under pressure." },
-    { name: "The Death Zone", flavor: "Above the last camp the air turns to knives. Everything the mountain saved for the summit push, thrown at once." }
+    { name: "The Approach", flavor: "Warm rock and open glacier under a late moon. The mountain lets you settle in. It can afford to." },
+    { name: "The Headwall", flavor: "The face goes vertical and easy ground becomes a memory. Nothing past this point is given away." },
+    { name: "The Death Zone", flavor: "Above the last camp the air stops helping. Whatever the mountain held in reserve, it spends on you now." }
   ];
   function scaleNode(n, act) {
     n.act = act;
@@ -724,32 +724,32 @@ var TrailBundle = (() => {
     return n;
   }
   var BESTIARY = [
-    { fn: nSwitch, t: 1, a: "Accuracy", m: "Loose footing. Time barely matters here \u2014 it is all about getting the answer right." },
-    { fn: nTraverse, t: 1, a: "Endurance", m: "Nothing is hard, but it never ends and the wind never stops. Steady, grinding pressure." },
-    { fn: nSnowfield, t: 1, a: "Accuracy", m: "Deep, forgiving snow. Slow going, but it lets a stumble slide. A place to find your rhythm." },
-    { fn: nRockfall, t: 1, a: "Timing", m: "Pebbles rattle down the gully in waves. A gentle first lesson in moving between the falls." },
-    { fn: nCrevasse, t: 2, a: "Precision", m: "A snow bridge over a black drop. Few steps to cross, but a single miss is punishing." },
-    { fn: nBergschrund, t: 2, a: "Escalating", m: "A widening crack. Every slip costs more stamina than the one before it." },
-    { fn: nStorm, t: 2, a: "Speed", m: "A squall building by the second. Correct answers will not calm it \u2014 only speed clears the ridge." },
-    { fn: nCouloir, t: 2, a: "Speed", m: "A steep gully funneling everything down. Keep pace, or it wears you down." },
-    { fn: nWindslab, t: 2, a: "Chaos", m: "Wind-loaded snow. Gusts of threat come without warning \u2014 brace and push through them." },
-    { fn: nVoid, t: 3, a: "No boons", m: "Bare ridge \u2014 nothing works here. No flare, no field notes, no tricks. Just what you know." },
-    { fn: nKnife, t: 3, a: "Consistency", m: "A ridge one boot wide. Falter and you slide back down it \u2014 a miss undoes your progress." },
-    { fn: nIcewall, t: 3, a: "Precision", m: "Vertical ice. Every placement matters, and it does not forgive hesitation." },
-    { fn: nSealedFace, t: 3, a: "Armored", m: "Hard blue ice shell. Your first correct answers break the layers before any climbing counts." },
-    { fn: nLongWall, t: 3, a: "Attrition", m: "A wall with no top in sight. The longer you are on it, the less each breather gives back." },
-    { fn: nVerglas, t: 3, a: "Fluency", m: "Mirror-thin ice that refreezes fast. Quick correct answers shed extra threat \u2014 hesitation lets it build." },
-    { fn: nWhiteout, t: 4, a: "Speed", m: "The cloud swallows the ridge. You climb blind and fast, before it closes for good." },
-    { fn: nThinAir, t: 4, a: "Attrition", m: "Air too thin to breathe. Standing still bleeds you dry \u2014 keep moving or waste away." },
-    { fn: nIcefall, t: 4, a: "Timing", m: "Ice comes down in volleys on its own grim schedule. Read the rhythm; move between the falls." },
-    { fn: nTempest, t: 4, a: "Enrage", m: "A storm that feeds on chaos. The closer you are to the edge, the harder it drives you toward it." },
-    { fn: nClosing, t: 4, a: "Countdown", m: "A weather window slamming shut. Every second you are given is shorter than the last." },
-    { fn: nAvalanche, t: 4, a: "Release", m: "A loaded, silent slope. It waits \u2014 then lets go all at once at the halfway point. Be past it." },
-    { fn: nCorniceRidge, t: 3, a: "Chaos ridge", m: "Wind lip over empty air. Random gusts hammer the crossing, and a single miss sends you sliding back." },
-    { fn: nFrozenTitan, t: 4, a: "Armored elite", m: "Glacier block with three ice layers to break \u2014 then it rages when the threat runs high." },
-    { fn: (n, al) => nGate(n, al, null), t: 5, a: "Competence duel", m: "Tests your weakest TCO exam domain at entry. Every wrong answer emboldens it; every right one drives it back." },
-    { fn: nSerac, t: 5, a: "Elite", m: "A wall of unstable ice that can go at any second. Fast, punishing, and it hits hard." },
-    { fn: nSummit, t: 5, a: "Final pitch", m: "Summit push \u2014 wind, ice, and everything the mountain has saved for the top." }
+    { fn: nSwitch, t: 1, a: "Accuracy", m: "Accuracy check. Generous clock, ordinary misses, no surprises." },
+    { fn: nTraverse, t: 1, a: "Endurance", m: "Endurance check. Steady passive threat across a long, easy line." },
+    { fn: nSnowfield, t: 1, a: "Accuracy", m: "Recovery ground. Slow clock, soft misses, forgiving all around." },
+    { fn: nRockfall, t: 1, a: "Timing", m: "Timing drill. Small threat spikes land on a fixed rhythm." },
+    { fn: nCrevasse, t: 2, a: "Precision", m: "Precision check. Few questions, heavy cost per miss." },
+    { fn: nBergschrund, t: 2, a: "Escalating", m: "Escalating misses. Each slip costs more stamina than the one before." },
+    { fn: nStorm, t: 2, a: "Speed", m: "Pure speed. Correct answers shed no threat here; only pace survives it." },
+    { fn: nCouloir, t: 2, a: "Speed", m: "Speed check. Fast-building threat, ordinary misses." },
+    { fn: nWindslab, t: 2, a: "Chaos", m: "Chaos. Random gusts of threat, no warning and no pattern." },
+    { fn: nVoid, t: 3, a: "No boons", m: "Boon suppression. Flare, notes, and every boon go dark for the pitch." },
+    { fn: nKnife, t: 3, a: "Consistency", m: "Consistency check. A miss knocks your progress back down the ridge." },
+    { fn: nIcewall, t: 3, a: "Precision", m: "Precision under pace. Expensive misses on a quick clock." },
+    { fn: nSealedFace, t: 3, a: "Armored", m: "Armored. Two correct answers break the shell before progress counts." },
+    { fn: nLongWall, t: 3, a: "Attrition", m: "Attrition. The threat relief on each correct answer keeps shrinking." },
+    { fn: nVerglas, t: 3, a: "Fluency", m: "Fluency check. Quick correct answers shed extra threat; slow ones shed almost none." },
+    { fn: nWhiteout, t: 4, a: "Speed", m: "Blind speed. The shortest clock on the mountain and thin relief." },
+    { fn: nThinAir, t: 4, a: "Attrition", m: "Attrition. Stamina drains every second you stand on the pitch." },
+    { fn: nIcefall, t: 4, a: "Timing", m: "Timing. Heavy threat volleys land on a fixed schedule." },
+    { fn: nTempest, t: 4, a: "Enrage", m: "Enrage. Past sixty percent threat, everything builds faster." },
+    { fn: nClosing, t: 4, a: "Countdown", m: "Countdown. Each question\u2019s clock is shorter than the last." },
+    { fn: nAvalanche, t: 4, a: "Release", m: "Release. At the halfway mark the slope lets go all at once." },
+    { fn: nCorniceRidge, t: 3, a: "Chaos ridge", m: "Chaos ridge. Gusts without warning, and a miss slides you back." },
+    { fn: nFrozenTitan, t: 4, a: "Armored elite", m: "Armored elite. Three shield layers, and it enrages when threat runs high." },
+    { fn: (n, al) => nGate(n, al, null), t: 5, a: "Competence duel", m: "Competence duel. Draws every question from your weakest exam domain." },
+    { fn: nSerac, t: 5, a: "Elite", m: "Elite. Starts angry \u2014 a quarter of the threat bar is already lit." },
+    { fn: nSummit, t: 5, a: "Final pitch", m: "Final pitch. Long, fast-building, and it opens with threat on the board." }
   ];
   function nodeEmoji(kind) {
     const m = {
@@ -1311,7 +1311,7 @@ var TrailBundle = (() => {
           ease += ctx.enc.node.swift;
           if (!ctx.enc.swiftTold) {
             ctx.enc.swiftTold = true;
-            banners.push({ title: "Quick placement", sub: "the ice holds while you move fast" });
+            banners.push({ title: "Quick placement", sub: "fast answers shed extra threat" });
           }
         }
         if (canUse(ctx, "allin")) ease *= 1.45;
@@ -1716,7 +1716,7 @@ var TrailBundle = (() => {
   var MENU_COPY = {
     kicker: "Roguelike study climb",
     tagline: "Know your terms, or the mountain wins.",
-    lore: "Draft boons at ledge camps. Survive hazards that punish the concepts you haven\u2019t locked in. What you master on the climb stays learned when you fall.",
+    lore: "The hazards up there test what you can still recall with the wind up, and every camp offers help you must choose between. Fall as often as it takes \u2014 the ledger keeps each concept you lock in.",
     primaryCta: "Climb the mountain",
     focusSummary: "Focus one trail",
     importSummary: "Import saved progress"
@@ -1741,7 +1741,7 @@ var TrailBundle = (() => {
       trails: "Where each trail stands",
       share: "Share your result",
       export: "Copy trail log",
-      exportHint: "Send me your trail log"
+      exportHint: "Carry it to your next climb"
     },
     exam: {
       kicker: "Board simulation",
@@ -1752,35 +1752,35 @@ var TrailBundle = (() => {
     bestiary: {
       kicker: "Mountain codex",
       title: "The Bestiary",
-      sub: "Every hazard on the climb \u2014 what it costs, how it kills, and what beats it."
+      sub: "Every hazard between the trailhead and the summit, and the particular way each one wants to stop you."
     }
   };
   var DEBRIEF_COPY = {
     summit: {
       icon: "\u{1F3C6}",
       title: "Summit reached",
-      sub: "You topped out. The mountain remembers who climbs it \u2014 and what you locked in stays banked."
+      sub: "Topped out in the first light. It goes in the ledger: the route, the weather, and every concept that held your weight."
     },
     fell: {
       icon: "\u{1F30D}",
       title: "Driven back",
-      sub: "Stamina ran dry. The mountain sent you down, but every concept you sealed is still yours."
+      sub: "The mountain kept the summit this time. It does not keep what you learned \u2014 that goes in the ledger, same as any climb."
     },
     quit: {
       icon: "\u{1F3D5}",
       title: "Back at camp",
-      sub: "You turned back before the ridge took everything. Here\u2019s what the climb still taught you."
+      sub: "Turning back is a skill. Ask anyone still climbing at sixty. The ledger takes lessons, not summits."
     }
   };
   var ACT_TRANSITIONS = {
     2: {
       title: "The Headwall",
-      sub: "Easy ground is gone. The face rears up and every pitch wants nerve under pressure.",
+      sub: "You tie in at the base of the face. It runs up out of sight, and it wants better answers than the approach did.",
       ic: "\u{1F9D7}"
     },
     3: {
       title: "The Death Zone",
-      sub: "Above the last camp the air turns to knives. Everything saved for the summit \u2014 thrown at once.",
+      sub: "Past this camp there is no rest that counts and no one coming. Move well, and do not stop long.",
       ic: "\u2620\uFE0F"
     }
   };

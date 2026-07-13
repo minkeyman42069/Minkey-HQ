@@ -19,7 +19,7 @@ export function foeColor(kind) {
 export function nSwitch(need, alt) {
   return {
     kind: 'switchback', icon: '🪨', title: 'Scree Slope',
-    blurb: 'Loose scree — it slides when you misstep. Time barely matters here; footing is everything.',
+    blurb: 'A slope of broken rock that moves underfoot. Slow is fine. Wrong is what slides.',
     need, time: 18, rise: 0.8, miss: 26, ease: 7, max: 100, hit: 12, restore: 14, boon: false, alt,
     tname: 'Loose scree', tic: '🪨',
   };
@@ -28,7 +28,7 @@ export function nSwitch(need, alt) {
 export function nStorm(need, alt) {
   return {
     kind: 'storm', icon: '🌩️', title: 'Rising Squall',
-    blurb: "A squall building by the second. Correct answers won't calm it — only speed clears the ridge.",
+    blurb: 'Snow coming in sideways and worse by the second. Nothing you know will quiet it. Outrun it or wear it.',
     need, time: 12, rise: 1.85, miss: 15, ease: 0, max: 100, hit: 15, restore: 16, boon: true, noBoonEase: true, alt,
     tname: 'The squall', tic: '🌩️',
   };
@@ -38,8 +38,8 @@ export function nGate(need, alt, domain) {
   return {
     kind: 'gate', icon: '🛡️', title: 'Gatekeeper',
     blurb: domain
-      ? 'It tests you on ' + domain + '. Every wrong answer emboldens it; every right one drives it back.'
-      : 'It tests your weakest exam domain. Every wrong answer emboldens it; every right one drives it back.',
+      ? 'It stands where the route narrows, and it has read your ledger. It will ask about ' + domain + '. Wrong answers feed it. Right ones back it off.'
+      : 'It stands where the route narrows, and it has read your ledger. It will ask what you least want asked. Wrong answers feed it. Right ones back it off.',
     need, time: 16, rise: 1.55, miss: 30, ease: 10, max: 100, hit: 20, restore: 22, boon: true, domain, gateDomain: null, alt,
     tname: 'The Gatekeeper', tic: '🛡️',
   };
@@ -56,7 +56,7 @@ export function nRest(alt, configRef) {
 export function nSummit(need, alt) {
   return {
     kind: 'summit', icon: '🏔️', title: 'Summit Push',
-    blurb: 'The last pitch — wind, ice, and everything the mountain has saved for the top.',
+    blurb: 'The last pitch. Wind you lean into, cold in your teeth, the dark starting to thin. All that stands between you and the top is everything you know.',
     need, time: 15, rise: 2.1, miss: 22, ease: 8, max: 100, hit: 20, restore: 14, boon: false, alt,
     tname: 'Summit push', tic: '❄️',
   };
@@ -65,7 +65,7 @@ export function nSummit(need, alt) {
 export function nSerac(need, alt) {
   return {
     kind: 'serac', icon: '🧊', title: 'Falling Serac',
-    blurb: 'A wall of unstable ice — it can go at any second. Fast, punishing, and it hits hard.',
+    blurb: 'A hanging wall of ice, creaking before you even rope up. It was falling today with or without you. Be quick, and be elsewhere.',
     need, time: 13, rise: 2.35, miss: 22, ease: 10, max: 100, hit: 22, restore: 20, boon: true, alt,
     tname: 'The serac', tic: '🧊',
   };
@@ -74,7 +74,7 @@ export function nSerac(need, alt) {
 export function nWhiteout(need, alt) {
   return {
     kind: 'whiteout', icon: '🌫️', title: 'Blinding Whiteout',
-    blurb: 'The cloud swallows the ridge whole. You climb by feel now — and you climb fast, before it closes for good.',
+    blurb: 'The cloud comes up the face and the world goes to milk. No ridge, no sky, no down. Climb by feel, and climb now.',
     need, time: 10, rise: 2.4, miss: 13, ease: 5, max: 100, hit: 15, restore: 16, boon: true, alt,
     tname: 'The whiteout', tic: '🌫️',
   };
@@ -83,7 +83,7 @@ export function nWhiteout(need, alt) {
 export function nCrevasse(need, alt) {
   return {
     kind: 'crevasse', icon: '🕳️', title: 'Snow Bridge',
-    blurb: 'A snow bridge over a black drop. Only a few steps to cross — but one wrong step and the mountain takes you.',
+    blurb: 'A rib of old snow over a dark with no bottom. A few careful steps and you are across. It only counts the wrong ones.',
     need, time: 15, rise: 1.25, miss: 32, ease: 11, max: 100, hit: 24, restore: 18, boon: true, alt,
     tname: 'The snow bridge', tic: '🕳️',
   };
@@ -92,7 +92,7 @@ export function nCrevasse(need, alt) {
 export function nTraverse(need, alt) {
   return {
     kind: 'traverse', icon: '🧗', title: 'Exposed Traverse',
-    blurb: 'A long, exposed line across the face. Nothing here is hard — but it never ends, and the wind never once stops.',
+    blurb: 'Ledges strung across the face for the better part of a mile. None of it is hard. All of it is long, and the wind leans on you the whole way.',
     need, time: 16, rise: 1.5, miss: 16, ease: 6, max: 100, hit: 14, restore: 16, boon: true, alt,
     tname: 'The traverse', tic: '🧗',
   };
@@ -101,7 +101,7 @@ export function nTraverse(need, alt) {
 export function nThinAir(need, alt) {
   return {
     kind: 'thinair', icon: '🫁', title: 'The Thin Air',
-    blurb: 'The air is too thin to breathe. Standing still costs you now — every second up here bleeds you dry. Keep moving.',
+    blurb: 'The air up here is a rumor. Your body burns whether you move or not — so move.',
     need, time: 16, rise: 1.1, miss: 18, ease: 8, max: 100, hit: 13, restore: 16, boon: true, drain: 0.28, alt,
     tname: 'Thin air', tic: '🫁',
   };
@@ -110,7 +110,7 @@ export function nThinAir(need, alt) {
 export function nIcefall(need, alt) {
   return {
     kind: 'icefall', icon: '☄️', title: 'The Icefall',
-    blurb: 'Ice comes down the couloir in volleys, on its own grim schedule. Read the rhythm — move between the falls.',
+    blurb: 'The serac field above calves on its own clock, tons at a time. Watch. Count. Cross. The ice does not aim, and it does not need to.',
     need, time: 14, rise: 0.8, miss: 18, ease: 9, max: 100, hit: 15, restore: 16, boon: true, spike: 12, spikeEvery: 5.5, alt,
     tname: 'The icefall', tic: '☄️',
   };
@@ -119,7 +119,7 @@ export function nIcefall(need, alt) {
 export function nVoid(need, alt) {
   return {
     kind: 'void', icon: '🌑', title: 'Bare Ridge',
-    blurb: 'Up here nothing works — no flare, no field notes, no tricks. Just you and what you actually know.',
+    blurb: 'Rock scoured bare by a hundred winters. Nothing in your pack works this high — no boons, no notes, no flare. Just you, and whatever stuck.',
     need, time: 15, rise: 1.6, miss: 22, ease: 9, max: 100, hit: 17, restore: 18, boon: false, suppress: true, alt,
     tname: 'Bare ridge', tic: '🌑',
   };
@@ -128,7 +128,7 @@ export function nVoid(need, alt) {
 export function nKnife(need, alt) {
   return {
     kind: 'knife', icon: '🗡️', title: 'The Knife-Edge',
-    blurb: 'A ridge one boot wide, a clean fall on either side. Falter and you slide back — the edge forgives nothing.',
+    blurb: 'A crest the width of your boot with air on both sides. There is no standing still here. One bad step puts you back where the move began.',
     need, time: 15, rise: 1.2, miss: 20, ease: 10, max: 100, hit: 16, restore: 18, boon: true, streakGate: true, alt,
     tname: 'The knife-edge', tic: '🗡️',
   };
@@ -137,7 +137,7 @@ export function nKnife(need, alt) {
 export function nBergschrund(need, alt) {
   return {
     kind: 'berg', icon: '⛏️', title: 'Widening Crack',
-    blurb: 'The gap between snow and ice widens with every slip. Stumble once and it yawns; stumble again and it swallows.',
+    blurb: 'The crack between glacier and mountain runs right beside your line. Every stumble feeds it, and the next one always costs more.',
     need, time: 15, rise: 1.2, miss: 17, ease: 9, max: 100, hit: 16, restore: 18, boon: true, escalate: 6, alt,
     tname: 'The widening crack', tic: '⛏️',
   };
@@ -146,7 +146,7 @@ export function nBergschrund(need, alt) {
 export function nSnowfield(need, alt) {
   return {
     kind: 'snowfield', icon: '🌨️', title: 'The Snowfield',
-    blurb: 'Deep, soft snow — slow and plodding, but it forgives a stumble. Find your pace.',
+    blurb: 'Thigh-deep powder that swallows your mistakes along with your boots. Slow going. Kind going. Find a rhythm and keep it.',
     need, time: 18, rise: 0.7, miss: 12, ease: 10, max: 100, hit: 10, restore: 14, boon: true, alt,
     tname: 'The snowfield', tic: '🌨️',
   };
@@ -155,7 +155,7 @@ export function nSnowfield(need, alt) {
 export function nCouloir(need, alt) {
   return {
     kind: 'couloir', icon: '🗻', title: 'The Couloir',
-    blurb: 'A steep gully that funnels everything downward. Keep pace, or the mountain wears you down.',
+    blurb: 'A chute of ice between rock walls. Everything the mountain sheds comes down through here, and your route goes up it. Do not linger.',
     need, time: 13, rise: 1.9, miss: 18, ease: 6, max: 100, hit: 17, restore: 16, boon: true, alt,
     tname: 'The couloir', tic: '🗻',
   };
@@ -164,7 +164,7 @@ export function nCouloir(need, alt) {
 export function nIcewall(need, alt) {
   return {
     kind: 'icewall', icon: '💠', title: 'The Ice Wall',
-    blurb: 'Vertical ice. Every placement matters, and it does not forgive hesitation.',
+    blurb: 'Ninety degrees of blue ice. Swing, test, trust, step up. Rush one placement and the whole pitch knows it.',
     need, time: 14, rise: 1.6, miss: 24, ease: 9, max: 100, hit: 20, restore: 18, boon: true, alt,
     tname: 'The ice wall', tic: '💠',
   };
@@ -173,7 +173,7 @@ export function nIcewall(need, alt) {
 export function nWindslab(need, alt) {
   return {
     kind: 'windslab', icon: '🌀', title: 'Gust Field',
-    blurb: 'Wind-loaded snow, primed to release. Gusts of threat come without warning — brace and keep moving through them.',
+    blurb: 'Wind-packed slabs that boom underfoot. The gusts keep no schedule and send no warning. Stay low and keep moving.',
     need, time: 14, rise: 1.0, miss: 16, ease: 8, max: 100, hit: 16, restore: 16, boon: true, gust: 0.08, alt,
     tname: 'The gust field', tic: '🌀',
   };
@@ -182,7 +182,7 @@ export function nWindslab(need, alt) {
 export function nSealedFace(need, alt) {
   return {
     kind: 'sealedface', icon: '🔒', title: 'Ice Shell',
-    blurb: 'A face sealed in hard blue ice. Your first correct answers break the shell — then you can climb for real.',
+    blurb: 'Overnight melt froze the face into a single blue glaze. Break the shell first. The climbing starts underneath.',
     need, time: 15, rise: 1.2, miss: 20, ease: 10, max: 100, hit: 17, restore: 18, boon: true, shield: 2, alt,
     tname: 'The ice shell', tic: '🔒',
   };
@@ -191,7 +191,7 @@ export function nSealedFace(need, alt) {
 export function nLongWall(need, alt) {
   return {
     kind: 'longwall', icon: '🪜', title: 'The Long Wall',
-    blurb: 'A wall with no top in sight. The longer you are on it, the less each breather gives back — and it knows it.',
+    blurb: 'You cannot see the top from the bottom, and not from halfway either. The first breather on this wall helps. The fifth barely does.',
     need, time: 16, rise: 1.5, miss: 20, ease: 11, max: 100, hit: 16, restore: 16, boon: true, fatigue: true, alt,
     tname: 'The long wall', tic: '🪜',
   };
@@ -200,7 +200,7 @@ export function nLongWall(need, alt) {
 export function nTempest(need, alt) {
   return {
     kind: 'tempest', icon: '🌪️', title: 'The Tempest',
-    blurb: 'A storm that feeds on chaos. The closer you are to the edge, the harder it drives you toward it.',
+    blurb: 'A storm with an appetite. Let the danger build and the wind rises to meet it, driving you toward the edge it wants you over. Starve it calm.',
     need, time: 13, rise: 1.55, miss: 22, ease: 8, max: 100, hit: 18, restore: 18, boon: true, enrage: 1.7, alt,
     tname: 'The tempest', tic: '🌪️',
   };
@@ -209,7 +209,7 @@ export function nTempest(need, alt) {
 export function nClosing(need, alt) {
   return {
     kind: 'closing', icon: '⏳', title: 'The Closing Window',
-    blurb: 'The weather window is slamming shut. Every second you are given is shorter than the last — climb.',
+    blurb: 'The forecast bought you an hour and the mountain is spending it fast. Each chance you get is briefer than the last. Go.',
     need, time: 14, rise: 2.0, miss: 24, ease: 7, max: 100, hit: 17, restore: 18, boon: true, decay: true, alt,
     tname: 'The closing window', tic: '⏳',
   };
@@ -218,7 +218,7 @@ export function nClosing(need, alt) {
 export function nAvalanche(need, alt) {
   return {
     kind: 'avalanche', icon: '💥', title: 'The Avalanche',
-    blurb: 'The whole slope is loaded and silent. It waits, and waits — then lets go all at once. Be past it when it does.',
+    blurb: 'A loaded slope, quiet the way held breath is quiet. Somewhere past the middle it lets go. Where you stand when it does is up to you.',
     need, time: 15, rise: 1.25, miss: 22, ease: 9, max: 100, hit: 20, restore: 18, boon: true, phase: true, alt,
     tname: 'The avalanche', tic: '💥',
   };
@@ -227,7 +227,7 @@ export function nAvalanche(need, alt) {
 export function nRockfall(need, alt) {
   return {
     kind: 'rockfall', icon: '🥌', title: 'Rockfall Gully',
-    blurb: 'Small stones skip down the gully in waves. Nothing up here hits hard yet — learn to move between the volleys, before the mountain finds bigger rocks.',
+    blurb: 'Pebbles come down the gully in bursts, rattling off the walls ahead of you. Count the quiet between volleys. That is when you move.',
     need, time: 18, rise: 0.7, miss: 14, ease: 8, max: 100, hit: 12, restore: 15, boon: true, spike: 7, spikeEvery: 7, alt,
     tname: 'The rockfall', tic: '🥌',
   };
@@ -236,7 +236,7 @@ export function nRockfall(need, alt) {
 export function nVerglas(need, alt) {
   return {
     kind: 'verglas', icon: '🪞', title: 'The Verglas',
-    blurb: 'A face glazed in mirror-thin ice. Answer while your footing is fresh and the strain sheds — hesitate, and the glaze refreezes ahead of you.',
+    blurb: 'Meltwater froze over the rock in a skin too thin to see. Your edges bite for a moment after every move. Move again before they skate.',
     need, time: 15, rise: 1.9, miss: 18, ease: 4, max: 100, hit: 17, restore: 18, boon: true, swift: 9, alt,
     tname: 'The verglas', tic: '🪞',
   };
@@ -245,7 +245,7 @@ export function nVerglas(need, alt) {
 export function nShrine(alt) {
   return {
     kind: 'shrine', icon: '⛩️', title: 'Weathered Shrine',
-    blurb: 'Cairns and faded prayer flags. Climbers leave something here, and the mountain remembers.',
+    blurb: 'Cairns and faded prayer flags, older than any name in the ledger. Climbers leave something here. The mountain remembers.',
     need: 0, restore: 0, boon: false, alt,
   };
 }
@@ -253,7 +253,7 @@ export function nShrine(alt) {
 export function nCorniceRidge(need, alt) {
   return {
     kind: 'corniceridge', icon: '🌬️', title: 'Wind Lip',
-    blurb: 'A wind-carved lip of snow over empty air. Gusts hammer it, and one wrong step sends you sliding back.',
+    blurb: 'A lip of snow curled over empty air by wind that has not stopped in years. It bucks without warning, and a slip undoes honest work.',
     need, time: 15, rise: 0.9, miss: 14, ease: 9, max: 100, hit: 15, restore: 18, boon: true, gust: 0.03, streakGate: true, alt,
     tname: 'The wind lip', tic: '🌬️',
   };
@@ -262,16 +262,16 @@ export function nCorniceRidge(need, alt) {
 export function nFrozenTitan(need, alt) {
   return {
     kind: 'frozentitan', icon: '🧊', title: 'Glacier Block',
-    blurb: 'A pillar of ancient blue ice. Break through three frozen layers — then it rages when the threat runs high.',
+    blurb: 'A pillar of glacier ice three winters thick. All three layers break before the climbing counts, and old ice splinters hard when it starts to lose.',
     need, time: 14, rise: 1.1, miss: 19, ease: 9, max: 100, hit: 17, restore: 20, boon: true, shield: 3, enrage: 1.5, alt,
     tname: 'The glacier block', tic: '🧊',
   };
 }
 
 export const ACTS = [
-  { name: 'The Approach', flavor: 'Warm rock, open glacier. The mountain lets you find your rhythm before it shows its teeth.' },
-  { name: 'The Headwall', flavor: 'The face rears up. Easy ground is gone — every pitch wants technique, nerve, and recall under pressure.' },
-  { name: 'The Death Zone', flavor: 'Above the last camp the air turns to knives. Everything the mountain saved for the summit push, thrown at once.' },
+  { name: 'The Approach', flavor: 'Warm rock and open glacier under a late moon. The mountain lets you settle in. It can afford to.' },
+  { name: 'The Headwall', flavor: 'The face goes vertical and easy ground becomes a memory. Nothing past this point is given away.' },
+  { name: 'The Death Zone', flavor: 'Above the last camp the air stops helping. Whatever the mountain held in reserve, it spends on you now.' },
 ];
 
 export function scaleNode(n, act) {
@@ -286,32 +286,32 @@ export function scaleNode(n, act) {
 }
 
 export const BESTIARY = [
-  { fn: nSwitch, t: 1, a: 'Accuracy', m: 'Loose footing. Time barely matters here — it is all about getting the answer right.' },
-  { fn: nTraverse, t: 1, a: 'Endurance', m: 'Nothing is hard, but it never ends and the wind never stops. Steady, grinding pressure.' },
-  { fn: nSnowfield, t: 1, a: 'Accuracy', m: 'Deep, forgiving snow. Slow going, but it lets a stumble slide. A place to find your rhythm.' },
-  { fn: nRockfall, t: 1, a: 'Timing', m: 'Pebbles rattle down the gully in waves. A gentle first lesson in moving between the falls.' },
-  { fn: nCrevasse, t: 2, a: 'Precision', m: 'A snow bridge over a black drop. Few steps to cross, but a single miss is punishing.' },
-  { fn: nBergschrund, t: 2, a: 'Escalating', m: 'A widening crack. Every slip costs more stamina than the one before it.' },
-  { fn: nStorm, t: 2, a: 'Speed', m: 'A squall building by the second. Correct answers will not calm it — only speed clears the ridge.' },
-  { fn: nCouloir, t: 2, a: 'Speed', m: 'A steep gully funneling everything down. Keep pace, or it wears you down.' },
-  { fn: nWindslab, t: 2, a: 'Chaos', m: 'Wind-loaded snow. Gusts of threat come without warning — brace and push through them.' },
-  { fn: nVoid, t: 3, a: 'No boons', m: 'Bare ridge — nothing works here. No flare, no field notes, no tricks. Just what you know.' },
-  { fn: nKnife, t: 3, a: 'Consistency', m: 'A ridge one boot wide. Falter and you slide back down it — a miss undoes your progress.' },
-  { fn: nIcewall, t: 3, a: 'Precision', m: 'Vertical ice. Every placement matters, and it does not forgive hesitation.' },
-  { fn: nSealedFace, t: 3, a: 'Armored', m: 'Hard blue ice shell. Your first correct answers break the layers before any climbing counts.' },
-  { fn: nLongWall, t: 3, a: 'Attrition', m: 'A wall with no top in sight. The longer you are on it, the less each breather gives back.' },
-  { fn: nVerglas, t: 3, a: 'Fluency', m: 'Mirror-thin ice that refreezes fast. Quick correct answers shed extra threat — hesitation lets it build.' },
-  { fn: nWhiteout, t: 4, a: 'Speed', m: 'The cloud swallows the ridge. You climb blind and fast, before it closes for good.' },
-  { fn: nThinAir, t: 4, a: 'Attrition', m: 'Air too thin to breathe. Standing still bleeds you dry — keep moving or waste away.' },
-  { fn: nIcefall, t: 4, a: 'Timing', m: 'Ice comes down in volleys on its own grim schedule. Read the rhythm; move between the falls.' },
-  { fn: nTempest, t: 4, a: 'Enrage', m: 'A storm that feeds on chaos. The closer you are to the edge, the harder it drives you toward it.' },
-  { fn: nClosing, t: 4, a: 'Countdown', m: 'A weather window slamming shut. Every second you are given is shorter than the last.' },
-  { fn: nAvalanche, t: 4, a: 'Release', m: 'A loaded, silent slope. It waits — then lets go all at once at the halfway point. Be past it.' },
-  { fn: nCorniceRidge, t: 3, a: 'Chaos ridge', m: 'Wind lip over empty air. Random gusts hammer the crossing, and a single miss sends you sliding back.' },
-  { fn: nFrozenTitan, t: 4, a: 'Armored elite', m: 'Glacier block with three ice layers to break — then it rages when the threat runs high.' },
-  { fn: (n, al) => nGate(n, al, null), t: 5, a: 'Competence duel', m: 'Tests your weakest TCO exam domain at entry. Every wrong answer emboldens it; every right one drives it back.' },
-  { fn: nSerac, t: 5, a: 'Elite', m: 'A wall of unstable ice that can go at any second. Fast, punishing, and it hits hard.' },
-  { fn: nSummit, t: 5, a: 'Final pitch', m: 'Summit push — wind, ice, and everything the mountain has saved for the top.' },
+  { fn: nSwitch, t: 1, a: 'Accuracy', m: 'Accuracy check. Generous clock, ordinary misses, no surprises.' },
+  { fn: nTraverse, t: 1, a: 'Endurance', m: 'Endurance check. Steady passive threat across a long, easy line.' },
+  { fn: nSnowfield, t: 1, a: 'Accuracy', m: 'Recovery ground. Slow clock, soft misses, forgiving all around.' },
+  { fn: nRockfall, t: 1, a: 'Timing', m: 'Timing drill. Small threat spikes land on a fixed rhythm.' },
+  { fn: nCrevasse, t: 2, a: 'Precision', m: 'Precision check. Few questions, heavy cost per miss.' },
+  { fn: nBergschrund, t: 2, a: 'Escalating', m: 'Escalating misses. Each slip costs more stamina than the one before.' },
+  { fn: nStorm, t: 2, a: 'Speed', m: 'Pure speed. Correct answers shed no threat here; only pace survives it.' },
+  { fn: nCouloir, t: 2, a: 'Speed', m: 'Speed check. Fast-building threat, ordinary misses.' },
+  { fn: nWindslab, t: 2, a: 'Chaos', m: 'Chaos. Random gusts of threat, no warning and no pattern.' },
+  { fn: nVoid, t: 3, a: 'No boons', m: 'Boon suppression. Flare, notes, and every boon go dark for the pitch.' },
+  { fn: nKnife, t: 3, a: 'Consistency', m: 'Consistency check. A miss knocks your progress back down the ridge.' },
+  { fn: nIcewall, t: 3, a: 'Precision', m: 'Precision under pace. Expensive misses on a quick clock.' },
+  { fn: nSealedFace, t: 3, a: 'Armored', m: 'Armored. Two correct answers break the shell before progress counts.' },
+  { fn: nLongWall, t: 3, a: 'Attrition', m: 'Attrition. The threat relief on each correct answer keeps shrinking.' },
+  { fn: nVerglas, t: 3, a: 'Fluency', m: 'Fluency check. Quick correct answers shed extra threat; slow ones shed almost none.' },
+  { fn: nWhiteout, t: 4, a: 'Speed', m: 'Blind speed. The shortest clock on the mountain and thin relief.' },
+  { fn: nThinAir, t: 4, a: 'Attrition', m: 'Attrition. Stamina drains every second you stand on the pitch.' },
+  { fn: nIcefall, t: 4, a: 'Timing', m: 'Timing. Heavy threat volleys land on a fixed schedule.' },
+  { fn: nTempest, t: 4, a: 'Enrage', m: 'Enrage. Past sixty percent threat, everything builds faster.' },
+  { fn: nClosing, t: 4, a: 'Countdown', m: 'Countdown. Each question’s clock is shorter than the last.' },
+  { fn: nAvalanche, t: 4, a: 'Release', m: 'Release. At the halfway mark the slope lets go all at once.' },
+  { fn: nCorniceRidge, t: 3, a: 'Chaos ridge', m: 'Chaos ridge. Gusts without warning, and a miss slides you back.' },
+  { fn: nFrozenTitan, t: 4, a: 'Armored elite', m: 'Armored elite. Three shield layers, and it enrages when threat runs high.' },
+  { fn: (n, al) => nGate(n, al, null), t: 5, a: 'Competence duel', m: 'Competence duel. Draws every question from your weakest exam domain.' },
+  { fn: nSerac, t: 5, a: 'Elite', m: 'Elite. Starts angry — a quarter of the threat bar is already lit.' },
+  { fn: nSummit, t: 5, a: 'Final pitch', m: 'Final pitch. Long, fast-building, and it opens with threat on the board.' },
 ];
 
 export function nodeEmoji(kind) {

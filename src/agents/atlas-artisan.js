@@ -33,7 +33,7 @@ export const ATLAS_TOKENS = {
 export const MENU_COPY = {
   kicker: 'Roguelike study climb',
   tagline: 'Know your terms, or the mountain wins.',
-  lore: 'Draft boons at ledge camps. Survive hazards that punish the concepts you haven\u2019t locked in. What you master on the climb stays learned when you fall.',
+  lore: 'The hazards up there test what you can still recall with the wind up, and every camp offers help you must choose between. Fall as often as it takes \u2014 the ledger keeps each concept you lock in.',
   primaryCta: 'Climb the mountain',
   focusSummary: 'Focus one trail',
   importSummary: 'Import saved progress',
@@ -59,7 +59,7 @@ export const SCREEN_COPY = {
     trails: 'Where each trail stands',
     share: 'Share your result',
     export: 'Copy trail log',
-    exportHint: 'Send me your trail log',
+    exportHint: 'Carry it to your next climb',
   },
   exam: {
     kicker: 'Board simulation',
@@ -70,7 +70,7 @@ export const SCREEN_COPY = {
   bestiary: {
     kicker: 'Mountain codex',
     title: 'The Bestiary',
-    sub: 'Every hazard on the climb \u2014 what it costs, how it kills, and what beats it.',
+    sub: 'Every hazard between the trailhead and the summit, and the particular way each one wants to stop you.',
   },
 };
 
@@ -78,29 +78,29 @@ export const DEBRIEF_COPY = {
   summit: {
     icon: '\u{1F3C6}',
     title: 'Summit reached',
-    sub: 'You topped out. The mountain remembers who climbs it \u2014 and what you locked in stays banked.',
+    sub: 'Topped out in the first light. It goes in the ledger: the route, the weather, and every concept that held your weight.',
   },
   fell: {
     icon: '\u{1F30D}',
     title: 'Driven back',
-    sub: 'Stamina ran dry. The mountain sent you down, but every concept you sealed is still yours.',
+    sub: 'The mountain kept the summit this time. It does not keep what you learned \u2014 that goes in the ledger, same as any climb.',
   },
   quit: {
     icon: '\u{1F3D5}',
     title: 'Back at camp',
-    sub: 'You turned back before the ridge took everything. Here\u2019s what the climb still taught you.',
+    sub: 'Turning back is a skill. Ask anyone still climbing at sixty. The ledger takes lessons, not summits.',
   },
 };
 
 export const ACT_TRANSITIONS = {
   2: {
     title: 'The Headwall',
-    sub: 'Easy ground is gone. The face rears up and every pitch wants nerve under pressure.',
+    sub: 'You tie in at the base of the face. It runs up out of sight, and it wants better answers than the approach did.',
     ic: '🧗',
   },
   3: {
     title: 'The Death Zone',
-    sub: 'Above the last camp the air turns to knives. Everything saved for the summit — thrown at once.',
+    sub: 'Past this camp there is no rest that counts and no one coming. Move well, and do not stop long.',
     ic: '☠️',
   },
 };

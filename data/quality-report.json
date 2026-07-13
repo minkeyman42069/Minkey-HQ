@@ -1,75 +1,67 @@
 {
-  "generatedAt": "2026-07-12T23:07:02.562Z",
+  "generatedAt": "2026-07-13T02:10:51.526Z",
   "summary": {
-    "total": 433,
+    "total": 445,
     "avgQuality": 91,
     "grades": {
-      "A": 332,
+      "A": 347,
       "B": 98,
-      "C": 3,
+      "C": 0,
       "D": 0,
       "F": 0
     },
     "flagCounts": {
-      "EXPLANATION_NO_CONTRAST": 317,
       "DEFINITION_ONLY": 23,
-      "THIN_STEM": 54,
-      "ANSWER_LEAK": 64,
-      "UNBALANCED_OPTIONS": 3
+      "THIN_STEM": 53,
+      "EXPLANATION_NO_CONTRAST": 316,
+      "ANSWER_LEAK": 66,
+      "COMPARISON_STEM": 2
     },
+    "domainCoverage": [
+      {
+        "domain": "A",
+        "count": 60,
+        "pct": 13.5,
+        "target": 17,
+        "delta": -3.5
+      },
+      {
+        "domain": "B",
+        "count": 45,
+        "pct": 10.1,
+        "target": 11,
+        "delta": -0.9
+      },
+      {
+        "domain": "C",
+        "count": 191,
+        "pct": 42.9,
+        "target": 25,
+        "delta": 17.9
+      },
+      {
+        "domain": "D",
+        "count": 72,
+        "pct": 16.2,
+        "target": 19,
+        "delta": -2.8
+      },
+      {
+        "domain": "E",
+        "count": 31,
+        "pct": 7,
+        "target": 13,
+        "delta": -6
+      },
+      {
+        "domain": "F",
+        "count": 46,
+        "pct": 10.3,
+        "target": 15,
+        "delta": -4.7
+      }
+    ],
     "needsWork": [
-      {
-        "id": 0,
-        "quality": 98,
-        "grade": "A",
-        "flags": [
-          "EXPLANATION_NO_CONTRAST"
-        ],
-        "cat": "Functions of Behavior",
-        "dom": "D",
-        "type": "mc",
-        "q": "A child cries and a parent hands over a cookie. The crying keeps happening because it gets the snack. What function is this?",
-        "preview": "A child cries and a parent hands over a cookie. The crying keeps happening because it gets"
-      },
-      {
-        "id": 1,
-        "quality": 98,
-        "grade": "A",
-        "flags": [
-          "EXPLANATION_NO_CONTRAST"
-        ],
-        "cat": "Functions of Behavior",
-        "dom": "D",
-        "type": "mc",
-        "q": "A student cracks jokes during class so classmates laugh and look over at him. Function?",
-        "preview": "A student cracks jokes during class so classmates laugh and look over at him. Function?"
-      },
-      {
-        "id": 2,
-        "quality": 98,
-        "grade": "A",
-        "flags": [
-          "EXPLANATION_NO_CONTRAST"
-        ],
-        "cat": "Functions of Behavior",
-        "dom": "D",
-        "type": "mc",
-        "q": "A learner throws his worksheet when handed a hard task and gets sent to the hall, ending the work. Function?",
-        "preview": "A learner throws his worksheet when handed a hard task and gets sent to the hall, ending t"
-      },
-      {
-        "id": 3,
-        "quality": 88,
-        "grade": "A",
-        "flags": [
-          "EXPLANATION_NO_CONTRAST"
-        ],
-        "cat": "Functions of Behavior",
-        "dom": "D",
-        "type": "mc",
-        "q": "A child rocks back and forth the same way even when completely alone with nothing else going on. Function?",
-        "preview": "A child rocks back and forth the same way even when completely alone with nothing else goi"
-      },
       {
         "id": 4,
         "quality": 86,
@@ -1673,6 +1665,19 @@
         "preview": "During a free-access period, an RBT records how many seconds a learner plays with each of "
       },
       {
+        "id": 138,
+        "quality": 86,
+        "grade": "A",
+        "flags": [
+          "COMPARISON_STEM"
+        ],
+        "cat": "Preference Assessment",
+        "dom": "B",
+        "type": "mc",
+        "q": "The key difference between single-stimulus and paired-stimulus assessment is:",
+        "preview": "The key difference between single-stimulus and paired-stimulus assessment is:"
+      },
+      {
         "id": 139,
         "quality": 96,
         "grade": "A",
@@ -2038,22 +2043,6 @@
         "preview": "You want to INCREASE how often a learner completes work, so you reinforce higher rates of "
       },
       {
-        "id": 169,
-        "quality": 66,
-        "grade": "C",
-        "flags": [
-          "THIN_STEM",
-          "ANSWER_LEAK",
-          "UNBALANCED_OPTIONS",
-          "EXPLANATION_NO_CONTRAST"
-        ],
-        "cat": "Differential Reinforcement",
-        "dom": "D",
-        "type": "mc",
-        "q": "The difference between DRA and DRI is:",
-        "preview": "The difference between DRA and DRI is:"
-      },
-      {
         "id": 170,
         "quality": 78,
         "grade": "B",
@@ -2230,6 +2219,7 @@
         "grade": "B",
         "flags": [
           "THIN_STEM",
+          "COMPARISON_STEM",
           "ANSWER_LEAK",
           "EXPLANATION_NO_CONTRAST"
         ],
@@ -2357,21 +2347,6 @@
         "type": "mc",
         "q": "After making a mess, the learner must clean it up AND tidy the surrounding area beyond the original state. This is:",
         "preview": "After making a mess, the learner must clean it up AND tidy the surrounding area beyond the"
-      },
-      {
-        "id": 194,
-        "quality": 66,
-        "grade": "C",
-        "flags": [
-          "ANSWER_LEAK",
-          "UNBALANCED_OPTIONS",
-          "EXPLANATION_NO_CONTRAST"
-        ],
-        "cat": "Reinforcement & Punishment",
-        "dom": "C",
-        "type": "mc",
-        "q": "The difference between response cost and time-out from reinforcement is:",
-        "preview": "The difference between response cost and time-out from reinforcement is:"
       },
       {
         "id": 195,
@@ -2890,21 +2865,6 @@
         "type": "mc",
         "q": "Which situation must an RBT report to their supervisor RIGHT AWAY?",
         "preview": "Which situation must an RBT report to their supervisor RIGHT AWAY?"
-      },
-      {
-        "id": 235,
-        "quality": 66,
-        "grade": "C",
-        "flags": [
-          "ANSWER_LEAK",
-          "UNBALANCED_OPTIONS",
-          "EXPLANATION_NO_CONTRAST"
-        ],
-        "cat": "Professionalism & Scope",
-        "dom": "F",
-        "type": "mc",
-        "q": "The difference between 'scope of competence' and 'scope of practice' is:",
-        "preview": "The difference between 'scope of competence' and 'scope of practice' is:"
       },
       {
         "id": 236,
@@ -4558,17 +4518,122 @@
         "type": "mc",
         "q": "A family offers the RBT paid babysitting on weekends. This is problematic because it creates a:",
         "preview": "A family offers the RBT paid babysitting on weekends. This is problematic because it creat"
+      },
+      {
+        "id": 433,
+        "quality": 100,
+        "grade": "A",
+        "flags": [
+          "ANSWER_LEAK"
+        ],
+        "cat": "Documentation & Reporting",
+        "dom": "E",
+        "type": "mc",
+        "q": "An RBT writes in a session note: 'The client was in a great mood and really seemed to enjoy the lesson today.' Why should this be revised before it goes in the record?",
+        "preview": "An RBT writes in a session note: 'The client was in a great mood and really seemed to enjo"
+      },
+      {
+        "id": 434,
+        "quality": 100,
+        "grade": "A",
+        "flags": [
+          "EXPLANATION_NO_CONTRAST"
+        ],
+        "cat": "Documentation & Reporting",
+        "dom": "E",
+        "type": "mc",
+        "q": "An RBT finishes a session but is running late to the next one. When should the session note and data be completed?",
+        "preview": "An RBT finishes a session but is running late to the next one. When should the session not"
+      },
+      {
+        "id": 436,
+        "quality": 100,
+        "grade": "A",
+        "flags": [
+          "ANSWER_LEAK"
+        ],
+        "cat": "Documentation & Reporting",
+        "dom": "E",
+        "type": "mc",
+        "q": "An RBT notices the datasheet lists a target the current program no longer includes, and the counts do not match what they observed. What should the RBT do?",
+        "preview": "An RBT notices the datasheet lists a target the current program no longer includes, and th"
+      },
+      {
+        "id": 438,
+        "quality": 100,
+        "grade": "A",
+        "flags": [
+          "EXPLANATION_NO_CONTRAST"
+        ],
+        "cat": "Documentation & Reporting",
+        "dom": "E",
+        "type": "mc",
+        "q": "An RBT is tempted to fill in data for a few trials they forgot to score during a busy session. The most ethical action is to:",
+        "preview": "An RBT is tempted to fill in data for a few trials they forgot to score during a busy sess"
+      },
+      {
+        "id": 440,
+        "quality": 100,
+        "grade": "A",
+        "flags": [
+          "ANSWER_LEAK",
+          "EXPLANATION_NO_CONTRAST"
+        ],
+        "cat": "Ethics & Scope",
+        "dom": "F",
+        "type": "mc",
+        "q": "An RBT wants to review a client's program during the drive home. The safest, most ethical practice is to:",
+        "preview": "An RBT wants to review a client's program during the drive home. The safest, most ethical "
+      },
+      {
+        "id": 441,
+        "quality": 100,
+        "grade": "A",
+        "flags": [
+          "ANSWER_LEAK",
+          "EXPLANATION_NO_CONTRAST"
+        ],
+        "cat": "Ethics & Scope",
+        "dom": "F",
+        "type": "mc",
+        "q": "A grateful family offers the RBT an expensive gift at the end of a session. The most appropriate response is to:",
+        "preview": "A grateful family offers the RBT an expensive gift at the end of a session. The most appro"
+      },
+      {
+        "id": 442,
+        "quality": 100,
+        "grade": "A",
+        "flags": [
+          "ANSWER_LEAK",
+          "EXPLANATION_NO_CONTRAST"
+        ],
+        "cat": "Professionalism & Scope",
+        "dom": "F",
+        "type": "mc",
+        "q": "A caregiver asks the RBT to conduct a functional behavior assessment and write the behavior plan. The RBT should:",
+        "preview": "A caregiver asks the RBT to conduct a functional behavior assessment and write the behavio"
+      },
+      {
+        "id": 443,
+        "quality": 100,
+        "grade": "A",
+        "flags": [
+          "EXPLANATION_NO_CONTRAST"
+        ],
+        "cat": "Professionalism & Scope",
+        "dom": "F",
+        "type": "mc",
+        "q": "An RBT realizes a new client's parent is someone they already know socially. The best first step is to:",
+        "preview": "An RBT realizes a new client's parent is someone they already know socially. The best firs"
       }
     ]
   },
   "results": [
     {
       "id": 0,
-      "quality": 98,
+      "quality": 100,
       "grade": "A",
-      "flags": [
-        "EXPLANATION_NO_CONTRAST"
-      ],
+      "flags": [],
       "cat": "Functions of Behavior",
       "dom": "D",
       "type": "mc",
@@ -4577,11 +4642,9 @@
     },
     {
       "id": 1,
-      "quality": 98,
+      "quality": 100,
       "grade": "A",
-      "flags": [
-        "EXPLANATION_NO_CONTRAST"
-      ],
+      "flags": [],
       "cat": "Functions of Behavior",
       "dom": "D",
       "type": "mc",
@@ -4590,11 +4653,9 @@
     },
     {
       "id": 2,
-      "quality": 98,
+      "quality": 100,
       "grade": "A",
-      "flags": [
-        "EXPLANATION_NO_CONTRAST"
-      ],
+      "flags": [],
       "cat": "Functions of Behavior",
       "dom": "D",
       "type": "mc",
@@ -4603,11 +4664,9 @@
     },
     {
       "id": 3,
-      "quality": 88,
+      "quality": 96,
       "grade": "A",
-      "flags": [
-        "EXPLANATION_NO_CONTRAST"
-      ],
+      "flags": [],
       "cat": "Functions of Behavior",
       "dom": "D",
       "type": "mc",
@@ -6374,7 +6433,9 @@
       "id": 138,
       "quality": 86,
       "grade": "A",
-      "flags": [],
+      "flags": [
+        "COMPARISON_STEM"
+      ],
       "cat": "Preference Assessment",
       "dom": "B",
       "type": "mc",
@@ -6770,19 +6831,14 @@
     },
     {
       "id": 169,
-      "quality": 66,
-      "grade": "C",
-      "flags": [
-        "THIN_STEM",
-        "ANSWER_LEAK",
-        "UNBALANCED_OPTIONS",
-        "EXPLANATION_NO_CONTRAST"
-      ],
+      "quality": 100,
+      "grade": "A",
+      "flags": [],
       "cat": "Differential Reinforcement",
       "dom": "D",
       "type": "mc",
-      "q": "The difference between DRA and DRI is:",
-      "preview": "The difference between DRA and DRI is:"
+      "q": "A learner frequently flaps their hands during instruction. The RBT is told to reinforce the learner for resting both hands in their lap — a response that cannot happen at the same time as hand-flapping. Which differential reinforcement procedure is this?",
+      "preview": "A learner frequently flaps their hands during instruction. The RBT is told to reinforce th"
     },
     {
       "id": 170,
@@ -6972,6 +7028,7 @@
       "grade": "B",
       "flags": [
         "THIN_STEM",
+        "COMPARISON_STEM",
         "ANSWER_LEAK",
         "EXPLANATION_NO_CONTRAST"
       ],
@@ -7102,18 +7159,14 @@
     },
     {
       "id": 194,
-      "quality": 66,
-      "grade": "C",
-      "flags": [
-        "ANSWER_LEAK",
-        "UNBALANCED_OPTIONS",
-        "EXPLANATION_NO_CONTRAST"
-      ],
+      "quality": 100,
+      "grade": "A",
+      "flags": [],
       "cat": "Reinforcement & Punishment",
       "dom": "C",
       "type": "mc",
-      "q": "The difference between response cost and time-out from reinforcement is:",
-      "preview": "The difference between response cost and time-out from reinforcement is:"
+      "q": "During a token program, a learner has earned several tokens for on-task behavior. After a disruptive outburst, the RBT removes two tokens the learner already earned. Which procedure did the RBT use, and how does it differ from time-out?",
+      "preview": "During a token program, a learner has earned several tokens for on-task behavior. After a "
     },
     {
       "id": 195,
@@ -7646,18 +7699,14 @@
     },
     {
       "id": 235,
-      "quality": 66,
-      "grade": "C",
-      "flags": [
-        "ANSWER_LEAK",
-        "UNBALANCED_OPTIONS",
-        "EXPLANATION_NO_CONTRAST"
-      ],
+      "quality": 100,
+      "grade": "A",
+      "flags": [],
       "cat": "Professionalism & Scope",
       "dom": "F",
       "type": "mc",
-      "q": "The difference between 'scope of competence' and 'scope of practice' is:",
-      "preview": "The difference between 'scope of competence' and 'scope of practice' is:"
+      "q": "A caregiver asks an RBT to begin a feeding protocol the RBT has never been trained to run, even though RBTs are permitted to implement such protocols under supervision. What boundary is the RBT hitting?",
+      "preview": "A caregiver asks an RBT to begin a feeding protocol the RBT has never been trained to run,"
     },
     {
       "id": 236,
@@ -10125,6 +10174,157 @@
       "type": "mc",
       "q": "A family offers the RBT paid babysitting on weekends. This is problematic because it creates a:",
       "preview": "A family offers the RBT paid babysitting on weekends. This is problematic because it creat"
+    },
+    {
+      "id": 433,
+      "quality": 100,
+      "grade": "A",
+      "flags": [
+        "ANSWER_LEAK"
+      ],
+      "cat": "Documentation & Reporting",
+      "dom": "E",
+      "type": "mc",
+      "q": "An RBT writes in a session note: 'The client was in a great mood and really seemed to enjoy the lesson today.' Why should this be revised before it goes in the record?",
+      "preview": "An RBT writes in a session note: 'The client was in a great mood and really seemed to enjo"
+    },
+    {
+      "id": 434,
+      "quality": 100,
+      "grade": "A",
+      "flags": [
+        "EXPLANATION_NO_CONTRAST"
+      ],
+      "cat": "Documentation & Reporting",
+      "dom": "E",
+      "type": "mc",
+      "q": "An RBT finishes a session but is running late to the next one. When should the session note and data be completed?",
+      "preview": "An RBT finishes a session but is running late to the next one. When should the session not"
+    },
+    {
+      "id": 435,
+      "quality": 100,
+      "grade": "A",
+      "flags": [],
+      "cat": "Documentation & Reporting",
+      "dom": "E",
+      "type": "mc",
+      "q": "Which entry is MOST appropriate for a professional session note?",
+      "preview": "Which entry is MOST appropriate for a professional session note?"
+    },
+    {
+      "id": 436,
+      "quality": 100,
+      "grade": "A",
+      "flags": [
+        "ANSWER_LEAK"
+      ],
+      "cat": "Documentation & Reporting",
+      "dom": "E",
+      "type": "mc",
+      "q": "An RBT notices the datasheet lists a target the current program no longer includes, and the counts do not match what they observed. What should the RBT do?",
+      "preview": "An RBT notices the datasheet lists a target the current program no longer includes, and th"
+    },
+    {
+      "id": 437,
+      "quality": 100,
+      "grade": "A",
+      "flags": [],
+      "cat": "Documentation & Reporting",
+      "dom": "E",
+      "type": "mc",
+      "q": "A caregiver asks the RBT to explain why the treatment goals were chosen and whether they can be changed. The RBT should:",
+      "preview": "A caregiver asks the RBT to explain why the treatment goals were chosen and whether they c"
+    },
+    {
+      "id": 438,
+      "quality": 100,
+      "grade": "A",
+      "flags": [
+        "EXPLANATION_NO_CONTRAST"
+      ],
+      "cat": "Documentation & Reporting",
+      "dom": "E",
+      "type": "mc",
+      "q": "An RBT is tempted to fill in data for a few trials they forgot to score during a busy session. The most ethical action is to:",
+      "preview": "An RBT is tempted to fill in data for a few trials they forgot to score during a busy sess"
+    },
+    {
+      "id": 439,
+      "quality": 100,
+      "grade": "A",
+      "flags": [],
+      "cat": "Ethics & Scope",
+      "dom": "F",
+      "type": "mc",
+      "q": "During a home session, a young client discloses something that makes the RBT suspect abuse. What should the RBT do?",
+      "preview": "During a home session, a young client discloses something that makes the RBT suspect abuse"
+    },
+    {
+      "id": 440,
+      "quality": 100,
+      "grade": "A",
+      "flags": [
+        "ANSWER_LEAK",
+        "EXPLANATION_NO_CONTRAST"
+      ],
+      "cat": "Ethics & Scope",
+      "dom": "F",
+      "type": "mc",
+      "q": "An RBT wants to review a client's program during the drive home. The safest, most ethical practice is to:",
+      "preview": "An RBT wants to review a client's program during the drive home. The safest, most ethical "
+    },
+    {
+      "id": 441,
+      "quality": 100,
+      "grade": "A",
+      "flags": [
+        "ANSWER_LEAK",
+        "EXPLANATION_NO_CONTRAST"
+      ],
+      "cat": "Ethics & Scope",
+      "dom": "F",
+      "type": "mc",
+      "q": "A grateful family offers the RBT an expensive gift at the end of a session. The most appropriate response is to:",
+      "preview": "A grateful family offers the RBT an expensive gift at the end of a session. The most appro"
+    },
+    {
+      "id": 442,
+      "quality": 100,
+      "grade": "A",
+      "flags": [
+        "ANSWER_LEAK",
+        "EXPLANATION_NO_CONTRAST"
+      ],
+      "cat": "Professionalism & Scope",
+      "dom": "F",
+      "type": "mc",
+      "q": "A caregiver asks the RBT to conduct a functional behavior assessment and write the behavior plan. The RBT should:",
+      "preview": "A caregiver asks the RBT to conduct a functional behavior assessment and write the behavio"
+    },
+    {
+      "id": 443,
+      "quality": 100,
+      "grade": "A",
+      "flags": [
+        "EXPLANATION_NO_CONTRAST"
+      ],
+      "cat": "Professionalism & Scope",
+      "dom": "F",
+      "type": "mc",
+      "q": "An RBT realizes a new client's parent is someone they already know socially. The best first step is to:",
+      "preview": "An RBT realizes a new client's parent is someone they already know socially. The best firs"
+    },
+    {
+      "id": 444,
+      "quality": 100,
+      "grade": "A",
+      "flags": [],
+      "cat": "Professionalism & Scope",
+      "dom": "F",
+      "type": "mc",
+      "q": "An RBT is assigned a client whose needs require a skill set the RBT has not been trained in. The RBT should:",
+      "preview": "An RBT is assigned a client whose needs require a skill set the RBT has not been trained i"
     }
   ]
 }

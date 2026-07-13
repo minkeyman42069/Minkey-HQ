@@ -50,6 +50,9 @@ export function scoreQuestion(q, ctx = {}) {
     if (isDefOnly) flags.push('DEFINITION_ONLY');
   }
   if (!hasScenario && q.q.length < 70 && type === 'mc') flags.push('THIN_STEM');
+  // Bare "difference between X and Y is:" stems test recall of a definition, not
+  // application. Scenario-led comparisons are fine and are not flagged.
+  if (type === 'mc' && /difference between/i.test(q.q) && !hasScenario) flags.push('COMPARISON_STEM');
 
   // --- Options (0-25) ---
   if (type === 'tf') {
@@ -136,6 +139,7 @@ export function auditBank(bank) {
     avgQuality: Math.round(results.reduce((s, r) => s + r.quality, 0) / results.length),
     grades: { A: 0, B: 0, C: 0, D: 0, F: 0 },
     flagCounts: {},
+    domainCoverage: domainCoverage(bank),
     needsWork: results.filter((r) => r.quality < 70 || r.flags.length > 0),
   };
   results.forEach((r) => {
@@ -146,6 +150,23 @@ export function auditBank(bank) {
   });
 
   return { results, summary };
+}
+
+/** RBT 3rd-ed Test Content Outline domain weights (for coverage vs. blueprint). */
+export const TCO_WEIGHTS = { A: 17, B: 11, C: 25, D: 19, E: 13, F: 15 };
+
+/** Actual bank distribution per TCO domain vs. the exam blueprint (percentage-point delta). */
+export function domainCoverage(bank) {
+  const counts = { A: 0, B: 0, C: 0, D: 0, E: 0, F: 0 };
+  bank.forEach((q) => {
+    const d = domainOf(q);
+    if (counts[d] != null) counts[d]++;
+  });
+  const total = bank.length || 1;
+  return Object.keys(TCO_WEIGHTS).map((d) => {
+    const pct = +((counts[d] / total) * 100).toFixed(1);
+    return { domain: d, count: counts[d], pct, target: TCO_WEIGHTS[d], delta: +(pct - TCO_WEIGHTS[d]).toFixed(1) };
+  });
 }
 
 export const BACB_SAMPLES = [

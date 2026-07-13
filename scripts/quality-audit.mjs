@@ -26,6 +26,12 @@ Object.entries(summary.flagCounts)
   .slice(0, 12)
   .forEach(([f, n]) => console.log(`  ${f.padEnd(28)} ${n}`));
 
+console.log('\nDomain coverage vs RBT 3rd-ed blueprint:');
+summary.domainCoverage.forEach((d) => {
+  const sign = d.delta > 0 ? '+' : '';
+  console.log(`  ${d.domain}  ${String(d.count).padStart(3)} items  ${String(d.pct).padStart(5)}%  (target ${d.target}%, ${sign}${d.delta}pp)`);
+});
+
 const worst = results.filter((r) => r.quality < 55 || r.flags.includes('DUPLICATE_STEM')).slice(0, 15);
 console.log('\nLowest quality / duplicates (first 15):');
 worst.forEach((r) => console.log(`  #${r.id} [${r.grade} ${r.quality}] ${r.flags.join(', ')} — ${r.preview}…`));

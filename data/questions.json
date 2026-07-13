@@ -9,7 +9,7 @@
       "Automatic reinforcement"
     ],
     "c": 0,
-    "e": "Behavior maintained by getting an item or activity is <b>access</b>.",
+    "e": "Behavior maintained by getting an item or activity is <b>access to tangibles</b>. It is not <b>escape</b> (nothing unpleasant is removed), not <b>attention</b> (the cookie, not a social reaction, maintains it), and not <b>automatic</b> (it depends on the parent delivering the snack).",
     "id": 0,
     "type": "mc",
     "dom": "D"
@@ -24,7 +24,7 @@
       "Automatic reinforcement"
     ],
     "c": 1,
-    "e": "Behavior that gets others to notice or react is maintained by <b>attention</b>.",
+    "e": "Behavior that gets others to notice or react is maintained by <b>attention</b>. It is not <b>access</b> (no item is delivered), not <b>escape</b> (no demand is removed), and not <b>automatic</b> (it depends on an audience reacting).",
     "id": 1,
     "type": "mc",
     "dom": "D"
@@ -39,7 +39,7 @@
       "Automatic reinforcement"
     ],
     "c": 2,
-    "e": "Behavior that gets you out of something unpleasant is <b>escape</b>.",
+    "e": "Behavior that removes or postpones something unpleasant is <b>escape/avoidance</b>. It is not <b>attention</b> (being sent to the hall ends interaction), not <b>access</b> (no item is gained), and not <b>automatic</b> (it depends on the work being removed).",
     "id": 2,
     "type": "mc",
     "dom": "D"
@@ -54,7 +54,7 @@
       "Access to tangibles"
     ],
     "c": 0,
-    "e": "Self-reinforcing / sensory behavior that needs no one else is <b>automatic</b>.",
+    "e": "Self-reinforcing / sensory behavior that continues with no one else present is <b>automatic reinforcement</b>. It is not <b>attention</b>, <b>access</b>, or <b>escape</b>, because none of those social consequences are available when the learner is alone.",
     "id": 3,
     "type": "mc",
     "dom": "D"
@@ -2536,18 +2536,19 @@
   },
   {
     "cat": "Differential Reinforcement",
-    "q": "The difference between DRA and DRI is:",
+    "q": "A learner frequently flaps their hands during instruction. The RBT is told to reinforce the learner for resting both hands in their lap — a response that cannot happen at the same time as hand-flapping. Which differential reinforcement procedure is this?",
     "a": [
-      "DRI's replacement behavior physically cannot co-occur with the problem; DRA's just needs to be an appropriate alternative",
-      "DRA reinforces absence; DRI reinforces presence",
-      "DRA is for high rates; DRI is for low rates",
-      "There is no difference"
+      "DRI, because the reinforced behavior is physically incompatible with the problem",
+      "DRA, because the reinforced behavior is an appropriate but compatible alternative",
+      "DRO, because reinforcement is delivered only when the problem is absent",
+      "DRL, because reinforcement is delivered for progressively lower rates"
     ],
     "c": 0,
-    "e": "Both reinforce a replacement, but <b>DRI</b> requires the alternative to be INCOMPATIBLE (can't happen at the same time), while <b>DRA</b> just needs an appropriate alternative.",
+    "e": "This is <b>DRI</b>: the replacement (hands in lap) <b>cannot co-occur</b> with hand-flapping. It is not <b>DRA</b>, which reinforces any appropriate alternative that could still happen alongside the problem; not <b>DRO</b>, which reinforces the behavior's absence over an interval; and not <b>DRL</b>, which targets lower rates.",
     "id": 169,
     "type": "mc",
-    "dom": "D"
+    "dom": "D",
+    "task": "D.2"
   },
   {
     "cat": "Differential Reinforcement",
@@ -2911,18 +2912,19 @@
   },
   {
     "cat": "Reinforcement & Punishment",
-    "q": "The difference between response cost and time-out from reinforcement is:",
+    "q": "During a token program, a learner has earned several tokens for on-task behavior. After a disruptive outburst, the RBT removes two tokens the learner already earned. Which procedure did the RBT use, and how does it differ from time-out?",
     "a": [
-      "Response cost removes a specific reinforcer already earned; time-out removes access to reinforcement for a period",
-      "Response cost adds an aversive; time-out removes one",
-      "Response cost is reinforcement; time-out is punishment",
-      "There is no difference"
+      "Response cost, which removes a specific reinforcer already earned, unlike time-out",
+      "Time-out, which briefly removes access to the reinforcing setting or activity",
+      "Response cost, which adds an aversive stimulus to reduce the behavior",
+      "Time-out, which permanently removes an established reinforcer"
     ],
     "c": 0,
-    "e": "<b>Response cost</b> takes away an owned reinforcer (tokens); <b>time-out</b> suspends access to the reinforcing environment/activity temporarily.",
+    "e": "Removing <b>already-earned tokens</b> is <b>response cost</b> — withdrawal of a specific earned reinforcer. <b>Time-out</b> differs because it suspends <b>access</b> to reinforcement for a period rather than taking a possession, and neither procedure adds an aversive stimulus.",
     "id": 194,
     "type": "mc",
-    "dom": "C"
+    "dom": "C",
+    "task": "C.10"
   },
   {
     "cat": "Reinforcement & Punishment",
@@ -3526,18 +3528,19 @@
   },
   {
     "cat": "Professionalism & Scope",
-    "q": "The difference between 'scope of competence' and 'scope of practice' is:",
+    "q": "A caregiver asks an RBT to begin a feeding protocol the RBT has never been trained to run, even though RBTs are permitted to implement such protocols under supervision. What boundary is the RBT hitting?",
     "a": [
-      "Scope of practice is what the credential allows; scope of competence is what YOU are actually trained and able to do",
-      "They are identical",
-      "Competence is broader than practice",
-      "Practice is set by the family"
+      "Scope of competence, because the task is within the credential but beyond the RBT's own training",
+      "Scope of practice, because the RBT credential does not permit this activity at all",
+      "Scope of competence, because the RBT is fully trained and faces no real limit",
+      "Scope of practice, because the caregiver is the one who defines what the RBT may do"
     ],
     "c": 0,
-    "e": "<b>Scope of practice</b> = the profession's permitted activities; <b>scope of competence</b> = your individual demonstrated skills, which may be narrower.",
+    "e": "<b>Scope of practice</b> is what the credential permits; <b>scope of competence</b> is what <b>you personally</b> are trained to do. This task is within practice but outside this RBT's competence, so the RBT should decline and seek training/supervision — it is not the caregiver who sets these limits.",
     "id": 235,
     "type": "mc",
-    "dom": "F"
+    "dom": "F",
+    "task": "F.3"
   },
   {
     "cat": "Professionalism & Scope",
@@ -6276,5 +6279,197 @@
     "e": "A <b>multiple relationship</b> can impair objectivity and create conflicts of interest (F.7).",
     "type": "mc",
     "id": 432
+  },
+  {
+    "cat": "Documentation & Reporting",
+    "dom": "E",
+    "task": "E.1",
+    "q": "An RBT writes in a session note: 'The client was in a great mood and really seemed to enjoy the lesson today.' Why should this be revised before it goes in the record?",
+    "a": [
+      "It is subjective and interpretive rather than an objective description of observable behavior",
+      "It is far too long to include in a session note",
+      "It uses the client's first name instead of their initials",
+      "It repeats data the BCBA has already reviewed"
+    ],
+    "c": 0,
+    "e": "Session notes must be <b>objective and observable</b> (e.g., 'smiled, completed 8/10 trials'), not <b>subjective</b> interpretations like 'great mood.' The problem is interpretation, not length, naming, or duplication.",
+    "type": "mc",
+    "id": 433
+  },
+  {
+    "cat": "Documentation & Reporting",
+    "dom": "E",
+    "task": "E.2",
+    "q": "An RBT finishes a session but is running late to the next one. When should the session note and data be completed?",
+    "a": [
+      "As soon as possible after the session, while details are accurate, per agency policy",
+      "Only at the end of the pay period when notes are batched together",
+      "Whenever the caregiver next asks for a progress update",
+      "After the BCBA has reviewed the raw data first"
+    ],
+    "c": 0,
+    "e": "Documentation should be <b>timely and accurate</b>, completed as soon as possible after the session. Batching notes late, waiting for a request, or waiting on the BCBA all risk lost or inaccurate detail.",
+    "type": "mc",
+    "id": 434
+  },
+  {
+    "cat": "Documentation & Reporting",
+    "dom": "E",
+    "task": "E.1",
+    "q": "Which entry is MOST appropriate for a professional session note?",
+    "a": [
+      "'Completed 9 of 10 mand trials independently; 2 instances of elopement during transitions'",
+      "'Client was defiant and clearly did not want to be there today'",
+      "'The parent seemed overwhelmed and the home was pretty messy'",
+      "'Had a rough day, probably because of something going on at home'"
+    ],
+    "c": 0,
+    "e": "Notes record <b>observable, measurable</b> behavior and data. The other entries are <b>subjective, judgmental, or speculative</b> and do not belong in the record.",
+    "type": "mc",
+    "id": 435
+  },
+  {
+    "cat": "Documentation & Reporting",
+    "dom": "E",
+    "task": "E.4",
+    "q": "An RBT notices the datasheet lists a target the current program no longer includes, and the counts do not match what they observed. What should the RBT do?",
+    "a": [
+      "Report the discrepancy to the supervising BCBA rather than changing the program independently",
+      "Quietly correct the program so it matches what they observed",
+      "Ignore it and keep collecting data on the old target",
+      "Ask the caregiver which target the team should use"
+    ],
+    "c": 0,
+    "e": "Data or program discrepancies go to the <b>supervising BCBA</b>. RBTs implement and report; they do not <b>change programs independently</b>, ignore errors, or defer clinical decisions to caregivers.",
+    "type": "mc",
+    "id": 436
+  },
+  {
+    "cat": "Documentation & Reporting",
+    "dom": "E",
+    "task": "E.5",
+    "q": "A caregiver asks the RBT to explain why the treatment goals were chosen and whether they can be changed. The RBT should:",
+    "a": [
+      "Refer the clinical questions to the BCBA while relaying observations objectively",
+      "Explain the full clinical rationale and approve the changes on the spot",
+      "Tell the caregiver that goals can never be discussed with families",
+      "Change the goals so they match the caregiver's request"
+    ],
+    "c": 0,
+    "e": "Setting or changing goals is a <b>BCBA</b> responsibility. The RBT communicates <b>within the chain of command</b> — relaying objective information and referring clinical decisions up, not approving or changing goals.",
+    "type": "mc",
+    "id": 437
+  },
+  {
+    "cat": "Documentation & Reporting",
+    "dom": "E",
+    "task": "E.3",
+    "q": "An RBT is tempted to fill in data for a few trials they forgot to score during a busy session. The most ethical action is to:",
+    "a": [
+      "Record only what was actually measured and note the missing data to the supervisor",
+      "Estimate the missed trials so the datasheet looks complete",
+      "Copy the values from the previous session's datasheet",
+      "Mark all the missed trials as correct to stay positive"
+    ],
+    "c": 0,
+    "e": "Data must reflect <b>what actually occurred</b>. Estimating, copying, or inflating values falsifies the record; the RBT logs only measured data and <b>reports the gap</b> to the supervisor.",
+    "type": "mc",
+    "id": 438
+  },
+  {
+    "cat": "Ethics & Scope",
+    "dom": "F",
+    "task": "F.4",
+    "q": "During a home session, a young client discloses something that makes the RBT suspect abuse. What should the RBT do?",
+    "a": [
+      "Follow mandated-reporting duties and notify the supervisor per agency policy",
+      "Wait to see whether it happens again before telling anyone",
+      "Confront the family directly about the suspected abuse",
+      "Keep it fully confidential because it was said during session"
+    ],
+    "c": 0,
+    "e": "RBTs are typically <b>mandated reporters</b>: suspected abuse is reported per legal and agency requirements, and the supervisor is notified. Confidentiality does <b>not</b> override mandated reporting, and RBTs do not investigate or confront families.",
+    "type": "mc",
+    "id": 439
+  },
+  {
+    "cat": "Ethics & Scope",
+    "dom": "F",
+    "task": "F.5",
+    "q": "An RBT wants to review a client's program during the drive home. The safest, most ethical practice is to:",
+    "a": [
+      "Access records only through approved, secure channels and never store client data on personal devices",
+      "Email the datasheets to a personal account for convenience",
+      "Text a photo of the datasheet to a coworker to review",
+      "Save the files to a personal phone for offline access"
+    ],
+    "c": 0,
+    "e": "Client information stays in <b>secure, approved systems</b>. Emailing to personal accounts, texting photos, or storing data on personal devices all breach <b>confidentiality</b>.",
+    "type": "mc",
+    "id": 440
+  },
+  {
+    "cat": "Ethics & Scope",
+    "dom": "F",
+    "task": "F.2",
+    "q": "A grateful family offers the RBT an expensive gift at the end of a session. The most appropriate response is to:",
+    "a": [
+      "Politely decline per professional boundary and gift policies, and inform the supervisor",
+      "Accept it so the family does not feel rejected",
+      "Accept it but keep it a secret from the supervisor",
+      "Suggest the family give cash instead of a gift"
+    ],
+    "c": 0,
+    "e": "Accepting valuable gifts risks a <b>multiple relationship</b> and conflicts of interest. The RBT declines politely per policy and <b>informs the supervisor</b> rather than accepting quietly or redirecting the gift.",
+    "type": "mc",
+    "id": 441
+  },
+  {
+    "cat": "Professionalism & Scope",
+    "dom": "F",
+    "task": "F.1",
+    "q": "A caregiver asks the RBT to conduct a functional behavior assessment and write the behavior plan. The RBT should:",
+    "a": [
+      "Explain that assessment and plan design are the BCBA's role and refer the request to the supervisor",
+      "Complete the assessment and plan themselves to be helpful",
+      "Decline and stop providing any services to the client",
+      "Design the plan but have the caregiver sign off on it"
+    ],
+    "c": 0,
+    "e": "Designing assessments and behavior plans is <b>outside the RBT role</b> — those are <b>BCBA</b> responsibilities. The RBT refers the request up the chain; it neither performs the task nor abandons services.",
+    "type": "mc",
+    "id": 442
+  },
+  {
+    "cat": "Professionalism & Scope",
+    "dom": "F",
+    "task": "F.6",
+    "q": "An RBT realizes a new client's parent is someone they already know socially. The best first step is to:",
+    "a": [
+      "Disclose the potential conflict to the supervisor so it can be managed",
+      "Say nothing, since they can simply stay professional",
+      "Immediately quit the case without telling anyone",
+      "Ask the parent to keep their relationship a secret"
+    ],
+    "c": 0,
+    "e": "A pre-existing social relationship is a potential <b>multiple relationship</b>; the RBT <b>discloses it to the supervisor</b> so it can be managed. Hiding it, abruptly quitting, or asking for secrecy are all inappropriate.",
+    "type": "mc",
+    "id": 443
+  },
+  {
+    "cat": "Professionalism & Scope",
+    "dom": "F",
+    "task": "F.3",
+    "q": "An RBT is assigned a client whose needs require a skill set the RBT has not been trained in. The RBT should:",
+    "a": [
+      "Tell the supervisor and request training or supervision before proceeding",
+      "Do their best with the client without mentioning the gap",
+      "Look up techniques online and start using them immediately",
+      "Refuse to work with the client under any circumstances"
+    ],
+    "c": 0,
+    "e": "Practicing within your <b>scope of competence</b> means requesting <b>training or supervision</b> for unfamiliar needs — not improvising, hiding the gap, or refusing the client outright.",
+    "type": "mc",
+    "id": 444
   }
 ]

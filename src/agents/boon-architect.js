@@ -4,6 +4,7 @@
  */
 
 import { oathStamMult } from './expedition-director.js';
+import { TIER_COMBAT } from './hazard-warden.js';
 
 export const BOON_TAGS = {
   safety: { label: 'Safety', color: '#5fce9f' },
@@ -346,7 +347,10 @@ export function createBoonArchitect() {
     onWrong(ctx) {
       const banners = [];
       let threatDelta = ctx.enc.node.miss;
-      let staminaCost = ctx.viaTimeout ? ctx.config.TIMEOUT_COST : ctx.config.MISS_COST;
+      const tierCombat = TIER_COMBAT[ctx.enc.node.tier];
+      let staminaCost = ctx.viaTimeout
+        ? (tierCombat ? tierCombat.timeoutCost : ctx.config.TIMEOUT_COST)
+        : (tierCombat ? tierCombat.missCost : ctx.config.MISS_COST);
       let freed = false;
       let keepStreak = false;
 

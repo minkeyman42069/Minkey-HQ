@@ -21,7 +21,7 @@ index.html
 | Agent | File | Responsibility |
 |-------|------|----------------|
 | **Boon Architect** | `boon-architect.js` | Boon catalog, duos, draft weighting, hook-driven effects |
-| **Hazard Warden** | `hazard-warden.js` | Node factories, bestiary, act scaling |
+| **Hazard Warden** | `hazard-warden.js` | Node factories, bestiary, tier combat table (`TIER_COMBAT`), act scaling |
 | **Trail Scholar** | `trail-scholar.js` | TCO domains, Leitner scheduler, question types |
 | **Mountain Economy** | `mountain-economy.js` | Weather, relics, stamina/threat tuning |
 | **Expedition Director** | `expedition-director.js` | Route assembly across acts |

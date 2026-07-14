@@ -144,7 +144,10 @@ export function simPitch(node, opts = {}) {
       if (node.noBoonEase) ease = 0;
       threat = Math.max(0, threat - ease);
     } else {
-      let cost = viaTimeout ? ENGINE.TIMEOUT_COST : ENGINE.MISS_COST;
+      const tc = H.TIER_COMBAT[node.tier];
+      let cost = viaTimeout
+        ? (tc ? tc.timeoutCost : ENGINE.TIMEOUT_COST)
+        : (tc ? tc.missCost : ENGINE.MISS_COST);
       if (node.escalate) cost += missCount * node.escalate;
       missCount++;
       stamina -= cost;

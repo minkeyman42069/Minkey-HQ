@@ -123,14 +123,7 @@ function shuffle(a, rnd) {
  * @param {typeof defaultHazards} hazards
  */
 export function buildRoute(rnd, topic, config, hazards = defaultHazards) {
-  const {
-    scaleNode,
-    nSwitch, nTraverse, nSnowfield, nRockfall,
-    nCrevasse, nBergschrund, nStorm, nCouloir, nWindslab,
-    nVoid, nKnife, nIcewall, nSealedFace, nLongWall, nCorniceRidge, nVerglas,
-    nWhiteout, nThinAir, nIcefall, nTempest, nClosing, nAvalanche, nFrozenTitan,
-    nGate, nRest, nShrine, nSerac, nSummit,
-  } = hazards;
+  const { scaleNode, nSwitch, nGate, nRest, nShrine, nSerac, nSummit } = hazards;
 
   let alt = 1600;
   const step = (g) => { alt += g + Math.floor(rnd() * 70); return alt; };
@@ -139,14 +132,17 @@ export function buildRoute(rnd, topic, config, hazards = defaultHazards) {
   const pick = (pool, k) => shuffle(pool.slice(), rnd).slice(0, k);
   const nd = (base) => base + Math.floor(rnd() * 2);
 
-  const T1 = [nSwitch, nTraverse, nSnowfield, nRockfall];
-  const T2 = [nCrevasse, nBergschrund, nStorm, nCouloir, nWindslab];
-  const T3 = [nVoid, nKnife, nIcewall, nSealedFace, nLongWall, nCorniceRidge, nVerglas];
-  const T4 = [nWhiteout, nThinAir, nIcefall, nTempest, nClosing, nAvalanche, nFrozenTitan];
+  // Pools come straight from the bestiary tiers, so a hazard's tier decides
+  // where it can appear on the route. Tier 5 fixed points (gate/serac/summit)
+  // are placed explicitly below.
+  const tierPool = (t) => hazards.BESTIARY.filter((b) => b.t === t).map((b) => b.fn);
+  const T2 = tierPool(2);
+  const T3 = tierPool(3);
+  const T4 = tierPool(4);
 
   // ACT I - The Approach: T1 hazards + a single taste of T2
   A(nSwitch(nd(3), step(215)), 1);
-  pick([nTraverse, nSnowfield, nRockfall], 1).forEach((fn) => { A(fn(nd(3), step(220)), 1); });
+  pick(tierPool(1).filter((fn) => fn !== nSwitch), 1).forEach((fn) => { A(fn(nd(3), step(220)), 1); });
   A(pick(T2, 1)[0](nd(4), step(240)), 1);
   A(nGate(nd(4), step(235), null), 1);
   A(nRest(step(150), config), 1);

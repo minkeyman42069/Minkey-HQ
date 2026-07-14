@@ -76,6 +76,7 @@ var TrailBundle = (() => {
     ACTS: () => ACTS,
     BESTIARY: () => BESTIARY,
     FOE_COLORS: () => FOE_COLORS,
+    TIER_COMBAT: () => TIER_COMBAT,
     foeColor: () => foeColor,
     nAvalanche: () => nAvalanche,
     nBergschrund: () => nBergschrund,
@@ -142,6 +143,13 @@ var TrailBundle = (() => {
   function foeColor(kind) {
     return FOE_COLORS[kind] || "#8a97ab";
   }
+  var TIER_COMBAT = {
+    1: { missCost: 10, timeoutCost: 7 },
+    2: { missCost: 12, timeoutCost: 8 },
+    3: { missCost: 14, timeoutCost: 10 },
+    4: { missCost: 16, timeoutCost: 11 },
+    5: { missCost: 17, timeoutCost: 12 }
+  };
   function nSwitch(need, alt) {
     return {
       kind: "switchback",
@@ -149,6 +157,7 @@ var TrailBundle = (() => {
       title: "Scree Slope",
       blurb: "A slope of broken rock that moves underfoot. Slow is fine. Wrong is what slides.",
       need,
+      tier: 1,
       time: 18,
       rise: 0.8,
       miss: 26,
@@ -169,6 +178,7 @@ var TrailBundle = (() => {
       title: "Rising Squall",
       blurb: "Snow coming in sideways and worse by the second. Nothing you know will quiet it. Outrun it or wear it.",
       need,
+      tier: 2,
       time: 12,
       rise: 1.85,
       miss: 15,
@@ -190,6 +200,7 @@ var TrailBundle = (() => {
       title: "Gatekeeper",
       blurb: domain ? "It stands where the route narrows, and it has read your ledger. It will ask about " + domain + ". Wrong answers feed it. Right ones back it off." : "It stands where the route narrows, and it has read your ledger. It will ask what you least want asked. Wrong answers feed it. Right ones back it off.",
       need,
+      tier: 5,
       time: 16,
       rise: 1.55,
       miss: 30,
@@ -224,6 +235,7 @@ var TrailBundle = (() => {
       title: "Summit Push",
       blurb: "The last pitch. Wind you lean into, cold in your teeth, the dark starting to thin. All that stands between you and the top is everything you know.",
       need,
+      tier: 5,
       time: 15,
       rise: 2.1,
       miss: 22,
@@ -244,6 +256,7 @@ var TrailBundle = (() => {
       title: "Falling Serac",
       blurb: "A hanging wall of ice, creaking before you even rope up. It was falling today with or without you. Be quick, and be elsewhere.",
       need,
+      tier: 5,
       time: 13,
       rise: 2.35,
       miss: 22,
@@ -264,6 +277,7 @@ var TrailBundle = (() => {
       title: "Blinding Whiteout",
       blurb: "The cloud comes up the face and the world goes to milk. No ridge, no sky, no down. Climb by feel, and climb now.",
       need,
+      tier: 4,
       time: 10,
       rise: 2.4,
       miss: 13,
@@ -284,6 +298,7 @@ var TrailBundle = (() => {
       title: "Snow Bridge",
       blurb: "A rib of old snow over a dark with no bottom. A few careful steps and you are across. It only counts the wrong ones.",
       need,
+      tier: 2,
       time: 15,
       rise: 1.25,
       miss: 32,
@@ -304,6 +319,7 @@ var TrailBundle = (() => {
       title: "Exposed Traverse",
       blurb: "Ledges strung across the face for the better part of a mile. None of it is hard. All of it is long, and the wind leans on you the whole way.",
       need,
+      tier: 1,
       time: 16,
       rise: 1.5,
       miss: 16,
@@ -324,6 +340,7 @@ var TrailBundle = (() => {
       title: "The Thin Air",
       blurb: "The air up here is a rumor. Your body burns whether you move or not \u2014 so move.",
       need,
+      tier: 4,
       time: 16,
       rise: 1.1,
       miss: 18,
@@ -345,6 +362,7 @@ var TrailBundle = (() => {
       title: "The Icefall",
       blurb: "The serac field above calves on its own clock, tons at a time. Watch. Count. Cross. The ice does not aim, and it does not need to.",
       need,
+      tier: 4,
       time: 14,
       rise: 0.8,
       miss: 18,
@@ -367,6 +385,7 @@ var TrailBundle = (() => {
       title: "Bare Ridge",
       blurb: "Rock scoured bare by a hundred winters. Nothing in your pack works this high \u2014 no boons, no notes, no flare. Just you, and whatever stuck.",
       need,
+      tier: 3,
       time: 15,
       rise: 1.6,
       miss: 22,
@@ -388,6 +407,7 @@ var TrailBundle = (() => {
       title: "The Knife-Edge",
       blurb: "A crest the width of your boot with air on both sides. There is no standing still here. One bad step puts you back where the move began.",
       need,
+      tier: 3,
       time: 15,
       rise: 1.2,
       miss: 20,
@@ -409,6 +429,7 @@ var TrailBundle = (() => {
       title: "Widening Crack",
       blurb: "The crack between glacier and mountain runs right beside your line. Every stumble feeds it, and the next one always costs more.",
       need,
+      tier: 2,
       time: 15,
       rise: 1.2,
       miss: 17,
@@ -430,6 +451,7 @@ var TrailBundle = (() => {
       title: "The Snowfield",
       blurb: "Thigh-deep powder that swallows your mistakes along with your boots. Slow going. Kind going. Find a rhythm and keep it.",
       need,
+      tier: 1,
       time: 18,
       rise: 0.7,
       miss: 12,
@@ -450,6 +472,7 @@ var TrailBundle = (() => {
       title: "The Couloir",
       blurb: "A chute of ice between rock walls. Everything the mountain sheds comes down through here, and your route goes up it. Do not linger.",
       need,
+      tier: 2,
       time: 13,
       rise: 1.9,
       miss: 18,
@@ -470,6 +493,7 @@ var TrailBundle = (() => {
       title: "The Ice Wall",
       blurb: "Ninety degrees of blue ice. Swing, test, trust, step up. Rush one placement and the whole pitch knows it.",
       need,
+      tier: 3,
       time: 14,
       rise: 1.6,
       miss: 24,
@@ -490,6 +514,7 @@ var TrailBundle = (() => {
       title: "Gust Field",
       blurb: "Wind-packed slabs that boom underfoot. The gusts keep no schedule and send no warning. Stay low and keep moving.",
       need,
+      tier: 2,
       time: 14,
       rise: 1,
       miss: 16,
@@ -511,6 +536,7 @@ var TrailBundle = (() => {
       title: "Ice Shell",
       blurb: "Overnight melt froze the face into a single blue glaze. Break the shell first. The climbing starts underneath.",
       need,
+      tier: 3,
       time: 15,
       rise: 1.2,
       miss: 20,
@@ -532,6 +558,7 @@ var TrailBundle = (() => {
       title: "The Long Wall",
       blurb: "You cannot see the top from the bottom, and not from halfway either. The first breather on this wall helps. The fifth barely does.",
       need,
+      tier: 3,
       time: 16,
       rise: 1.5,
       miss: 20,
@@ -553,6 +580,7 @@ var TrailBundle = (() => {
       title: "The Tempest",
       blurb: "A storm with an appetite. Let the danger build and the wind rises to meet it, driving you toward the edge it wants you over. Starve it calm.",
       need,
+      tier: 4,
       time: 13,
       rise: 1.55,
       miss: 22,
@@ -574,6 +602,7 @@ var TrailBundle = (() => {
       title: "The Closing Window",
       blurb: "The forecast bought you an hour and the mountain is spending it fast. Each chance you get is briefer than the last. Go.",
       need,
+      tier: 4,
       time: 14,
       rise: 2,
       miss: 24,
@@ -595,6 +624,7 @@ var TrailBundle = (() => {
       title: "The Avalanche",
       blurb: "A loaded slope, quiet the way held breath is quiet. Somewhere past the middle it lets go. Where you stand when it does is up to you.",
       need,
+      tier: 4,
       time: 15,
       rise: 1.25,
       miss: 22,
@@ -616,6 +646,7 @@ var TrailBundle = (() => {
       title: "Rockfall Gully",
       blurb: "Pebbles come down the gully in bursts, rattling off the walls ahead of you. Count the quiet between volleys. That is when you move.",
       need,
+      tier: 1,
       time: 18,
       rise: 0.7,
       miss: 14,
@@ -638,6 +669,7 @@ var TrailBundle = (() => {
       title: "The Verglas",
       blurb: "Meltwater froze over the rock in a skin too thin to see. Your edges bite for a moment after every move. Move again before they skate.",
       need,
+      tier: 3,
       time: 15,
       rise: 1.9,
       miss: 18,
@@ -671,6 +703,7 @@ var TrailBundle = (() => {
       title: "Wind Lip",
       blurb: "A lip of snow curled over empty air by wind that has not stopped in years. It bucks without warning, and a slip undoes honest work.",
       need,
+      tier: 3,
       time: 15,
       rise: 0.9,
       miss: 14,
@@ -693,6 +726,7 @@ var TrailBundle = (() => {
       title: "Glacier Block",
       blurb: "A pillar of glacier ice three winters thick. All three layers break before the climbing counts, and old ice splinters hard when it starts to lose.",
       need,
+      tier: 4,
       time: 14,
       rise: 1.1,
       miss: 19,
@@ -724,33 +758,33 @@ var TrailBundle = (() => {
     return n;
   }
   var BESTIARY = [
-    { fn: nSwitch, t: 1, a: "Accuracy", m: "Accuracy check. Generous clock, ordinary misses, no surprises." },
-    { fn: nTraverse, t: 1, a: "Endurance", m: "Endurance check. Steady passive threat across a long, easy line." },
-    { fn: nSnowfield, t: 1, a: "Accuracy", m: "Recovery ground. Slow clock, soft misses, forgiving all around." },
-    { fn: nRockfall, t: 1, a: "Timing", m: "Timing drill. Small threat spikes land on a fixed rhythm." },
-    { fn: nCrevasse, t: 2, a: "Precision", m: "Precision check. Few questions, heavy cost per miss." },
-    { fn: nBergschrund, t: 2, a: "Escalating", m: "Escalating misses. Each slip costs more stamina than the one before." },
-    { fn: nStorm, t: 2, a: "Speed", m: "Pure speed. Correct answers shed no threat here; only pace survives it." },
-    { fn: nCouloir, t: 2, a: "Speed", m: "Speed check. Fast-building threat, ordinary misses." },
-    { fn: nWindslab, t: 2, a: "Chaos", m: "Chaos. Random gusts of threat, no warning and no pattern." },
-    { fn: nVoid, t: 3, a: "No boons", m: "Boon suppression. Flare, notes, and every boon go dark for the pitch." },
-    { fn: nKnife, t: 3, a: "Consistency", m: "Consistency check. A miss knocks your progress back down the ridge." },
-    { fn: nIcewall, t: 3, a: "Precision", m: "Precision under pace. Expensive misses on a quick clock." },
-    { fn: nSealedFace, t: 3, a: "Armored", m: "Armored. Two correct answers break the shell before progress counts." },
-    { fn: nLongWall, t: 3, a: "Attrition", m: "Attrition. The threat relief on each correct answer keeps shrinking." },
-    { fn: nVerglas, t: 3, a: "Fluency", m: "Fluency check. Quick correct answers shed extra threat; slow ones shed almost none." },
-    { fn: nWhiteout, t: 4, a: "Speed", m: "Blind speed. The shortest clock on the mountain and thin relief." },
-    { fn: nThinAir, t: 4, a: "Attrition", m: "Attrition. Stamina drains every second you stand on the pitch." },
-    { fn: nIcefall, t: 4, a: "Timing", m: "Timing. Heavy threat volleys land on a fixed schedule." },
-    { fn: nTempest, t: 4, a: "Enrage", m: "Enrage. Past sixty percent threat, everything builds faster." },
-    { fn: nClosing, t: 4, a: "Countdown", m: "Countdown. Each question\u2019s clock is shorter than the last." },
-    { fn: nAvalanche, t: 4, a: "Release", m: "Release. At the halfway mark the slope lets go all at once." },
-    { fn: nCorniceRidge, t: 3, a: "Chaos ridge", m: "Chaos ridge. Gusts without warning, and a miss slides you back." },
-    { fn: nFrozenTitan, t: 4, a: "Armored elite", m: "Armored elite. Three shield layers, and it enrages when threat runs high." },
-    { fn: (n, al) => nGate(n, al, null), t: 5, a: "Competence duel", m: "Competence duel. Draws every question from your weakest exam domain." },
-    { fn: nSerac, t: 5, a: "Elite", m: "Elite. Starts angry \u2014 a quarter of the threat bar is already lit." },
-    { fn: nSummit, t: 5, a: "Final pitch", m: "Final pitch. Long, fast-building, and it opens with threat on the board." }
-  ];
+    { fn: nSwitch, a: "Accuracy", m: "Accuracy check. Generous clock, ordinary misses, no surprises." },
+    { fn: nTraverse, a: "Endurance", m: "Endurance check. Steady passive threat across a long, easy line." },
+    { fn: nSnowfield, a: "Accuracy", m: "Recovery ground. Slow clock, soft misses, forgiving all around." },
+    { fn: nRockfall, a: "Timing", m: "Timing drill. Small threat spikes land on a fixed rhythm." },
+    { fn: nCrevasse, a: "Precision", m: "Precision check. Few questions, heavy cost per miss." },
+    { fn: nBergschrund, a: "Escalating", m: "Escalating misses. Each slip costs more stamina than the one before." },
+    { fn: nStorm, a: "Speed", m: "Pure speed. Correct answers shed no threat here; only pace survives it." },
+    { fn: nCouloir, a: "Speed", m: "Speed check. Fast-building threat, ordinary misses." },
+    { fn: nWindslab, a: "Chaos", m: "Chaos. Random gusts of threat, no warning and no pattern." },
+    { fn: nVoid, a: "No boons", m: "Boon suppression. Flare, notes, and every boon go dark for the pitch." },
+    { fn: nKnife, a: "Consistency", m: "Consistency check. A miss knocks your progress back down the ridge." },
+    { fn: nIcewall, a: "Precision", m: "Precision under pace. Expensive misses on a quick clock." },
+    { fn: nSealedFace, a: "Armored", m: "Armored. Two correct answers break the shell before progress counts." },
+    { fn: nLongWall, a: "Attrition", m: "Attrition. The threat relief on each correct answer keeps shrinking." },
+    { fn: nVerglas, a: "Fluency", m: "Fluency check. Quick correct answers shed extra threat; slow ones shed almost none." },
+    { fn: nWhiteout, a: "Speed", m: "Blind speed. The shortest clock on the mountain and thin relief." },
+    { fn: nThinAir, a: "Attrition", m: "Attrition. Stamina drains every second you stand on the pitch." },
+    { fn: nIcefall, a: "Timing", m: "Timing. Heavy threat volleys land on a fixed schedule." },
+    { fn: nTempest, a: "Enrage", m: "Enrage. Past sixty percent threat, everything builds faster." },
+    { fn: nClosing, a: "Countdown", m: "Countdown. Each question\u2019s clock is shorter than the last." },
+    { fn: nAvalanche, a: "Release", m: "Release. At the halfway mark the slope lets go all at once." },
+    { fn: nCorniceRidge, a: "Chaos ridge", m: "Chaos ridge. Gusts without warning, and a miss slides you back." },
+    { fn: nFrozenTitan, a: "Armored elite", m: "Armored elite. Three shield layers, and it enrages when threat runs high." },
+    { fn: (n, al) => nGate(n, al, null), a: "Competence duel", m: "Competence duel. Draws every question from your weakest exam domain." },
+    { fn: nSerac, a: "Elite", m: "Elite. Starts angry \u2014 a quarter of the threat bar is already lit." },
+    { fn: nSummit, a: "Final pitch", m: "Final pitch. Long, fast-building, and it opens with threat on the board." }
+  ].map((e) => ({ ...e, t: e.fn(1, 0).tier }));
   function nodeEmoji(kind) {
     const m = {
       switchback: "\u{1FAA8}",
@@ -1302,37 +1336,7 @@ var TrailBundle = (() => {
     return a;
   }
   function buildRoute(rnd2, topic, config, hazards = hazard_warden_exports) {
-    const {
-      scaleNode: scaleNode2,
-      nSwitch: nSwitch2,
-      nTraverse: nTraverse2,
-      nSnowfield: nSnowfield2,
-      nRockfall: nRockfall2,
-      nCrevasse: nCrevasse2,
-      nBergschrund: nBergschrund2,
-      nStorm: nStorm2,
-      nCouloir: nCouloir2,
-      nWindslab: nWindslab2,
-      nVoid: nVoid2,
-      nKnife: nKnife2,
-      nIcewall: nIcewall2,
-      nSealedFace: nSealedFace2,
-      nLongWall: nLongWall2,
-      nCorniceRidge: nCorniceRidge2,
-      nVerglas: nVerglas2,
-      nWhiteout: nWhiteout2,
-      nThinAir: nThinAir2,
-      nIcefall: nIcefall2,
-      nTempest: nTempest2,
-      nClosing: nClosing2,
-      nAvalanche: nAvalanche2,
-      nFrozenTitan: nFrozenTitan2,
-      nGate: nGate2,
-      nRest: nRest2,
-      nShrine: nShrine2,
-      nSerac: nSerac2,
-      nSummit: nSummit2
-    } = hazards;
+    const { scaleNode: scaleNode2, nSwitch: nSwitch2, nGate: nGate2, nRest: nRest2, nShrine: nShrine2, nSerac: nSerac2, nSummit: nSummit2 } = hazards;
     let alt = 1600;
     const step = (g) => {
       alt += g + Math.floor(rnd2() * 70);
@@ -1345,12 +1349,12 @@ var TrailBundle = (() => {
     };
     const pick = (pool, k) => shuffle(pool.slice(), rnd2).slice(0, k);
     const nd = (base) => base + Math.floor(rnd2() * 2);
-    const T1 = [nSwitch2, nTraverse2, nSnowfield2, nRockfall2];
-    const T2 = [nCrevasse2, nBergschrund2, nStorm2, nCouloir2, nWindslab2];
-    const T3 = [nVoid2, nKnife2, nIcewall2, nSealedFace2, nLongWall2, nCorniceRidge2, nVerglas2];
-    const T4 = [nWhiteout2, nThinAir2, nIcefall2, nTempest2, nClosing2, nAvalanche2, nFrozenTitan2];
+    const tierPool = (t) => hazards.BESTIARY.filter((b) => b.t === t).map((b) => b.fn);
+    const T2 = tierPool(2);
+    const T3 = tierPool(3);
+    const T4 = tierPool(4);
     A(nSwitch2(nd(3), step(215)), 1);
-    pick([nTraverse2, nSnowfield2, nRockfall2], 1).forEach((fn) => {
+    pick(tierPool(1).filter((fn) => fn !== nSwitch2), 1).forEach((fn) => {
       A(fn(nd(3), step(220)), 1);
     });
     A(pick(T2, 1)[0](nd(4), step(240)), 1);
@@ -1777,7 +1781,8 @@ var TrailBundle = (() => {
       onWrong(ctx) {
         const banners = [];
         let threatDelta = ctx.enc.node.miss;
-        let staminaCost = ctx.viaTimeout ? ctx.config.TIMEOUT_COST : ctx.config.MISS_COST;
+        const tierCombat = TIER_COMBAT[ctx.enc.node.tier];
+        let staminaCost = ctx.viaTimeout ? tierCombat ? tierCombat.timeoutCost : ctx.config.TIMEOUT_COST : tierCombat ? tierCombat.missCost : ctx.config.MISS_COST;
         let freed = false;
         let keepStreak = false;
         if (ctx.viaTimeout && canUse(ctx, "steady") && !ctx.enc.firstTimeoutUsed) {

@@ -1,72 +1,56 @@
 /**
- * Climb economy model — mirrors index.html stamina/threat math.
- * Keep in sync with CONFIG + node factories when rebalancing.
+ * Climb economy model — simulates real routes from the real node factories.
+ * Routes come from expedition-director buildRoute and hazard stats from
+ * hazard-warden, so the sim cannot drift from shipped gameplay math.
+ * (Per-pitch tick-fidelity lives in hazard-sim.mjs; this model covers the
+ * whole-climb stamina economy with simplified pitches.)
  */
 
+import { CONFIG } from '../../src/core/config.js';
+import { TIER_COMBAT } from '../../src/agents/hazard-warden.js';
+import { buildRoute, createSeededRng } from '../../src/agents/expedition-director.js';
+import { startThreatFor } from './hazard-sim.mjs';
+
 export const BALANCE = {
-  STAM_MAX: 100,
-  MISS_COST: 14,
-  TIMEOUT_COST: 10,
-  REST_RESTORE: 38,
-  CLEAR_RESTORE_MULT: 0.92,
-  EASE_ON_CORRECT: 6,
-  THREAT_RESET: 75,
-  CRUX_RISE_MULT: 1.2,
-  ACT_SCALE: { rise: 0.20, miss: 0.08, hit: 0.10, timeDrop: 2 },
-  MAX_BOONS: 5,
+  STAM_MAX: CONFIG.STAM_MAX,
+  MISS_COST: CONFIG.MISS_COST,
+  TIMEOUT_COST: CONFIG.TIMEOUT_COST,
+  TIER_COMBAT,
+  REST_RESTORE: CONFIG.REST_RESTORE,
+  CLEAR_RESTORE_MULT: CONFIG.CLEAR_RESTORE_MULT,
+  EASE_ON_CORRECT: CONFIG.EASE_ON_CORRECT,
+  THREAT_RESET: CONFIG.THREAT_RESET,
+  CRUX_RISE_MULT: CONFIG.CRUX_RISE_MULT,
+  MAX_BOONS: CONFIG.MAX_BOONS,
 };
 
-/** Representative post-rebalance route (~58 questions, 3 rests). */
-export function defaultRoute() {
-  const nd = (b) => b + (Math.random() < 0.5 ? 0 : 1);
-  const scale = (n, act) => {
-    if (n.kind === 'rest') return n;
-    const sc = 1 + (act - 1) * BALANCE.ACT_SCALE.rise;
-    return {
-      ...n,
-      act,
-      rise: +(n.rise * sc).toFixed(2),
-      miss: Math.round(n.miss * (1 + (act - 1) * BALANCE.ACT_SCALE.miss)),
-      hit: Math.round(n.hit * (1 + (act - 1) * BALANCE.ACT_SCALE.hit)),
-      time: Math.max(8, n.time - (act - 1) * BALANCE.ACT_SCALE.timeDrop),
-    };
-  };
-
-  const nodes = [
-    scale({ kind: 'switchback', need: nd(3), time: 18, rise: 0.8, miss: 26, ease: 7, hit: 12, restore: 14 }, 1),
-    scale({ kind: 'traverse', need: nd(3), time: 16, rise: 1.5, miss: 16, ease: 6, hit: 14, restore: 16 }, 1),
-    scale({ kind: 'crevasse', need: nd(4), time: 15, rise: 1.25, miss: 32, ease: 11, hit: 24, restore: 18 }, 1),
-    scale({ kind: 'gate', need: nd(4), time: 16, rise: 1.55, miss: 30, ease: 10, hit: 20, restore: 22 }, 1),
-    { kind: 'rest', restore: BALANCE.REST_RESTORE },
-    scale({ kind: 'storm', need: nd(5), time: 12, rise: 1.85, miss: 15, ease: 0, hit: 15, restore: 16, noBoonEase: true }, 2),
-    scale({ kind: 'berg', need: nd(5), time: 15, rise: 1.2, miss: 17, ease: 9, hit: 16, restore: 18, escalate: 6 }, 2),
-    scale({ kind: 'void', need: nd(5), time: 15, rise: 1.6, miss: 22, ease: 9, hit: 17, restore: 18 }, 2),
-    scale({ kind: 'gate', need: nd(5), time: 16, rise: 1.55, miss: 30, ease: 10, hit: 20, restore: 22 }, 2),
-    { kind: 'rest', restore: BALANCE.REST_RESTORE },
-    scale({ kind: 'icewall', need: nd(4), time: 14, rise: 1.6, miss: 24, ease: 9, hit: 20, restore: 18 }, 3),
-    scale({ kind: 'thinair', need: nd(4), time: 16, rise: 1.1, miss: 18, ease: 8, hit: 13, restore: 16, drain: 0.28 }, 3),
-    scale({ kind: 'whiteout', need: nd(4), time: 10, rise: 2.4, miss: 13, ease: 5, hit: 15, restore: 16 }, 3),
-    scale({ kind: 'gate', need: nd(5), time: 16, rise: 1.55, miss: 30, ease: 10, hit: 20, restore: 22 }, 3),
-    scale({ kind: 'serac', need: 5, time: 13, rise: 2.35, miss: 22, ease: 10, hit: 22, restore: 20, startThreat: 25 }, 3),
-    { kind: 'rest', restore: BALANCE.REST_RESTORE },
-    scale({ kind: 'summit', need: 6, time: 15, rise: 2.1, miss: 22, ease: 8, hit: 20, restore: 14, startThreat: 20 }, 3),
-  ];
-  return nodes;
+/** A real route straight from the Expedition Director. */
+export function defaultRoute(rnd = Math.random) {
+  return buildRoute(rnd, null, CONFIG);
 }
 
-function questionOutcome(acc, timeoutRate) {
-  const r = Math.random();
+function missCosts(node) {
+  const tc = TIER_COMBAT[node.tier];
+  return {
+    miss: tc ? tc.missCost : BALANCE.MISS_COST,
+    timeout: tc ? tc.timeoutCost : BALANCE.TIMEOUT_COST,
+  };
+}
+
+function questionOutcome(acc, timeoutRate, rnd) {
+  const r = rnd();
   if (r < acc) return { correct: true, timeout: false };
   if (r < acc + timeoutRate) return { correct: false, timeout: true };
   return { correct: false, timeout: false };
 }
 
-function simPitch(node, stamina, acc, timeoutRate, boons) {
-  let threat = node.startThreat || 0;
-  const max = 100;
+function simPitch(node, stamina, acc, timeoutRate, boons, rnd) {
+  let threat = node.startThreat ?? startThreatFor(node.kind);
+  const max = node.max || 100;
   let done = 0;
   let missCount = 0;
   let strikes = 0;
+  const costs = missCosts(node);
 
   if (boons.provisions) stamina = Math.min(BALANCE.STAM_MAX, stamina + 5);
 
@@ -80,7 +64,7 @@ function simPitch(node, stamina, acc, timeoutRate, boons) {
     threat += node.rise * time * riseMult;
     if (node.drain) stamina -= node.drain * time;
 
-    const out = questionOutcome(acc, timeoutRate);
+    const out = questionOutcome(acc, timeoutRate, rnd);
     if (out.correct) {
       done++;
       let ease = typeof node.ease === 'number' ? node.ease : BALANCE.EASE_ON_CORRECT;
@@ -88,7 +72,7 @@ function simPitch(node, stamina, acc, timeoutRate, boons) {
       else if (boons.vent) ease += 2;
       threat = Math.max(0, threat - ease);
     } else {
-      let cost = out.timeout ? BALANCE.TIMEOUT_COST : BALANCE.MISS_COST;
+      let cost = out.timeout ? costs.timeout : costs.miss;
       if (node.escalate) cost += missCount * node.escalate;
       missCount++;
       stamina -= cost;
@@ -114,7 +98,8 @@ export function simulateClimb(opts = {}) {
   const acc = opts.accuracy ?? 0.82;
   const timeoutRate = opts.timeoutRate ?? 0.06;
   const boons = opts.boons ?? {};
-  const route = opts.route ?? defaultRoute();
+  const rnd = opts.rnd ?? Math.random;
+  const route = opts.route ?? defaultRoute(rnd);
 
   let stamina = BALANCE.STAM_MAX;
   let summited = false;
@@ -124,12 +109,13 @@ export function simulateClimb(opts = {}) {
   for (const node of route) {
     if (node.act === 3 && act3Entry === null) act3Entry = stamina;
 
+    if (node.kind === 'shrine') continue;
     if (node.kind === 'rest') {
       stamina = Math.min(BALANCE.STAM_MAX, stamina + node.restore);
       continue;
     }
 
-    const res = simPitch(node, stamina, acc, timeoutRate, boons);
+    const res = simPitch(node, stamina, acc, timeoutRate, boons, rnd);
     stamina = res.stamina;
     totalStrikes += res.strikes;
 
@@ -144,9 +130,10 @@ export function runMonteCarlo(n = 3000, opts = {}) {
   let wins = 0;
   let act3Alive = 0;
   let totalStrikes = 0;
+  const rnd = opts.seed != null ? createSeededRng(opts.seed) : Math.random;
 
   for (let i = 0; i < n; i++) {
-    const r = simulateClimb(opts);
+    const r = simulateClimb({ ...opts, rnd });
     if (r.summited) wins++;
     if (r.act3Entry !== null && r.act3Entry > 0) act3Alive++;
     totalStrikes += r.totalStrikes;
@@ -157,7 +144,7 @@ export function runMonteCarlo(n = 3000, opts = {}) {
     summitRate: +(wins / n).toFixed(3),
     act3Survival: +(act3Alive / n).toFixed(3),
     avgStrikes: +(totalStrikes / n).toFixed(2),
-    opts,
+    opts: { ...opts, rnd: undefined },
   };
 }
 

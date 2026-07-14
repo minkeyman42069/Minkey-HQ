@@ -1,21 +1,37 @@
 {
-  "generatedAt": "2026-07-13T11:19:21.870Z",
+  "generatedAt": "2026-07-14T11:03:29.277Z",
   "runsPerScenario": 4000,
   "balance": {
     "STAM_MAX": 100,
     "MISS_COST": 14,
     "TIMEOUT_COST": 10,
+    "TIER_COMBAT": {
+      "1": {
+        "missCost": 10,
+        "timeoutCost": 7
+      },
+      "2": {
+        "missCost": 12,
+        "timeoutCost": 8
+      },
+      "3": {
+        "missCost": 14,
+        "timeoutCost": 10
+      },
+      "4": {
+        "missCost": 16,
+        "timeoutCost": 11
+      },
+      "5": {
+        "missCost": 17,
+        "timeoutCost": 12
+      }
+    },
     "REST_RESTORE": 38,
     "CLEAR_RESTORE_MULT": 0.92,
     "EASE_ON_CORRECT": 6,
     "THREAT_RESET": 75,
     "CRUX_RISE_MULT": 1.2,
-    "ACT_SCALE": {
-      "rise": 0.2,
-      "miss": 0.08,
-      "hit": 0.1,
-      "timeDrop": 2
-    },
     "MAX_BOONS": 5
   },
   "targets": {
@@ -27,9 +43,9 @@
   "scenarios": {
     "base": {
       "runs": 4000,
-      "summitRate": 0.344,
-      "act3Survival": 0.768,
-      "avgStrikes": 6.68,
+      "summitRate": 0.362,
+      "act3Survival": 0.806,
+      "avgStrikes": 6.71,
       "opts": {
         "accuracy": 0.82,
         "timeoutRate": 0.06
@@ -37,9 +53,9 @@
     },
     "boon": {
       "runs": 4000,
-      "summitRate": 0.567,
-      "act3Survival": 0.882,
-      "avgStrikes": 6.94,
+      "summitRate": 0.531,
+      "act3Survival": 0.899,
+      "avgStrikes": 6.77,
       "opts": {
         "accuracy": 0.82,
         "timeoutRate": 0.05,
@@ -51,9 +67,9 @@
     },
     "stacked": {
       "runs": 4000,
-      "summitRate": 0.881,
-      "act3Survival": 0.965,
-      "avgStrikes": 7.93,
+      "summitRate": 0.829,
+      "act3Survival": 0.975,
+      "avgStrikes": 7.63,
       "opts": {
         "accuracy": 0.82,
         "timeoutRate": 0.05,
@@ -66,9 +82,9 @@
     },
     "skilled": {
       "runs": 4000,
-      "summitRate": 0.726,
-      "act3Survival": 0.953,
-      "avgStrikes": 7.06,
+      "summitRate": 0.734,
+      "act3Survival": 0.943,
+      "avgStrikes": 6.8,
       "opts": {
         "accuracy": 0.88,
         "timeoutRate": 0.04
@@ -76,9 +92,9 @@
     },
     "struggling": {
       "runs": 4000,
-      "summitRate": 0.032,
-      "act3Survival": 0.349,
-      "avgStrikes": 5.08,
+      "summitRate": 0.037,
+      "act3Survival": 0.417,
+      "avgStrikes": 5.19,
       "opts": {
         "accuracy": 0.72,
         "timeoutRate": 0.1

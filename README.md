@@ -37,6 +37,8 @@ You can also open `index.html` directly in a browser — works offline after the
 
 After each run you receive an `RBT5:…` trail-log code. Paste it on the trailhead to import concept tiers from finished climbs.
 
+The sandbox's **Route Setter** lets you author a named line, grade it (alpine F–ED via Monte Carlo through the real agent bus), and cut a `LINE1:…` code. Anyone who pastes that code at the trailhead climbs your set route — summiting an imported line earns the **First Ascent** badge.
+
 ## Repo layout
 
 ```
@@ -81,6 +83,7 @@ from one seed. See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#staff-sandbox).
 | `npm run sandbox` | Staff-team control room (port 4175, open `/sandbox/`) |
 | `npm run check` | Validate bank, sync, build bundle, verify trail |
 | `npm run balance` | Run climb balance simulator |
+| `npm run balance:hazards` | Per-hazard Monte Carlo — ranks every enemy within its tier |
 | `npm run audit` | Score every question → `data/quality-report.json` |
 | `npm run sync` | Inject `data/questions.json` into `index.html` |
 | `npm run build:trail` | Rebuild `game/trail.bundle.js` from `src/` |

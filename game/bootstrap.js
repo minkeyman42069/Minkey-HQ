@@ -32,6 +32,8 @@ window.scaleNode = Trail.agents.hazard.api.scaleNode;
 window.spoilsDraftEligible = Exp.spoilsDraftEligible;
 window.dailySeed = Exp.dailySeed;
 window.createSeededRng = Exp.createSeededRng;
+window.decodeLine = Exp.decodeLine;
+window.buildSetRoute = Exp.buildSetRoute;
 window.applyOathMods = Exp.applyOathMods;
 window.oathStamMult = Exp.oathStamMult;
 window.oathHealMult = Exp.oathHealMult;
@@ -44,7 +46,7 @@ const H = Trail.agents.hazard.api;
   'nSwitch', 'nStorm', 'nGate', 'nRest', 'nSummit', 'nSerac', 'nWhiteout', 'nCrevasse',
   'nTraverse', 'nThinAir', 'nIcefall', 'nVoid', 'nKnife', 'nBergschrund', 'nSnowfield',
   'nCouloir', 'nIcewall', 'nWindslab', 'nSealedFace', 'nLongWall', 'nTempest', 'nClosing',
-  'nAvalanche', 'nShrine', 'nCorniceRidge', 'nFrozenTitan',
+  'nAvalanche', 'nShrine', 'nCorniceRidge', 'nFrozenTitan', 'nRockfall', 'nVerglas',
 ].forEach((k) => { window[k] = H[k]; });
 
 window.weakestDomainLetter = function () {

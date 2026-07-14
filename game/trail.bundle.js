@@ -55,8 +55,8 @@ var TrailBundle = (() => {
     STAM_MAX: 100,
     MISS_COST: 14,
     TIMEOUT_COST: 10,
-    REST_RESTORE: 28,
-    CLEAR_RESTORE_MULT: 0.85,
+    REST_RESTORE: 38,
+    CLEAR_RESTORE_MULT: 0.92,
     THREAT_RESET: 75,
     CRUX_RISE_MULT: 1.2,
     MAX_BOONS: 5,
@@ -90,6 +90,7 @@ var TrailBundle = (() => {
     nKnife: () => nKnife,
     nLongWall: () => nLongWall,
     nRest: () => nRest,
+    nRockfall: () => nRockfall,
     nSealedFace: () => nSealedFace,
     nSerac: () => nSerac,
     nShrine: () => nShrine,
@@ -100,6 +101,7 @@ var TrailBundle = (() => {
     nTempest: () => nTempest,
     nThinAir: () => nThinAir,
     nTraverse: () => nTraverse,
+    nVerglas: () => nVerglas,
     nVoid: () => nVoid,
     nWhiteout: () => nWhiteout,
     nWindslab: () => nWindslab,
@@ -132,6 +134,8 @@ var TrailBundle = (() => {
     avalanche: "#b3bcc6",
     corniceridge: "#9fb4c8",
     frozentitan: "#7fd4e8",
+    rockfall: "#c2a178",
+    verglas: "#8fd0e8",
     shrine: "#c9a86a",
     rest: "#d89b52"
   };
@@ -143,7 +147,7 @@ var TrailBundle = (() => {
       kind: "switchback",
       icon: "\u{1FAA8}",
       title: "Scree Slope",
-      blurb: "Loose scree \u2014 it slides when you misstep. Time barely matters here; footing is everything.",
+      blurb: "A slope of broken rock that moves underfoot. Slow is fine. Wrong is what slides.",
       need,
       time: 18,
       rise: 0.8,
@@ -163,14 +167,14 @@ var TrailBundle = (() => {
       kind: "storm",
       icon: "\u{1F329}\uFE0F",
       title: "Rising Squall",
-      blurb: "A squall building by the second. Correct answers won't calm it \u2014 only speed clears the ridge.",
+      blurb: "Snow coming in sideways and worse by the second. Nothing you know will quiet it. Outrun it or wear it.",
       need,
       time: 12,
-      rise: 2,
+      rise: 1.85,
       miss: 15,
       ease: 0,
       max: 100,
-      hit: 16,
+      hit: 15,
       restore: 16,
       boon: true,
       noBoonEase: true,
@@ -184,12 +188,12 @@ var TrailBundle = (() => {
       kind: "gate",
       icon: "\u{1F6E1}\uFE0F",
       title: "Gatekeeper",
-      blurb: domain ? "It tests you on " + domain + ". Every wrong answer emboldens it; every right one drives it back." : "It tests your weakest exam domain. Every wrong answer emboldens it; every right one drives it back.",
+      blurb: domain ? "It stands where the route narrows, and it has read your ledger. It will ask about " + domain + ". Wrong answers feed it. Right ones back it off." : "It stands where the route narrows, and it has read your ledger. It will ask what you least want asked. Wrong answers feed it. Right ones back it off.",
       need,
-      time: 17,
-      rise: 1.35,
+      time: 16,
+      rise: 1.55,
       miss: 30,
-      ease: 12,
+      ease: 10,
       max: 100,
       hit: 20,
       restore: 22,
@@ -218,7 +222,7 @@ var TrailBundle = (() => {
       kind: "summit",
       icon: "\u{1F3D4}\uFE0F",
       title: "Summit Push",
-      blurb: "The last pitch \u2014 wind, ice, and everything the mountain has saved for the top.",
+      blurb: "The last pitch. Wind you lean into, cold in your teeth, the dark starting to thin. All that stands between you and the top is everything you know.",
       need,
       time: 15,
       rise: 2.1,
@@ -238,11 +242,11 @@ var TrailBundle = (() => {
       kind: "serac",
       icon: "\u{1F9CA}",
       title: "Falling Serac",
-      blurb: "A wall of unstable ice \u2014 it can go at any second. Fast, punishing, and it hits hard.",
+      blurb: "A hanging wall of ice, creaking before you even rope up. It was falling today with or without you. Be quick, and be elsewhere.",
       need,
       time: 13,
-      rise: 2.5,
-      miss: 24,
+      rise: 2.35,
+      miss: 22,
       ease: 10,
       max: 100,
       hit: 22,
@@ -258,7 +262,7 @@ var TrailBundle = (() => {
       kind: "whiteout",
       icon: "\u{1F32B}\uFE0F",
       title: "Blinding Whiteout",
-      blurb: "The cloud swallows the ridge whole. You climb by feel now \u2014 and you climb fast, before it closes for good.",
+      blurb: "The cloud comes up the face and the world goes to milk. No ridge, no sky, no down. Climb by feel, and climb now.",
       need,
       time: 10,
       rise: 2.4,
@@ -278,12 +282,12 @@ var TrailBundle = (() => {
       kind: "crevasse",
       icon: "\u{1F573}\uFE0F",
       title: "Snow Bridge",
-      blurb: "A snow bridge over a black drop. Only a few steps to cross \u2014 but one wrong step and the mountain takes you.",
+      blurb: "A rib of old snow over a dark with no bottom. A few careful steps and you are across. It only counts the wrong ones.",
       need,
       time: 15,
-      rise: 1,
-      miss: 28,
-      ease: 12,
+      rise: 1.25,
+      miss: 32,
+      ease: 11,
       max: 100,
       hit: 24,
       restore: 18,
@@ -298,7 +302,7 @@ var TrailBundle = (() => {
       kind: "traverse",
       icon: "\u{1F9D7}",
       title: "Exposed Traverse",
-      blurb: "A long, exposed line across the face. Nothing here is hard \u2014 but it never ends, and the wind never once stops.",
+      blurb: "Ledges strung across the face for the better part of a mile. None of it is hard. All of it is long, and the wind leans on you the whole way.",
       need,
       time: 16,
       rise: 1.5,
@@ -318,17 +322,17 @@ var TrailBundle = (() => {
       kind: "thinair",
       icon: "\u{1FAC1}",
       title: "The Thin Air",
-      blurb: "The air is too thin to breathe. Standing still costs you now \u2014 every second up here bleeds you dry. Keep moving.",
+      blurb: "The air up here is a rumor. Your body burns whether you move or not \u2014 so move.",
       need,
       time: 16,
-      rise: 1,
+      rise: 1.1,
       miss: 18,
       ease: 8,
       max: 100,
-      hit: 12,
+      hit: 13,
       restore: 16,
       boon: true,
-      drain: 0.2,
+      drain: 0.28,
       alt,
       tname: "Thin air",
       tic: "\u{1FAC1}"
@@ -339,7 +343,7 @@ var TrailBundle = (() => {
       kind: "icefall",
       icon: "\u2604\uFE0F",
       title: "The Icefall",
-      blurb: "Ice comes down the couloir in volleys, on its own grim schedule. Read the rhythm \u2014 move between the falls.",
+      blurb: "The serac field above calves on its own clock, tons at a time. Watch. Count. Cross. The ice does not aim, and it does not need to.",
       need,
       time: 14,
       rise: 0.8,
@@ -349,8 +353,8 @@ var TrailBundle = (() => {
       hit: 15,
       restore: 16,
       boon: true,
-      spike: 13,
-      spikeEvery: 5,
+      spike: 12,
+      spikeEvery: 5.5,
       alt,
       tname: "The icefall",
       tic: "\u2604\uFE0F"
@@ -361,14 +365,14 @@ var TrailBundle = (() => {
       kind: "void",
       icon: "\u{1F311}",
       title: "Bare Ridge",
-      blurb: "Up here nothing works \u2014 no flare, no field notes, no tricks. Just you and what you actually know.",
+      blurb: "Rock scoured bare by a hundred winters. Nothing in your pack works this high \u2014 no boons, no notes, no flare. Just you, and whatever stuck.",
       need,
       time: 15,
-      rise: 1.4,
-      miss: 20,
-      ease: 10,
+      rise: 1.6,
+      miss: 22,
+      ease: 9,
       max: 100,
-      hit: 16,
+      hit: 17,
       restore: 18,
       boon: false,
       suppress: true,
@@ -382,7 +386,7 @@ var TrailBundle = (() => {
       kind: "knife",
       icon: "\u{1F5E1}\uFE0F",
       title: "The Knife-Edge",
-      blurb: "A ridge one boot wide, a clean fall on either side. Falter and you slide back \u2014 the edge forgives nothing.",
+      blurb: "A crest the width of your boot with air on both sides. There is no standing still here. One bad step puts you back where the move began.",
       need,
       time: 15,
       rise: 1.2,
@@ -403,17 +407,17 @@ var TrailBundle = (() => {
       kind: "berg",
       icon: "\u26CF\uFE0F",
       title: "Widening Crack",
-      blurb: "The gap between snow and ice widens with every slip. Stumble once and it yawns; stumble again and it swallows.",
+      blurb: "The crack between glacier and mountain runs right beside your line. Every stumble feeds it, and the next one always costs more.",
       need,
       time: 15,
-      rise: 1,
-      miss: 14,
-      ease: 10,
+      rise: 1.2,
+      miss: 17,
+      ease: 9,
       max: 100,
       hit: 16,
       restore: 18,
       boon: true,
-      escalate: 4,
+      escalate: 6,
       alt,
       tname: "The widening crack",
       tic: "\u26CF\uFE0F"
@@ -424,7 +428,7 @@ var TrailBundle = (() => {
       kind: "snowfield",
       icon: "\u{1F328}\uFE0F",
       title: "The Snowfield",
-      blurb: "Deep, soft snow \u2014 slow and plodding, but it forgives a stumble. Find your pace.",
+      blurb: "Thigh-deep powder that swallows your mistakes along with your boots. Slow going. Kind going. Find a rhythm and keep it.",
       need,
       time: 18,
       rise: 0.7,
@@ -444,7 +448,7 @@ var TrailBundle = (() => {
       kind: "couloir",
       icon: "\u{1F5FB}",
       title: "The Couloir",
-      blurb: "A steep gully that funnels everything downward. Keep pace, or the mountain wears you down.",
+      blurb: "A chute of ice between rock walls. Everything the mountain sheds comes down through here, and your route goes up it. Do not linger.",
       need,
       time: 13,
       rise: 1.9,
@@ -464,7 +468,7 @@ var TrailBundle = (() => {
       kind: "icewall",
       icon: "\u{1F4A0}",
       title: "The Ice Wall",
-      blurb: "Vertical ice. Every placement matters, and it does not forgive hesitation.",
+      blurb: "Ninety degrees of blue ice. Swing, test, trust, step up. Rush one placement and the whole pitch knows it.",
       need,
       time: 14,
       rise: 1.6,
@@ -484,7 +488,7 @@ var TrailBundle = (() => {
       kind: "windslab",
       icon: "\u{1F300}",
       title: "Gust Field",
-      blurb: "Wind-loaded snow, primed to release. Gusts of threat come without warning \u2014 brace and keep moving through them.",
+      blurb: "Wind-packed slabs that boom underfoot. The gusts keep no schedule and send no warning. Stay low and keep moving.",
       need,
       time: 14,
       rise: 1,
@@ -494,7 +498,7 @@ var TrailBundle = (() => {
       hit: 16,
       restore: 16,
       boon: true,
-      gust: 0.5,
+      gust: 0.08,
       alt,
       tname: "The gust field",
       tic: "\u{1F300}"
@@ -505,7 +509,7 @@ var TrailBundle = (() => {
       kind: "sealedface",
       icon: "\u{1F512}",
       title: "Ice Shell",
-      blurb: "A face sealed in hard blue ice. Your first correct answers break the shell \u2014 then you can climb for real.",
+      blurb: "Overnight melt froze the face into a single blue glaze. Break the shell first. The climbing starts underneath.",
       need,
       time: 15,
       rise: 1.2,
@@ -526,12 +530,12 @@ var TrailBundle = (() => {
       kind: "longwall",
       icon: "\u{1FA9C}",
       title: "The Long Wall",
-      blurb: "A wall with no top in sight. The longer you are on it, the less each breather gives back \u2014 and it knows it.",
+      blurb: "You cannot see the top from the bottom, and not from halfway either. The first breather on this wall helps. The fifth barely does.",
       need,
       time: 16,
-      rise: 1.3,
-      miss: 18,
-      ease: 12,
+      rise: 1.5,
+      miss: 20,
+      ease: 11,
       max: 100,
       hit: 16,
       restore: 16,
@@ -547,11 +551,11 @@ var TrailBundle = (() => {
       kind: "tempest",
       icon: "\u{1F32A}\uFE0F",
       title: "The Tempest",
-      blurb: "A storm that feeds on chaos. The closer you are to the edge, the harder it drives you toward it.",
+      blurb: "A storm with an appetite. Let the danger build and the wind rises to meet it, driving you toward the edge it wants you over. Starve it calm.",
       need,
       time: 13,
-      rise: 1.4,
-      miss: 20,
+      rise: 1.55,
+      miss: 22,
       ease: 8,
       max: 100,
       hit: 18,
@@ -568,12 +572,12 @@ var TrailBundle = (() => {
       kind: "closing",
       icon: "\u23F3",
       title: "The Closing Window",
-      blurb: "The weather window is slamming shut. Every second you are given is shorter than the last \u2014 climb.",
+      blurb: "The forecast bought you an hour and the mountain is spending it fast. Each chance you get is briefer than the last. Go.",
       need,
-      time: 16,
-      rise: 1.2,
-      miss: 18,
-      ease: 9,
+      time: 14,
+      rise: 2,
+      miss: 24,
+      ease: 7,
       max: 100,
       hit: 17,
       restore: 18,
@@ -589,11 +593,11 @@ var TrailBundle = (() => {
       kind: "avalanche",
       icon: "\u{1F4A5}",
       title: "The Avalanche",
-      blurb: "The whole slope is loaded and silent. It waits, and waits \u2014 then lets go all at once. Be past it when it does.",
+      blurb: "A loaded slope, quiet the way held breath is quiet. Somewhere past the middle it lets go. Where you stand when it does is up to you.",
       need,
       time: 15,
-      rise: 1,
-      miss: 20,
+      rise: 1.25,
+      miss: 22,
       ease: 9,
       max: 100,
       hit: 20,
@@ -605,12 +609,55 @@ var TrailBundle = (() => {
       tic: "\u{1F4A5}"
     };
   }
+  function nRockfall(need, alt) {
+    return {
+      kind: "rockfall",
+      icon: "\u{1F94C}",
+      title: "Rockfall Gully",
+      blurb: "Pebbles come down the gully in bursts, rattling off the walls ahead of you. Count the quiet between volleys. That is when you move.",
+      need,
+      time: 18,
+      rise: 0.7,
+      miss: 14,
+      ease: 8,
+      max: 100,
+      hit: 12,
+      restore: 15,
+      boon: true,
+      spike: 7,
+      spikeEvery: 7,
+      alt,
+      tname: "The rockfall",
+      tic: "\u{1F94C}"
+    };
+  }
+  function nVerglas(need, alt) {
+    return {
+      kind: "verglas",
+      icon: "\u{1FA9E}",
+      title: "The Verglas",
+      blurb: "Meltwater froze over the rock in a skin too thin to see. Your edges bite for a moment after every move. Move again before they skate.",
+      need,
+      time: 15,
+      rise: 1.9,
+      miss: 18,
+      ease: 4,
+      max: 100,
+      hit: 17,
+      restore: 18,
+      boon: true,
+      swift: 9,
+      alt,
+      tname: "The verglas",
+      tic: "\u{1FA9E}"
+    };
+  }
   function nShrine(alt) {
     return {
       kind: "shrine",
       icon: "\u26E9\uFE0F",
       title: "Weathered Shrine",
-      blurb: "Cairns and faded prayer flags. Climbers leave something here, and the mountain remembers.",
+      blurb: "Cairns and faded prayer flags, older than any name in the ledger. Climbers leave something here. The mountain remembers.",
       need: 0,
       restore: 0,
       boon: false,
@@ -622,17 +669,17 @@ var TrailBundle = (() => {
       kind: "corniceridge",
       icon: "\u{1F32C}\uFE0F",
       title: "Wind Lip",
-      blurb: "A wind-carved lip of snow over empty air. Gusts hammer it, and one wrong step sends you sliding back.",
+      blurb: "A lip of snow curled over empty air by wind that has not stopped in years. It bucks without warning, and a slip undoes honest work.",
       need,
       time: 15,
-      rise: 1.1,
-      miss: 18,
+      rise: 0.9,
+      miss: 14,
       ease: 9,
       max: 100,
-      hit: 17,
-      restore: 16,
+      hit: 15,
+      restore: 18,
       boon: true,
-      gust: 0.4,
+      gust: 0.03,
       streakGate: true,
       alt,
       tname: "The wind lip",
@@ -644,14 +691,14 @@ var TrailBundle = (() => {
       kind: "frozentitan",
       icon: "\u{1F9CA}",
       title: "Glacier Block",
-      blurb: "A pillar of ancient blue ice. Break through three frozen layers \u2014 then it rages when the threat runs high.",
+      blurb: "A pillar of glacier ice three winters thick. All three layers break before the climbing counts, and old ice splinters hard when it starts to lose.",
       need,
       time: 14,
-      rise: 1.2,
-      miss: 20,
+      rise: 1.1,
+      miss: 19,
       ease: 9,
       max: 100,
-      hit: 18,
+      hit: 17,
       restore: 20,
       boon: true,
       shield: 3,
@@ -662,9 +709,9 @@ var TrailBundle = (() => {
     };
   }
   var ACTS = [
-    { name: "The Approach", flavor: "Warm rock, open glacier. The mountain lets you find your rhythm before it shows its teeth." },
-    { name: "The Headwall", flavor: "The face rears up. Easy ground is gone \u2014 every pitch wants technique, nerve, and recall under pressure." },
-    { name: "The Death Zone", flavor: "Above the last camp the air turns to knives. Everything the mountain saved for the summit push, thrown at once." }
+    { name: "The Approach", flavor: "Warm rock and open glacier under a late moon. The mountain lets you settle in. It can afford to." },
+    { name: "The Headwall", flavor: "The face goes vertical and easy ground becomes a memory. Nothing past this point is given away." },
+    { name: "The Death Zone", flavor: "Above the last camp the air stops helping. Whatever the mountain held in reserve, it spends on you now." }
   ];
   function scaleNode(n, act) {
     n.act = act;
@@ -677,33 +724,36 @@ var TrailBundle = (() => {
     return n;
   }
   var BESTIARY = [
-    { fn: nSwitch, t: 1, a: "Accuracy", m: "Loose footing. Time barely matters here \u2014 it is all about getting the answer right." },
-    { fn: nTraverse, t: 1, a: "Endurance", m: "Nothing is hard, but it never ends and the wind never stops. Steady, grinding pressure." },
-    { fn: nSnowfield, t: 1, a: "Accuracy", m: "Deep, forgiving snow. Slow going, but it lets a stumble slide. A place to find your rhythm." },
-    { fn: nCrevasse, t: 2, a: "Precision", m: "A snow bridge over a black drop. Few steps to cross, but a single miss is punishing." },
-    { fn: nBergschrund, t: 2, a: "Escalating", m: "A widening crack. Every slip costs more stamina than the one before it." },
-    { fn: nStorm, t: 2, a: "Speed", m: "A squall building by the second. Correct answers will not calm it \u2014 only speed clears the ridge." },
-    { fn: nCouloir, t: 2, a: "Speed", m: "A steep gully funneling everything down. Keep pace, or it wears you down." },
-    { fn: nWindslab, t: 2, a: "Chaos", m: "Wind-loaded snow. Gusts of threat come without warning \u2014 brace and push through them." },
-    { fn: nVoid, t: 3, a: "No boons", m: "Bare ridge \u2014 nothing works here. No flare, no field notes, no tricks. Just what you know." },
-    { fn: nKnife, t: 3, a: "Consistency", m: "A ridge one boot wide. Falter and you slide back down it \u2014 a miss undoes your progress." },
-    { fn: nIcewall, t: 3, a: "Precision", m: "Vertical ice. Every placement matters, and it does not forgive hesitation." },
-    { fn: nSealedFace, t: 3, a: "Armored", m: "Hard blue ice shell. Your first correct answers break the layers before any climbing counts." },
-    { fn: nLongWall, t: 3, a: "Attrition", m: "A wall with no top in sight. The longer you are on it, the less each breather gives back." },
-    { fn: nWhiteout, t: 4, a: "Speed", m: "The cloud swallows the ridge. You climb blind and fast, before it closes for good." },
-    { fn: nThinAir, t: 4, a: "Attrition", m: "Air too thin to breathe. Standing still bleeds you dry \u2014 keep moving or waste away." },
-    { fn: nIcefall, t: 4, a: "Timing", m: "Ice comes down in volleys on its own grim schedule. Read the rhythm; move between the falls." },
-    { fn: nTempest, t: 4, a: "Enrage", m: "A storm that feeds on chaos. The closer you are to the edge, the harder it drives you toward it." },
-    { fn: nClosing, t: 4, a: "Countdown", m: "A weather window slamming shut. Every second you are given is shorter than the last." },
-    { fn: nAvalanche, t: 4, a: "Release", m: "A loaded, silent slope. It waits \u2014 then lets go all at once at the halfway point. Be past it." },
-    { fn: nCorniceRidge, t: 3, a: "Chaos ridge", m: "Wind lip over empty air. Random gusts hammer the crossing, and a single miss sends you sliding back." },
-    { fn: nFrozenTitan, t: 4, a: "Armored elite", m: "Glacier block with three ice layers to break \u2014 then it rages when the threat runs high." },
-    { fn: (n, al) => nGate(n, al, null), t: 5, a: "Competence duel", m: "Tests your weakest TCO exam domain at entry. Every wrong answer emboldens it; every right one drives it back." },
-    { fn: nSerac, t: 5, a: "Elite", m: "A wall of unstable ice that can go at any second. Fast, punishing, and it hits hard." },
-    { fn: nSummit, t: 5, a: "Final pitch", m: "Summit push \u2014 wind, ice, and everything the mountain has saved for the top." }
+    { fn: nSwitch, t: 1, a: "Accuracy", m: "Accuracy check. Generous clock, ordinary misses, no surprises." },
+    { fn: nTraverse, t: 1, a: "Endurance", m: "Endurance check. Steady passive threat across a long, easy line." },
+    { fn: nSnowfield, t: 1, a: "Accuracy", m: "Recovery ground. Slow clock, soft misses, forgiving all around." },
+    { fn: nRockfall, t: 1, a: "Timing", m: "Timing drill. Small threat spikes land on a fixed rhythm." },
+    { fn: nCrevasse, t: 2, a: "Precision", m: "Precision check. Few questions, heavy cost per miss." },
+    { fn: nBergschrund, t: 2, a: "Escalating", m: "Escalating misses. Each slip costs more stamina than the one before." },
+    { fn: nStorm, t: 2, a: "Speed", m: "Pure speed. Correct answers shed no threat here; only pace survives it." },
+    { fn: nCouloir, t: 2, a: "Speed", m: "Speed check. Fast-building threat, ordinary misses." },
+    { fn: nWindslab, t: 2, a: "Chaos", m: "Chaos. Random gusts of threat, no warning and no pattern." },
+    { fn: nVoid, t: 3, a: "No boons", m: "Boon suppression. Flare, notes, and every boon go dark for the pitch." },
+    { fn: nKnife, t: 3, a: "Consistency", m: "Consistency check. A miss knocks your progress back down the ridge." },
+    { fn: nIcewall, t: 3, a: "Precision", m: "Precision under pace. Expensive misses on a quick clock." },
+    { fn: nSealedFace, t: 3, a: "Armored", m: "Armored. Two correct answers break the shell before progress counts." },
+    { fn: nLongWall, t: 3, a: "Attrition", m: "Attrition. The threat relief on each correct answer keeps shrinking." },
+    { fn: nVerglas, t: 3, a: "Fluency", m: "Fluency check. Quick correct answers shed extra threat; slow ones shed almost none." },
+    { fn: nWhiteout, t: 4, a: "Speed", m: "Blind speed. The shortest clock on the mountain and thin relief." },
+    { fn: nThinAir, t: 4, a: "Attrition", m: "Attrition. Stamina drains every second you stand on the pitch." },
+    { fn: nIcefall, t: 4, a: "Timing", m: "Timing. Heavy threat volleys land on a fixed schedule." },
+    { fn: nTempest, t: 4, a: "Enrage", m: "Enrage. Past sixty percent threat, everything builds faster." },
+    { fn: nClosing, t: 4, a: "Countdown", m: "Countdown. Each question\u2019s clock is shorter than the last." },
+    { fn: nAvalanche, t: 4, a: "Release", m: "Release. At the halfway mark the slope lets go all at once." },
+    { fn: nCorniceRidge, t: 3, a: "Chaos ridge", m: "Chaos ridge. Gusts without warning, and a miss slides you back." },
+    { fn: nFrozenTitan, t: 4, a: "Armored elite", m: "Armored elite. Three shield layers, and it enrages when threat runs high." },
+    { fn: (n, al) => nGate(n, al, null), t: 5, a: "Competence duel", m: "Competence duel. Draws every question from your weakest exam domain." },
+    { fn: nSerac, t: 5, a: "Elite", m: "Elite. Starts angry \u2014 a quarter of the threat bar is already lit." },
+    { fn: nSummit, t: 5, a: "Final pitch", m: "Final pitch. Long, fast-building, and it opens with threat on the board." }
   ];
   function nodeEmoji(kind) {
     const m = {
+      switchback: "\u{1FAA8}",
       storm: "\u26C8\uFE0F",
       gate: "\u{1F6E1}\uFE0F",
       rest: "\u{1F3D5}\uFE0F",
@@ -728,6 +778,8 @@ var TrailBundle = (() => {
       avalanche: "\u{1F4A5}",
       corniceridge: "\u{1F32C}\uFE0F",
       frozentitan: "\u{1F9CA}",
+      rockfall: "\u{1F94C}",
+      verglas: "\u{1FA9E}",
       shrine: "\u26E9\uFE0F"
     };
     return m[kind] || "\u26F0\uFE0F";
@@ -760,7 +812,383 @@ var TrailBundle = (() => {
     if (node.kind === "avalanche") return "It waits, then breaks \u2014 " + n + " before the slope goes";
     if (node.kind === "corniceridge") return "Gusts + setbacks \u2014 " + n + " across the wind lip";
     if (node.kind === "frozentitan") return "Break 3 ice layers \u2014 " + n + " past the glacier block";
+    if (node.kind === "rockfall") return "Move between the volleys \u2014 " + n + " to clear";
+    if (node.kind === "verglas") return "Answer fast, shed threat \u2014 " + n + " across the glaze";
     return n + " to clear";
+  }
+
+  // src/agents/sandbox-steward.js
+  var NODE_FACTORIES = {
+    switchback: "nSwitch",
+    storm: "nStorm",
+    gate: "nGate",
+    serac: "nSerac",
+    summit: "nSummit",
+    whiteout: "nWhiteout",
+    crevasse: "nCrevasse",
+    traverse: "nTraverse",
+    thinair: "nThinAir",
+    icefall: "nIcefall",
+    void: "nVoid",
+    knife: "nKnife",
+    berg: "nBergschrund",
+    snowfield: "nSnowfield",
+    couloir: "nCouloir",
+    icewall: "nIcewall",
+    windslab: "nWindslab",
+    sealedface: "nSealedFace",
+    longwall: "nLongWall",
+    tempest: "nTempest",
+    closing: "nClosing",
+    avalanche: "nAvalanche",
+    corniceridge: "nCorniceRidge",
+    frozentitan: "nFrozenTitan",
+    rockfall: "nRockfall",
+    verglas: "nVerglas"
+  };
+  function seededRng(seed) {
+    let a = seed >>> 0 || 1;
+    return function() {
+      a |= 0;
+      a = a + 1831565813 | 0;
+      let t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  function clamp(v, lo, hi) {
+    return Math.max(lo, Math.min(hi, v));
+  }
+  function createSandboxSteward() {
+    const api = {
+      factories: NODE_FACTORIES,
+      seededRng,
+      /** All pitch kinds this sandbox can spawn. */
+      pitchKinds() {
+        return Object.keys(NODE_FACTORIES);
+      },
+      /** Build a throwaway RUN shaped like index.html's freshRun (minimal). */
+      blankRun(over = {}) {
+        const run = {
+          topic: over.topic || null,
+          route: [],
+          nodeIdx: over.nodeIdx || 0,
+          prog: over.prog || {},
+          locked: new Set(over.locked || []),
+          mastered: new Set(over.mastered || []),
+          boons: new Set(over.boons || []),
+          flares: over.flares || 0,
+          stamina: over.stamina != null ? over.stamina : 100,
+          altitude: over.altitude || 1600,
+          seen: 0,
+          right: 0,
+          bestStreak: 0,
+          nodeCleared: 0,
+          summited: false,
+          stones: {},
+          recovered: 0,
+          weather: over.weather || null,
+          relics: new Set(over.relics || []),
+          relicLog: [],
+          recent: []
+        };
+        if (run.boons.has("flare")) run.flares = run.flares || 2;
+        return run;
+      },
+      /** Build a throwaway ENC shaped like index.html's encounter state. */
+      blankEnc(node, over = {}) {
+        return {
+          node,
+          need: node.need,
+          done: 0,
+          threat: over.threat != null ? over.threat : node.startThreat || 0,
+          max: node.max || 100,
+          lifelineUsed: false,
+          firstMissUsed: false,
+          firstTimeoutUsed: false,
+          rallyUsed: false,
+          bulwarkUsed: false,
+          streakEase: 0,
+          cairnBank: 0,
+          missCount: 0,
+          spikeT: 0,
+          shieldLeft: node.shield || 0,
+          easeMul: 1,
+          timeMul: 1,
+          phaseMul: 1,
+          phased: false,
+          luckyUsed: false,
+          cruxTold: false,
+          streak: 0,
+          lastId: -1
+        };
+      },
+      /** Spawn any pitch node via the real Hazard Warden factories, scaled to an act. */
+      spawnNode(trail, opts = {}) {
+        const H2 = trail.agents.hazard.api;
+        const kind = opts.kind || "switchback";
+        const fnName = NODE_FACTORIES[kind];
+        if (!fnName || !H2[fnName]) throw new Error("Unknown pitch kind: " + kind);
+        const need = opts.need != null ? opts.need : 4;
+        const alt = opts.alt != null ? opts.alt : 2e3;
+        const act = clamp(opts.act || 1, 1, 3);
+        let node;
+        if (kind === "gate") node = H2.nGate(need, alt, opts.domain || null);
+        else node = H2[fnName](need, alt);
+        if (kind === "serac") node.startThreat = 25;
+        if (kind === "summit") node.startThreat = 20;
+        return H2.scaleNode(node, act);
+      },
+      /** Preview the boon draft a ledge would offer, deterministically. */
+      previewDraft(trail, opts = {}) {
+        const run = api.blankRun({
+          boons: opts.owned || [],
+          stamina: opts.stamina != null ? opts.stamina : 60,
+          nodeIdx: opts.nodeIdx || 0
+        });
+        const enc = api.blankEnc(api.spawnNode(trail, { kind: "switchback" }));
+        const ctx = trail.makeCtx(run, enc);
+        const rnd2 = seededRng(opts.seed || 1);
+        return trail.agents.boon.api.pickDraft(ctx, rnd2, opts.count || 3);
+      },
+      /**
+       * Simulate a single pitch by driving the real hook bus.
+       *
+       * @param {object} trail  kernel handle (window.Trail)
+       * @param {object} opts
+       *   kind, act, need, boons[], relics[], weather (object), seed,
+       *   answers: array of booleans OR {correct, viaTimeout},
+       *   secondsPerQuestion: passive threat drift applied between answers (0 = off)
+       * @returns {{node, start, steps, final, cleared, strikes}}
+       */
+      simulatePitch(trail, opts = {}) {
+        const CONFIG2 = trail.CONFIG;
+        const rnd2 = seededRng(opts.seed || 1);
+        const node = api.spawnNode(trail, {
+          kind: opts.kind,
+          need: opts.need,
+          act: opts.act,
+          alt: opts.alt,
+          domain: opts.domain
+        });
+        const run = api.blankRun({
+          boons: opts.boons || [],
+          relics: opts.relics || [],
+          weather: opts.weather || null,
+          stamina: opts.stamina != null ? opts.stamina : CONFIG2.STAM_MAX,
+          nodeIdx: opts.nodeIdx || 0
+        });
+        const enc = api.blankEnc(node, { threat: node.startThreat || 0 });
+        const steps = [];
+        let strikes = 0;
+        const ctx = (extra) => trail.makeCtx(run, enc, { rnd: rnd2, ...extra || {} });
+        const addStamina = (x) => {
+          run.stamina = clamp(run.stamina + x, 0, CONFIG2.STAM_MAX);
+        };
+        const raiseThreat = (x) => {
+          enc.threat = clamp(enc.threat + x, 0, enc.max);
+          if (enc.threat >= enc.max) {
+            enc.threat = Math.max(0, enc.threat - CONFIG2.THREAT_RESET);
+            const sout = trail.emit("mountain:strike", ctx());
+            if (sout.blocked) {
+              steps.push({ kind: "strike", blocked: true, banners: sout.banners || [] });
+              return;
+            }
+            let hit = sout.hit != null ? sout.hit : node.hit;
+            if (run.relics.has("carabiner") && !enc.luckyUsed) {
+              enc.luckyUsed = true;
+              hit = Math.round(hit * 0.5);
+            }
+            if (run.relics.has("rope") && node.kind === "gate") hit = Math.round(hit * 0.75);
+            addStamina(-hit);
+            strikes++;
+            steps.push({ kind: "strike", blocked: false, hit, banners: sout.banners || [] });
+          }
+        };
+        const weatherRise = run.weather ? run.weather.rise : 1;
+        const driftPerSec = opts.secondsPerQuestion || 0;
+        const applyDrift = () => {
+          if (!driftPerSec || !node.rise) return;
+          let rm = trail.agents.boon.api.riseMultiplier(ctx());
+          if (node.enrage && enc.threat >= enc.max * 0.6) rm *= node.enrage;
+          if (enc.phaseMul) rm *= enc.phaseMul;
+          if (enc.need > 1 && enc.done >= enc.need - 1) rm *= CONFIG2.CRUX_RISE_MULT;
+          rm = Math.min(rm, 2);
+          raiseThreat(node.rise * rm * weatherRise * driftPerSec);
+        };
+        const pe = trail.emit("pitch:enter", ctx());
+        if (pe.staminaDelta) addStamina(pe.staminaDelta);
+        const start = { stamina: run.stamina, threat: Math.round(enc.threat), banners: pe.banners || [] };
+        const answers = (opts.answers || []).map(
+          (a) => typeof a === "boolean" ? { correct: a, viaTimeout: false } : a
+        );
+        for (let i = 0; i < answers.length && run.stamina > 0; i++) {
+          const a = answers[i];
+          applyDrift();
+          const qs = trail.emit("question:start", ctx());
+          if (qs.staminaDelta) addStamina(qs.staminaDelta);
+          const step = { n: i + 1, correct: a.correct, viaTimeout: !!a.viaTimeout, banners: [] };
+          if (qs.banners && qs.banners.length) step.banners.push(...qs.banners);
+          if (a.correct) {
+            enc.streak++;
+            run.bestStreak = Math.max(run.bestStreak, enc.streak);
+            if (enc.shieldLeft > 0) {
+              enc.shieldLeft--;
+              step.shield = enc.shieldLeft;
+            } else {
+              enc.done++;
+              if (node.phase && !enc.phased && enc.done >= Math.ceil(enc.need / 2)) {
+                enc.phased = true;
+                enc.phaseMul = 1.5;
+                raiseThreat(22);
+                step.banners.push({ title: "The slope lets go", sub: "it releases all at once" });
+              }
+            }
+            const out = trail.emit("answer:correct", ctx());
+            if (out.staminaDelta) addStamina(out.staminaDelta);
+            if (out.threatDelta) raiseThreat(out.threatDelta);
+            if (out.banners) step.banners.push(...out.banners);
+            step.threatDelta = out.threatDelta || 0;
+          } else {
+            const out = trail.emit("answer:wrong", ctx({ viaTimeout: a.viaTimeout }));
+            if (!out.keepStreak) {
+              enc.streak = 0;
+              enc.streakEase = 0;
+            }
+            if (out.staminaCost > 0) addStamina(-out.staminaCost);
+            else if (out.staminaDelta) addStamina(out.staminaDelta);
+            if (out.threatDelta) raiseThreat(out.threatDelta);
+            if (out.banners) step.banners.push(...out.banners);
+            if (node.streakGate) {
+              enc.done = Math.max(0, enc.done - 2);
+              step.banners.push({ title: "Knocked back", sub: "you slide down the ridge" });
+            }
+            step.threatDelta = out.threatDelta || 0;
+          }
+          step.stamina = run.stamina;
+          step.threat = Math.round(enc.threat);
+          step.streak = enc.streak;
+          step.done = enc.done;
+          steps.push(step);
+          if (enc.done >= enc.need) {
+            step.cleared = true;
+            break;
+          }
+        }
+        const cleared = enc.done >= enc.need;
+        let clearRestore = 0;
+        if (cleared) {
+          const co = trail.emit("pitch:clear", ctx());
+          clearRestore = (co.clearBonus || 0) + trail.pitchRestore(node, "clear", run);
+          addStamina(clearRestore);
+        }
+        return {
+          node,
+          start,
+          steps,
+          strikes,
+          cleared,
+          final: {
+            stamina: run.stamina,
+            threat: Math.round(enc.threat),
+            streak: enc.streak,
+            bestStreak: run.bestStreak,
+            done: enc.done,
+            need: enc.need,
+            clearRestore,
+            survived: run.stamina > 0
+          }
+        };
+      },
+      /**
+       * Grade a set line the way a guidebook would: Monte Carlo the whole
+       * route through the real bus and map the summit rate to an alpine
+       * grade (F → ED). Deterministic from the seed.
+       */
+      gradeLine(trail, spec, opts = {}) {
+        const CONFIG2 = trail.CONFIG;
+        const runs = opts.runs || 200;
+        const acc = opts.accuracy ?? 0.82;
+        const timeoutRate = opts.timeoutRate ?? 0.06;
+        const route = trail.agents.expedition.api.buildSetRoute(spec, CONFIG2);
+        const pitchIdx = route.map((n, i) => i).filter((i) => route[i].kind !== "rest");
+        const deaths = route.map(() => 0);
+        let summits = 0;
+        let endSum = 0;
+        for (let r = 0; r < runs; r++) {
+          const rnd2 = seededRng((opts.seed || 1) * 7919 + r);
+          let stamina = CONFIG2.STAM_MAX;
+          let alive = true;
+          for (let i = 0; i < route.length && alive; i++) {
+            const node = route[i];
+            if (node.kind === "rest") {
+              stamina = Math.min(CONFIG2.STAM_MAX, stamina + CONFIG2.REST_RESTORE);
+              continue;
+            }
+            const answers = [];
+            for (let q = 0; q < node.need * 3 + 6; q++) {
+              const roll = rnd2();
+              if (roll < acc) answers.push({ correct: true, viaTimeout: false });
+              else answers.push({ correct: false, viaTimeout: roll < acc + timeoutRate });
+            }
+            const res = api.simulatePitch(trail, {
+              kind: node.kind,
+              need: node.need,
+              act: node.act,
+              alt: node.alt,
+              stamina,
+              seed: Math.floor(rnd2() * 1e9) + 1,
+              answers,
+              secondsPerQuestion: 6
+            });
+            stamina = res.final.stamina;
+            if (!res.final.survived || !res.cleared) {
+              alive = false;
+              deaths[i]++;
+            }
+          }
+          if (alive) {
+            summits++;
+            endSum += stamina;
+          }
+        }
+        const rate = summits / runs;
+        const GRADES = [
+          [0.7, "F", "Facile"],
+          [0.55, "PD", "Peu Difficile"],
+          [0.4, "AD", "Assez Difficile"],
+          [0.25, "D", "Difficile"],
+          [0.12, "TD", "Tr\xE8s Difficile"],
+          [-1, "ED", "Extr\xEAmement Difficile"]
+        ];
+        const g = GRADES.find((x) => rate >= x[0]);
+        let worst = -1;
+        for (const i of pitchIdx) if (worst < 0 || deaths[i] > deaths[worst]) worst = i;
+        return {
+          route,
+          runs,
+          summitRate: +rate.toFixed(3),
+          avgEndStamina: summits ? +(endSum / summits).toFixed(1) : 0,
+          grade: g[1],
+          gradeName: g[2],
+          deaths,
+          cruxIndex: worst,
+          crux: worst >= 0 ? route[worst] : null
+        };
+      },
+      /** Convenience: the whole staff roster for the sandbox gallery. */
+      roster(trail) {
+        return trail.meta;
+      }
+    };
+    return {
+      id: "sandbox-steward",
+      name: "Sandbox Steward",
+      role: "Deterministic simulation & control surface for the Staff Sandbox",
+      api,
+      register() {
+      }
+    };
   }
 
   // src/agents/expedition-director.js
@@ -803,7 +1231,8 @@ var TrailBundle = (() => {
     { id: "exam_pass", ic: "\u2705", name: "Mock Pass", desc: "Pass Board Sim at 80% or higher." },
     { id: "daily_ridge", ic: "\u{1F305}", name: "Ridge Walker", desc: "Complete Today's Ridge." },
     { id: "oath_summit", ic: "\u{1F91D}", name: "Bound", desc: "Summit with an expedition oath sworn." },
-    { id: "grade_s", ic: "\u{1F48E}", name: "Alpine Grade", desc: "Earn an S grade on a summit run." }
+    { id: "grade_s", ic: "\u{1F48E}", name: "Alpine Grade", desc: "Earn an S grade on a summit run." },
+    { id: "first_ascent", ic: "\u26CF\uFE0F", name: "First Ascent", desc: "Summit a set line from the guidebook." }
   ];
   var HARD_KINDS = /* @__PURE__ */ new Set([
     "void",
@@ -818,7 +1247,8 @@ var TrailBundle = (() => {
     "sealedface",
     "longwall",
     "thinair",
-    "icefall"
+    "icefall",
+    "verglas"
   ]);
   function oathById(id) {
     return OATHS.find((o) => o.id === id) || OATHS[0];
@@ -877,6 +1307,7 @@ var TrailBundle = (() => {
       nSwitch: nSwitch2,
       nTraverse: nTraverse2,
       nSnowfield: nSnowfield2,
+      nRockfall: nRockfall2,
       nCrevasse: nCrevasse2,
       nBergschrund: nBergschrund2,
       nStorm: nStorm2,
@@ -888,6 +1319,7 @@ var TrailBundle = (() => {
       nSealedFace: nSealedFace2,
       nLongWall: nLongWall2,
       nCorniceRidge: nCorniceRidge2,
+      nVerglas: nVerglas2,
       nWhiteout: nWhiteout2,
       nThinAir: nThinAir2,
       nIcefall: nIcefall2,
@@ -913,12 +1345,12 @@ var TrailBundle = (() => {
     };
     const pick = (pool, k) => shuffle(pool.slice(), rnd2).slice(0, k);
     const nd = (base) => base + Math.floor(rnd2() * 2);
-    const T1 = [nSwitch2, nTraverse2, nSnowfield2];
+    const T1 = [nSwitch2, nTraverse2, nSnowfield2, nRockfall2];
     const T2 = [nCrevasse2, nBergschrund2, nStorm2, nCouloir2, nWindslab2];
-    const T3 = [nVoid2, nKnife2, nIcewall2, nSealedFace2, nLongWall2, nCorniceRidge2];
+    const T3 = [nVoid2, nKnife2, nIcewall2, nSealedFace2, nLongWall2, nCorniceRidge2, nVerglas2];
     const T4 = [nWhiteout2, nThinAir2, nIcefall2, nTempest2, nClosing2, nAvalanche2, nFrozenTitan2];
     A(nSwitch2(nd(3), step(215)), 1);
-    pick([nTraverse2, nSnowfield2], 1).forEach((fn) => {
+    pick([nTraverse2, nSnowfield2, nRockfall2], 1).forEach((fn) => {
       A(fn(nd(3), step(220)), 1);
     });
     A(pick(T2, 1)[0](nd(4), step(240)), 1);
@@ -939,6 +1371,82 @@ var TrailBundle = (() => {
     A(nRest2(step(140), config), 3);
     A(nSerac2(5, step(320)), 3);
     A(nSummit2(6, step(360)), 3);
+    return r;
+  }
+  var LINE_LIMITS = { minPitches: 5, maxPitches: 18, needMin: 3, needMax: 7, nameMax: 36 };
+  function lineChecksum(s) {
+    let h = 2166136261;
+    for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619);
+    return (h >>> 0).toString(36).slice(-4);
+  }
+  function b64encode(s) {
+    if (typeof btoa === "function") return btoa(unescape(encodeURIComponent(s)));
+    return Buffer.from(s, "utf8").toString("base64");
+  }
+  function b64decode(s) {
+    if (typeof atob === "function") return decodeURIComponent(escape(atob(s)));
+    return Buffer.from(s, "base64").toString("utf8");
+  }
+  var cleanText = (s, max) => String(s || "").replace(/[<>&]/g, "").trim().slice(0, max);
+  function encodeLine(spec) {
+    const p = spec.pitches.map((x) => x.kind === "rest" ? "R" : [x.kind, x.need]);
+    const payload = { v: 1, name: cleanText(spec.name, LINE_LIMITS.nameMax), setter: cleanText(spec.setter, LINE_LIMITS.nameMax), p };
+    payload.cs = lineChecksum(JSON.stringify({ v: payload.v, name: payload.name, setter: payload.setter, p: payload.p }));
+    return "LINE1:" + b64encode(JSON.stringify(payload));
+  }
+  function decodeLine(code) {
+    const m = String(code || "").trim().match(/^LINE1:(.+)$/);
+    if (!m) return { ok: false, err: "Not a guidebook line code." };
+    let payload;
+    try {
+      payload = JSON.parse(b64decode(m[1]));
+    } catch (e) {
+      return { ok: false, err: "Could not read that line code." };
+    }
+    if (payload.cs && lineChecksum(JSON.stringify({ v: payload.v, name: payload.name, setter: payload.setter, p: payload.p })) !== payload.cs) {
+      return { ok: false, err: "Checksum failed \u2014 the code may be truncated." };
+    }
+    const L = LINE_LIMITS;
+    const pitches = [];
+    for (const x of payload.p || []) {
+      if (x === "R") {
+        pitches.push({ kind: "rest" });
+        continue;
+      }
+      const kind = x && x[0];
+      if (kind === "summit" || !NODE_FACTORIES[kind] && kind !== "rest") continue;
+      pitches.push({ kind, need: Math.max(L.needMin, Math.min(L.needMax, Math.round(x[1]) || 4)) });
+    }
+    const real = pitches.filter((x) => x.kind !== "rest");
+    if (real.length < L.minPitches) return { ok: false, err: "A line needs at least " + L.minPitches + " pitches." };
+    if (real.length > L.maxPitches) return { ok: false, err: "No line is that long. Max " + L.maxPitches + " pitches." };
+    return {
+      ok: true,
+      spec: { name: cleanText(payload.name, L.nameMax) || "Unnamed Line", setter: cleanText(payload.setter, L.nameMax) || "unknown", pitches }
+    };
+  }
+  function buildSetRoute(spec, config, hazards = hazard_warden_exports) {
+    const real = spec.pitches.filter((x) => x.kind !== "rest").length;
+    let alt = 1600;
+    let seen = 0;
+    const r = [];
+    for (const p of spec.pitches) {
+      if (p.kind === "rest") {
+        alt += 140;
+        r.push(hazards.scaleNode(hazards.nRest(alt, config), r.length ? r[r.length - 1].act : 1));
+        continue;
+      }
+      seen++;
+      const act = seen <= Math.ceil(real / 3) ? 1 : seen <= Math.ceil(2 * real / 3) ? 2 : 3;
+      alt += 210 + seen * 37 % 70;
+      const fn = hazards[NODE_FACTORIES[p.kind]];
+      const node = p.kind === "gate" ? hazards.nGate(p.need, alt, null) : fn(p.need, alt);
+      if (p.kind === "serac") node.startThreat = 25;
+      r.push(hazards.scaleNode(node, act));
+    }
+    const summit = hazards.nSummit(6, alt + 340);
+    summit.startThreat = 20;
+    r.push(hazards.scaleNode(summit, 3));
     return r;
   }
 
@@ -1249,6 +1757,13 @@ var TrailBundle = (() => {
         if (ctx.enc.node.fatigue) {
           ease *= ctx.enc.easeMul || 1;
           ctx.enc.easeMul = Math.max(0.35, (ctx.enc.easeMul || 1) - 0.14);
+        }
+        if (ctx.enc.node.swift && ctx.run.maxTime > 0 && ctx.run.timeLeft / ctx.run.maxTime >= (ctx.enc.node.swiftFrac ?? 0.5)) {
+          ease += ctx.enc.node.swift;
+          if (!ctx.enc.swiftTold) {
+            ctx.enc.swiftTold = true;
+            banners.push({ title: "Quick placement", sub: "fast answers shed extra threat" });
+          }
         }
         if (canUse(ctx, "allin")) ease *= 1.45;
         if (hasDuo(ctx, "Runout") && ctx.enc.streak >= 5) {
@@ -1652,7 +2167,7 @@ var TrailBundle = (() => {
   var MENU_COPY = {
     kicker: "Roguelike study climb",
     tagline: "Know your terms, or the mountain wins.",
-    lore: "Draft boons at ledge camps. Survive hazards that punish the concepts you haven\u2019t locked in. What you master on the climb stays learned when you fall.",
+    lore: "The hazards up there test what you can still recall with the wind up, and every camp offers help you must choose between. Fall as often as it takes \u2014 the ledger keeps each concept you lock in.",
     primaryCta: "Climb the mountain",
     focusSummary: "Focus one trail",
     importSummary: "Import saved progress"
@@ -1677,7 +2192,7 @@ var TrailBundle = (() => {
       trails: "Where each trail stands",
       share: "Share your result",
       export: "Copy trail log",
-      exportHint: "Send me your trail log"
+      exportHint: "Carry it to your next climb"
     },
     exam: {
       kicker: "Board simulation",
@@ -1688,35 +2203,35 @@ var TrailBundle = (() => {
     bestiary: {
       kicker: "Mountain codex",
       title: "The Bestiary",
-      sub: "Every hazard on the climb \u2014 what it costs, how it kills, and what beats it."
+      sub: "Every hazard between the trailhead and the summit, and the particular way each one wants to stop you."
     }
   };
   var DEBRIEF_COPY = {
     summit: {
       icon: "\u{1F3C6}",
       title: "Summit reached",
-      sub: "You topped out. The mountain remembers who climbs it \u2014 and what you locked in stays banked."
+      sub: "Topped out in the first light. It goes in the ledger: the route, the weather, and every concept that held your weight."
     },
     fell: {
       icon: "\u{1F30D}",
       title: "Driven back",
-      sub: "Stamina ran dry. The mountain sent you down, but every concept you sealed is still yours."
+      sub: "The mountain kept the summit this time. It does not keep what you learned \u2014 that goes in the ledger, same as any climb."
     },
     quit: {
       icon: "\u{1F3D5}",
       title: "Back at camp",
-      sub: "You turned back before the ridge took everything. Here\u2019s what the climb still taught you."
+      sub: "Turning back is a skill. Ask anyone still climbing at sixty. The ledger takes lessons, not summits."
     }
   };
   var ACT_TRANSITIONS = {
     2: {
       title: "The Headwall",
-      sub: "Easy ground is gone. The face rears up and every pitch wants nerve under pressure.",
+      sub: "You tie in at the base of the face. It runs up out of sight, and it wants better answers than the approach did.",
       ic: "\u{1F9D7}"
     },
     3: {
       title: "The Death Zone",
-      sub: "Above the last camp the air turns to knives. Everything saved for the summit \u2014 thrown at once.",
+      sub: "Past this camp there is no rest that counts and no one coming. Move well, and do not stop long.",
       ic: "\u2620\uFE0F"
     }
   };
@@ -1782,302 +2297,6 @@ var TrailBundle = (() => {
       id: "atlas-artisan",
       name: "Atlas Artisan",
       role: "Visual design system, screen copy, and UI polish",
-      api,
-      register() {
-      }
-    };
-  }
-
-  // src/agents/sandbox-steward.js
-  var NODE_FACTORIES = {
-    switchback: "nSwitch",
-    storm: "nStorm",
-    gate: "nGate",
-    serac: "nSerac",
-    summit: "nSummit",
-    whiteout: "nWhiteout",
-    crevasse: "nCrevasse",
-    traverse: "nTraverse",
-    thinair: "nThinAir",
-    icefall: "nIcefall",
-    void: "nVoid",
-    knife: "nKnife",
-    berg: "nBergschrund",
-    snowfield: "nSnowfield",
-    couloir: "nCouloir",
-    icewall: "nIcewall",
-    windslab: "nWindslab",
-    sealedface: "nSealedFace",
-    longwall: "nLongWall",
-    tempest: "nTempest",
-    closing: "nClosing",
-    avalanche: "nAvalanche",
-    corniceridge: "nCorniceRidge",
-    frozentitan: "nFrozenTitan"
-  };
-  function seededRng(seed) {
-    let a = seed >>> 0 || 1;
-    return function() {
-      a |= 0;
-      a = a + 1831565813 | 0;
-      let t = Math.imul(a ^ a >>> 15, 1 | a);
-      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
-      return ((t ^ t >>> 14) >>> 0) / 4294967296;
-    };
-  }
-  function clamp(v, lo, hi) {
-    return Math.max(lo, Math.min(hi, v));
-  }
-  function createSandboxSteward() {
-    const api = {
-      factories: NODE_FACTORIES,
-      seededRng,
-      /** All pitch kinds this sandbox can spawn. */
-      pitchKinds() {
-        return Object.keys(NODE_FACTORIES);
-      },
-      /** Build a throwaway RUN shaped like index.html's freshRun (minimal). */
-      blankRun(over = {}) {
-        const run = {
-          topic: over.topic || null,
-          route: [],
-          nodeIdx: over.nodeIdx || 0,
-          prog: over.prog || {},
-          locked: new Set(over.locked || []),
-          mastered: new Set(over.mastered || []),
-          boons: new Set(over.boons || []),
-          flares: over.flares || 0,
-          stamina: over.stamina != null ? over.stamina : 100,
-          altitude: over.altitude || 1600,
-          seen: 0,
-          right: 0,
-          bestStreak: 0,
-          nodeCleared: 0,
-          summited: false,
-          stones: {},
-          recovered: 0,
-          weather: over.weather || null,
-          relics: new Set(over.relics || []),
-          relicLog: [],
-          recent: []
-        };
-        if (run.boons.has("flare")) run.flares = run.flares || 2;
-        return run;
-      },
-      /** Build a throwaway ENC shaped like index.html's encounter state. */
-      blankEnc(node, over = {}) {
-        return {
-          node,
-          need: node.need,
-          done: 0,
-          threat: over.threat != null ? over.threat : node.startThreat || 0,
-          max: node.max || 100,
-          lifelineUsed: false,
-          firstMissUsed: false,
-          firstTimeoutUsed: false,
-          rallyUsed: false,
-          bulwarkUsed: false,
-          streakEase: 0,
-          cairnBank: 0,
-          missCount: 0,
-          spikeT: 0,
-          shieldLeft: node.shield || 0,
-          easeMul: 1,
-          timeMul: 1,
-          phaseMul: 1,
-          phased: false,
-          luckyUsed: false,
-          cruxTold: false,
-          streak: 0,
-          lastId: -1
-        };
-      },
-      /** Spawn any pitch node via the real Hazard Warden factories, scaled to an act. */
-      spawnNode(trail, opts = {}) {
-        const H2 = trail.agents.hazard.api;
-        const kind = opts.kind || "switchback";
-        const fnName = NODE_FACTORIES[kind];
-        if (!fnName || !H2[fnName]) throw new Error("Unknown pitch kind: " + kind);
-        const need = opts.need != null ? opts.need : 4;
-        const alt = opts.alt != null ? opts.alt : 2e3;
-        const act = clamp(opts.act || 1, 1, 3);
-        let node;
-        if (kind === "gate") node = H2.nGate(need, alt, opts.domain || null);
-        else node = H2[fnName](need, alt);
-        if (kind === "serac") node.startThreat = 25;
-        if (kind === "summit") node.startThreat = 20;
-        return H2.scaleNode(node, act);
-      },
-      /** Preview the boon draft a ledge would offer, deterministically. */
-      previewDraft(trail, opts = {}) {
-        const run = api.blankRun({
-          boons: opts.owned || [],
-          stamina: opts.stamina != null ? opts.stamina : 60,
-          nodeIdx: opts.nodeIdx || 0
-        });
-        const enc = api.blankEnc(api.spawnNode(trail, { kind: "switchback" }));
-        const ctx = trail.makeCtx(run, enc);
-        const rnd2 = seededRng(opts.seed || 1);
-        return trail.agents.boon.api.pickDraft(ctx, rnd2, opts.count || 3);
-      },
-      /**
-       * Simulate a single pitch by driving the real hook bus.
-       *
-       * @param {object} trail  kernel handle (window.Trail)
-       * @param {object} opts
-       *   kind, act, need, boons[], relics[], weather (object), seed,
-       *   answers: array of booleans OR {correct, viaTimeout},
-       *   secondsPerQuestion: passive threat drift applied between answers (0 = off)
-       * @returns {{node, start, steps, final, cleared, strikes}}
-       */
-      simulatePitch(trail, opts = {}) {
-        const CONFIG2 = trail.CONFIG;
-        const rnd2 = seededRng(opts.seed || 1);
-        const node = api.spawnNode(trail, {
-          kind: opts.kind,
-          need: opts.need,
-          act: opts.act,
-          alt: opts.alt,
-          domain: opts.domain
-        });
-        const run = api.blankRun({
-          boons: opts.boons || [],
-          relics: opts.relics || [],
-          weather: opts.weather || null,
-          stamina: opts.stamina != null ? opts.stamina : CONFIG2.STAM_MAX,
-          nodeIdx: opts.nodeIdx || 0
-        });
-        const enc = api.blankEnc(node, { threat: node.startThreat || 0 });
-        const steps = [];
-        let strikes = 0;
-        const ctx = (extra) => trail.makeCtx(run, enc, { rnd: rnd2, ...extra || {} });
-        const addStamina = (x) => {
-          run.stamina = clamp(run.stamina + x, 0, CONFIG2.STAM_MAX);
-        };
-        const raiseThreat = (x) => {
-          enc.threat = clamp(enc.threat + x, 0, enc.max);
-          if (enc.threat >= enc.max) {
-            enc.threat = Math.max(0, enc.threat - CONFIG2.THREAT_RESET);
-            const sout = trail.emit("mountain:strike", ctx());
-            if (sout.blocked) {
-              steps.push({ kind: "strike", blocked: true, banners: sout.banners || [] });
-              return;
-            }
-            let hit = sout.hit != null ? sout.hit : node.hit;
-            if (run.relics.has("carabiner") && !enc.luckyUsed) {
-              enc.luckyUsed = true;
-              hit = Math.round(hit * 0.5);
-            }
-            if (run.relics.has("rope") && node.kind === "gate") hit = Math.round(hit * 0.75);
-            addStamina(-hit);
-            strikes++;
-            steps.push({ kind: "strike", blocked: false, hit, banners: sout.banners || [] });
-          }
-        };
-        const weatherRise = run.weather ? run.weather.rise : 1;
-        const driftPerSec = opts.secondsPerQuestion || 0;
-        const applyDrift = () => {
-          if (!driftPerSec || !node.rise) return;
-          let rm = trail.agents.boon.api.riseMultiplier(ctx());
-          if (node.enrage && enc.threat >= enc.max * 0.6) rm *= node.enrage;
-          if (enc.phaseMul) rm *= enc.phaseMul;
-          if (enc.need > 1 && enc.done >= enc.need - 1) rm *= CONFIG2.CRUX_RISE_MULT;
-          rm = Math.min(rm, 2);
-          raiseThreat(node.rise * rm * weatherRise * driftPerSec);
-        };
-        const pe = trail.emit("pitch:enter", ctx());
-        if (pe.staminaDelta) addStamina(pe.staminaDelta);
-        const start = { stamina: run.stamina, threat: Math.round(enc.threat), banners: pe.banners || [] };
-        const answers = (opts.answers || []).map(
-          (a) => typeof a === "boolean" ? { correct: a, viaTimeout: false } : a
-        );
-        for (let i = 0; i < answers.length && run.stamina > 0; i++) {
-          const a = answers[i];
-          applyDrift();
-          const qs = trail.emit("question:start", ctx());
-          if (qs.staminaDelta) addStamina(qs.staminaDelta);
-          const step = { n: i + 1, correct: a.correct, viaTimeout: !!a.viaTimeout, banners: [] };
-          if (qs.banners && qs.banners.length) step.banners.push(...qs.banners);
-          if (a.correct) {
-            enc.streak++;
-            run.bestStreak = Math.max(run.bestStreak, enc.streak);
-            if (enc.shieldLeft > 0) {
-              enc.shieldLeft--;
-              step.shield = enc.shieldLeft;
-            } else {
-              enc.done++;
-              if (node.phase && !enc.phased && enc.done >= Math.ceil(enc.need / 2)) {
-                enc.phased = true;
-                enc.phaseMul = 1.5;
-                raiseThreat(22);
-                step.banners.push({ title: "The slope lets go", sub: "it releases all at once" });
-              }
-            }
-            const out = trail.emit("answer:correct", ctx());
-            if (out.staminaDelta) addStamina(out.staminaDelta);
-            if (out.threatDelta) raiseThreat(out.threatDelta);
-            if (out.banners) step.banners.push(...out.banners);
-            step.threatDelta = out.threatDelta || 0;
-          } else {
-            const out = trail.emit("answer:wrong", ctx({ viaTimeout: a.viaTimeout }));
-            if (!out.keepStreak) {
-              enc.streak = 0;
-              enc.streakEase = 0;
-            }
-            if (out.staminaCost > 0) addStamina(-out.staminaCost);
-            else if (out.staminaDelta) addStamina(out.staminaDelta);
-            if (out.threatDelta) raiseThreat(out.threatDelta);
-            if (out.banners) step.banners.push(...out.banners);
-            if (node.streakGate) {
-              enc.done = Math.max(0, enc.done - 2);
-              step.banners.push({ title: "Knocked back", sub: "you slide down the ridge" });
-            }
-            step.threatDelta = out.threatDelta || 0;
-          }
-          step.stamina = run.stamina;
-          step.threat = Math.round(enc.threat);
-          step.streak = enc.streak;
-          step.done = enc.done;
-          steps.push(step);
-          if (enc.done >= enc.need) {
-            step.cleared = true;
-            break;
-          }
-        }
-        const cleared = enc.done >= enc.need;
-        let clearRestore = 0;
-        if (cleared) {
-          const co = trail.emit("pitch:clear", ctx());
-          clearRestore = (co.clearBonus || 0) + trail.pitchRestore(node, "clear", run);
-          addStamina(clearRestore);
-        }
-        return {
-          node,
-          start,
-          steps,
-          strikes,
-          cleared,
-          final: {
-            stamina: run.stamina,
-            threat: Math.round(enc.threat),
-            streak: enc.streak,
-            bestStreak: run.bestStreak,
-            done: enc.done,
-            need: enc.need,
-            clearRestore,
-            survived: run.stamina > 0
-          }
-        };
-      },
-      /** Convenience: the whole staff roster for the sandbox gallery. */
-      roster(trail) {
-        return trail.meta;
-      }
-    };
-    return {
-      id: "sandbox-steward",
-      name: "Sandbox Steward",
-      role: "Deterministic simulation & control surface for the Staff Sandbox",
       api,
       register() {
       }
@@ -2383,7 +2602,11 @@ var TrailBundle = (() => {
           oathGateHitMult,
           spoilsDraftEligible,
           dailySeed,
-          createSeededRng
+          createSeededRng,
+          encodeLine,
+          decodeLine,
+          LINE_LIMITS,
+          buildSetRoute: (spec) => buildSetRoute(spec, CONFIG, hazard_warden_exports)
         }
       },
       atlas: atlasAgent,
@@ -2445,6 +2668,8 @@ var TrailBundle = (() => {
   window.spoilsDraftEligible = Exp.spoilsDraftEligible;
   window.dailySeed = Exp.dailySeed;
   window.createSeededRng = Exp.createSeededRng;
+  window.decodeLine = Exp.decodeLine;
+  window.buildSetRoute = Exp.buildSetRoute;
   window.applyOathMods = Exp.applyOathMods;
   window.oathStamMult = Exp.oathStamMult;
   window.oathHealMult = Exp.oathHealMult;
@@ -2477,7 +2702,9 @@ var TrailBundle = (() => {
     "nAvalanche",
     "nShrine",
     "nCorniceRidge",
-    "nFrozenTitan"
+    "nFrozenTitan",
+    "nRockfall",
+    "nVerglas"
   ].forEach((k) => {
     window[k] = H[k];
   });

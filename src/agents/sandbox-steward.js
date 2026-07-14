@@ -13,7 +13,7 @@ export const NODE_FACTORIES = {
   icefall: 'nIcefall', void: 'nVoid', knife: 'nKnife', berg: 'nBergschrund', snowfield: 'nSnowfield',
   couloir: 'nCouloir', icewall: 'nIcewall', windslab: 'nWindslab', sealedface: 'nSealedFace',
   longwall: 'nLongWall', tempest: 'nTempest', closing: 'nClosing', avalanche: 'nAvalanche',
-  corniceridge: 'nCorniceRidge', frozentitan: 'nFrozenTitan',
+  corniceridge: 'nCorniceRidge', frozentitan: 'nFrozenTitan', rockfall: 'nRockfall', verglas: 'nVerglas',
 };
 
 /** Small deterministic PRNG (mulberry32) so every sandbox run is reproducible. */
@@ -293,6 +293,69 @@ export function createSandboxSteward() {
           clearRestore,
           survived: run.stamina > 0,
         },
+      };
+    },
+
+    /**
+     * Grade a set line the way a guidebook would: Monte Carlo the whole
+     * route through the real bus and map the summit rate to an alpine
+     * grade (F → ED). Deterministic from the seed.
+     */
+    gradeLine(trail, spec, opts = {}) {
+      const CONFIG = trail.CONFIG;
+      const runs = opts.runs || 200;
+      const acc = opts.accuracy ?? 0.82;
+      const timeoutRate = opts.timeoutRate ?? 0.06;
+      const route = trail.agents.expedition.api.buildSetRoute(spec, CONFIG);
+      const pitchIdx = route.map((n, i) => i).filter((i) => route[i].kind !== 'rest');
+      const deaths = route.map(() => 0);
+      let summits = 0;
+      let endSum = 0;
+
+      for (let r = 0; r < runs; r++) {
+        const rnd = seededRng((opts.seed || 1) * 7919 + r);
+        let stamina = CONFIG.STAM_MAX;
+        let alive = true;
+        for (let i = 0; i < route.length && alive; i++) {
+          const node = route[i];
+          if (node.kind === 'rest') {
+            stamina = Math.min(CONFIG.STAM_MAX, stamina + CONFIG.REST_RESTORE);
+            continue;
+          }
+          const answers = [];
+          for (let q = 0; q < node.need * 3 + 6; q++) {
+            const roll = rnd();
+            if (roll < acc) answers.push({ correct: true, viaTimeout: false });
+            else answers.push({ correct: false, viaTimeout: roll < acc + timeoutRate });
+          }
+          const res = api.simulatePitch(trail, {
+            kind: node.kind, need: node.need, act: node.act, alt: node.alt,
+            stamina, seed: Math.floor(rnd() * 1e9) + 1, answers, secondsPerQuestion: 6,
+          });
+          stamina = res.final.stamina;
+          if (!res.final.survived || !res.cleared) { alive = false; deaths[i]++; }
+        }
+        if (alive) { summits++; endSum += stamina; }
+      }
+
+      const rate = summits / runs;
+      const GRADES = [
+        [0.70, 'F', 'Facile'], [0.55, 'PD', 'Peu Difficile'], [0.40, 'AD', 'Assez Difficile'],
+        [0.25, 'D', 'Difficile'], [0.12, 'TD', 'Très Difficile'], [-1, 'ED', 'Extrêmement Difficile'],
+      ];
+      const g = GRADES.find((x) => rate >= x[0]);
+      let worst = -1;
+      for (const i of pitchIdx) if (worst < 0 || deaths[i] > deaths[worst]) worst = i;
+      return {
+        route,
+        runs,
+        summitRate: +rate.toFixed(3),
+        avgEndStamina: summits ? +(endSum / summits).toFixed(1) : 0,
+        grade: g[1],
+        gradeName: g[2],
+        deaths,
+        cruxIndex: worst,
+        crux: worst >= 0 ? route[worst] : null,
       };
     },
 

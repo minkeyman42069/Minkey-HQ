@@ -10,6 +10,7 @@
     "analyze": "node scripts/analyze-bank.mjs",
     "audit": "node scripts/quality-audit.mjs",
     "balance": "node scripts/simulate-balance.mjs",
+    "balance:hazards": "node scripts/simulate-hazards.mjs",
     "sync-check": "node scripts/check-bank-sync.mjs",
     "extract": "node scripts/extract-bank.mjs",
     "overhaul": "node scripts/overhaul-bank.mjs",

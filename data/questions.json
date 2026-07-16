@@ -9,7 +9,7 @@
       "Automatic reinforcement"
     ],
     "c": 0,
-    "e": "Behavior maintained by getting an item or activity is <b>access</b>.",
+    "e": "Behavior maintained by getting an item or activity is <b>access</b>. <b>Attention</b> is incorrect because the maintaining consequence in this scenario does not match that function.",
     "id": 0,
     "type": "mc",
     "dom": "D"
@@ -24,7 +24,7 @@
       "Automatic reinforcement"
     ],
     "c": 1,
-    "e": "Behavior that gets others to notice or react is maintained by <b>attention</b>.",
+    "e": "Behavior that gets others to notice or react is maintained by <b>attention</b>. <b>Escape/avoidance</b> is incorrect because the maintaining consequence in this scenario does not match that function.",
     "id": 1,
     "type": "mc",
     "dom": "D"
@@ -39,7 +39,7 @@
       "Automatic reinforcement"
     ],
     "c": 2,
-    "e": "Behavior that gets you out of something unpleasant is <b>escape</b>.",
+    "e": "Behavior that gets you out of something unpleasant is <b>escape</b>. <b>Attention</b> is incorrect because the maintaining consequence in this scenario does not match that function.",
     "id": 2,
     "type": "mc",
     "dom": "D"
@@ -54,7 +54,7 @@
       "Access to tangibles"
     ],
     "c": 0,
-    "e": "Self-reinforcing / sensory behavior that needs no one else is <b>automatic</b>.",
+    "e": "Self-reinforcing / sensory behavior that needs no one else is <b>automatic</b>. <b>Attention</b> is incorrect because the maintaining consequence in this scenario does not match that function.",
     "id": 3,
     "type": "mc",
     "dom": "D"
@@ -76,18 +76,18 @@
   },
   {
     "cat": "Functions of Behavior",
-    "q": "The purpose a behavior serves for the person is called its…",
+    "q": "A BCBA asks why a client keeps leaving the table during demands. The RBT should identify the behavior's:",
     "a": [
-      "topography",
-      "function",
-      "antecedent",
-      "dimension"
+      "Topography",
+      "Function",
+      "Antecedent",
+      "Dimension"
     ],
     "c": 1,
-    "e": "The <b>function</b> is the purpose behind the behavior — why it keeps happening.",
-    "id": 5,
+    "e": "The <b>function</b> is the purpose the behavior serves (why it is reinforced). <b>Topography</b> describes form, not purpose; antecedents and dimensions are measurement concepts, not the maintaining reason.",
     "type": "mc",
-    "dom": "D"
+    "dom": "D",
+    "id": 5
   },
   {
     "cat": "Functions of Behavior",
@@ -99,7 +99,7 @@
       "Automatic reinforcement"
     ],
     "c": 1,
-    "e": "Grabbing an item to have it is maintained by <b>access</b> to the tangible.",
+    "e": "Grabbing an item to have it is maintained by <b>access</b> to the tangible. <b>Attention</b> is incorrect because the maintaining consequence in this scenario does not match that function.",
     "id": 6,
     "type": "mc",
     "dom": "D"
@@ -174,7 +174,7 @@
       "removes; adds"
     ],
     "c": 0,
-    "e": "The whole distinction is the EFFECT: reinforcement <b>increases</b>, punishment <b>decreases</b>.",
+    "e": "The whole distinction is the EFFECT: reinforcement <b>increases</b>, punishment <b>decreases</b>. <b>adds; removes</b> is incorrect because it misidentifies what is added, removed, or withheld after the behavior.",
     "id": 11,
     "type": "mc",
     "dom": "C"
@@ -204,7 +204,7 @@
       "Extinction"
     ],
     "c": 1,
-    "e": "A preferred thing removed → behavior decreases = <b>negative punishment</b>.",
+    "e": "A preferred thing removed → behavior decreases = <b>negative punishment</b>. <b>Extinction</b> is incorrect because it defines a different differential-reinforcement procedure.",
     "id": 13,
     "type": "mc",
     "dom": "C"
@@ -219,7 +219,7 @@
       "negatively punished"
     ],
     "c": 1,
-    "e": "An aversive (the beep) is REMOVED and buckling increases = <b>negative reinforcement</b>.",
+    "e": "An aversive (the beep) is REMOVED and buckling increases = <b>negative reinforcement</b>. <b>positively punished</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 14,
     "type": "mc",
     "dom": "C"
@@ -234,7 +234,7 @@
       "try punishment briefly"
     ],
     "c": 1,
-    "e": "Ethics require <b>exhausting reinforcement procedures</b> before considering punishment.",
+    "e": "Ethics require <b>exhausting reinforcement procedures</b> before considering punishment. <b>try punishment briefly</b> is incorrect because it misidentifies what is added, removed, or withheld after the behavior.",
     "id": 15,
     "type": "mc",
     "dom": "C"
@@ -264,7 +264,7 @@
       "Conditioned stimulus"
     ],
     "c": 0,
-    "e": "<b>Deprivation of water</b> is an <b>establishing operation (EO)</b> — it increases the value of the drink and makes the learner more likely to work for it. An abolishing operation would decrease value (e.g., after the learner is fully hydrated).",
+    "e": "<b>Deprivation of water</b> is an <b>establishing operation (EO)</b> — it increases the value of the drink and makes the learner more likely to work for it. An abolishing operation would decrease value (e.g., after the learner is fully hydrated). <b>Abolishing operation</b> is incorrect because it defines a different differential-reinforcement procedure.",
     "type": "mc",
     "dom": "C",
     "id": 17
@@ -294,7 +294,7 @@
       "Conditioned punisher"
     ],
     "c": 0,
-    "e": "<b>Water deprivation</b> is an <b>establishing operation</b> that increases the value of water. Satiation would decrease value after the client is no longer thirsty.",
+    "e": "<b>Water deprivation</b> is an <b>establishing operation</b> that increases the value of water. Satiation would decrease value after the client is no longer thirsty. <b>Conditioned punisher</b> is incorrect because it defines a different differential-reinforcement procedure.",
     "type": "mc",
     "dom": "C",
     "id": 19
@@ -309,7 +309,7 @@
       "generalization"
     ],
     "c": 1,
-    "e": "<b>Satiation</b> lowers a reinforcer's effectiveness — it acts as an abolishing operation.",
+    "e": "<b>Satiation</b> lowers a reinforcer's effectiveness — it acts as an abolishing operation. <b>deprivation</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 20,
     "type": "mc",
     "dom": "C"
@@ -339,7 +339,7 @@
       "Continuous reinforcement"
     ],
     "c": 0,
-    "e": "A <b>varying, unpredictable number of responses</b> before reinforcement is <b>variable ratio (VR)</b>, which produces steady, resistant responding. Fixed ratio uses a constant response requirement.",
+    "e": "A <b>varying, unpredictable number of responses</b> before reinforcement is <b>variable ratio (VR)</b>, which produces steady, resistant responding. Fixed ratio uses a constant response requirement. <b>Fixed ratio</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "dom": "C",
     "id": 22
@@ -354,7 +354,7 @@
       "Variable ratio (VR 2)"
     ],
     "c": 0,
-    "e": "Reinforcement for the first response after a <b>fixed amount of time</b> is <b>fixed interval (FI)</b>. Variable interval would use unpredictable time periods; ratio schedules depend on response count.",
+    "e": "Reinforcement for the first response after a <b>fixed amount of time</b> is <b>fixed interval (FI)</b>. Variable interval would use unpredictable time periods; ratio schedules depend on response count. <b>Fixed ratio (FR 2)</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "dom": "C",
     "id": 23
@@ -384,7 +384,7 @@
       "Fixed interval"
     ],
     "c": 0,
-    "e": "Reinforcing <b>every occurrence</b> during initial acquisition is <b>continuous reinforcement (CRF)</b>. Although FR-1 also delivers after each response, CRF is the standard term for 100% reinforcement during early teaching.",
+    "e": "Reinforcing <b>every occurrence</b> during initial acquisition is <b>continuous reinforcement (CRF)</b>. Although FR-1 also delivers after each response, CRF is the standard term for 100% reinforcement during early teaching. <b>Variable ratio</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "dom": "C",
     "id": 25
@@ -399,7 +399,7 @@
       "Fixed interval"
     ],
     "c": 1,
-    "e": "Delivered independent of behavior = <b>noncontingent reinforcement (NCR)</b>.",
+    "e": "Delivered independent of behavior = <b>noncontingent reinforcement (NCR)</b>. <b>Fixed interval</b> is incorrect because it misidentifies what is added, removed, or withheld after the behavior.",
     "id": 26,
     "type": "mc",
     "dom": "C"
@@ -414,7 +414,7 @@
       "Extinction"
     ],
     "c": 0,
-    "e": "During <b>initial acquisition</b> of a new skill, <b>CRF</b> (reinforcing every correct response) builds the response quickly. Thinning to intermittent schedules comes after the skill is established.",
+    "e": "During <b>initial acquisition</b> of a new skill, <b>CRF</b> (reinforcing every correct response) builds the response quickly. Thinning to intermittent schedules comes after the skill is established. <b>Extinction</b> is incorrect because it describes a different verbal operant than the one cued by the antecedent and consequence.",
     "type": "mc",
     "dom": "C",
     "id": 27
@@ -444,7 +444,7 @@
       "DRL"
     ],
     "c": 0,
-    "e": "<b>DRA</b> = differential reinforcement of an ALTERNATIVE behavior.",
+    "e": "<b>DRA</b> = differential reinforcement of an ALTERNATIVE behavior. <b>DRO</b> is incorrect because it misidentifies what is added, removed, or withheld after the behavior.",
     "id": 29,
     "type": "mc",
     "dom": "D"
@@ -459,7 +459,7 @@
       "DRH"
     ],
     "c": 1,
-    "e": "<b>DRI</b> = differential reinforcement of an INCOMPATIBLE behavior (e.g., hands in lap vs. hitting).",
+    "e": "<b>DRI</b> = differential reinforcement of an INCOMPATIBLE behavior (e.g., hands in lap vs. hitting). <b>DRA</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 30,
     "type": "mc",
     "dom": "D"
@@ -474,7 +474,7 @@
       "DRI"
     ],
     "c": 0,
-    "e": "<b>DRO</b> = differential reinforcement of OTHER behavior — reinforcing zero occurrences.",
+    "e": "<b>DRO</b> = differential reinforcement of OTHER behavior — reinforcing zero occurrences. <b>DRA</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 31,
     "type": "mc",
     "dom": "D"
@@ -519,7 +519,7 @@
       "prompt; fade"
     ],
     "c": 1,
-    "e": "Reinforce behaviors to <b>increase</b>; withhold reinforcement for behaviors to <b>decrease</b>.",
+    "e": "Reinforce behaviors to <b>increase</b>; withhold reinforcement for behaviors to <b>decrease</b>. <b>add; remove</b> is incorrect because it defines a different differential-reinforcement procedure.",
     "id": 34,
     "type": "mc",
     "dom": "D"
@@ -534,7 +534,7 @@
       "DRH"
     ],
     "c": 2,
-    "e": "Two behaviors that can't co-occur = <b>DRI</b> (incompatible).",
+    "e": "Two behaviors that can't co-occur = <b>DRI</b> (incompatible). <b>DRA</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 35,
     "type": "mc",
     "dom": "D"
@@ -549,7 +549,7 @@
       "Fading"
     ],
     "c": 1,
-    "e": "Withholding the maintaining reinforcer so behavior decreases = <b>extinction</b>.",
+    "e": "Withholding the maintaining reinforcer so behavior decreases = <b>extinction</b>. <b>Fading</b> is incorrect because it misidentifies what is added, removed, or withheld after the behavior.",
     "id": 36,
     "type": "mc",
     "dom": "D"
@@ -564,7 +564,7 @@
       "Pairing"
     ],
     "c": 1,
-    "e": "<b>FCT</b> teaches communication that replaces the problem behavior with the same function.",
+    "e": "<b>FCT</b> teaches communication that replaces the problem behavior with the same function. <b>Shaping</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 37,
     "type": "mc",
     "dom": "D"
@@ -579,7 +579,7 @@
       "prompt"
     ],
     "c": 1,
-    "e": "A <b>FERB</b> gets the same need met in a better way (e.g., 'Remote, please' vs. grabbing).",
+    "e": "A <b>FERB</b> gets the same need met in a better way (e.g., 'Remote, please' vs. grabbing). <b>prompt</b> is incorrect because the maintaining consequence in this scenario does not match that function.",
     "id": 38,
     "type": "mc",
     "dom": "D"
@@ -594,7 +594,7 @@
       "Permanent product recording"
     ],
     "c": 0,
-    "e": "Recording <b>every occurrence</b> throughout the observation is <b>continuous measurement</b>. Interval and momentary methods sample only part of the session; permanent product measures outcomes after the behavior.",
+    "e": "Recording <b>every occurrence</b> throughout the observation is <b>continuous measurement</b>. Interval and momentary methods sample only part of the session; permanent product measures outcomes after the behavior. <b>Momentary time sampling</b> is incorrect because it is not the measurement or graph-reading rule applied in this scenario.",
     "type": "mc",
     "dom": "A",
     "id": 39
@@ -609,7 +609,7 @@
       "Whole-interval recording"
     ],
     "c": 0,
-    "e": "A raw <b>count of each occurrence</b> is <b>frequency (event) recording</b>, a continuous measure. Duration records how long behavior lasts; latency records time to onset; whole-interval is discontinuous.",
+    "e": "A raw <b>count of each occurrence</b> is <b>frequency (event) recording</b>, a continuous measure. Duration records how long behavior lasts; latency records time to onset; whole-interval is discontinuous. <b>Latency recording</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "dom": "A",
     "id": 40
@@ -624,7 +624,7 @@
       "IRT"
     ],
     "c": 1,
-    "e": "<b>Rate</b> = count ÷ time, which standardizes data across sessions of different lengths.",
+    "e": "<b>Rate</b> = count ÷ time, which standardizes data across sessions of different lengths. <b>IRT</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 41,
     "type": "mc",
     "dom": "A"
@@ -639,7 +639,7 @@
       "Rate"
     ],
     "c": 0,
-    "e": "<b>Duration</b> is the total time a behavior <b>lasts</b> from start to stop. Latency measures time from a cue to behavior onset; IRT measures time between responses.",
+    "e": "<b>Duration</b> is the total time a behavior <b>lasts</b> from start to stop. Latency measures time from a cue to behavior onset; IRT measures time between responses. <b>Rate</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "dom": "A",
     "id": 42
@@ -654,7 +654,7 @@
       "Frequency"
     ],
     "c": 0,
-    "e": "<b>Latency</b> is the time from the <b>SD/cue until the behavior begins</b>. Duration measures how long the behavior continues once started.",
+    "e": "<b>Latency</b> is the time from the <b>SD/cue until the behavior begins</b>. Duration measures how long the behavior continues once started. <b>Duration</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "dom": "A",
     "id": 43
@@ -669,7 +669,7 @@
       "Partial interval"
     ],
     "c": 0,
-    "e": "<b>Interresponse time (IRT)</b> is the elapsed time <b>between two instances</b> of the same response. Latency is cue-to-first-response; duration is how long one episode lasts.",
+    "e": "<b>Interresponse time (IRT)</b> is the elapsed time <b>between two instances</b> of the same response. Latency is cue-to-first-response; duration is how long one episode lasts. <b>Latency</b> is incorrect because it describes a different verbal operant than the one cued by the antecedent and consequence.",
     "type": "mc",
     "dom": "A",
     "id": 44
@@ -684,7 +684,7 @@
       "private events"
     ],
     "c": 0,
-    "e": "<b>Discrete</b> behaviors have a clear start and stop, which makes event recording possible.",
+    "e": "<b>Discrete</b> behaviors have a clear start and stop, which makes event recording possible. <b>private events</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 45,
     "type": "mc",
     "dom": "A"
@@ -699,7 +699,7 @@
       "partial interval"
     ],
     "c": 1,
-    "e": "When length varies, <b>duration</b> captures the real picture better than a count.",
+    "e": "When length varies, <b>duration</b> captures the real picture better than a count. <b>latency</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 46,
     "type": "mc",
     "dom": "A"
@@ -714,7 +714,7 @@
       "latency"
     ],
     "c": 1,
-    "e": "<b>Rate</b> standardizes to per-unit-time, so different session lengths compare fairly.",
+    "e": "<b>Rate</b> standardizes to per-unit-time, so different session lengths compare fairly. <b>count</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 47,
     "type": "mc",
     "dom": "A"
@@ -729,7 +729,7 @@
       "Duration recording"
     ],
     "c": 0,
-    "e": "Recording behavior only during <b>specific intervals</b> rather than continuously is <b>discontinuous measurement</b>. Continuous methods capture every occurrence or the full time behavior occurs.",
+    "e": "Recording behavior only during <b>specific intervals</b> rather than continuously is <b>discontinuous measurement</b>. Continuous methods capture every occurrence or the full time behavior occurs. <b>Duration recording</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "dom": "A",
     "id": 48
@@ -744,7 +744,7 @@
       "Unknown functions"
     ],
     "c": 0,
-    "e": "Discontinuous methods estimate behavior that occurs at <b>very high rates</b> and is difficult to count in real time. Low-rate behavior is usually better suited to continuous event recording.",
+    "e": "Discontinuous methods estimate behavior that occurs at <b>very high rates</b> and is difficult to count in real time. Low-rate behavior is usually better suited to continuous event recording. <b>Very low rates</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "dom": "A",
     "id": 49
@@ -759,7 +759,7 @@
       "Frequency recording"
     ],
     "c": 0,
-    "e": "<b>Whole-interval</b> requires the behavior to occur for the <b>entire interval</b> to score a '+'. Partial interval marks any occurrence; momentary samples only at the interval end.",
+    "e": "<b>Whole-interval</b> requires the behavior to occur for the <b>entire interval</b> to score a '+'. Partial interval marks any occurrence; momentary samples only at the interval end. <b>Frequency recording</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "dom": "A",
     "id": 50
@@ -774,7 +774,7 @@
       "Permanent product recording"
     ],
     "c": 0,
-    "e": "<b>Partial-interval</b> scores a '+' if the behavior occurred at <b>any point</b> during the interval. Whole-interval requires behavior throughout; momentary checks only at the interval boundary.",
+    "e": "<b>Partial-interval</b> scores a '+' if the behavior occurred at <b>any point</b> during the interval. Whole-interval requires behavior throughout; momentary checks only at the interval boundary. <b>Momentary time sampling</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "dom": "A",
     "id": 51
@@ -789,7 +789,7 @@
       "Duration recording"
     ],
     "c": 0,
-    "e": "<b>Momentary time sampling</b> records whether behavior is occurring at the <b>precise moment</b> the interval ends. Partial and whole interval track whether behavior occurred during the interval.",
+    "e": "<b>Momentary time sampling</b> records whether behavior is occurring at the <b>precise moment</b> the interval ends. Partial and whole interval track whether behavior occurred during the interval. <b>Duration recording</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "dom": "A",
     "id": 52
@@ -804,7 +804,7 @@
       "rate"
     ],
     "c": 0,
-    "e": "<b>Permanent product</b> measures the tangible result — e.g., worksheets completed.",
+    "e": "<b>Permanent product</b> measures the tangible result — e.g., worksheets completed. <b>rate</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 53,
     "type": "mc",
     "dom": "A"
@@ -819,7 +819,7 @@
       "latency"
     ],
     "c": 1,
-    "e": "Scoring the leftover product = <b>permanent product</b> recording.",
+    "e": "Scoring the leftover product = <b>permanent product</b> recording. <b>latency</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 54,
     "type": "mc",
     "dom": "A"
@@ -834,7 +834,7 @@
       "Only measurable as a product"
     ],
     "c": 0,
-    "e": "<b>Momentary time sampling</b> efficiently estimates <b>high-rate, ongoing</b> behavior by sampling at intervals. Brief, rare behaviors are better captured with event recording.",
+    "e": "<b>Momentary time sampling</b> efficiently estimates <b>high-rate, ongoing</b> behavior by sampling at intervals. Brief, rare behaviors are better captured with event recording. <b>Brief and rare</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "dom": "A",
     "id": 55
@@ -849,7 +849,7 @@
       "Verbal prompt"
     ],
     "c": 0,
-    "e": "<b>Hand-over-hand</b> guidance through the entire response is a <b>full physical prompt</b> — the most intrusive level. Gestural and verbal prompts provide less direct support.",
+    "e": "<b>Hand-over-hand</b> guidance through the entire response is a <b>full physical prompt</b> — the most intrusive level. Gestural and verbal prompts provide less direct support. <b>Verbal prompt</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "dom": "C",
     "id": 56
@@ -864,7 +864,7 @@
       "Full physical prompt"
     ],
     "c": 0,
-    "e": "Pointing or motioning toward the correct stimulus is a <b>gestural prompt</b>. Verbal prompts use spoken words; model prompts demonstrate the response; physical prompts involve contact.",
+    "e": "Pointing or motioning toward the correct stimulus is a <b>gestural prompt</b>. Verbal prompts use spoken words; model prompts demonstrate the response; physical prompts involve contact. <b>Model prompt</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "dom": "C",
     "id": 57
@@ -894,7 +894,7 @@
       "stimulus fading"
     ],
     "c": 1,
-    "e": "<b>Least-to-most</b> begins with minimal help and increases as needed.",
+    "e": "<b>Least-to-most</b> begins with minimal help and increases as needed. <b>stimulus fading</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 59,
     "type": "mc",
     "dom": "C"
@@ -909,7 +909,7 @@
       "Backward chaining"
     ],
     "c": 0,
-    "e": "<b>Most-to-least</b> begins with the <b>most intrusive</b> prompt and systematically reduces support. Least-to-most starts minimal and increases only after errors.",
+    "e": "<b>Most-to-least</b> begins with the <b>most intrusive</b> prompt and systematically reduces support. Least-to-most starts minimal and increases only after errors. <b>Backward chaining</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "dom": "C",
     "id": 60
@@ -939,7 +939,7 @@
       "Extinction"
     ],
     "c": 0,
-    "e": "<b>Least-to-most</b> is appropriate when the learner is <b>mostly independent</b> and needs only occasional support. Most-to-least is reserved for learners who need maximum help from the start.",
+    "e": "<b>Least-to-most</b> is appropriate when the learner is <b>mostly independent</b> and needs only occasional support. Most-to-least is reserved for learners who need maximum help from the start. <b>Extinction</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "dom": "C",
     "id": 62
@@ -954,7 +954,7 @@
       "Visual prompt"
     ],
     "c": 0,
-    "e": "Inserting a <b>planned pause</b> before delivering a prompt is <b>time delay</b> — it creates an opportunity for independent responding. The gesture afterward is a separate prompt type.",
+    "e": "Inserting a <b>planned pause</b> before delivering a prompt is <b>time delay</b> — it creates an opportunity for independent responding. The gesture afterward is a separate prompt type. <b>Visual prompt</b> is incorrect because it is not the measurement or graph-reading rule applied in this scenario.",
     "type": "mc",
     "dom": "C",
     "id": 63
@@ -969,7 +969,7 @@
       "Extinction"
     ],
     "c": 0,
-    "e": "Systematically reducing physical guidance as the learner improves is <b>prompt fading</b>. Schedule thinning changes reinforcement frequency; shaping changes response form; extinction withholds reinforcement.",
+    "e": "Systematically reducing physical guidance as the learner improves is <b>prompt fading</b>. Schedule thinning changes reinforcement frequency; shaping changes response form; extinction withholds reinforcement. <b>Shaping</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "dom": "C",
     "id": 64
@@ -984,7 +984,7 @@
       "behavioral momentum"
     ],
     "c": 1,
-    "e": "<b>Stimulus fading</b> transfers control to the natural cue.",
+    "e": "<b>Stimulus fading</b> transfers control to the natural cue. <b>time delay</b> is incorrect because it is not the measurement or graph-reading rule applied in this scenario.",
     "id": 65,
     "type": "mc",
     "dom": "C"
@@ -1006,33 +1006,33 @@
   },
   {
     "cat": "Chaining",
-    "q": "Breaking a multi-step skill into individual teachable steps is called a…",
+    "q": "Before teaching shoe-tying, the BCBA lists each knot-and-loop step in order. This document is a:",
     "a": [
-      "task analysis",
-      "shaping plan",
-      "preference assessment",
-      "functional analysis"
+      "Task analysis",
+      "Shaping plan",
+      "Preference assessment",
+      "Functional analysis"
     ],
     "c": 0,
-    "e": "A <b>task analysis</b> lists the ordered steps of the skill.",
-    "id": 67,
+    "e": "A <b>task analysis</b> breaks a multi-step skill into ordered teachable steps. A shaping plan refines one behavior; preference and functional analyses serve different assessment purposes. <b>Shaping plan</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
-    "dom": "C"
+    "dom": "C",
+    "id": 67
   },
   {
     "cat": "Chaining",
-    "q": "Teaching the FIRST step first and adding later steps as each is mastered is…",
+    "q": "The team teaches step 1 of a dressing chain to mastery, then adds step 2. This approach is:",
     "a": [
-      "backward chaining",
-      "forward chaining",
-      "total task chaining",
-      "shaping"
+      "Backward chaining",
+      "Forward chaining",
+      "Total task chaining",
+      "Shaping"
     ],
     "c": 1,
-    "e": "<b>Forward chaining</b> starts at step one and builds forward.",
-    "id": 68,
+    "e": "<b>Forward chaining</b> starts with the first step and adds later steps as each is mastered. Backward chaining begins with the last step; shaping refines one behavior, not a step sequence.",
     "type": "mc",
-    "dom": "C"
+    "dom": "C",
+    "id": 68
   },
   {
     "cat": "Chaining",
@@ -1044,7 +1044,7 @@
       "time delay"
     ],
     "c": 1,
-    "e": "<b>Backward chaining</b> starts with the final step so the learner always ends on success.",
+    "e": "<b>Backward chaining</b> starts with the final step so the learner always ends on success. <b>time delay</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 69,
     "type": "mc",
     "dom": "C"
@@ -1059,7 +1059,7 @@
       "shaping"
     ],
     "c": 2,
-    "e": "<b>Total task</b> chaining runs the entire chain each session.",
+    "e": "<b>Total task</b> chaining runs the entire chain each session. <b>shaping</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 70,
     "type": "mc",
     "dom": "C"
@@ -1074,7 +1074,7 @@
       "middle step"
     ],
     "c": 1,
-    "e": "In backward chaining the taught step is the <b>last</b> one, so reinforcement follows task completion every time.",
+    "e": "In backward chaining the taught step is the <b>last</b> one, so reinforcement follows task completion every time. <b>first step</b> is incorrect because it describes a different teaching procedure than the one named in the stem.",
     "id": 71,
     "type": "mc",
     "dom": "C"
@@ -1089,25 +1089,25 @@
       "learns steps out of order"
     ],
     "c": 1,
-    "e": "Ending on success each time <b>reduces frustration and increases motivation</b>.",
+    "e": "Ending on success each time <b>reduces frustration and increases motivation</b>. <b>never needs prompts</b> is incorrect because it describes a different teaching procedure than the one named in the stem.",
     "id": 72,
     "type": "mc",
     "dom": "C"
   },
   {
     "cat": "Chaining",
-    "q": "In forward chaining, data is collected on…",
+    "q": "During forward chaining of a morning routine, trial-by-trial data should focus on:",
     "a": [
-      "every step every time",
-      "the step currently being taught",
-      "only the last step",
-      "no steps"
+      "Every step on every trial",
+      "The step currently being taught",
+      "Only the final step in the chain",
+      "No steps until the chain is complete"
     ],
     "c": 1,
-    "e": "You take data on the <b>step currently being taught</b> in forward chaining.",
-    "id": 73,
+    "e": "In <b>forward chaining</b>, data target the <b>step currently being taught</b> while earlier steps are already mastered. Collecting only the last step describes backward chaining focus; skipping data loses instructional control. <b>Every step on every trial</b> is incorrect because it describes a different teaching procedure than the one named in the stem.",
     "type": "mc",
-    "dom": "C"
+    "dom": "C",
+    "id": 73
   },
   {
     "cat": "Chaining",
@@ -1119,7 +1119,7 @@
       "never"
     ],
     "c": 1,
-    "e": "Total task lets you reinforce <b>after each correct step</b>, particularly early in learning.",
+    "e": "Total task lets you reinforce <b>after each correct step</b>, particularly early in learning. <b>never</b> is incorrect because it describes a different teaching procedure than the one named in the stem.",
     "id": 74,
     "type": "mc",
     "dom": "C"
@@ -1134,25 +1134,25 @@
       "punisher"
     ],
     "c": 1,
-    "e": "Each completed step is the <b>cue/SD</b> that triggers the next step.",
+    "e": "Each completed step is the <b>cue/SD</b> that triggers the next step. <b>punisher</b> is incorrect because it describes a different teaching procedure than the one named in the stem.",
     "id": 75,
     "type": "mc",
     "dom": "C"
   },
   {
     "cat": "Shaping",
-    "q": "Reinforcing steps that get gradually closer to a target behavior is…",
+    "q": "An RBT reinforces closer and closer approximations toward a target mand. This teaching method is:",
     "a": [
-      "chaining",
-      "shaping",
-      "fading",
-      "pairing"
+      "Chaining",
+      "Shaping",
+      "Fading",
+      "Pairing"
     ],
     "c": 1,
-    "e": "<b>Shaping</b> reinforces successive approximations toward the goal behavior.",
-    "id": 76,
+    "e": "<b>Shaping</b> reinforces successive approximations toward a terminal behavior. <b>Chaining</b> links separate steps; fading reduces prompts; pairing associates neutral stimuli with reinforcement. <b>Fading</b> is incorrect because it describes a different verbal operant than the one cued by the antecedent and consequence.",
     "type": "mc",
-    "dom": "C"
+    "dom": "C",
+    "id": 76
   },
   {
     "cat": "Shaping",
@@ -1164,25 +1164,25 @@
       "intervals"
     ],
     "c": 1,
-    "e": "<b>Successive approximations</b> are the closer-and-closer versions of the target.",
+    "e": "<b>Successive approximations</b> are the closer-and-closer versions of the target. <b>intervals</b> is incorrect because it describes a different teaching procedure than the one named in the stem.",
     "id": 77,
     "type": "mc",
     "dom": "C"
   },
   {
     "cat": "Shaping",
-    "q": "How is shaping different from chaining?",
+    "q": "A supervisor asks how shaping differs from chaining. The best answer is:",
     "a": [
       "Shaping links separate steps; chaining refines one behavior",
       "Shaping refines one behavior toward a target; chaining links separate steps",
-      "They are identical",
+      "They are identical procedures",
       "Shaping never uses reinforcement"
     ],
     "c": 1,
-    "e": "<b>Shaping</b> molds a single behavior via approximations; <b>chaining</b> links distinct steps into a sequence.",
-    "id": 78,
+    "e": "<b>Shaping</b> molds a single behavior through successive approximations. <b>Chaining</b> links distinct steps into a sequence. The first option reverses the definitions; both procedures use reinforcement. <b>They are identical procedures</b> is incorrect because it describes a different teaching procedure than the one named in the stem.",
     "type": "mc",
-    "dom": "C"
+    "dom": "C",
+    "id": 78
   },
   {
     "cat": "Teaching Procedures",
@@ -1194,7 +1194,7 @@
       "NCR"
     ],
     "c": 1,
-    "e": "<b>DTT</b> (discrete trial training) uses that structured antecedent-response-consequence trial.",
+    "e": "<b>DTT</b> (discrete trial training) uses that structured antecedent-response-consequence trial. <b>NET</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 79,
     "type": "mc",
     "dom": "C"
@@ -1209,14 +1209,14 @@
       "FR"
     ],
     "c": 1,
-    "e": "<b>NET</b> (natural environment teaching) embeds learning into daily activities.",
+    "e": "<b>NET</b> (natural environment teaching) embeds learning into daily activities. <b>FR</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 80,
     "type": "mc",
     "dom": "C"
   },
   {
     "cat": "Teaching Procedures",
-    "q": "Explain → Model → Practice → Feedback is the sequence for…",
+    "q": "A BCBA trains staff using explain → model → practice → feedback. This training package is:",
     "a": [
       "BST",
       "DTT",
@@ -1224,25 +1224,25 @@
       "MSWO"
     ],
     "c": 0,
-    "e": "<b>BST</b> (behavioral skills training) follows explain, model, practice, feedback.",
-    "id": 81,
+    "e": "<b>BST</b> (behavioral skills training) follows explain, model, practice, and feedback. DTT is a learner teaching format; FCT builds communication replacements; MSWO is a preference assessment. <b>DTT</b> is incorrect because it does not reflect the professional boundary or credential rule tested here.",
     "type": "mc",
-    "dom": "C"
+    "dom": "C",
+    "id": 81
   },
   {
     "cat": "Teaching Procedures",
-    "q": "The three parts of a single discrete trial are…",
+    "q": "During DTT, each trial includes which three components in order?",
     "a": [
-      "prompt, delay, reinforcer",
-      "antecedent, response, consequence",
-      "baseline, trend, mastery",
+      "Prompt, delay, reinforcer",
+      "Antecedent, response, consequence",
+      "Baseline, trend, mastery",
       "EO, MO, AO"
     ],
     "c": 1,
-    "e": "A discrete trial = <b>antecedent/SD, the response, and the consequence</b>.",
-    "id": 82,
+    "e": "A discrete trial is structured as <b>antecedent (SD), response, consequence</b>. Prompt-delay-reinforcer is not the three-term contingency; baseline/trend/mastery and EO/MO/AO are different frameworks.",
     "type": "mc",
-    "dom": "C"
+    "dom": "C",
+    "id": 82
   },
   {
     "cat": "Teaching Procedures",
@@ -1254,7 +1254,7 @@
       "token economy"
     ],
     "c": 0,
-    "e": "<b>Match-to-sample (MTS)</b> matches a sample to its counterpart in the array.",
+    "e": "<b>Match-to-sample (MTS)</b> matches a sample to its counterpart in the array. <b>free operant</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 83,
     "type": "mc",
     "dom": "C"
@@ -1284,7 +1284,7 @@
       "descriptive"
     ],
     "c": 1,
-    "e": "<b>Direct / stimulus</b> preference assessments present items to test choices.",
+    "e": "<b>Direct / stimulus</b> preference assessments present items to test choices. <b>indirect</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 85,
     "type": "mc",
     "dom": "B"
@@ -1299,7 +1299,7 @@
       "MSWO"
     ],
     "c": 0,
-    "e": "<b>Free operant</b> lets the client interact freely; you record engagement time.",
+    "e": "<b>Free operant</b> lets the client interact freely; you record engagement time. <b>MSWO</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 86,
     "type": "mc",
     "dom": "B"
@@ -1314,7 +1314,7 @@
       "Free-operant observation"
     ],
     "c": 0,
-    "e": "<b>Single stimulus</b> presents <b>one item at a time</b> in succession. Paired stimulus uses two items side by side; MSWO uses an array with removal; free operant allows unrestricted access.",
+    "e": "<b>Single stimulus</b> presents <b>one item at a time</b> in succession. Paired stimulus uses two items side by side; MSWO uses an array with removal; free operant allows unrestricted access. <b>MSWO</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "dom": "B",
     "id": 87
@@ -1329,7 +1329,7 @@
       "Indirect assessment"
     ],
     "c": 0,
-    "e": "<b>Paired stimulus</b> presents <b>two items at a time</b> and records which is chosen. Single stimulus shows one item; MSWO uses a larger array with removal after each choice.",
+    "e": "<b>Paired stimulus</b> presents <b>two items at a time</b> and records which is chosen. Single stimulus shows one item; MSWO uses a larger array with removal after each choice. <b>MSWO</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "dom": "B",
     "id": 88
@@ -1344,7 +1344,7 @@
       "Single stimulus assessment"
     ],
     "c": 0,
-    "e": "<b>MSWO</b> uses an array and <b>removes each chosen item</b> without returning it, producing a preference hierarchy. MSW would return items; paired uses two at a time; single presents one.",
+    "e": "<b>MSWO</b> uses an array and <b>removes each chosen item</b> without returning it, producing a preference hierarchy. MSW would return items; paired uses two at a time; single presents one. <b>Paired stimulus assessment</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "dom": "B",
     "id": 89
@@ -1359,7 +1359,7 @@
       "single stimulus"
     ],
     "c": 1,
-    "e": "<b>MSW</b> = Multiple Stimulus WITH replacement; the chosen item returns to the (smaller) array.",
+    "e": "<b>MSW</b> = Multiple Stimulus WITH replacement; the chosen item returns to the (smaller) array. <b>MSWO</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 90,
     "type": "mc",
     "dom": "B"
@@ -1374,7 +1374,7 @@
       "Free-operant preference assessment"
     ],
     "c": 0,
-    "e": "<b>MSWO</b> presents an array and <b>removes</b> each chosen item without returning it, producing a ranked hierarchy. MSW returns chosen items; paired stimulus uses pairs only.",
+    "e": "<b>MSWO</b> presents an array and <b>removes</b> each chosen item without returning it, producing a ranked hierarchy. MSW returns chosen items; paired stimulus uses pairs only. <b>Paired stimulus assessment</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "dom": "B",
     "id": 91
@@ -1404,7 +1404,7 @@
       "MTS"
     ],
     "c": 0,
-    "e": "<b>ABC data</b> logs what happens before, the behavior, and what happens after.",
+    "e": "<b>ABC data</b> logs what happens before, the behavior, and what happens after. <b>MTS</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 93,
     "type": "mc",
     "dom": "B"
@@ -1419,7 +1419,7 @@
       "Token economy"
     ],
     "c": 0,
-    "e": "An <b>FBA</b> identifies the function to guide intervention.",
+    "e": "An <b>FBA</b> identifies the function to guide intervention. <b>Task analysis</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 94,
     "type": "mc",
     "dom": "B"
@@ -1434,7 +1434,7 @@
       "preference assessment"
     ],
     "c": 1,
-    "e": "A <b>functional analysis (FA)</b> manipulates conditions (plus a control) to test the function.",
+    "e": "A <b>functional analysis (FA)</b> manipulates conditions (plus a control) to test the function. <b>indirect assessment</b> is incorrect because the maintaining consequence in this scenario does not match that function.",
     "id": 95,
     "type": "mc",
     "dom": "B"
@@ -1449,7 +1449,7 @@
       "permanent product"
     ],
     "c": 2,
-    "e": "<b>Indirect</b> assessment uses reports/tools rather than direct observation.",
+    "e": "<b>Indirect</b> assessment uses reports/tools rather than direct observation. <b>descriptive</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 96,
     "type": "mc",
     "dom": "B"
@@ -1479,7 +1479,7 @@
       "baseline"
     ],
     "c": 1,
-    "e": "The <b>antecedent</b> comes right before and can trigger the behavior.",
+    "e": "The <b>antecedent</b> comes right before and can trigger the behavior. <b>function</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 98,
     "type": "mc",
     "dom": "B"
@@ -1494,7 +1494,7 @@
       "mastery data"
     ],
     "c": 1,
-    "e": "<b>Baseline</b> is the starting measurement before intervention.",
+    "e": "<b>Baseline</b> is the starting measurement before intervention. <b>trend data</b> is incorrect because it is not the measurement or graph-reading rule applied in this scenario.",
     "id": 99,
     "type": "mc",
     "dom": "B"
@@ -1524,7 +1524,7 @@
       "imitation"
     ],
     "c": 1,
-    "e": "A <b>tact</b> labels what you see — pointing at a book and saying 'book'.",
+    "e": "A <b>tact</b> labels what you see — pointing at a book and saying 'book'. <b>mand</b> is incorrect because it describes a different verbal operant than the one cued by the antecedent and consequence.",
     "id": 101,
     "type": "mc",
     "dom": "C"
@@ -1539,7 +1539,7 @@
       "tact"
     ],
     "c": 0,
-    "e": "An <b>echoic</b> repeats what was heard — sibling says 'ball,' child says 'ball'.",
+    "e": "An <b>echoic</b> repeats what was heard — sibling says 'ball,' child says 'ball'. <b>mand</b> is incorrect because it describes a different verbal operant than the one cued by the antecedent and consequence.",
     "id": 102,
     "type": "mc",
     "dom": "C"
@@ -1554,7 +1554,7 @@
       "mand"
     ],
     "c": 1,
-    "e": "An <b>intraverbal</b> is a verbal response to another's words, no item present.",
+    "e": "An <b>intraverbal</b> is a verbal response to another's words, no item present. <b>tact</b> is incorrect because it describes a different verbal operant than the one cued by the antecedent and consequence.",
     "id": 103,
     "type": "mc",
     "dom": "C"
@@ -1584,7 +1584,7 @@
       "discrimination"
     ],
     "c": 1,
-    "e": "<b>Generalization</b> = applying the skill flexibly beyond where it was taught.",
+    "e": "<b>Generalization</b> = applying the skill flexibly beyond where it was taught. <b>mastery</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 105,
     "type": "mc",
     "dom": "C"
@@ -1614,7 +1614,7 @@
       "satiation"
     ],
     "c": 0,
-    "e": "<b>Mastery</b> = meeting an individualized criterion consistently across contexts.",
+    "e": "<b>Mastery</b> = meeting an individualized criterion consistently across contexts. <b>baseline</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 107,
     "type": "mc",
     "dom": "C"
@@ -1629,7 +1629,7 @@
       "maintenance"
     ],
     "c": 1,
-    "e": "<b>Discrimination</b> = telling cues apart and responding differently to each.",
+    "e": "<b>Discrimination</b> = telling cues apart and responding differently to each. <b>imitation</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 108,
     "type": "mc",
     "dom": "C"
@@ -1659,7 +1659,7 @@
       "The school principal"
     ],
     "c": 1,
-    "e": "The <b>RBT/BT</b> delivers services directly and collects data under supervision.",
+    "e": "The <b>RBT/BT</b> delivers services directly and collects data under supervision. <b>The BCBA</b> is incorrect because it is not the measurement or graph-reading rule applied in this scenario.",
     "id": 110,
     "type": "mc",
     "dom": "F"
@@ -1674,7 +1674,7 @@
       "the front desk"
     ],
     "c": 1,
-    "e": "Report to the <b>supervising BCBA</b> specifically — that's the reporting line.",
+    "e": "Report to the <b>supervising BCBA</b> specifically — that's the reporting line. <b>other RBTs</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 111,
     "type": "mc",
     "dom": "F"
@@ -1689,7 +1689,7 @@
       "Keeping the client engaged with reinforcement"
     ],
     "c": 1,
-    "e": "Designing programs and directing an FA are the <b>BCBA's</b> job — outside RBT scope.",
+    "e": "Designing programs and directing an FA are the <b>BCBA's</b> job — outside RBT scope. <b>Implementing the plan</b> is incorrect because it does not reflect the professional boundary or credential rule tested here.",
     "id": 112,
     "type": "mc",
     "dom": "F"
@@ -1704,7 +1704,7 @@
       "assent"
     ],
     "c": 1,
-    "e": "<b>Scope of competence</b> = your actual skill limits and when to ask for help.",
+    "e": "<b>Scope of competence</b> = your actual skill limits and when to ask for help. <b>assent</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 113,
     "type": "mc",
     "dom": "F"
@@ -1719,7 +1719,7 @@
       "fieldwork"
     ],
     "c": 0,
-    "e": "<b>Scope of practice</b> = what your role/certification permits.",
+    "e": "<b>Scope of practice</b> = what your role/certification permits. <b>caseload</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 114,
     "type": "mc",
     "dom": "F"
@@ -1734,7 +1734,7 @@
       "no supervision"
     ],
     "c": 1,
-    "e": "<b>Direct supervision</b> = the professional is present and guiding in real time.",
+    "e": "<b>Direct supervision</b> = the professional is present and guiding in real time. <b>no supervision</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 115,
     "type": "mc",
     "dom": "F"
@@ -1749,7 +1749,7 @@
       "assent"
     ],
     "c": 1,
-    "e": "<b>Indirect supervision</b> happens without the supervisor on site.",
+    "e": "<b>Indirect supervision</b> happens without the supervisor on site. <b>assent</b> is incorrect because it is not the measurement or graph-reading rule applied in this scenario.",
     "id": 116,
     "type": "mc",
     "dom": "F"
@@ -1764,7 +1764,7 @@
       "pairing"
     ],
     "c": 1,
-    "e": "<b>Consent</b> = formal permission before assessment/intervention.",
+    "e": "<b>Consent</b> = formal permission before assessment/intervention. <b>assent</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 117,
     "type": "mc",
     "dom": "F"
@@ -1779,7 +1779,7 @@
       "mastery"
     ],
     "c": 1,
-    "e": "<b>Assent</b> = the learner's own willingness to take part, respecting their autonomy.",
+    "e": "<b>Assent</b> = the learner's own willingness to take part, respecting their autonomy. <b>consent</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 118,
     "type": "mc",
     "dom": "F"
@@ -1794,7 +1794,7 @@
       "chaining"
     ],
     "c": 1,
-    "e": "<b>Pairing</b> = becoming a source of good things so the learner engages with you.",
+    "e": "<b>Pairing</b> = becoming a source of good things so the learner engages with you. <b>fading</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 119,
     "type": "mc",
     "dom": "F"
@@ -1809,7 +1809,7 @@
       "satiation"
     ],
     "c": 0,
-    "e": "<b>Behavioral momentum</b> uses easy wins to carry the learner into a harder demand.",
+    "e": "<b>Behavioral momentum</b> uses easy wins to carry the learner into a harder demand. <b>satiation</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 120,
     "type": "mc",
     "dom": "F"
@@ -1824,7 +1824,7 @@
       "32 CEUs"
     ],
     "c": 1,
-    "e": "RBT requires the 40-hour training plus <b>passing the BACB exam</b> (the master's/2000 hrs are BCBA).",
+    "e": "RBT requires the 40-hour training plus <b>passing the BACB exam</b> (the master's/2000 hrs are BCBA). <b>32 CEUs</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 121,
     "type": "mc",
     "dom": "F"
@@ -1839,7 +1839,7 @@
       "cumulative graph"
     ],
     "c": 1,
-    "e": "<b>Line graphs</b> are standard in ABA for tracking change over time.",
+    "e": "<b>Line graphs</b> are standard in ABA for tracking change over time. <b>bar graph</b> is incorrect because it is not the measurement or graph-reading rule applied in this scenario.",
     "id": 122,
     "type": "mc",
     "dom": "A"
@@ -1854,7 +1854,7 @@
       "scatterplot"
     ],
     "c": 1,
-    "e": "A <b>cumulative graph</b> displays cumulative frequency — often for maintenance/generalization targets.",
+    "e": "A <b>cumulative graph</b> displays cumulative frequency — often for maintenance/generalization targets. <b>bar graph</b> is incorrect because it is not the measurement or graph-reading rule applied in this scenario.",
     "id": 123,
     "type": "mc",
     "dom": "A"
@@ -1869,7 +1869,7 @@
       "standard celeration chart"
     ],
     "c": 1,
-    "e": "<b>Bar graphs</b> summarize but hide the variability within the data.",
+    "e": "<b>Bar graphs</b> summarize but hide the variability within the data. <b>line graph</b> is incorrect because it is not the measurement or graph-reading rule applied in this scenario.",
     "id": 124,
     "type": "mc",
     "dom": "A"
@@ -1884,25 +1884,25 @@
       "mastery"
     ],
     "c": 1,
-    "e": "<b>Trend</b> = the direction of the data path (increasing, decreasing, flat).",
+    "e": "<b>Trend</b> = the direction of the data path (increasing, decreasing, flat). <b>mastery</b> is incorrect because it is not the measurement or graph-reading rule applied in this scenario.",
     "id": 125,
     "type": "mc",
     "dom": "A"
   },
   {
     "cat": "Graphing & Data",
-    "q": "You can gauge variability by…",
+    "q": "While reviewing a client's graph, the RBT needs a quick measure of spread across data points. The best approach is to:",
     "a": [
-      "counting sessions",
-      "subtracting the lowest data point from the highest",
-      "reading the x-axis",
-      "finding the mean only"
+      "Count the number of sessions plotted",
+      "Subtract the lowest point from the highest",
+      "Read only the x-axis labels",
+      "Calculate the mean and ignore extremes"
     ],
     "c": 1,
-    "e": "<b>Variability</b> ≈ highest data point minus the lowest — how spread out the data is.",
-    "id": 126,
+    "e": "<b>Variability</b> is often summarized as the range: highest data point minus lowest. Session count and axis labels do not measure spread; the mean alone hides how far points deviate.",
     "type": "mc",
-    "dom": "A"
+    "dom": "A",
+    "id": 126
   },
   {
     "cat": "Graphing & Data",
@@ -1914,7 +1914,7 @@
       "trend; variability"
     ],
     "c": 1,
-    "e": "X-axis = <b>time/sessions</b>; y-axis = <b>number or percent correct</b>.",
+    "e": "X-axis = <b>time/sessions</b>; y-axis = <b>number or percent correct</b>. <b>function; rate</b> is incorrect because it is not the measurement or graph-reading rule applied in this scenario.",
     "id": 127,
     "type": "mc",
     "dom": "A"
@@ -1929,7 +1929,7 @@
       "Single stimulus assessment"
     ],
     "c": 0,
-    "e": "<b>Free-operant</b> allows unrestricted access while the RBT records <b>duration of engagement</b>. No items are removed (unlike MSWO) and no forced choices are presented (unlike paired stimulus).",
+    "e": "<b>Free-operant</b> allows unrestricted access while the RBT records <b>duration of engagement</b>. No items are removed (unlike MSWO) and no forced choices are presented (unlike paired stimulus). <b>MSWO</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "dom": "B",
     "id": 128
@@ -1944,7 +1944,7 @@
       "Free-operant"
     ],
     "c": 0,
-    "e": "<b>Single-stimulus</b> (also called successive choice) presents one item at a time; you record approach vs. no approach. No forced choice between items.",
+    "e": "<b>Single-stimulus</b> (also called successive choice) presents one item at a time; you record approach vs. no approach. No forced choice between items. <b>MSWO</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 129,
     "type": "mc",
     "dom": "B"
@@ -1959,7 +1959,7 @@
       "MSW"
     ],
     "c": 0,
-    "e": "<b>Paired stimulus</b> (forced choice) presents two items at a time, counterbalanced so each item is compared against the others.",
+    "e": "<b>Paired stimulus</b> (forced choice) presents two items at a time, counterbalanced so each item is compared against the others. <b>MSW</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 130,
     "type": "mc",
     "dom": "B"
@@ -1989,7 +1989,7 @@
       "Indirect assessment — no item contact"
     ],
     "c": 0,
-    "e": "<b>MSW (with replacement)</b> returns the chosen item to the array, making it safer for learners who escalate when items are removed. MSWO removes items; paired uses dyads; indirect involves no direct contact.",
+    "e": "<b>MSW (with replacement)</b> returns the chosen item to the array, making it safer for learners who escalate when items are removed. MSWO removes items; paired uses dyads; indirect involves no direct contact. <b>Indirect assessment — no item contact</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "dom": "B",
     "id": 132
@@ -2004,7 +2004,7 @@
       "Paired stimulus"
     ],
     "c": 0,
-    "e": "<b>MSW</b> returns the chosen item rather than removing it, so it's the safest choice when removing items provokes problem behavior.",
+    "e": "<b>MSW</b> returns the chosen item rather than removing it, so it's the safest choice when removing items provokes problem behavior. <b>Single-stimulus</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 133,
     "type": "mc",
     "dom": "B"
@@ -2019,7 +2019,7 @@
       "MSWO measures duration; MSW counts approaches"
     ],
     "c": 0,
-    "e": "Both use arrays, but <b>MSWO removes</b> the selected stimulus while <b>MSW replaces</b> it. This replacement distinction drives the clinical choice when removal triggers problem behavior.",
+    "e": "Both use arrays, but <b>MSWO removes</b> the selected stimulus while <b>MSW replaces</b> it. This replacement distinction drives the clinical choice when removal triggers problem behavior. <b>MSWO is indirect; MSW is direct</b> is incorrect because it reverses or blurs the distinction described in the stem.",
     "type": "mc",
     "dom": "B",
     "id": 134
@@ -2034,7 +2034,7 @@
       "Single-stimulus assessment"
     ],
     "c": 0,
-    "e": "<b>Indirect</b> assessments (interviews/questionnaires such as the RAISD) gather likely reinforcers by asking, with no direct interaction with the items.",
+    "e": "<b>Indirect</b> assessments (interviews/questionnaires such as the RAISD) gather likely reinforcers by asking, with no direct interaction with the items. <b>Free-operant assessment</b> is incorrect because it is not the measurement or graph-reading rule applied in this scenario.",
     "id": 135,
     "type": "mc",
     "dom": "B"
@@ -2049,7 +2049,7 @@
       "Free-operant observation"
     ],
     "c": 0,
-    "e": "<b>Indirect assessment</b> gathers preference information through <b>reports or rating scales</b> with no direct interaction with stimuli. All other options involve presenting items to the learner.",
+    "e": "<b>Indirect assessment</b> gathers preference information through <b>reports or rating scales</b> with no direct interaction with stimuli. All other options involve presenting items to the learner. <b>MSWO</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "dom": "B",
     "id": 136
@@ -2064,7 +2064,7 @@
       "Latency to first approach only"
     ],
     "c": 0,
-    "e": "In <b>free-operant</b> assessment, <b>duration of engagement</b> is the primary measure — longer contact indicates higher preference. Forced choice and removal characterize other methods.",
+    "e": "In <b>free-operant</b> assessment, <b>duration of engagement</b> is the primary measure — longer contact indicates higher preference. Forced choice and removal characterize other methods. <b>Latency to first approach only</b> is incorrect because it is not the measurement or graph-reading rule applied in this scenario.",
     "type": "mc",
     "dom": "B",
     "id": 137
@@ -2094,7 +2094,7 @@
       "Exactly half"
     ],
     "c": 0,
-    "e": "Per the training, essentially <b>all</b> staff use some form of indirect assessment — though research on its accuracy is mixed, so it's usually paired with direct methods.",
+    "e": "Per the training, essentially <b>all</b> staff use some form of indirect assessment — though research on its accuracy is mixed, so it's usually paired with direct methods. <b>Almost none</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 139,
     "type": "mc",
     "dom": "B"
@@ -2109,7 +2109,7 @@
       "Positional"
     ],
     "c": 0,
-    "e": "<b>Full physical</b> (hand-over-hand) provides complete physical guidance — the most intrusive prompt.",
+    "e": "<b>Full physical</b> (hand-over-hand) provides complete physical guidance — the most intrusive prompt. <b>Gestural</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 140,
     "type": "mc",
     "dom": "C"
@@ -2124,7 +2124,7 @@
       "Positional"
     ],
     "c": 0,
-    "e": "<b>Partial physical</b> = a gentle touch/nudge to initiate, less support than full hand-over-hand.",
+    "e": "<b>Partial physical</b> = a gentle touch/nudge to initiate, less support than full hand-over-hand. <b>Modeling</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 141,
     "type": "mc",
     "dom": "C"
@@ -2139,7 +2139,7 @@
       "Visual"
     ],
     "c": 0,
-    "e": "<b>Modeling</b> = demonstrating the behavior for the learner to imitate.",
+    "e": "<b>Modeling</b> = demonstrating the behavior for the learner to imitate. <b>Verbal</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 142,
     "type": "mc",
     "dom": "C"
@@ -2154,7 +2154,7 @@
       "Visual prompt"
     ],
     "c": 0,
-    "e": "<b>Gestural</b> prompts use motions like pointing, nodding, or reaching toward the target.",
+    "e": "<b>Gestural</b> prompts use motions like pointing, nodding, or reaching toward the target. <b>Visual prompt</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 143,
     "type": "mc",
     "dom": "C"
@@ -2169,7 +2169,7 @@
       "Partial physical prompt"
     ],
     "c": 0,
-    "e": "<b>Positional</b> prompts change the placement of the target (moving it nearer) to cue the correct response.",
+    "e": "<b>Positional</b> prompts change the placement of the target (moving it nearer) to cue the correct response. <b>Visual prompt</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 144,
     "type": "mc",
     "dom": "C"
@@ -2184,7 +2184,7 @@
       "Positional prompt"
     ],
     "c": 0,
-    "e": "<b>Visual</b> prompts are pictures, symbols, or written cues that guide responding.",
+    "e": "<b>Visual</b> prompts are pictures, symbols, or written cues that guide responding. <b>Verbal prompt</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 145,
     "type": "mc",
     "dom": "C"
@@ -2199,7 +2199,7 @@
       "Graduated guidance"
     ],
     "c": 0,
-    "e": "<b>Time delay</b> inserts a planned wait after the SD before prompting, giving the learner a chance to respond independently.",
+    "e": "<b>Time delay</b> inserts a planned wait after the SD before prompting, giving the learner a chance to respond independently. <b>No-no prompt</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 146,
     "type": "mc",
     "dom": "C"
@@ -2214,7 +2214,7 @@
       "Time delay"
     ],
     "c": 0,
-    "e": "<b>Most-to-least</b> begins with strong prompts (often full physical) and fades support — best for teaching brand-new skills to reduce errors.",
+    "e": "<b>Most-to-least</b> begins with strong prompts (often full physical) and fades support — best for teaching brand-new skills to reduce errors. <b>Time delay</b> is incorrect because it is not the measurement or graph-reading rule applied in this scenario.",
     "id": 147,
     "type": "mc",
     "dom": "C"
@@ -2229,7 +2229,7 @@
       "Graduated guidance"
     ],
     "c": 0,
-    "e": "<b>Least-to-most</b> starts with the least intrusive prompt and increases only as needed — promotes independence for skills partly in repertoire.",
+    "e": "<b>Least-to-most</b> starts with the least intrusive prompt and increases only as needed — promotes independence for skills partly in repertoire. <b>Most-to-least</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 148,
     "type": "mc",
     "dom": "C"
@@ -2244,7 +2244,7 @@
       "Time delay"
     ],
     "c": 0,
-    "e": "The <b>no-no prompt</b> allows up to two 'No' corrections before escalating to a more intrusive prompt.",
+    "e": "The <b>no-no prompt</b> allows up to two 'No' corrections before escalating to a more intrusive prompt. <b>Time delay</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 149,
     "type": "mc",
     "dom": "C"
@@ -2259,7 +2259,7 @@
       "Corrective feedback"
     ],
     "c": 0,
-    "e": "<b>Errorless learning</b> prompts immediately so mistakes rarely occur — reduces frustration and practicing errors.",
+    "e": "<b>Errorless learning</b> prompts immediately so mistakes rarely occur — reduces frustration and practicing errors. <b>No-no prompt</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 150,
     "type": "mc",
     "dom": "C"
@@ -2274,7 +2274,7 @@
       "Fixed time delay only"
     ],
     "c": 0,
-    "e": "New skills usually start <b>most-to-least</b> so the learner succeeds and doesn't rehearse errors; support is then faded.",
+    "e": "New skills usually start <b>most-to-least</b> so the learner succeeds and doesn't rehearse errors; support is then faded. <b>Least-to-most</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 151,
     "type": "mc",
     "dom": "C"
@@ -2289,7 +2289,7 @@
       "Visual prompt"
     ],
     "c": 0,
-    "e": "<b>Full physical</b> (hand-over-hand) is the <b>most intrusive</b> prompt level. Gestural, verbal, and visual prompts are less direct and are faded to after physical support is reduced.",
+    "e": "<b>Full physical</b> (hand-over-hand) is the <b>most intrusive</b> prompt level. Gestural, verbal, and visual prompts are less direct and are faded to after physical support is reduced. <b>Verbal prompt</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "dom": "C",
     "id": 152
@@ -2304,7 +2304,7 @@
       "Positional prompting"
     ],
     "c": 0,
-    "e": "<b>Graduated guidance</b> continuously adjusts physical support (up or down) based on the learner's performance in the moment.",
+    "e": "<b>Graduated guidance</b> continuously adjusts physical support (up or down) based on the learner's performance in the moment. <b>Time delay</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 153,
     "type": "mc",
     "dom": "C"
@@ -2319,7 +2319,7 @@
       "Wait until the entire program ends to fade"
     ],
     "c": 0,
-    "e": "Fade prompts when the learner performs <b>fluently and consistently</b> at the current level. Immediate removal risks errors; increasing intrusiveness moves backward; waiting creates prompt dependence.",
+    "e": "Fade prompts when the learner performs <b>fluently and consistently</b> at the current level. Immediate removal risks errors; increasing intrusiveness moves backward; waiting creates prompt dependence. <b>Increase to full physical prompts</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "dom": "C",
     "id": 154
@@ -2334,7 +2334,7 @@
       "Fixed interval"
     ],
     "c": 0,
-    "e": "<b>Continuous reinforcement (CRF)</b> reinforces each occurrence — best for teaching a new skill.",
+    "e": "<b>Continuous reinforcement (CRF)</b> reinforces each occurrence — best for teaching a new skill. <b>Fixed ratio</b> is incorrect because it misidentifies what is added, removed, or withheld after the behavior.",
     "id": 155,
     "type": "mc",
     "dom": "C"
@@ -2349,7 +2349,7 @@
       "Variable interval"
     ],
     "c": 0,
-    "e": "<b>Fixed ratio</b> delivers reinforcement after a set NUMBER of responses (here, every 5).",
+    "e": "<b>Fixed ratio</b> delivers reinforcement after a set NUMBER of responses (here, every 5). <b>Variable ratio</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 156,
     "type": "mc",
     "dom": "C"
@@ -2364,7 +2364,7 @@
       "Fixed interval"
     ],
     "c": 0,
-    "e": "<b>Variable ratio</b> reinforces after a changing average number of responses — produces high, steady rates and is resistant to extinction.",
+    "e": "<b>Variable ratio</b> reinforces after a changing average number of responses — produces high, steady rates and is resistant to extinction. <b>Fixed ratio</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 157,
     "type": "mc",
     "dom": "C"
@@ -2379,7 +2379,7 @@
       "Variable ratio"
     ],
     "c": 0,
-    "e": "<b>Fixed interval</b>: reinforcement is available after a set amount of TIME (every 6 hours), regardless of how many times you check.",
+    "e": "<b>Fixed interval</b>: reinforcement is available after a set amount of TIME (every 6 hours), regardless of how many times you check. <b>Fixed ratio</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 158,
     "type": "mc",
     "dom": "C"
@@ -2394,7 +2394,7 @@
       "Fixed ratio"
     ],
     "c": 0,
-    "e": "<b>Variable interval</b>: reinforcement (or the quiz) becomes available after a changing average amount of TIME.",
+    "e": "<b>Variable interval</b>: reinforcement (or the quiz) becomes available after a changing average amount of TIME. <b>Fixed ratio</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 159,
     "type": "mc",
     "dom": "C"
@@ -2409,7 +2409,7 @@
       "One is punishment; the other is reinforcement"
     ],
     "c": 0,
-    "e": "<b>Ratio schedules</b> depend on the <b>number of responses</b>; <b>interval schedules</b> depend on <b>passage of time</b>. Fixed vs. variable is a separate dimension on each type.",
+    "e": "<b>Ratio schedules</b> depend on the <b>number of responses</b>; <b>interval schedules</b> depend on <b>passage of time</b>. Fixed vs. variable is a separate dimension on each type. <b>One is fixed; the other is always variable</b> is incorrect because it reverses or blurs the distinction described in the stem.",
     "type": "mc",
     "dom": "C",
     "id": 160
@@ -2454,7 +2454,7 @@
       "Extinction"
     ],
     "c": 0,
-    "e": "<b>NCR</b> delivers reinforcement on a <b>time schedule independent of behavior</b>, reducing the MO for attention. DRO reinforces intervals without problem behavior; extinction withholds the reinforcer entirely.",
+    "e": "<b>NCR</b> delivers reinforcement on a <b>time schedule independent of behavior</b>, reducing the MO for attention. DRO reinforces intervals without problem behavior; extinction withholds the reinforcer entirely. <b>DRO</b> is incorrect because it is not the measurement or graph-reading rule applied in this scenario.",
     "type": "mc",
     "dom": "C",
     "id": 163
@@ -2469,7 +2469,7 @@
       "DRL (low rates)"
     ],
     "c": 0,
-    "e": "<b>DRA</b> reinforces an appropriate ALTERNATIVE behavior that serves the same function as the problem behavior.",
+    "e": "<b>DRA</b> reinforces an appropriate ALTERNATIVE behavior that serves the same function as the problem behavior. <b>DRO (omission)</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 164,
     "type": "mc",
     "dom": "D"
@@ -2484,7 +2484,7 @@
       "DRH (high rates)"
     ],
     "c": 0,
-    "e": "<b>DRI</b> reinforces an INCOMPATIBLE behavior — one that can't physically co-occur with the target problem behavior.",
+    "e": "<b>DRI</b> reinforces an INCOMPATIBLE behavior — one that can't physically co-occur with the target problem behavior. <b>DRO (omission)</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 165,
     "type": "mc",
     "dom": "D"
@@ -2499,7 +2499,7 @@
       "DRI (incompatible)"
     ],
     "c": 0,
-    "e": "<b>DRO</b> (differential reinforcement of other/zero behavior) reinforces the ABSENCE of the target behavior for an interval.",
+    "e": "<b>DRO</b> (differential reinforcement of other/zero behavior) reinforces the ABSENCE of the target behavior for an interval. <b>DRL (low rates)</b> is incorrect because it misidentifies what is added, removed, or withheld after the behavior.",
     "id": 166,
     "type": "mc",
     "dom": "D"
@@ -2514,7 +2514,7 @@
       "DRA (alternative)"
     ],
     "c": 0,
-    "e": "<b>DRL</b> reinforces LOWER rates of a behavior that's acceptable in small amounts — reduce, don't eliminate.",
+    "e": "<b>DRL</b> reinforces LOWER rates of a behavior that's acceptable in small amounts — reduce, don't eliminate. <b>DRO (omission)</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 167,
     "type": "mc",
     "dom": "D"
@@ -2529,25 +2529,25 @@
       "DRI (incompatible)"
     ],
     "c": 0,
-    "e": "<b>DRH</b> reinforces HIGHER rates of a desired behavior (e.g., more task completions).",
+    "e": "<b>DRH</b> reinforces HIGHER rates of a desired behavior (e.g., more task completions). <b>DRO (omission)</b> is incorrect because it is not the measurement or graph-reading rule applied in this scenario.",
     "id": 168,
     "type": "mc",
     "dom": "D"
   },
   {
     "cat": "Differential Reinforcement",
-    "q": "The difference between DRA and DRI is:",
+    "q": "An RBT is comparing DRA and DRI for a hitting reduction plan. Which statement correctly describes the difference?",
     "a": [
-      "DRI's replacement behavior physically cannot co-occur with the problem; DRA's just needs to be an appropriate alternative",
-      "DRA reinforces absence; DRI reinforces presence",
-      "DRA is for high rates; DRI is for low rates",
-      "There is no difference"
+      "DRI requires an incompatible replacement; DRA only needs an appropriate alternative",
+      "DRA reinforces absence of hitting; DRI reinforces any other behavior",
+      "DRA is for high-rate behavior; DRI is for low-rate behavior",
+      "There is no meaningful difference between the two"
     ],
     "c": 0,
-    "e": "Both reinforce a replacement, but <b>DRI</b> requires the alternative to be INCOMPATIBLE (can't happen at the same time), while <b>DRA</b> just needs an appropriate alternative.",
-    "id": 169,
+    "e": "<b>DRI</b> requires the replacement behavior to be physically incompatible with hitting (e.g., hands in lap). <b>DRA</b> only requires an appropriate alternative and does not require incompatibility. Reinforcing absence of hitting describes <b>DRO</b>, not DRA.",
     "type": "mc",
-    "dom": "D"
+    "dom": "D",
+    "id": 169
   },
   {
     "cat": "Differential Reinforcement",
@@ -2574,7 +2574,7 @@
       "Permanent product"
     ],
     "c": 0,
-    "e": "<b>Whole-interval</b> recording marks an interval only if the behavior occurred throughout the WHOLE interval.",
+    "e": "<b>Whole-interval</b> recording marks an interval only if the behavior occurred throughout the WHOLE interval. <b>Partial interval</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 171,
     "type": "mc",
     "dom": "A"
@@ -2589,7 +2589,7 @@
       "Permanent product"
     ],
     "c": 0,
-    "e": "<b>Partial-interval</b> recording scores the interval if the behavior occurred at any moment during it.",
+    "e": "<b>Partial-interval</b> recording scores the interval if the behavior occurred at any moment during it. <b>Whole interval</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 172,
     "type": "mc",
     "dom": "A"
@@ -2604,7 +2604,7 @@
       "Event recording"
     ],
     "c": 0,
-    "e": "<b>Momentary time sampling</b> records whether the behavior is occurring at the specific moment the interval ends.",
+    "e": "<b>Momentary time sampling</b> records whether the behavior is occurring at the specific moment the interval ends. <b>Whole interval</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 173,
     "type": "mc",
     "dom": "A"
@@ -2619,7 +2619,7 @@
       "Latency"
     ],
     "c": 0,
-    "e": "<b>Permanent product</b> measures the tangible results a behavior leaves behind (worksheets done, dishes washed).",
+    "e": "<b>Permanent product</b> measures the tangible results a behavior leaves behind (worksheets done, dishes washed). <b>Latency</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 174,
     "type": "mc",
     "dom": "A"
@@ -2634,7 +2634,7 @@
       "Only measurable as a product"
     ],
     "c": 0,
-    "e": "Interval methods estimate behavior that occurs at <b>high rates</b> or is otherwise impractical to record continuously.",
+    "e": "Interval methods estimate behavior that occurs at <b>high rates</b> or is otherwise impractical to record continuously. <b>Extremely rare</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 175,
     "type": "mc",
     "dom": "A"
@@ -2649,7 +2649,7 @@
       "32%"
     ],
     "c": 0,
-    "e": "% of intervals = occurred ÷ total × 100 = 12 ÷ 20 × 100 = <b>60%</b>.",
+    "e": "% of intervals = occurred ÷ total × 100 = 12 ÷ 20 × 100 = <b>60%</b>. <b>12%</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 176,
     "type": "mc",
     "dom": "A"
@@ -2664,7 +2664,7 @@
       "There is no meaningful difference"
     ],
     "c": 0,
-    "e": "<b>Whole-interval</b> requires the behavior throughout the interval (often underestimates). <b>Momentary time sampling</b> records status at the instant the interval closes. Neither is continuous or a product measure.",
+    "e": "<b>Whole-interval</b> requires the behavior throughout the interval (often underestimates). <b>Momentary time sampling</b> records status at the instant the interval closes. Neither is continuous or a product measure. <b>There is no meaningful difference</b> is incorrect because it is not the measurement or graph-reading rule applied in this scenario.",
     "type": "mc",
     "dom": "A",
     "id": 177
@@ -2679,7 +2679,7 @@
       "Intraverbal"
     ],
     "c": 0,
-    "e": "A <b>mand</b> is a request under a motivating operation (deprivation/desire) that is reinforced by getting the specific item.",
+    "e": "A <b>mand</b> is a request under a motivating operation (deprivation/desire) that is reinforced by getting the specific item. <b>Tact</b> is incorrect because it describes a different verbal operant than the one cued by the antecedent and consequence.",
     "id": 178,
     "type": "mc",
     "dom": "C"
@@ -2709,7 +2709,7 @@
       "Mand"
     ],
     "c": 0,
-    "e": "An <b>echoic</b> is a point-to-point vocal repetition of what was just heard.",
+    "e": "An <b>echoic</b> is a point-to-point vocal repetition of what was just heard. <b>Tact</b> is incorrect because it describes a different verbal operant than the one cued by the antecedent and consequence.",
     "id": 180,
     "type": "mc",
     "dom": "C"
@@ -2724,7 +2724,7 @@
       "Textual"
     ],
     "c": 0,
-    "e": "An <b>intraverbal</b> is a verbal response to a verbal SD without point-to-point correspondence (answering questions, fill-ins, conversation).",
+    "e": "An <b>intraverbal</b> is a verbal response to a verbal SD without point-to-point correspondence (answering questions, fill-ins, conversation). <b>Tact</b> is incorrect because it describes a different verbal operant than the one cued by the antecedent and consequence.",
     "id": 181,
     "type": "mc",
     "dom": "C"
@@ -2739,7 +2739,7 @@
       "Tact"
     ],
     "c": 0,
-    "e": "<b>Textual</b> = converting written text into vocal responding (reading aloud).",
+    "e": "<b>Textual</b> = converting written text into vocal responding (reading aloud). <b>Tact</b> is incorrect because it describes a different verbal operant than the one cued by the antecedent and consequence.",
     "id": 182,
     "type": "mc",
     "dom": "C"
@@ -2754,25 +2754,25 @@
       "Intraverbal"
     ],
     "c": 0,
-    "e": "<b>Transcription</b> = converting spoken words into written form (taking dictation).",
+    "e": "<b>Transcription</b> = converting spoken words into written form (taking dictation). <b>Echoic</b> is incorrect because it describes a different verbal operant than the one cued by the antecedent and consequence.",
     "id": 183,
     "type": "mc",
     "dom": "C"
   },
   {
     "cat": "Verbal Operants",
-    "q": "The main difference between a mand and a tact is:",
+    "q": "A learner says 'juice' only when thirsty and gets juice, but labels 'cup' when a cup is visible without requesting it. This illustrates:",
     "a": [
-      "A mand is a request driven by motivation; a tact is a label driven by what's present",
-      "A mand labels; a tact requests",
-      "A mand is written; a tact is spoken",
-      "They are the same operant"
+      "Mand under motivation; tact under stimulus control",
+      "Tact under motivation; mand under stimulus control",
+      "Written mand versus spoken tact",
+      "The same operant with different words"
     ],
     "c": 0,
-    "e": "<b>Mand = request</b> under an MO (get what you want). <b>Tact = label</b> under stimulus control (name what you see).",
-    "id": 184,
+    "e": "A <b>mand</b> is a request maintained by motivating operations (get what you want). A <b>tact</b> labels a present stimulus. The second option reverses the definitions; modality does not define the operant.",
     "type": "mc",
-    "dom": "C"
+    "dom": "C",
+    "id": 184
   },
   {
     "cat": "Verbal Operants",
@@ -2799,7 +2799,7 @@
       "Tact"
     ],
     "c": 0,
-    "e": "<b>FFC</b> (feature-function-class) responding is an intraverbal skill — answering about characteristics without the item present.",
+    "e": "<b>FFC</b> (feature-function-class) responding is an intraverbal skill — answering about characteristics without the item present. <b>Mand</b> is incorrect because the maintaining consequence in this scenario does not match that function.",
     "id": 186,
     "type": "mc",
     "dom": "C"
@@ -2814,7 +2814,7 @@
       "Transcription"
     ],
     "c": 0,
-    "e": "The <b>echoic</b> (vocal imitation) is typically built first, since being able to repeat sounds supports learning to label (tact).",
+    "e": "The <b>echoic</b> (vocal imitation) is typically built first, since being able to repeat sounds supports learning to label (tact). <b>Textual</b> is incorrect because it describes a different verbal operant than the one cued by the antecedent and consequence.",
     "id": 187,
     "type": "mc",
     "dom": "C"
@@ -2829,7 +2829,7 @@
       "Negative reinforcement"
     ],
     "c": 0,
-    "e": "<b>Positive punishment</b> ADDS something aversive to decrease behavior. 'Positive' = added; 'punishment' = behavior decreases.",
+    "e": "<b>Positive punishment</b> ADDS something aversive to decrease behavior. 'Positive' = added; 'punishment' = behavior decreases. <b>Positive reinforcement</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 188,
     "type": "mc",
     "dom": "C"
@@ -2844,7 +2844,7 @@
       "Positive reinforcement"
     ],
     "c": 0,
-    "e": "<b>Negative punishment</b> REMOVES something desired to decrease behavior. 'Negative' = taken away.",
+    "e": "<b>Negative punishment</b> REMOVES something desired to decrease behavior. 'Negative' = taken away. <b>Negative reinforcement</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 189,
     "type": "mc",
     "dom": "C"
@@ -2859,7 +2859,7 @@
       "Restitution"
     ],
     "c": 0,
-    "e": "<b>Non-exclusionary time-out</b> keeps the learner in the setting while removing access to reinforcement (materials, activity).",
+    "e": "<b>Non-exclusionary time-out</b> keeps the learner in the setting while removing access to reinforcement (materials, activity). <b>Restitution</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 190,
     "type": "mc",
     "dom": "C"
@@ -2874,7 +2874,7 @@
       "Delayed access"
     ],
     "c": 0,
-    "e": "<b>Exclusionary time-out</b> removes the learner FROM the reinforcing environment for a period.",
+    "e": "<b>Exclusionary time-out</b> removes the learner FROM the reinforcing environment for a period. <b>Response cost</b> is incorrect because it is not the measurement or graph-reading rule applied in this scenario.",
     "id": 191,
     "type": "mc",
     "dom": "C"
@@ -2889,7 +2889,7 @@
       "DRO"
     ],
     "c": 0,
-    "e": "<b>Response cost</b> is a form of negative punishment where a specific reinforcer/token is withdrawn contingent on behavior.",
+    "e": "<b>Response cost</b> is a form of negative punishment where a specific reinforcer/token is withdrawn contingent on behavior. <b>DRO</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 192,
     "type": "mc",
     "dom": "C"
@@ -2904,25 +2904,25 @@
       "Noncontingent reinforcement"
     ],
     "c": 0,
-    "e": "<b>Restitutional overcorrection</b> requires restoring the environment to a better-than-original condition after the disruption.",
+    "e": "<b>Restitutional overcorrection</b> requires restoring the environment to a better-than-original condition after the disruption. <b>Time-out</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 193,
     "type": "mc",
     "dom": "C"
   },
   {
     "cat": "Reinforcement & Punishment",
-    "q": "The difference between response cost and time-out from reinforcement is:",
+    "q": "A BCBA asks how response cost differs from time-out from reinforcement. The best answer is:",
     "a": [
-      "Response cost removes a specific reinforcer already earned; time-out removes access to reinforcement for a period",
+      "Response cost removes an earned reinforcer; time-out blocks access to reinforcement for a period",
       "Response cost adds an aversive; time-out removes one",
-      "Response cost is reinforcement; time-out is punishment",
-      "There is no difference"
+      "Response cost is reinforcement; time-out is extinction",
+      "They are identical negative-punishment procedures"
     ],
     "c": 0,
-    "e": "<b>Response cost</b> takes away an owned reinforcer (tokens); <b>time-out</b> suspends access to the reinforcing environment/activity temporarily.",
-    "id": 194,
+    "e": "<b>Response cost</b> removes a specific reinforcer the learner already earned (e.g., tokens). <b>Time-out</b> temporarily removes access to the reinforcing environment or activity. Adding an aversive would be punishment, not response cost.",
     "type": "mc",
-    "dom": "C"
+    "dom": "C",
+    "id": 194
   },
   {
     "cat": "Reinforcement & Punishment",
@@ -2934,7 +2934,7 @@
       "Whenever a parent requests them"
     ],
     "c": 0,
-    "e": "Punishment is a <b>last resort</b>; the most intrusive/aversive procedures are reserved for behavior posing a risk of serious harm or death.",
+    "e": "Punishment is a <b>last resort</b>; the most intrusive/aversive procedures are reserved for behavior posing a risk of serious harm or death. <b>Whenever a parent requests them</b> is incorrect because it misidentifies what is added, removed, or withheld after the behavior.",
     "id": 195,
     "type": "mc",
     "dom": "C"
@@ -2949,7 +2949,7 @@
       "Recovery"
     ],
     "c": 0,
-    "e": "<b>Acceleration</b> is focused and directed behavior that's less responsive to redirection, heading toward the peak.",
+    "e": "<b>Acceleration</b> is focused and directed behavior that's less responsive to redirection, heading toward the peak. <b>Peak</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 196,
     "type": "mc",
     "dom": "D"
@@ -2964,7 +2964,7 @@
       "Trigger"
     ],
     "c": 0,
-    "e": "The <b>peak</b> is the point of greatest danger — the crisis behavior is at its most intense.",
+    "e": "The <b>peak</b> is the point of greatest danger — the crisis behavior is at its most intense. <b>Trigger</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 197,
     "type": "mc",
     "dom": "D"
@@ -2979,7 +2979,7 @@
       "Acceleration"
     ],
     "c": 0,
-    "e": "<b>De-escalation</b> follows the peak as intensity decreases and the person begins to withdraw/calm.",
+    "e": "<b>De-escalation</b> follows the peak as intensity decreases and the person begins to withdraw/calm. <b>Recovery</b> is incorrect because it defines a different differential-reinforcement procedure.",
     "id": 198,
     "type": "mc",
     "dom": "D"
@@ -2994,7 +2994,7 @@
       "Peak"
     ],
     "c": 0,
-    "e": "In <b>recovery</b>, the person is quiet and may want space; avoid heavy demands to prevent re-escalation.",
+    "e": "In <b>recovery</b>, the person is quiet and may want space; avoid heavy demands to prevent re-escalation. <b>Calm</b> is incorrect because it describes a different verbal operant than the one cued by the antecedent and consequence.",
     "id": 199,
     "type": "mc",
     "dom": "D"
@@ -3009,7 +3009,7 @@
       "Recovery"
     ],
     "c": 0,
-    "e": "The cycle begins in the <b>calm</b> stage — cooperative, responsive, engaging in expected behavior.",
+    "e": "The cycle begins in the <b>calm</b> stage — cooperative, responsive, engaging in expected behavior. <b>Trigger</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 200,
     "type": "mc",
     "dom": "D"
@@ -3024,7 +3024,7 @@
       "Automatic reinforcement"
     ],
     "c": 0,
-    "e": "<b>SIB</b> is behavior that intentionally injures one's own body; it may be maintained by various functions and can constitute a crisis.",
+    "e": "<b>SIB</b> is behavior that intentionally injures one's own body; it may be maintained by various functions and can constitute a crisis. <b>Elopement</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 201,
     "type": "mc",
     "dom": "D"
@@ -3039,7 +3039,7 @@
       "Perseveration"
     ],
     "c": 0,
-    "e": "<b>Elopement</b> is leaving a designated safe area; it becomes a crisis when it endangers the individual.",
+    "e": "<b>Elopement</b> is leaving a designated safe area; it becomes a crisis when it endangers the individual. <b>SIB</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 202,
     "type": "mc",
     "dom": "D"
@@ -3054,7 +3054,7 @@
       "Shaping"
     ],
     "c": 0,
-    "e": "<b>Forward chaining</b> teaches steps in order from the first, reinforcing the current step — helps reduce errors.",
+    "e": "<b>Forward chaining</b> teaches steps in order from the first, reinforcing the current step — helps reduce errors. <b>Shaping</b> is incorrect because it is not the measurement or graph-reading rule applied in this scenario.",
     "id": 203,
     "type": "mc",
     "dom": "C"
@@ -3069,7 +3069,7 @@
       "Discrete trial"
     ],
     "c": 0,
-    "e": "<b>Backward chaining</b> teaches the final step first (often most-to-least), so every trial ends with the learner completing and being reinforced.",
+    "e": "<b>Backward chaining</b> teaches the final step first (often most-to-least), so every trial ends with the learner completing and being reinforced. <b>Discrete trial</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 204,
     "type": "mc",
     "dom": "C"
@@ -3084,7 +3084,7 @@
       "Time delay"
     ],
     "c": 0,
-    "e": "<b>Total task</b> presents the entire chain each session, reinforcing correct steps throughout.",
+    "e": "<b>Total task</b> presents the entire chain each session, reinforcing correct steps throughout. <b>Time delay</b> is incorrect because it misidentifies what is added, removed, or withheld after the behavior.",
     "id": 205,
     "type": "mc",
     "dom": "C"
@@ -3114,7 +3114,7 @@
       "Motivating operation"
     ],
     "c": 0,
-    "e": "Each completed step acts as the <b>SD</b> (cue) that signals the next step in the chain.",
+    "e": "Each completed step acts as the <b>SD</b> (cue) that signals the next step in the chain. <b>Punisher</b> is incorrect because it describes a different teaching procedure than the one named in the stem.",
     "id": 207,
     "type": "mc",
     "dom": "C"
@@ -3129,7 +3129,7 @@
       "Fade all prompts"
     ],
     "c": 0,
-    "e": "Chaining requires a <b>task analysis</b> — the behavior broken into teachable, sequential steps.",
+    "e": "Chaining requires a <b>task analysis</b> — the behavior broken into teachable, sequential steps. <b>Fade all prompts</b> is incorrect because it describes a different teaching procedure than the one named in the stem.",
     "id": 208,
     "type": "mc",
     "dom": "C"
@@ -3144,7 +3144,7 @@
       "Positive punishment"
     ],
     "c": 0,
-    "e": "Least-to-most intrusive: <b>antecedent</b> → reinforcement-based → extinction → negative punishment → positive punishment.",
+    "e": "Least-to-most intrusive: <b>antecedent</b> → reinforcement-based → extinction → negative punishment → positive punishment. <b>Extinction</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 209,
     "type": "mc",
     "dom": "D"
@@ -3159,7 +3159,7 @@
       "Satiation"
     ],
     "c": 0,
-    "e": "An <b>extinction burst</b> is the temporary increase in the behavior when reinforcement is first withheld.",
+    "e": "An <b>extinction burst</b> is the temporary increase in the behavior when reinforcement is first withheld. <b>Satiation</b> is incorrect because it misidentifies what is added, removed, or withheld after the behavior.",
     "id": 210,
     "type": "mc",
     "dom": "D"
@@ -3174,7 +3174,7 @@
       "Shaping"
     ],
     "c": 0,
-    "e": "<b>Spontaneous recovery</b> is the reappearance of an extinguished behavior after time has passed.",
+    "e": "<b>Spontaneous recovery</b> is the reappearance of an extinguished behavior after time has passed. <b>Shaping</b> is incorrect because it misidentifies what is added, removed, or withheld after the behavior.",
     "id": 211,
     "type": "mc",
     "dom": "D"
@@ -3189,7 +3189,7 @@
       "Noncontingent escape only"
     ],
     "c": 0,
-    "e": "<b>FCT</b> replaces problem behavior with an appropriate communication response that accesses the same reinforcer/function.",
+    "e": "<b>FCT</b> replaces problem behavior with an appropriate communication response that accesses the same reinforcer/function. <b>Response cost</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 212,
     "type": "mc",
     "dom": "D"
@@ -3204,7 +3204,7 @@
       "Rate"
     ],
     "c": 0,
-    "e": "<b>Latency</b> = time between the SD/instruction and the ONSET of the response.",
+    "e": "<b>Latency</b> = time between the SD/instruction and the ONSET of the response. <b>IRT</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 213,
     "type": "mc",
     "dom": "A"
@@ -3219,7 +3219,7 @@
       "IRT"
     ],
     "c": 0,
-    "e": "<b>Duration</b> measures how long a behavior lasts — useful when episodes vary in length.",
+    "e": "<b>Duration</b> measures how long a behavior lasts — useful when episodes vary in length. <b>IRT</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 214,
     "type": "mc",
     "dom": "A"
@@ -3234,7 +3234,7 @@
       "Rate"
     ],
     "c": 0,
-    "e": "<b>IRT</b> (interresponse time) is the elapsed time from the end of one response to the beginning of the next.",
+    "e": "<b>IRT</b> (interresponse time) is the elapsed time from the end of one response to the beginning of the next. <b>Rate</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 215,
     "type": "mc",
     "dom": "A"
@@ -3249,7 +3249,7 @@
       "IRT; frequency"
     ],
     "c": 0,
-    "e": "<b>Latency</b> = time from the instruction until behavior <b>starts</b>. <b>Duration</b> = how long the behavior <b>lasts</b> once it begins. Both can be 12 seconds but measure different dimensions.",
+    "e": "<b>Latency</b> = time from the instruction until behavior <b>starts</b>. <b>Duration</b> = how long the behavior <b>lasts</b> once it begins. Both can be 12 seconds but measure different dimensions. <b>IRT; frequency</b> is incorrect because it is not the measurement or graph-reading rule applied in this scenario.",
     "type": "mc",
     "dom": "A",
     "id": 216
@@ -3264,7 +3264,7 @@
       "Partial interval"
     ],
     "c": 0,
-    "e": "<b>Rate</b> = count ÷ time, which standardizes counts across sessions of different lengths (15 ÷ 30 = 0.5/min).",
+    "e": "<b>Rate</b> = count ÷ time, which standardizes counts across sessions of different lengths (15 ÷ 30 = 0.5/min). <b>Latency</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 217,
     "type": "mc",
     "dom": "A"
@@ -3279,7 +3279,7 @@
       "Punisher"
     ],
     "c": 0,
-    "e": "An <b>EO</b> INCREASES the value of a reinforcer (deprivation from food raises food's value).",
+    "e": "An <b>EO</b> INCREASES the value of a reinforcer (deprivation from food raises food's value). <b>Punisher</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 218,
     "type": "mc",
     "dom": "C"
@@ -3294,7 +3294,7 @@
       "SD"
     ],
     "c": 0,
-    "e": "An <b>AO</b> DECREASES the value of a reinforcer (satiation lowers food's value).",
+    "e": "An <b>AO</b> DECREASES the value of a reinforcer (satiation lowers food's value). <b>SD</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 219,
     "type": "mc",
     "dom": "C"
@@ -3339,25 +3339,25 @@
       "Prompting"
     ],
     "c": 0,
-    "e": "<b>Shaping</b> reinforces <b>successive approximations</b> — steps that increasingly resemble the terminal behavior.",
+    "e": "<b>Shaping</b> reinforces <b>successive approximations</b> — steps that increasingly resemble the terminal behavior. <b>Chaining</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 222,
     "type": "mc",
     "dom": "C"
   },
   {
     "cat": "Shaping",
-    "q": "In shaping, the 'baseline' you start reinforcing is:",
+    "q": "Before shaping a new skill, the RBT should first reinforce:",
     "a": [
-      "The closest approximation the learner already does without prompts",
-      "The final terminal behavior",
-      "A completely new behavior never seen",
-      "The last step of a chain"
+      "The closest unprompted approximation already in the repertoire",
+      "The final terminal behavior on the first trial",
+      "A completely novel behavior never observed",
+      "Only the last step of an existing chain"
     ],
     "c": 0,
-    "e": "Shaping begins from the <b>current closest approximation</b> the learner performs unprompted, then builds toward the terminal behavior.",
-    "id": 223,
+    "e": "Shaping starts at <b>baseline</b> — the nearest approximation the learner already performs without prompts — then builds toward the terminal behavior. Starting at the terminal goal or a novel behavior skips the learner's current repertoire. <b>Only the last step of an existing chain</b> is incorrect because it describes a different teaching procedure than the one named in the stem.",
     "type": "mc",
-    "dom": "C"
+    "dom": "C",
+    "id": 223
   },
   {
     "cat": "Shaping",
@@ -3369,7 +3369,7 @@
       "Time delay"
     ],
     "c": 0,
-    "e": "Shaping uses <b>differential reinforcement</b>: reinforce the new closer approximation while placing the old one on extinction.",
+    "e": "Shaping uses <b>differential reinforcement</b>: reinforce the new closer approximation while placing the old one on extinction. <b>Punishment</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 224,
     "type": "mc",
     "dom": "C"
@@ -3384,7 +3384,7 @@
       "Time-out"
     ],
     "c": 0,
-    "e": "<b>Incidental teaching</b> follows the learner's lead — teaching is triggered when the LEARNER initiates.",
+    "e": "<b>Incidental teaching</b> follows the learner's lead — teaching is triggered when the LEARNER initiates. <b>Time-out</b> is incorrect because it is not the measurement or graph-reading rule applied in this scenario.",
     "id": 225,
     "type": "mc",
     "dom": "C"
@@ -3399,7 +3399,7 @@
       "Echoic training"
     ],
     "c": 0,
-    "e": "<b>Responding</b> to joint attention = following someone else's bid (looking where they point).",
+    "e": "<b>Responding</b> to joint attention = following someone else's bid (looking where they point). <b>Mand training</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 226,
     "type": "mc",
     "dom": "C"
@@ -3414,7 +3414,7 @@
       "Transcription"
     ],
     "c": 0,
-    "e": "<b>Initiating</b> joint attention = the learner acts to direct another person's attention to a shared item/event.",
+    "e": "<b>Initiating</b> joint attention = the learner acts to direct another person's attention to a shared item/event. <b>Tacting</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 227,
     "type": "mc",
     "dom": "C"
@@ -3429,7 +3429,7 @@
       "Response cost"
     ],
     "c": 0,
-    "e": "<b>PRT</b> focuses on pivotal/core skills (motivation, responsivity) to produce widespread improvements.",
+    "e": "<b>PRT</b> focuses on pivotal/core skills (motivation, responsivity) to produce widespread improvements. <b>Response cost</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 228,
     "type": "mc",
     "dom": "C"
@@ -3444,7 +3444,7 @@
       "Play (control)"
     ],
     "c": 0,
-    "e": "The <b>attention</b> condition tests whether the behavior is maintained by social attention by delivering attention contingent on the behavior.",
+    "e": "The <b>attention</b> condition tests whether the behavior is maintained by social attention by delivering attention contingent on the behavior. <b>Play (control)</b> is incorrect because the maintaining consequence in this scenario does not match that function.",
     "id": 229,
     "type": "mc",
     "dom": "B"
@@ -3459,7 +3459,7 @@
       "Access to tangibles"
     ],
     "c": 0,
-    "e": "The <b>demand/escape</b> condition tests whether behavior is reinforced by getting OUT of tasks.",
+    "e": "The <b>demand/escape</b> condition tests whether behavior is reinforced by getting OUT of tasks. <b>Attention</b> is incorrect because the maintaining consequence in this scenario does not match that function.",
     "id": 230,
     "type": "mc",
     "dom": "B"
@@ -3474,7 +3474,7 @@
       "Tangible"
     ],
     "c": 0,
-    "e": "The <b>alone</b> condition tests <b>automatic</b> (self-stimulatory) reinforcement, since no social consequences are available.",
+    "e": "The <b>alone</b> condition tests <b>automatic</b> (self-stimulatory) reinforcement, since no social consequences are available. <b>Escape</b> is incorrect because the maintaining consequence in this scenario does not match that function.",
     "id": 231,
     "type": "mc",
     "dom": "B"
@@ -3489,7 +3489,7 @@
       "To test escape only"
     ],
     "c": 0,
-    "e": "The <b>play/control</b> condition provides free reinforcement and no demands, serving as the comparison baseline where behavior should be low.",
+    "e": "The <b>play/control</b> condition provides free reinforcement and no demands, serving as the comparison baseline where behavior should be low. <b>To test escape only</b> is incorrect because the maintaining consequence in this scenario does not match that function.",
     "id": 232,
     "type": "mc",
     "dom": "B"
@@ -3504,7 +3504,7 @@
       "Ignore the request entirely"
     ],
     "c": 0,
-    "e": "RBTs work under supervision within their <b>scope of competence</b>; new/unfamiliar procedures require consulting the supervising BCBA.",
+    "e": "RBTs work under supervision within their <b>scope of competence</b>; new/unfamiliar procedures require consulting the supervising BCBA. <b>Modify the plan themselves</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 233,
     "type": "mc",
     "dom": "F"
@@ -3519,25 +3519,25 @@
       "A preferred item being chosen"
     ],
     "c": 0,
-    "e": "Unexpected changes like <b>spikes in SIB/aggression</b>, health changes, or safety concerns must be reported immediately.",
+    "e": "Unexpected changes like <b>spikes in SIB/aggression</b>, health changes, or safety concerns must be reported immediately. <b>A preferred item being chosen</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 234,
     "type": "mc",
     "dom": "F"
   },
   {
     "cat": "Professionalism & Scope",
-    "q": "The difference between 'scope of competence' and 'scope of practice' is:",
+    "q": "During supervision, an RBT confuses scope of practice with scope of competence. The correct distinction is:",
     "a": [
-      "Scope of practice is what the credential allows; scope of competence is what YOU are actually trained and able to do",
-      "They are identical",
-      "Competence is broader than practice",
-      "Practice is set by the family"
+      "Practice is what the credential permits; competence is what the individual is trained to perform",
+      "They mean the same thing in ethics codes",
+      "Competence is always broader than practice",
+      "Practice is determined by each family, not the certifying body"
     ],
     "c": 0,
-    "e": "<b>Scope of practice</b> = the profession's permitted activities; <b>scope of competence</b> = your individual demonstrated skills, which may be narrower.",
-    "id": 235,
+    "e": "<b>Scope of practice</b> is defined by the credential and regulations (what an RBT may do). <b>Scope of competence</b> is individual — what you are actually trained and able to perform, which may be narrower. Families do not set legal scope of practice.",
     "type": "mc",
-    "dom": "F"
+    "dom": "F",
+    "id": 235
   },
   {
     "cat": "Professionalism & Scope",
@@ -3549,7 +3549,7 @@
       "Contingency"
     ],
     "c": 0,
-    "e": "<b>Assent</b> is the learner's voluntary willingness to participate; <b>consent</b> is the legal permission given by a guardian.",
+    "e": "<b>Assent</b> is the learner's voluntary willingness to participate; <b>consent</b> is the legal permission given by a guardian. <b>Consent</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 236,
     "type": "mc",
     "dom": "F"
@@ -3579,7 +3579,7 @@
       "Independent"
     ],
     "c": 0,
-    "e": "<b>Interdisciplinary</b> teams collaborate directly, integrating expertise toward shared goals.",
+    "e": "<b>Interdisciplinary</b> teams collaborate directly, integrating expertise toward shared goals. <b>Independent</b> is incorrect because it is not the measurement or graph-reading rule applied in this scenario.",
     "id": 238,
     "type": "mc",
     "dom": "F"
@@ -3609,7 +3609,7 @@
       "Preference assessment"
     ],
     "c": 0,
-    "e": "A <b>maintenance probe</b> briefly tests retention of a skill with no prompts/reinforcement to confirm it holds over time.",
+    "e": "A <b>maintenance probe</b> briefly tests retention of a skill with no prompts/reinforcement to confirm it holds over time. <b>Baseline session</b> is incorrect because it misidentifies what is added, removed, or withheld after the behavior.",
     "id": 240,
     "type": "mc",
     "dom": "C"
@@ -3624,7 +3624,7 @@
       "Extinction"
     ],
     "c": 0,
-    "e": "<b>Intermittent (variable)</b> schedules make behavior more durable and resistant to extinction, supporting maintenance.",
+    "e": "<b>Intermittent (variable)</b> schedules make behavior more durable and resistant to extinction, supporting maintenance. <b>Extinction</b> is incorrect because it misidentifies what is added, removed, or withheld after the behavior.",
     "id": 241,
     "type": "mc",
     "dom": "C"
@@ -3639,7 +3639,7 @@
       "Satiation"
     ],
     "c": 0,
-    "e": "<b>Generalization</b> is responding correctly across untrained situations, people, or stimuli.",
+    "e": "<b>Generalization</b> is responding correctly across untrained situations, people, or stimuli. <b>Satiation</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 242,
     "type": "mc",
     "dom": "C"
@@ -4062,7 +4062,7 @@
       "Permanent product"
     ],
     "c": 0,
-    "e": "<b>Momentary time sampling</b> records the behavior only at the specific moment the interval ends.",
+    "e": "<b>Momentary time sampling</b> records the behavior only at the specific moment the interval ends. <b>Whole interval</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 279,
     "type": "mc",
     "dom": "A"
@@ -4077,7 +4077,7 @@
       "Permanent product"
     ],
     "c": 0,
-    "e": "<b>Partial interval</b> scores the whole interval if the behavior happened at any point, which inflates the estimate.",
+    "e": "<b>Partial interval</b> scores the whole interval if the behavior happened at any point, which inflates the estimate. <b>Whole interval</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 280,
     "type": "mc",
     "dom": "A"
@@ -4092,7 +4092,7 @@
       "Event recording"
     ],
     "c": 0,
-    "e": "<b>Whole interval</b> requires the behavior for the entire interval, so brief occurrences don't count — underestimating.",
+    "e": "<b>Whole interval</b> requires the behavior for the entire interval, so brief occurrences don't count — underestimating. <b>Event recording</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 281,
     "type": "mc",
     "dom": "A"
@@ -4140,7 +4140,7 @@
       "67%"
     ],
     "c": 0,
-    "e": "% of intervals = occurred ÷ total × 100 = 9 ÷ 15 × 100 = <b>60%</b>.",
+    "e": "% of intervals = occurred ÷ total × 100 = 9 ÷ 15 × 100 = <b>60%</b>. <b>9%</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 285,
     "type": "mc",
     "dom": "A"
@@ -4155,7 +4155,7 @@
       "Only visible on completed worksheets"
     ],
     "c": 0,
-    "e": "Interval recording is most appropriate when behavior is <b>high-rate</b> and continuous measurement is impractical. Rare behaviors and permanent products call for different methods.",
+    "e": "Interval recording is most appropriate when behavior is <b>high-rate</b> and continuous measurement is impractical. Rare behaviors and permanent products call for different methods. <b>Extremely rare and brief</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "dom": "A",
     "id": 286
@@ -4185,25 +4185,25 @@
       "Absences of behavior"
     ],
     "c": 0,
-    "e": "<b>Shaping</b> reinforces successive approximations — steps that get closer and closer to the terminal behavior.",
+    "e": "<b>Shaping</b> reinforces successive approximations — steps that get closer and closer to the terminal behavior. <b>Absences of behavior</b> is incorrect because it describes a different teaching procedure than the one named in the stem.",
     "id": 288,
     "type": "mc",
     "dom": "C"
   },
   {
     "cat": "Shaping",
-    "q": "When starting a shaping program, the first thing you reinforce is:",
+    "q": "When opening a new shaping program, the first reinforced response should be:",
     "a": [
       "The closest approximation the learner already does without prompts",
-      "The full terminal behavior",
-      "A completely novel behavior",
-      "The last step of a chain"
+      "The full terminal behavior immediately",
+      "A brand-new behavior never demonstrated",
+      "The final chain step only"
     ],
     "c": 0,
-    "e": "You begin at <b>baseline</b> — the nearest approximation the learner already performs unprompted — and build from there.",
-    "id": 289,
+    "e": "Begin at <b>baseline</b>: reinforce the nearest unprompted approximation, then raise criteria gradually. Reinforcing only the terminal behavior or a never-seen behavior is not shaping.",
     "type": "mc",
-    "dom": "C"
+    "dom": "C",
+    "id": 289
   },
   {
     "cat": "Shaping",
@@ -4224,7 +4224,7 @@
       "Time delay"
     ],
     "c": 0,
-    "e": "Shaping uses <b>differential reinforcement</b>: reinforce the closer approximation while the previous one goes on extinction.",
+    "e": "Shaping uses <b>differential reinforcement</b>: reinforce the closer approximation while the previous one goes on extinction. <b>Time delay</b> is incorrect because it describes a different teaching procedure than the one named in the stem.",
     "id": 291,
     "type": "mc",
     "dom": "C"
@@ -4254,7 +4254,7 @@
       "Withhold reinforcement until the session ends"
     ],
     "c": 0,
-    "e": "In <b>DTT</b>, reinforcement is delivered <b>immediately</b> after the correct response to strengthen it.",
+    "e": "In <b>DTT</b>, reinforcement is delivered <b>immediately</b> after the correct response to strengthen it. <b>Repeat the SD three times</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 293,
     "type": "mc",
     "dom": "C"
@@ -4269,7 +4269,7 @@
       "Time-out"
     ],
     "c": 0,
-    "e": "<b>Incidental teaching</b> follows the learner's lead — teaching is triggered when the learner initiates.",
+    "e": "<b>Incidental teaching</b> follows the learner's lead — teaching is triggered when the learner initiates. <b>Time-out</b> is incorrect because it is not the measurement or graph-reading rule applied in this scenario.",
     "id": 294,
     "type": "mc",
     "dom": "C"
@@ -4293,7 +4293,7 @@
       "Echoic behavior"
     ],
     "c": 0,
-    "e": "<b>Initiating</b> joint attention = the learner acts to direct another person's attention to a shared item.",
+    "e": "<b>Initiating</b> joint attention = the learner acts to direct another person's attention to a shared item. <b>Echoic behavior</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 296,
     "type": "mc",
     "dom": "C"
@@ -4308,7 +4308,7 @@
       "10 seconds"
     ],
     "c": 0,
-    "e": "Prompt within roughly <b>3 seconds</b> of the SD so the learner connects the cue to the response.",
+    "e": "Prompt within roughly <b>3 seconds</b> of the SD so the learner connects the cue to the response. <b>1 second</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 297,
     "type": "mc",
     "dom": "C"
@@ -4323,7 +4323,7 @@
       "Ignore it unless it happens again"
     ],
     "c": 0,
-    "e": "Signs of possible abuse or unexpected health changes must be <b>reported immediately</b> to the supervisor.",
+    "e": "Signs of possible abuse or unexpected health changes must be <b>reported immediately</b> to the supervisor. <b>Ask the child not to tell anyone</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 298,
     "type": "mc",
     "dom": "F"
@@ -4347,7 +4347,7 @@
       "Contingency"
     ],
     "c": 0,
-    "e": "<b>Assent</b> is the learner's voluntary willingness; <b>consent</b> is the guardian's legal permission.",
+    "e": "<b>Assent</b> is the learner's voluntary willingness; <b>consent</b> is the guardian's legal permission. <b>Consent</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 300,
     "type": "mc",
     "dom": "F"
@@ -4377,7 +4377,7 @@
       "Trigger"
     ],
     "c": 0,
-    "e": "The <b>peak</b> is the most dangerous stage; crisis behavior is at its most intense.",
+    "e": "The <b>peak</b> is the most dangerous stage; crisis behavior is at its most intense. <b>Trigger</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 302,
     "type": "mc",
     "dom": "D"
@@ -4392,7 +4392,7 @@
       "De-escalation"
     ],
     "c": 0,
-    "e": "<b>Acceleration</b> is focused, directed behavior that's less responsive to redirection, heading toward the peak.",
+    "e": "<b>Acceleration</b> is focused, directed behavior that's less responsive to redirection, heading toward the peak. <b>Calm</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 303,
     "type": "mc",
     "dom": "D"
@@ -4492,7 +4492,7 @@
       "Rate"
     ],
     "c": 0,
-    "e": "<b>Variability</b> is the spread between the highest and lowest points.",
+    "e": "<b>Variability</b> is the spread between the highest and lowest points. <b>Mean</b> is incorrect because it is not the measurement or graph-reading rule applied in this scenario.",
     "id": 310,
     "type": "mc"
   },
@@ -4507,7 +4507,7 @@
       "Has a bad attitude"
     ],
     "c": 0,
-    "e": "Observable and measurable = you can see and count it. “Hits peers with an open hand” qualifies.",
+    "e": "Observable and measurable = you can see and count it. “Hits peers with an open hand” qualifies. <b>Is aggressive</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 311,
     "type": "mc"
   },
@@ -4522,7 +4522,7 @@
       "Latency recording"
     ],
     "c": 0,
-    "e": "<b>Permanent product</b> measures the lasting outcome a behavior leaves behind.",
+    "e": "<b>Permanent product</b> measures the lasting outcome a behavior leaves behind. <b>Latency recording</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 312,
     "type": "mc"
   },
@@ -4537,7 +4537,7 @@
       "The behavior stopped"
     ],
     "c": 0,
-    "e": "Disagreement between observers points to <b>unreliable data / poor fidelity</b> — a data-integrity risk.",
+    "e": "Disagreement between observers points to <b>unreliable data / poor fidelity</b> — a data-integrity risk. <b>The client improved</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 313,
     "type": "mc"
   },
@@ -4576,7 +4576,7 @@
       "Single stimulus"
     ],
     "c": 0,
-    "e": "<b>Free-operant</b> measures engagement when all items are freely available.",
+    "e": "<b>Free-operant</b> measures engagement when all items are freely available. <b>MSWO</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 316,
     "type": "mc"
   },
@@ -4591,7 +4591,7 @@
       "Force a choice between two"
     ],
     "c": 0,
-    "e": "MSWO = multiple stimulus <b>without replacement</b>: the chosen item is removed and the array re-presented.",
+    "e": "MSWO = multiple stimulus <b>without replacement</b>: the chosen item is removed and the array re-presented. <b>Force a choice between two</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 317,
     "type": "mc"
   },
@@ -4606,7 +4606,7 @@
       "MSWO"
     ],
     "c": 0,
-    "e": "<b>Paired stimulus</b> (forced choice) presents two options per trial.",
+    "e": "<b>Paired stimulus</b> (forced choice) presents two options per trial. <b>MSWO</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 318,
     "type": "mc"
   },
@@ -4621,7 +4621,7 @@
       "Preference assessment"
     ],
     "c": 0,
-    "e": "A <b>functional analysis</b> arranges conditions (attention, demand, alone, play) to test function.",
+    "e": "A <b>functional analysis</b> arranges conditions (attention, demand, alone, play) to test function. <b>Indirect assessment</b> is incorrect because the maintaining consequence in this scenario does not match that function.",
     "id": 319,
     "type": "mc"
   },
@@ -4636,7 +4636,7 @@
       "Permanent product"
     ],
     "c": 0,
-    "e": "<b>Indirect</b> assessments gather information from others rather than direct observation.",
+    "e": "<b>Indirect</b> assessments gather information from others rather than direct observation. <b>Permanent product</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 320,
     "type": "mc"
   },
@@ -4652,7 +4652,7 @@
   {
     "cat": "Reinforcement",
     "dom": "C",
-    "q": "Reinforcement delivered after every 4th correct response is a:",
+    "q": "An RBT delivers a reinforcer after every fourth correct tact trial. This schedule is a:",
     "a": [
       "Fixed ratio",
       "Variable ratio",
@@ -4660,9 +4660,9 @@
       "Variable interval"
     ],
     "c": 0,
-    "e": "<b>Fixed ratio</b> delivers reinforcement after a set number of responses.",
-    "id": 322,
-    "type": "mc"
+    "e": "<b>Fixed ratio (FR)</b> delivers reinforcement after a set number of responses. Interval schedules are time-based, not response-count-based; variable schedules change the requirement unpredictably.",
+    "type": "mc",
+    "id": 322
   },
   {
     "cat": "Reinforcement",
@@ -4675,7 +4675,7 @@
       "Continuous"
     ],
     "c": 0,
-    "e": "<b>Variable ratio</b> reinforces around an average count — it produces steady, high responding.",
+    "e": "<b>Variable ratio</b> reinforces around an average count — it produces steady, high responding. <b>Continuous</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 323,
     "type": "mc"
   },
@@ -4690,7 +4690,7 @@
       "No reinforcement"
     ],
     "c": 0,
-    "e": "<b>Continuous (CRF)</b> reinforcement builds a new skill fastest; thin it once acquired.",
+    "e": "<b>Continuous (CRF)</b> reinforcement builds a new skill fastest; thin it once acquired. <b>No reinforcement</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 324,
     "type": "mc"
   },
@@ -4705,7 +4705,7 @@
       "Establishing operation"
     ],
     "c": 0,
-    "e": "A <b>conditioned (secondary) reinforcer</b> gains its value through pairing.",
+    "e": "A <b>conditioned (secondary) reinforcer</b> gains its value through pairing. <b>Punisher</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 325,
     "type": "mc"
   },
@@ -4720,7 +4720,7 @@
       "SD, consequence, response"
     ],
     "c": 0,
-    "e": "DTT structure: <b>SD → response → consequence</b>, with reinforcement delivered immediately.",
+    "e": "DTT structure: <b>SD → response → consequence</b>, with reinforcement delivered immediately. <b>Response, SD, consequence</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 326,
     "type": "mc"
   },
@@ -4735,7 +4735,7 @@
       "Time-out"
     ],
     "c": 0,
-    "e": "<b>NET</b> teaches within natural routines using the learner's motivation.",
+    "e": "<b>NET</b> teaches within natural routines using the learner's motivation. <b>Time-out</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 327,
     "type": "mc"
   },
@@ -4750,24 +4750,24 @@
       "Shaping"
     ],
     "c": 0,
-    "e": "<b>Backward chaining</b> teaches the last step first so every trial ends in success.",
+    "e": "<b>Backward chaining</b> teaches the last step first so every trial ends in success. <b>Shaping</b> is incorrect because it misidentifies what is added, removed, or withheld after the behavior.",
     "id": 328,
     "type": "mc"
   },
   {
     "cat": "Chaining",
     "dom": "C",
-    "q": "Teaching the first step to criterion before adding the second is:",
+    "q": "A BCBA instructs the team to master step 1 before introducing step 2 in a tooth-brushing chain. This is:",
     "a": [
       "Forward chaining",
       "Backward chaining",
       "Total task presentation",
-      "Discrimination"
+      "Discrimination training"
     ],
     "c": 0,
-    "e": "<b>Forward chaining</b> builds the chain from the first step onward.",
-    "id": 329,
-    "type": "mc"
+    "e": "<b>Forward chaining</b> teaches the first step to criterion, then adds later steps in order. Backward chaining starts with the last step; total task presents the whole sequence with support. <b>Backward chaining</b> is incorrect because it describes a different teaching procedure than the one named in the stem.",
+    "type": "mc",
+    "id": 329
   },
   {
     "cat": "Prompting",
@@ -4780,7 +4780,7 @@
       "Stimulus fading"
     ],
     "c": 0,
-    "e": "<b>Errorless</b> teaching uses most-to-least prompting to prevent errors.",
+    "e": "<b>Errorless</b> teaching uses most-to-least prompting to prevent errors. <b>No prompts</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 330,
     "type": "mc"
   },
@@ -4795,7 +4795,7 @@
       "Full physical prompting"
     ],
     "c": 0,
-    "e": "<b>Least-to-most</b> starts with the least help and increases only if needed.",
+    "e": "<b>Least-to-most</b> starts with the least help and increases only if needed. <b>Errorless learning</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 331,
     "type": "mc"
   },
@@ -4810,7 +4810,7 @@
       "Modeling"
     ],
     "c": 0,
-    "e": "<b>Time delay</b> gradually widens the gap before the prompt to transfer stimulus control.",
+    "e": "<b>Time delay</b> gradually widens the gap before the prompt to transfer stimulus control. <b>Modeling</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 332,
     "type": "mc"
   },
@@ -4825,7 +4825,7 @@
       "Extinction"
     ],
     "c": 0,
-    "e": "<b>Discrimination training</b> reinforces responding to the correct stimulus only.",
+    "e": "<b>Discrimination training</b> reinforces responding to the correct stimulus only. <b>Extinction</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 333,
     "type": "mc"
   },
@@ -4840,7 +4840,7 @@
       "Prompt dependence"
     ],
     "c": 0,
-    "e": "<b>Generalization</b> is responding across untrained people, settings, and stimuli.",
+    "e": "<b>Generalization</b> is responding across untrained people, settings, and stimuli. <b>Acquisition</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 334,
     "type": "mc"
   },
@@ -4855,7 +4855,7 @@
       "Chaining"
     ],
     "c": 0,
-    "e": "<b>Maintenance</b> is continued performance over time; acquisition is initial learning.",
+    "e": "<b>Maintenance</b> is continued performance over time; acquisition is initial learning. <b>Shaping</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 335,
     "type": "mc"
   },
@@ -4870,14 +4870,14 @@
       "Discrimination"
     ],
     "c": 0,
-    "e": "<b>Shaping</b> differentially reinforces successive approximations.",
+    "e": "<b>Shaping</b> differentially reinforces successive approximations. <b>Fading</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 336,
     "type": "mc"
   },
   {
     "cat": "Token Economy",
     "dom": "C",
-    "q": "In a token economy, tokens are earned and later exchanged for:",
+    "q": "In a classroom token economy, earned tokens are later traded for:",
     "a": [
       "Backup reinforcers",
       "Punishers",
@@ -4885,9 +4885,9 @@
       "Data sheets"
     ],
     "c": 0,
-    "e": "Tokens are conditioned reinforcers traded for <b>backup reinforcers</b>.",
-    "id": 337,
-    "type": "mc"
+    "e": "Tokens are conditioned reinforcers exchanged for <b>backup reinforcers</b> (preferred items/activities). Punishers, prompts, and data sheets are not the backup menu in a token economy.",
+    "type": "mc",
+    "id": 337
   },
   {
     "cat": "Reinforcement",
@@ -4924,7 +4924,7 @@
       "Satiation"
     ],
     "c": 0,
-    "e": "The functions are attention, escape/avoidance, tangible, and <b>automatic/sensory</b>.",
+    "e": "The functions are attention, escape/avoidance, tangible, and <b>automatic/sensory</b>. <b>Satiation</b> is incorrect because the maintaining consequence in this scenario does not match that function.",
     "id": 340,
     "type": "mc"
   },
@@ -4939,7 +4939,7 @@
       "Response cost"
     ],
     "c": 0,
-    "e": "<b>NCR</b> provides the maintaining reinforcer on a time schedule, weakening the behavior-reinforcer link.",
+    "e": "<b>NCR</b> provides the maintaining reinforcer on a time schedule, weakening the behavior-reinforcer link. <b>Extinction</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 341,
     "type": "mc"
   },
@@ -4954,14 +4954,14 @@
       "Token"
     ],
     "c": 0,
-    "e": "The <b>high-probability (high-p) request</b> sequence builds momentum before a harder demand.",
+    "e": "The <b>high-probability (high-p) request</b> sequence builds momentum before a harder demand. <b>Token</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 342,
     "type": "mc"
   },
   {
     "cat": "Differential Reinforcement",
     "dom": "D",
-    "q": "Reinforcing the absence of the behavior for a set period is:",
+    "q": "An RBT delivers reinforcement when no aggression occurs for a 2-minute interval. This procedure is:",
     "a": [
       "DRO",
       "DRA",
@@ -4969,9 +4969,9 @@
       "DRL"
     ],
     "c": 0,
-    "e": "<b>DRO</b> reinforces zero occurrences across an interval (“other/omission”).",
-    "id": 343,
-    "type": "mc"
+    "e": "<b>DRO</b> reinforces the absence of the target behavior across an interval. DRA reinforces an alternative; DRI requires an incompatible replacement; DRL targets reduced rate of the same behavior. <b>DRA</b> is incorrect because it misidentifies what is added, removed, or withheld after the behavior.",
+    "type": "mc",
+    "id": 343
   },
   {
     "cat": "Differential Reinforcement",
@@ -4984,24 +4984,24 @@
       "Response cost"
     ],
     "c": 0,
-    "e": "<b>FCT</b> teaches a communication response that serves the same function as the problem behavior.",
+    "e": "<b>FCT</b> teaches a communication response that serves the same function as the problem behavior. <b>DRO</b> is incorrect because the maintaining consequence in this scenario does not match that function.",
     "id": 344,
     "type": "mc"
   },
   {
     "cat": "Extinction",
     "dom": "D",
-    "q": "Extinction means:",
+    "q": "A BCBA stops delivering attention after a client whines for help, and whining decreases. This intervention is:",
     "a": [
-      "Withholding the reinforcer that maintained the behavior",
-      "Adding a punisher",
-      "Reinforcing a new behavior",
-      "Ignoring all behavior forever"
+      "Extinction of attention-maintained behavior",
+      "Positive punishment",
+      "DRA with a replacement behavior",
+      "Permanent ignoring of all behavior"
     ],
     "c": 0,
-    "e": "<b>Extinction</b> stops delivering the maintaining reinforcer so the behavior weakens.",
-    "id": 345,
-    "type": "mc"
+    "e": "<b>Extinction</b> withholds the reinforcer that maintained the behavior (here, attention). Punishment adds an aversive; DRA would reinforce a replacement; extinction is procedure-specific, not global ignoring.",
+    "type": "mc",
+    "id": 345
   },
   {
     "cat": "Extinction",
@@ -5014,7 +5014,7 @@
       "Maintenance"
     ],
     "c": 0,
-    "e": "An <b>extinction burst</b> is a temporary increase in frequency/intensity when reinforcement stops.",
+    "e": "An <b>extinction burst</b> is a temporary increase in frequency/intensity when reinforcement stops. <b>Resurgence</b> is incorrect because it misidentifies what is added, removed, or withheld after the behavior.",
     "id": 346,
     "type": "mc"
   },
@@ -5029,7 +5029,7 @@
       "Shaping"
     ],
     "c": 0,
-    "e": "<b>Resurgence</b> is a secondary effect of extinction — old behavior returns when the new one is no longer reinforced.",
+    "e": "<b>Resurgence</b> is a secondary effect of extinction — old behavior returns when the new one is no longer reinforced. <b>Shaping</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 347,
     "type": "mc"
   },
@@ -5044,7 +5044,7 @@
       "Overcorrection"
     ],
     "c": 0,
-    "e": "<b>Exclusionary</b> time-out removes the person from the reinforcing setting; nonexclusionary keeps them in it.",
+    "e": "<b>Exclusionary</b> time-out removes the person from the reinforcing setting; nonexclusionary keeps them in it. <b>Response-cost</b> is incorrect because it misidentifies what is added, removed, or withheld after the behavior.",
     "id": 348,
     "type": "mc"
   },
@@ -5068,7 +5068,7 @@
       "Withholding all attention"
     ],
     "c": 0,
-    "e": "At peak, <b>safety</b> comes first — follow the crisis plan; data and teaching wait.",
+    "e": "At peak, <b>safety</b> comes first — follow the crisis plan; data and teaching wait. <b>Collecting frequency data</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 350,
     "type": "mc"
   },
@@ -5098,7 +5098,7 @@
       "End the session"
     ],
     "c": 0,
-    "e": "Variables that may affect progress (illness, medication, schedule) are reported in a timely manner (E.3).",
+    "e": "Variables that may affect progress (illness, medication, schedule) are reported in a timely manner (E.3). <b>Ignore it</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 352,
     "type": "mc"
   },
@@ -5113,7 +5113,7 @@
       "Skip data that day"
     ],
     "c": 0,
-    "e": "Seek and prioritize clinical direction through the chain of command (E.2).",
+    "e": "Seek and prioritize clinical direction through the chain of command (E.2). <b>Decide on your own</b> is incorrect because it is not the measurement or graph-reading rule applied in this scenario.",
     "id": 353,
     "type": "mc"
   },
@@ -5137,7 +5137,7 @@
       "Optional when you're busy"
     ],
     "c": 0,
-    "e": "Notes must objectively reflect what occurred and meet legal/regulatory/workplace rules (E.4).",
+    "e": "Notes must objectively reflect what occurred and meet legal/regulatory/workplace rules (E.4). <b>Based on how you felt</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 355,
     "type": "mc"
   },
@@ -5152,7 +5152,7 @@
       "Have a coworker show you quickly"
     ],
     "c": 0,
-    "e": "Provide services only after demonstrating competence — get proper training first (F.2).",
+    "e": "Provide services only after demonstrating competence — get proper training first (F.2). <b>Try your best anyway</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 356,
     "type": "mc"
   },
@@ -5167,7 +5167,7 @@
       "After one year of experience"
     ],
     "c": 0,
-    "e": "RBTs work only under ongoing supervision from a qualifying supervisor (F.3).",
+    "e": "RBTs work only under ongoing supervision from a qualifying supervisor (F.3). <b>Whenever the family asks</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 357,
     "type": "mc"
   },
@@ -5197,7 +5197,7 @@
       "Ask the client's opinion"
     ],
     "c": 0,
-    "e": "Avoid public/social-media entanglements that blur professional boundaries (F.6).",
+    "e": "Avoid public/social-media entanglements that blur professional boundaries (F.6). <b>Accept but never post</b> is incorrect because it does not reflect the professional boundary or credential rule tested here.",
     "id": 359,
     "type": "mc"
   },
@@ -5212,7 +5212,7 @@
       "Preference assessment"
     ],
     "c": 0,
-    "e": "A <b>multiple relationship</b> creates conflict-of-interest risk and should be avoided (F.7).",
+    "e": "A <b>multiple relationship</b> creates conflict-of-interest risk and should be avoided (F.7). <b>Generalization plan</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 360,
     "type": "mc"
   },
@@ -5227,7 +5227,7 @@
       "Trade it for extra sessions"
     ],
     "c": 0,
-    "e": "Adhere to the BACB gift-giving/receiving guidelines; significant gifts are declined (F.8).",
+    "e": "Adhere to the BACB gift-giving/receiving guidelines; significant gifts are declined (F.8). <b>Accept it warmly</b> is incorrect because it does not reflect the professional boundary or credential rule tested here.",
     "id": 361,
     "type": "mc"
   },
@@ -5257,7 +5257,7 @@
       "Ignoring their preferences"
     ],
     "c": 0,
-    "e": "Core ethics: treat others with compassion, dignity, and respect (F.1).",
+    "e": "Core ethics: treat others with compassion, dignity, and respect (F.1). <b>Ignoring their preferences</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 363,
     "type": "mc"
   },
@@ -5296,7 +5296,7 @@
       "Adds a stimulus to decrease a behavior"
     ],
     "c": 0,
-    "e": "<b>Negative</b> = remove; <b>reinforcement</b> = behavior increases. Something aversive is taken away.",
+    "e": "<b>Negative</b> = remove; <b>reinforcement</b> = behavior increases. Something aversive is taken away. <b>Adds a stimulus to increase a behavior</b> is incorrect because it misidentifies what is added, removed, or withheld after the behavior.",
     "id": 366,
     "type": "mc"
   },
@@ -5311,7 +5311,7 @@
       "Negative punishment"
     ],
     "c": 0,
-    "e": "Removing the nagging (aversive) makes chores more likely — <b>negative reinforcement</b> (escape).",
+    "e": "Removing the nagging (aversive) makes chores more likely — <b>negative reinforcement</b> (escape). <b>Positive punishment</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 367,
     "type": "mc"
   },
@@ -5326,7 +5326,7 @@
       "Negative reinforcement"
     ],
     "c": 0,
-    "e": "Adding a stimulus that <b>decreases</b> behavior is <b>positive punishment</b>.",
+    "e": "Adding a stimulus that <b>decreases</b> behavior is <b>positive punishment</b>. <b>Negative punishment</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 368,
     "type": "mc"
   },
@@ -5341,7 +5341,7 @@
       "Negative reinforcement"
     ],
     "c": 0,
-    "e": "Removing a reinforcer to <b>decrease</b> behavior is <b>negative punishment</b> — here, response cost.",
+    "e": "Removing a reinforcer to <b>decrease</b> behavior is <b>negative punishment</b> — here, response cost. <b>Extinction</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 369,
     "type": "mc"
   },
@@ -5395,7 +5395,7 @@
       "Intraverbal"
     ],
     "c": 0,
-    "e": "A <b>mand</b> is a request under motivation (an MO); it specifies its own reinforcer.",
+    "e": "A <b>mand</b> is a request under motivation (an MO); it specifies its own reinforcer. <b>Tact</b> is incorrect because it describes a different verbal operant than the one cued by the antecedent and consequence.",
     "id": 373,
     "type": "mc"
   },
@@ -5410,7 +5410,7 @@
       "Echoic"
     ],
     "c": 0,
-    "e": "A <b>tact</b> labels something in the environment; it's evoked by contact with the item.",
+    "e": "A <b>tact</b> labels something in the environment; it's evoked by contact with the item. <b>Mand</b> is incorrect because it describes a different verbal operant than the one cued by the antecedent and consequence.",
     "id": 374,
     "type": "mc"
   },
@@ -5425,7 +5425,7 @@
       "Textual"
     ],
     "c": 0,
-    "e": "An <b>echoic</b> is a vocal copy with point-to-point correspondence to what was heard.",
+    "e": "An <b>echoic</b> is a vocal copy with point-to-point correspondence to what was heard. <b>Mand</b> is incorrect because it describes a different verbal operant than the one cued by the antecedent and consequence.",
     "id": 375,
     "type": "mc"
   },
@@ -5440,7 +5440,7 @@
       "Echoic"
     ],
     "c": 0,
-    "e": "An <b>intraverbal</b> answers verbal stimuli without point-to-point correspondence (conversation, fill-ins).",
+    "e": "An <b>intraverbal</b> answers verbal stimuli without point-to-point correspondence (conversation, fill-ins). <b>Tact</b> is incorrect because it describes a different verbal operant than the one cued by the antecedent and consequence.",
     "id": 376,
     "type": "mc"
   },
@@ -5455,7 +5455,7 @@
       "Tact"
     ],
     "c": 0,
-    "e": "<b>Textual</b> behavior is reading written words aloud; transcription is writing/spelling what's heard.",
+    "e": "<b>Textual</b> behavior is reading written words aloud; transcription is writing/spelling what's heard. <b>Tact</b> is incorrect because it describes a different verbal operant than the one cued by the antecedent and consequence.",
     "id": 377,
     "type": "mc"
   },
@@ -5470,7 +5470,7 @@
       "Textual"
     ],
     "c": 0,
-    "e": "<b>Mands</b> are taught first — requesting gets the learner what they want and builds communication.",
+    "e": "<b>Mands</b> are taught first — requesting gets the learner what they want and builds communication. <b>Tact</b> is incorrect because it describes a different verbal operant than the one cued by the antecedent and consequence.",
     "id": 378,
     "type": "mc"
   },
@@ -5500,7 +5500,7 @@
       "Reinforcer"
     ],
     "c": 0,
-    "e": "An <b>EO</b> increases the value of a reinforcer and the behavior that gets it (deprivation).",
+    "e": "An <b>EO</b> increases the value of a reinforcer and the behavior that gets it (deprivation). <b>Reinforcer</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 380,
     "type": "mc"
   },
@@ -5515,7 +5515,7 @@
       "Punishment"
     ],
     "c": 0,
-    "e": "An <b>AO</b> decreases a reinforcer's value and the behavior it evokes (satiation).",
+    "e": "An <b>AO</b> decreases a reinforcer's value and the behavior it evokes (satiation). <b>Extinction</b> is incorrect because it defines a different differential-reinforcement procedure.",
     "id": 381,
     "type": "mc"
   },
@@ -5554,7 +5554,7 @@
       "Fixed ratio"
     ],
     "c": 0,
-    "e": "Reinforcement tied to unpredictable time = <b>variable interval</b>.",
+    "e": "Reinforcement tied to unpredictable time = <b>variable interval</b>. <b>Fixed ratio</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 384,
     "type": "mc"
   },
@@ -5584,7 +5584,7 @@
       "Prompt fading"
     ],
     "c": 0,
-    "e": "Increasing the response requirement (FR-2 → FR-5 → FR-10) is <b>schedule thinning</b>. Shaping changes response topography; chaining sequences steps; fading reduces prompts.",
+    "e": "Increasing the response requirement (FR-2 → FR-5 → FR-10) is <b>schedule thinning</b>. Shaping changes response topography; chaining sequences steps; fading reduces prompts. <b>Shaping</b> is incorrect because it describes a different verbal operant than the one cued by the antecedent and consequence.",
     "type": "mc",
     "id": 386
   },
@@ -5599,7 +5599,7 @@
       "DRL (low rate)"
     ],
     "c": 0,
-    "e": "<b>DRA</b> reinforces a specific alternative behavior in place of the problem behavior.",
+    "e": "<b>DRA</b> reinforces a specific alternative behavior in place of the problem behavior. <b>DRO (other)</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 387,
     "type": "mc"
   },
@@ -5614,7 +5614,7 @@
       "DRL (low rate)"
     ],
     "c": 0,
-    "e": "<b>DRI</b> reinforces a behavior that is physically incompatible with the target.",
+    "e": "<b>DRI</b> reinforces a behavior that is physically incompatible with the target. <b>DRO (other)</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 388,
     "type": "mc"
   },
@@ -5629,7 +5629,7 @@
       "DRA (alternative)"
     ],
     "c": 0,
-    "e": "<b>DRL</b> reinforces reduced rates of a behavior that's acceptable in moderation.",
+    "e": "<b>DRL</b> reinforces reduced rates of a behavior that's acceptable in moderation. <b>DRO (other)</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 389,
     "type": "mc"
   },
@@ -5644,7 +5644,7 @@
       "Chain"
     ],
     "c": 0,
-    "e": "<b>A-B-C</b> = Antecedent, Behavior, Consequence — a descriptive assessment tool.",
+    "e": "<b>A-B-C</b> = Antecedent, Behavior, Consequence — a descriptive assessment tool. <b>Chain</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 390,
     "type": "mc"
   },
@@ -5659,7 +5659,7 @@
       "Descriptive observation"
     ],
     "c": 0,
-    "e": "<b>Indirect</b> methods rely on others' reports rather than observing behavior directly.",
+    "e": "<b>Indirect</b> methods rely on others' reports rather than observing behavior directly. <b>A functional analysis</b> is incorrect because the maintaining consequence in this scenario does not match that function.",
     "id": 391,
     "type": "mc"
   },
@@ -5674,7 +5674,7 @@
       "Reporting concerns to the supervisor"
     ],
     "c": 0,
-    "e": "Designing or changing the plan is the <b>BCBA's</b> job. RBTs implement and report.",
+    "e": "Designing or changing the plan is the <b>BCBA's</b> job. RBTs implement and report. <b>Collecting session data</b> is incorrect because it does not reflect the professional boundary or credential rule tested here.",
     "id": 392,
     "type": "mc"
   },
@@ -5713,7 +5713,7 @@
       "At the end of the month"
     ],
     "c": 0,
-    "e": "Notes are completed contemporaneously so they're accurate and complete (E.4).",
+    "e": "Notes are completed contemporaneously so they're accurate and complete (E.4). <b>At the end of the month</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 395,
     "type": "mc"
   },
@@ -5752,7 +5752,7 @@
       "Skip data collection that day"
     ],
     "c": 0,
-    "e": "Report variables that may affect the client or the data in a timely manner (E.3).",
+    "e": "Report variables that may affect the client or the data in a timely manner (E.3). <b>Say nothing unless asked</b> is incorrect because it defines a different differential-reinforcement procedure.",
     "id": 398,
     "type": "mc"
   },
@@ -5767,7 +5767,7 @@
       "Change the treatment goals"
     ],
     "c": 0,
-    "e": "Sleep, illness, and meals are variables that can affect behavior — document and report them (E.3).",
+    "e": "Sleep, illness, and meals are variables that can affect behavior — document and report them (E.3). <b>Ignore it</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 399,
     "type": "mc"
   },
@@ -5782,7 +5782,7 @@
       "Skip that program"
     ],
     "c": 0,
-    "e": "Seek and prioritize clinical direction through the chain of command (E.2).",
+    "e": "Seek and prioritize clinical direction through the chain of command (E.2). <b>Skip that program</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 400,
     "type": "mc"
   },
@@ -5797,7 +5797,7 @@
       "Add it just for today"
     ],
     "c": 0,
-    "e": "Adding or changing goals is the BCBA's role; relay the request up the chain (E.1/E.2).",
+    "e": "Adding or changing goals is the BCBA's role; relay the request up the chain (E.1/E.2). <b>Add it right away</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 401,
     "type": "mc"
   },
@@ -5812,7 +5812,7 @@
       "Wait months to see if it changes"
     ],
     "c": 0,
-    "e": "Relay team concerns and suggestions to the supervisor in a timely manner (E.1).",
+    "e": "Relay team concerns and suggestions to the supervisor in a timely manner (E.1). <b>Quietly stop running it</b> is incorrect because it does not match the defining feature tested in this item.",
     "id": 402,
     "type": "mc"
   },
@@ -5851,7 +5851,7 @@
       "Marketing the clinic"
     ],
     "c": 0,
-    "e": "Notes must meet legal, regulatory, and workplace requirements — they carry real weight (E.4).",
+    "e": "Notes must meet legal, regulatory, and workplace requirements — they carry real weight (E.4). <b>Nothing important</b> is incorrect because it is not the measurement or graph-reading rule applied in this scenario.",
     "id": 405,
     "type": "mc"
   },
@@ -5864,7 +5864,7 @@
       "Automatic reinforcement"
     ],
     "c": 0,
-    "e": "The crying is followed by <b>access to a tangible</b> (cracker). Attention would require social reaction; escape would remove a demand; automatic would occur without anyone present.",
+    "e": "The crying is followed by <b>access to a tangible</b> (cracker). Attention would require social reaction; escape would remove a demand; automatic would occur without anyone present. <b>Attention</b> is incorrect because the maintaining consequence in this scenario does not match that function.",
     "dom": "D",
     "id": 406,
     "type": "mc",
@@ -5879,7 +5879,7 @@
       "Automatic reinforcement"
     ],
     "c": 2,
-    "e": "<b>Attention</b> from peers maintains the behavior. No tangible is gained and no demand is removed.",
+    "e": "<b>Attention</b> from peers maintains the behavior. No tangible is gained and no demand is removed. <b>Escape/avoidance</b> is incorrect because the maintaining consequence in this scenario does not match that function.",
     "dom": "D",
     "id": 407,
     "type": "mc",
@@ -5894,7 +5894,7 @@
       "Automatic reinforcement"
     ],
     "c": 1,
-    "e": "<b>Escape/avoidance</b> — the behavior removes or postpones the non-preferred task.",
+    "e": "<b>Escape/avoidance</b> — the behavior removes or postpones the non-preferred task. <b>Attention</b> is incorrect because the maintaining consequence in this scenario does not match that function.",
     "dom": "D",
     "id": 408,
     "type": "mc",
@@ -5909,7 +5909,7 @@
       "Automatic reinforcement"
     ],
     "c": 3,
-    "e": "<b>Automatic reinforcement</b> — sensory consequences maintain the behavior without social mediation.",
+    "e": "<b>Automatic reinforcement</b> — sensory consequences maintain the behavior without social mediation. <b>Attention</b> is incorrect because the maintaining consequence in this scenario does not match that function.",
     "dom": "D",
     "id": 409,
     "type": "mc",
@@ -5924,7 +5924,7 @@
       "Interobserver agreement"
     ],
     "c": 0,
-    "e": "<b>Function</b> = the environmental reason the behavior is reinforced. Topography is form; latency and IOA are measurement concepts.",
+    "e": "<b>Function</b> = the environmental reason the behavior is reinforced. Topography is form; latency and IOA are measurement concepts. <b>Latency</b> is incorrect because the maintaining consequence in this scenario does not match that function.",
     "dom": "D",
     "id": 410,
     "type": "mc",
@@ -5939,7 +5939,7 @@
       "Automatic reinforcement"
     ],
     "c": 0,
-    "e": "The client gains <b>access to a tangible</b> (the tablet).",
+    "e": "The client gains <b>access to a tangible</b> (the tablet). <b>Attention</b> is incorrect because the maintaining consequence in this scenario does not match that function.",
     "dom": "D",
     "id": 411,
     "type": "mc",
@@ -5954,7 +5954,7 @@
       "Negative punishment"
     ],
     "c": 0,
-    "e": "<b>Positive reinforcement:</b> a stimulus (praise/sticker) is <b>added</b> after the behavior and the behavior <b>increases</b>. Negative reinforcement would remove an aversive; punishment would decrease behavior.",
+    "e": "<b>Positive reinforcement:</b> a stimulus (praise/sticker) is <b>added</b> after the behavior and the behavior <b>increases</b>. Negative reinforcement would remove an aversive; punishment would decrease behavior. <b>Positive punishment</b> is incorrect because it does not match the defining feature tested in this item.",
     "dom": "C",
     "cat": "Reinforcement & Punishment",
     "id": 412,
@@ -5984,7 +5984,7 @@
       "Negative reinforcement"
     ],
     "c": 0,
-    "e": "<b>Positive punishment:</b> an aversive stimulus (extra homework) is <b>added</b> and the behavior <b>decreases</b>. Removing a preferred item would be negative punishment.",
+    "e": "<b>Positive punishment:</b> an aversive stimulus (extra homework) is <b>added</b> and the behavior <b>decreases</b>. Removing a preferred item would be negative punishment. <b>Negative punishment</b> is incorrect because it does not match the defining feature tested in this item.",
     "dom": "D",
     "cat": "Reinforcement & Punishment",
     "id": 414,
@@ -5999,7 +5999,7 @@
       "Negative reinforcement"
     ],
     "c": 0,
-    "e": "<b>Negative punishment:</b> a preferred stimulus (tokens) is <b>removed</b> and hitting <b>decreases</b>. Response cost is a common form used in token economies.",
+    "e": "<b>Negative punishment:</b> a preferred stimulus (tokens) is <b>removed</b> and hitting <b>decreases</b>. Response cost is a common form used in token economies. <b>Extinction</b> is incorrect because it does not match the defining feature tested in this item.",
     "dom": "D",
     "cat": "Reinforcement & Punishment",
     "id": 415,
@@ -6014,7 +6014,7 @@
       "NCR"
     ],
     "c": 0,
-    "e": "<b>DRA</b> reinforces an appropriate alternative (communication card) while withholding reinforcement for screaming (<b>extinction</b> of the problem behavior).",
+    "e": "<b>DRA</b> reinforces an appropriate alternative (communication card) while withholding reinforcement for screaming (<b>extinction</b> of the problem behavior). <b>DRL</b> is incorrect because it misidentifies what is added, removed, or withheld after the behavior.",
     "dom": "D",
     "id": 416,
     "type": "mc",
@@ -6044,7 +6044,7 @@
       "DRH"
     ],
     "c": 0,
-    "e": "<b>DRO</b> (differential reinforcement of other behavior) reinforces intervals with <b>zero</b> occurrences of the target behavior.",
+    "e": "<b>DRO</b> (differential reinforcement of other behavior) reinforces intervals with <b>zero</b> occurrences of the target behavior. <b>DRA</b> is incorrect because it does not match the defining feature tested in this item.",
     "dom": "D",
     "id": 418,
     "type": "mc",
@@ -6062,7 +6062,7 @@
       "25 per hour"
     ],
     "c": 1,
-    "e": "Rate standardizes count by time. <b>15 ÷ 1.5 hours = 10 per hour.</b> Always match the unit in the question (here, per hour).",
+    "e": "Rate standardizes count by time. <b>15 ÷ 1.5 hours = 10 per hour.</b> Always match the unit in the question (here, per hour). <b>5 per hour</b> is incorrect because it is not the measurement or graph-reading rule applied in this scenario.",
     "source": "BACB RBT Handbook — retired sample 1",
     "type": "mc",
     "id": 419
@@ -6096,7 +6096,7 @@
       "DRI"
     ],
     "c": 1,
-    "e": "<b>DRA</b> reinforces an appropriate <b>alternative</b> behavior (hand-raising) while withholding reinforcement for the problem behavior (shouting). DRO would reinforce intervals with no shouting, regardless of what else occurs.",
+    "e": "<b>DRA</b> reinforces an appropriate <b>alternative</b> behavior (hand-raising) while withholding reinforcement for the problem behavior (shouting). DRO would reinforce intervals with no shouting, regardless of what else occurs. <b>DRO</b> is incorrect because it defines a different differential-reinforcement procedure.",
     "source": "BACB RBT Handbook — retired sample 3",
     "type": "mc",
     "id": 421
@@ -6113,7 +6113,7 @@
       "Client seemed bored and unmotivated"
     ],
     "c": 0,
-    "e": "Objective notes describe <b>observable, measurable</b> events. Attitude, intent, and motivation labels are subjective interpretations.",
+    "e": "Objective notes describe <b>observable, measurable</b> events. Attitude, intent, and motivation labels are subjective interpretations. <b>Client seemed bored and unmotivated</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "id": 422
   },
@@ -6145,7 +6145,7 @@
       "Skip the program and collect only ABC data"
     ],
     "c": 0,
-    "e": "RBTs <b>seek clinical direction</b> through the chain of command when uncertain (E.2).",
+    "e": "RBTs <b>seek clinical direction</b> through the chain of command when uncertain (E.2). <b>Ask the caregiver how they want it done</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "id": 424
   },
@@ -6161,7 +6161,7 @@
       "Write a new goal and begin teaching it"
     ],
     "c": 0,
-    "e": "Program changes are the BCBA's responsibility. The RBT <b>communicates caregiver requests</b> to the supervisor (E.1/E.2).",
+    "e": "Program changes are the BCBA's responsibility. The RBT <b>communicates caregiver requests</b> to the supervisor (E.1/E.2). <b>Add the goal for today only</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "id": 425
   },
@@ -6177,7 +6177,7 @@
       "After the BCBA reviews the data"
     ],
     "c": 0,
-    "e": "Contemporaneous documentation supports accuracy and meets legal/workplace requirements (E.4).",
+    "e": "Contemporaneous documentation supports accuracy and meets legal/workplace requirements (E.4). <b>After the BCBA reviews the data</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "id": 426
   },
@@ -6193,7 +6193,7 @@
       "Ignore it unless behavior escalates"
     ],
     "c": 0,
-    "e": "Setting events (sleep, meals) can affect behavior and data quality. Document and <b>report in a timely manner</b>.",
+    "e": "Setting events (sleep, meals) can affect behavior and data quality. Document and <b>report in a timely manner</b>. <b>Cancel data collection for the day</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "id": 427
   },
@@ -6209,7 +6209,7 @@
       "The client used the FERB on 4 of 6 opportunities"
     ],
     "c": 0,
-    "e": "\"Noncompliant and defiant\" are <b>subjective labels</b>. Counts, durations, and objective descriptions belong in session notes.",
+    "e": "\"Noncompliant and defiant\" are <b>subjective labels</b>. Counts, durations, and objective descriptions belong in session notes. <b>The client left the table for 45 seconds</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "id": 428
   },
@@ -6241,7 +6241,7 @@
       "Discuss clients if the neighbor also works in schools"
     ],
     "c": 0,
-    "e": "Protect confidentiality — <b>no client information</b> should be disclosed in casual conversation, including confirming client status.",
+    "e": "Protect confidentiality — <b>no client information</b> should be disclosed in casual conversation, including confirming client status. <b>Share first names only</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "id": 430
   },
@@ -6257,7 +6257,7 @@
       "Join only if the BCBA is also a member"
     ],
     "c": 0,
-    "e": "Professional <b>boundaries</b> limit social-media entanglements that blur the therapeutic relationship (F.6).",
+    "e": "Professional <b>boundaries</b> limit social-media entanglements that blur the therapeutic relationship (F.6). <b>Join but avoid posting</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "id": 431
   },
@@ -6273,7 +6273,7 @@
       "Motivating operation"
     ],
     "c": 0,
-    "e": "A <b>multiple relationship</b> can impair objectivity and create conflicts of interest (F.7).",
+    "e": "A <b>multiple relationship</b> can impair objectivity and create conflicts of interest (F.7). <b>Token economy</b> is incorrect because it does not match the defining feature tested in this item.",
     "type": "mc",
     "id": 432
   }

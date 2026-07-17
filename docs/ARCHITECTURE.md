@@ -12,7 +12,7 @@ index.html
 ```
 
 1. `game/bootstrap.js` imports `src/core/kernel.js` and exposes `window.Trail`.
-2. The kernel registers six agents on a shared event bus.
+2. The kernel wires the ten-agent staff team to a shared event bus.
 3. `index.html` owns run state (`RUN`, `ENC`), rendering (`RENDER`), and the question encounter loop.
 4. Agents react to hooks (`answer:correct`, `hazard:gust`, `draft:offer`, etc.) and return deltas.
 
@@ -26,11 +26,12 @@ index.html
 | **Mountain Economy** | `mountain-economy.js` | Weather, relics, stamina/threat tuning |
 | **Expedition Director** | `expedition-director.js` | Route assembly across acts |
 | **Atlas Artisan** | `atlas-artisan.js` | UI tokens, screen copy, codex tiers, menu stats |
-| **Summit Sage** | `summit-sage.js` | Study coach — domain readiness, mastery analytics, review planning (pure) |
+| **Summit Sage** | `summit-sage.js` | Study coach — domain readiness, mastery analytics, review planning (pure; surfaces as "The Sage's counsel" on the debrief) |
+| **Cairn Keeper** | `cairn-keeper.js` | Trail tales — the deck of narrative choice encounters met at story cairns (pure; draws and resolves deterministically from the run rng) |
 | **Trail Chronicler** | `trail-chronicler.js` | Passive hook telemetry into a capped ring buffer (never mutates ctx) |
 | **Sandbox Steward** | `sandbox-steward.js` | Deterministic control surface: spawn pitches, preview drafts, simulate climbs through the real bus |
 
-The last three staff members are additive: **Summit Sage** and **Sandbox Steward** are pure helper agents (empty `register`), and **Trail Chronicler** only records hooks (its handlers always return `{}`), so none of them can change what a live climb does.
+**Summit Sage**, **Cairn Keeper**, and **Sandbox Steward** are pure helper agents (empty `register`), and **Trail Chronicler** only records hooks (its handlers always return `{}`) — none of them mutate a live climb through the bus. The Cairn Keeper's tale effects are applied by the engine after an explicit player choice, never as a hook side effect.
 
 Core wiring lives in `src/core/`:
 

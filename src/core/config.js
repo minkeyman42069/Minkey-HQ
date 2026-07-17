@@ -8,7 +8,7 @@ export const CONFIG = {
   THREAT_RESET: 75,
   CRUX_RISE_MULT: 1.2,
   MAX_BOONS: 5,
-  MODS: { weather: true, relics: true, shrines: true },
+  MODS: { weather: true, relics: true, shrines: true, tales: true },
   LOCK_TIER: 3,
   MASTER_TIER: 4,
   BOX_WEIGHTS: [9, 6.5, 5, 3.5, 2],

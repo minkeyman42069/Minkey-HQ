@@ -109,7 +109,9 @@ export function simulateClimb(opts = {}) {
   for (const node of route) {
     if (node.act === 3 && act3Entry === null) act3Entry = stamina;
 
-    if (node.kind === 'shrine') continue;
+    // Choice nodes (shrine offerings, Cairn Keeper tales) are player-driven
+    // and roughly stamina-neutral across their options — treat as no-ops.
+    if (node.kind === 'shrine' || node.kind === 'tale') continue;
     if (node.kind === 'rest') {
       stamina = Math.min(BALANCE.STAM_MAX, stamina + node.restore);
       continue;

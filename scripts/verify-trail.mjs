@@ -6,7 +6,7 @@ import { createKernel } from '../src/core/kernel.js';
 
 const Trail = createKernel();
 
-const required = ['boon', 'hazard', 'scholar', 'economy', 'expedition', 'atlas', 'sage', 'steward', 'chronicler'];
+const required = ['boon', 'hazard', 'scholar', 'economy', 'expedition', 'atlas', 'sage', 'keeper', 'steward', 'chronicler'];
 for (const k of required) {
   if (!Trail.agents[k]) throw new Error(`Missing agent: ${k}`);
 }
@@ -14,7 +14,7 @@ for (const k of required) {
 if (!Trail.economy?.grantRelic) throw new Error('Mountain economy API incomplete');
 if (Object.keys(Trail.agents.boon.api.catalog).length < 16) throw new Error('Boon catalog too small');
 if (Trail.agents.boon.api.duos.length < 8) throw new Error('Duo catalog too small');
-if (!Trail.meta || Trail.meta.length !== 9) throw new Error('Agent meta incomplete');
+if (!Trail.meta || Trail.meta.length !== 10) throw new Error('Agent meta incomplete');
 for (const m of Trail.meta) {
   if (!m.id || !m.name || !m.icon || !m.blurb) throw new Error(`Agent meta entry incomplete: ${m.id}`);
 }
@@ -57,6 +57,32 @@ if (!Array.isArray(breakdown) || breakdown.length !== 6) throw new Error('Sage b
 const readiness = Trail.agents.sage.api.readiness(sageRun, sageBank, Trail.CONFIG);
 if (readiness.ready !== 1) throw new Error('Sage readiness miscount');
 if (!Trail.agents.sage.api.recommend(sageRun, sageBank, Trail.CONFIG).length) throw new Error('Sage produced no tips');
+
+// --- Cairn Keeper trail tales ---
+const keeper = Trail.agents.keeper.api;
+if (!Array.isArray(keeper.TALES) || keeper.TALES.length < 8) throw new Error('Tale deck too small');
+for (const t of keeper.TALES) {
+  if (!t.id || !t.title || !t.text || !Array.isArray(t.choices) || t.choices.length < 2) {
+    throw new Error(`Tale incomplete: ${t.id}`);
+  }
+  for (const c of t.choices) {
+    if (!c.label || !c.desc || (!c.fx && !c.gamble)) throw new Error(`Tale choice incomplete: ${t.id}`);
+  }
+}
+const seededTale = () => 0.42;
+const taleA = keeper.drawTale(seededTale, 1, []);
+const taleB = keeper.drawTale(seededTale, 1, []);
+if (taleA.id !== taleB.id) throw new Error('Tale draw is not deterministic');
+if (taleA.minAct > 1) throw new Error('Tale draw ignored act gate');
+const redraw = keeper.drawTale(seededTale, 1, [taleA.id]);
+if (redraw.id === taleA.id) throw new Error('Tale draw repeated a used tale');
+const gambleChoice = keeper.TALES.find((t) => t.choices.some((c) => c.gamble)).choices.find((c) => c.gamble);
+const won = keeper.resolveChoice(gambleChoice, () => 0);
+const lost = keeper.resolveChoice(gambleChoice, () => 0.999);
+if (won.won !== true || lost.won !== false) throw new Error('Gamble resolution broken');
+if (!won.text || !lost.text) throw new Error('Gamble outcomes need text');
+const routeWithTales = Trail.buildRoute(() => 0.5, null);
+if (routeWithTales.filter((n) => n.kind === 'tale').length !== 2) throw new Error('Route should hold two story cairns');
 
 // --- Sandbox Steward deterministic simulation ---
 const steward = Trail.agents.steward.api;

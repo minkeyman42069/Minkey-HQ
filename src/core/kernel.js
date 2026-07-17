@@ -36,6 +36,7 @@ import { createAtlasArtisan } from '../agents/atlas-artisan.js';
 import { createSandboxSteward } from '../agents/sandbox-steward.js';
 import { createTrailChronicler } from '../agents/trail-chronicler.js';
 import { createSummitSage } from '../agents/summit-sage.js';
+import { createCairnKeeper } from '../agents/cairn-keeper.js';
 
 const AGENT_META = [
   {
@@ -88,6 +89,13 @@ const AGENT_META = [
     blurb: 'Study coach. Domain readiness, mastery analytics, and what to review next — pure functions over run progress.',
   },
   {
+    id: 'cairn-keeper',
+    name: 'Cairn Keeper',
+    icon: '🗿',
+    color: '#b9a2d8',
+    blurb: 'Trail tales. Narrative choice encounters at story cairns — risks, bargains, and promises, deterministic from the run seed.',
+  },
+  {
     id: 'trail-chronicler',
     name: 'Trail Chronicler',
     icon: '📓',
@@ -109,6 +117,7 @@ export function createKernel() {
   const economy = createEconomyApi();
   const atlasAgent = createAtlasArtisan();
   const sageAgent = createSummitSage();
+  const keeperAgent = createCairnKeeper();
   const stewardAgent = createSandboxSteward();
   const chroniclerAgent = createTrailChronicler();
   const scheduler = createScheduler(CONFIG);
@@ -159,6 +168,7 @@ export function createKernel() {
     },
     atlas: atlasAgent,
     sage: sageAgent,
+    keeper: keeperAgent,
     steward: stewardAgent,
     chronicler: chroniclerAgent,
   };

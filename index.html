@@ -433,6 +433,13 @@ body.wx-clear-dawn #aurora{opacity:.08!important;}
   padding:13px 15px;font-size:13.5px;line-height:1.55;margin:14px 0;}
 .weakcard.clean{background:rgba(95,206,159,.1);border-color:var(--pine);}
 .weakcard b{color:var(--rust);} .weakcard.clean b{color:var(--pine);}
+.sagecard{display:none;background:rgba(127,212,160,.07);border:1px solid rgba(127,212,160,.4);border-radius:var(--r-sm);
+  padding:13px 15px;font-size:13.5px;line-height:1.55;margin:14px 0;}
+.sagecard .sg-hd{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#7fd4a0;margin-bottom:6px;}
+.sagecard ul{margin:4px 0 0;padding-left:18px;}
+.sagecard li{margin:3px 0;}
+.sagecard .sg-next{margin-top:9px;color:var(--mut);font-size:12.5px;}
+.sagecard .sg-next b{color:#7fd4a0;}
 .codebox{background:#081522;border:1px solid var(--line);border-radius:var(--r-sm);padding:13px;margin-top:6px;}
 .codebox .cl{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
 .code{font-family:'Space Mono',monospace;font-size:11.5px;color:var(--pine);word-break:break-all;
@@ -956,6 +963,7 @@ body.lastlegs::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:
         <div class="sect">Where each trail stands</div>
         <div id="ttbl"></div>
         <div class="weakcard" id="weakcard"></div>
+        <div class="sagecard" id="sagecard"></div>
         <div class="missedcard" id="missedCard"></div>
         <button class="copybtn" id="shareBtn" onclick="shareResult()">&#128228; Share your result</button>
       </div>
@@ -1673,7 +1681,7 @@ function freshRun(topic, opts){
   var mb=mergedBank();
   var oath=(typeof getSelectedOath==='function'?getSelectedOath():'none');
   var _r={ topic:topic, oath:oath, route:buildRoute(topic), nodeIdx:0, actShown:{}, freeDraft:false,
-    daily:!!opts.daily, knownDuos:new Set(),
+    daily:!!opts.daily, knownDuos:new Set(), usedTales:[], freeDraftFrom:null,
     prog:{}, locked:new Set(), mastered:new Set(), boons:new Set(), flares:0,
     stamina:CONFIG.STAM_MAX, altitude:1600,
     seen:0, right:0, bestStreak:0, nodeCleared:0, summited:false, stones:{}, stoneNow:null, recovered:0,
@@ -1702,6 +1710,7 @@ function enterCurrentNode(){
   var node=RUN.route[RUN.nodeIdx];
   if(node.kind==='rest'){ openLedge(node,'rest'); return; }
   if(node.kind==='shrine'){ openShrine(node); return; }
+  if(node.kind==='tale'){ openTale(node); return; }
   var prevAct=RUN.curAct||1;
   if(node.act>prevAct && node.act>1 && !RUN.actShown[node.act]){
     RUN.actShown[node.act]=true;
@@ -1727,6 +1736,7 @@ function _enterCurrentNode(node){
   if(node.kind==='serac'){ ENC.threat=25; setTimeout(function(){ banner('The ice groans','it was waiting for you'); },250); }
   if(node.kind==='storm'){ setTimeout(function(){ banner('Rising squall','only speed clears this ridge'); },250); }
   if(node.kind==='summit'){ ENC.threat=20; setTimeout(function(){ banner('The final pitch','all that is left is what you know'); },250); }
+  if(node.startThreat){ ENC.threat=Math.max(ENC.threat, node.startThreat); if(node.kind!=='serac'&&node.kind!=='summit') setTimeout(function(){ banner('It was warned','something told this pitch you were coming'); },250); }
   var pent=Trail.emit('pitch:enter', trailCtx());
   if(pent.staminaDelta) addStamina(pent.staminaDelta);
   showBanners(pent.banners);
@@ -1883,6 +1893,46 @@ function openShrine(node){
   box.appendChild(give); box.appendChild(pass);
   RUN.nodeIdx++; renderHeld(); show('ledge');
 }
+function nextCombatNode(){
+  for(var i=RUN.nodeIdx;i<RUN.route.length;i++){ var k=RUN.route[i].kind;
+    if(k!=='rest'&&k!=='shrine'&&k!=='tale') return RUN.route[i]; }
+  return null;
+}
+function applyTaleFx(fx){
+  if(!fx) return;
+  if(fx.stam) addStamina(fx.stam);
+  if(fx.relic) grantRelic();
+  if(fx.draftNext){ RUN.freeDraft=true; RUN.freeDraftFrom='tale'; }
+  if(fx.threatNext){ var n=nextCombatNode(); if(n) n.startThreat=Math.min(90,(n.startThreat||0)+fx.threatNext); }
+  if(fx.easeNext){ var m=nextCombatNode(); if(m&&m.need) m.need=Math.max(2,m.need-fx.easeNext); }
+}
+function openTale(node){
+  clearInterval(RUN.timer); RUN.altitude=node.alt||RUN.altitude;
+  var tale=Trail.agents.keeper.api.drawTale(rnd, node.act||1, RUN.usedTales);
+  RUN.usedTales.push(tale.id);
+  document.getElementById('ledgeIc').innerHTML=tale.ic;
+  document.getElementById('ledgeTitle').textContent=tale.title;
+  document.getElementById('ledgeSub').textContent=tale.text;
+  document.getElementById('rewardRow').innerHTML='<span class="pill ice">&#9968;&#65039; '+fmt(node.alt||RUN.altitude)+' m</span>';
+  var draftWrap=document.getElementById('draftWrap'); draftWrap.style.display='block';
+  document.getElementById('draftLabel').textContent='What do you do?';
+  var box=document.getElementById('boons'); box.innerHTML='';
+  tale.choices.forEach(function(ch){
+    var el=document.createElement('button'); el.type='button'; el.className='boon'+(ch.gamble?' rare':'');
+    el.innerHTML='<div class="bic">'+ch.ic+'</div><div><div class="bt">'+ch.label+'</div><div class="bd">'+ch.desc+'</div></div>';
+    el.onclick=function(){
+      var out=Trail.agents.keeper.api.resolveChoice(ch, rnd);
+      applyTaleFx(out.fx);
+      draftWrap.style.display='none';
+      if(out.text) document.getElementById('ledgeSub').textContent=out.text;
+      if(out.won===false){ AUDIO.lock(); } else { AUDIO.correct(); }
+      META.tales=(META.tales||0)+1; if(META.tales>=5) unlockAchievement('tale_5'); saveMeta();
+      renderHeld();
+    };
+    box.appendChild(el);
+  });
+  RUN.nodeIdx++; renderHeld(); show('ledge');
+}
 function openLedge(node, mode){
   clearInterval(RUN.timer); RUN.altitude=node.alt||RUN.altitude;
   if(mode==='rest'){ addStamina(pitchRestore(node,'rest')); RUN.nodeIdx++; }
@@ -1901,9 +1951,10 @@ function openLedge(node, mode){
   var scholarBonus=!!RUN.freeDraft;
   var offer = (isRest || node.kind==='gate' || spoils || scholarBonus) && draftBoons();
   if(offer && offer.length){
-    if(scholarBonus) RUN.freeDraft=false;
+    var promiseLabel = RUN.freeDraftFrom==='tale' ? "The Keeper's promise" : "Scholar's reward";
+    if(scholarBonus){ RUN.freeDraft=false; RUN.freeDraftFrom=null; }
     draftWrap.style.display='block';
-    document.getElementById('draftLabel').textContent = scholarBonus ? "Scholar's reward" : spoils ? 'Spoils of the pitch' : isRest ? 'Take one for the climb' : 'Claim a boon';
+    document.getElementById('draftLabel').textContent = scholarBonus ? promiseLabel : spoils ? 'Spoils of the pitch' : isRest ? 'Take one for the climb' : 'Claim a boon';
     var box=document.getElementById('boons'); box.innerHTML='';
     offer.forEach(function(id){
       if(id==='_stamina'){
@@ -2237,6 +2288,22 @@ function endRun(kind){
   else { wc.className='weakcard clean'; wc.style.display='block';
     wc.innerHTML='<b>Every trail is holding.</b> Push the pace next climb and see what the thin air shakes loose.'; }
 
+  var sg=document.getElementById('sagecard');
+  if(sg){
+    if(typeof Trail!=='undefined' && Trail.agents && Trail.agents.sage && RUN.seen>0){
+      try{
+        var tips=Trail.agents.sage.api.recommend(RUN, BANK, CONFIG).slice(0,3);
+        var nr=Trail.agents.sage.api.nextReview(RUN, BANK, 6);
+        var seenCats={}, revCats=[];
+        nr.forEach(function(x){ if(!seenCats[x.cat]&&revCats.length<3){ seenCats[x.cat]=1; revCats.push(x.cat); } });
+        sg.style.display='block';
+        sg.innerHTML='<div class="sg-hd">&#129504; The Sage&rsquo;s counsel</div><ul>'
+          +tips.map(function(t){ return '<li>'+t+'</li>'; }).join('')+'</ul>'
+          +(revCats.length?'<div class="sg-next"><b>Open the next climb here:</b> '+revCats.join(' · ')+'</div>':'');
+      }catch(e){ sg.style.display='none'; }
+    } else { sg.style.display='none'; }
+  }
+
   document.getElementById('code').textContent=buildCode(kind,acc,top);
   renderMissed();
   var _brB=boardReady(); commitRun(kind); checkAchievements(kind); var _brA=boardReady(); var _bl=document.getElementById('bankline');
@@ -2313,7 +2380,7 @@ function starField(){ var s=''; var pts=[[10,12],[22,8],[34,16],[46,10],[58,14],
 /* ---------- grade, share ---------- */
 function gradeRun(){ var acc=RUN.seen?RUN.right/RUN.seen:0; var sc=acc*100; if(RUN.summited) sc+=12; sc+=Math.min(8,RUN.bestStreak); sc+=RUN.stamina*0.05; sc+=(RUN.recovered||0)*3; sc+=(RUN.clutch||0)*4; if(RUN.relics&&RUN.relics.has('stone')) sc+=15; sc=sc*(RUN.weather?RUN.weather.score:1);
   return sc>=100?'S':sc>=88?'A':sc>=74?'B':sc>=58?'C':'D'; }
-function nodeEmoji(kind){ var m={storm:'⛈️',gate:'🛡️',rest:'🏕️',summit:'🏔️',serac:'🧊',whiteout:'🌫️',crevasse:'🕳️',traverse:'🧗',thinair:'🫁',icefall:'☄️',void:'🌑',knife:'🗡️',berg:'⛏️',snowfield:'🌨️',couloir:'🗻',icewall:'💠',windslab:'🌀',sealedface:'🔒',longwall:'🪜',tempest:'🌪️',closing:'⏳',avalanche:'💥',corniceridge:'🌬️',frozentitan:'🧊',shrine:'⛩️'}; return m[kind]||'⛰️'; }
+function nodeEmoji(kind){ var m={storm:'⛈️',gate:'🛡️',rest:'🏕️',summit:'🏔️',serac:'🧊',whiteout:'🌫️',crevasse:'🕳️',traverse:'🧗',thinair:'🫁',icefall:'☄️',void:'🌑',knife:'🗡️',berg:'⛏️',snowfield:'🌨️',couloir:'🗻',icewall:'💠',windslab:'🌀',sealedface:'🔒',longwall:'🪜',tempest:'🌪️',closing:'⏳',avalanche:'💥',corniceridge:'🌬️',frozentitan:'🧊',shrine:'⛩️',tale:'🗿'}; return m[kind]||'⛰️'; }
 function copyText(txt, btnId, done){ var b=document.getElementById(btnId);
   var okc=function(){ if(b){ b.classList.add('done'); b.textContent=done; } };
   if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(okc).catch(function(){fb(txt,okc);}); } else fb(txt,okc); }
@@ -2446,8 +2513,8 @@ function nodeSub(node){
   return n+' to clear';
 }
 /* ---------- META-PROGRESSION (permanent bank so a fall is never a reset) ---------- */
-var META={bank:{},runs:0,summits:0,bestAlt:0,miles:0,achievements:[],dailyDone:0};
-function loadMeta(){ try{ var s=localStorage.getItem('rbtTrailMeta'); if(s){ var o=JSON.parse(s); META={bank:o.bank||{},runs:o.runs||0,summits:o.summits||0,bestAlt:o.bestAlt||0,miles:o.miles||0,achievements:o.achievements||[],dailyDone:o.dailyDone||0}; } }catch(e){} }
+var META={bank:{},runs:0,summits:0,bestAlt:0,miles:0,achievements:[],dailyDone:0,tales:0};
+function loadMeta(){ try{ var s=localStorage.getItem('rbtTrailMeta'); if(s){ var o=JSON.parse(s); META={bank:o.bank||{},runs:o.runs||0,summits:o.summits||0,bestAlt:o.bestAlt||0,miles:o.miles||0,achievements:o.achievements||[],dailyDone:o.dailyDone||0,tales:o.tales||0}; } }catch(e){} }
 function saveMeta(){ try{ localStorage.setItem('rbtTrailMeta',JSON.stringify(META)); }catch(e){} }
 function mergedBank(){ var m={},b=META.bank||{}; Object.keys(b).forEach(function(id){ m[id]=b[id]; }); Object.keys(SAVED).forEach(function(id){ m[id]=Math.max(m[id]||0,SAVED[id]); }); return m; }
 function boardReady(){ var b=META.bank||{},n=0; Object.keys(b).forEach(function(id){ if(b[id]>=CONFIG.LOCK_TIER) n++; }); return n; }

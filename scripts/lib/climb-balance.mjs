@@ -1,15 +1,31 @@
 /**
- * Climb economy model — simulates real routes from the real node factories.
- * Routes come from expedition-director buildRoute and hazard stats from
- * hazard-warden, so the sim cannot drift from shipped gameplay math.
- * (Per-pitch tick-fidelity lives in hazard-sim.mjs; this model covers the
- * whole-climb stamina economy with simplified pitches.)
+ * Climb economy gate — Monte Carlo over REAL climbs.
+ *
+ * Since the Climb Engine unification this no longer models pitches with its
+ * own math: every simulated climb is played end-to-end by
+ * `climb-engine.playClimb` through the real agent bus — the same
+ * resolveAnswer / tickDrift / strike code the browser executes. The only
+ * modeling assumptions left are the player ones, stated here:
+ *
+ *   accuracy        P(correct answer)
+ *   timeoutRate     share of wrong answers that are timeouts
+ *   ANSWER_SECONDS  seconds of passive hazard behavior burned per question
+ *                   (gusts, spikes, drain, and threat rise all count now)
+ *
+ * Choice nodes (shrines, Cairn Keeper tales) stay neutral in the gate:
+ * they are player-driven and roughly stamina-neutral across their options.
  */
 
+import { createKernel } from '../../src/core/kernel.js';
 import { CONFIG } from '../../src/core/config.js';
 import { TIER_COMBAT } from '../../src/agents/hazard-warden.js';
-import { buildRoute, createSeededRng } from '../../src/agents/expedition-director.js';
-import { startThreatFor } from './hazard-sim.mjs';
+import { createSeededRng } from '../../src/agents/expedition-director.js';
+import { playClimb } from '../../src/core/climb-engine.js';
+
+/** How long a typical climber leaves each question on the clock.
+ * Matches the Route Setter's gradeLine assumption (secondsPerQuestion: 6)
+ * so the whole codebase shares one player-speed model. */
+export const ANSWER_SECONDS = 6;
 
 export const BALANCE = {
   STAM_MAX: CONFIG.STAM_MAX,
@@ -22,120 +38,47 @@ export const BALANCE = {
   THREAT_RESET: CONFIG.THREAT_RESET,
   CRUX_RISE_MULT: CONFIG.CRUX_RISE_MULT,
   MAX_BOONS: CONFIG.MAX_BOONS,
+  ANSWER_SECONDS,
 };
 
-/** A real route straight from the Expedition Director. */
-export function defaultRoute(rnd = Math.random) {
-  return buildRoute(rnd, null, CONFIG);
-}
+const trail = createKernel();
 
-function missCosts(node) {
-  const tc = TIER_COMBAT[node.tier];
+/** Play one full climb through the real bus. */
+export function simulateClimb(opts = {}) {
+  const r = playClimb(trail, {
+    seed: opts.seed != null ? opts.seed : Math.floor(Math.random() * 2 ** 31),
+    accuracy: opts.accuracy ?? 0.82,
+    timeoutRate: opts.timeoutRate ?? 0.06,
+    answerSeconds: opts.answerSeconds ?? ANSWER_SECONDS,
+    fixedBoons: opts.fixedBoons ?? boonIds(opts.boons),
+    draftPolicy: 'none',
+    talePolicy: 'skip',
+    shrinePolicy: 'pass',
+    weather: null,
+  });
   return {
-    miss: tc ? tc.missCost : BALANCE.MISS_COST,
-    timeout: tc ? tc.timeoutCost : BALANCE.TIMEOUT_COST,
+    summited: r.summited,
+    stamina: r.stamina,
+    act3Entry: r.act3Entry,
+    totalStrikes: r.strikes,
   };
 }
 
-function questionOutcome(acc, timeoutRate, rnd) {
-  const r = rnd();
-  if (r < acc) return { correct: true, timeout: false };
-  if (r < acc + timeoutRate) return { correct: false, timeout: true };
-  return { correct: false, timeout: false };
-}
-
-function simPitch(node, stamina, acc, timeoutRate, boons, rnd) {
-  let threat = node.startThreat ?? startThreatFor(node.kind);
-  const max = node.max || 100;
-  let done = 0;
-  let missCount = 0;
-  let strikes = 0;
-  const costs = missCosts(node);
-
-  if (boons.provisions) stamina = Math.min(BALANCE.STAM_MAX, stamina + 5);
-
-  for (let q = 0; q < node.need; q++) {
-    const time = node.time || 16;
-    const crux = node.need > 1 && done >= node.need - 1;
-    let riseMult = crux ? BALANCE.CRUX_RISE_MULT : 1;
-    if (boons.coldfront) riseMult *= 0.75;
-
-    // passive threat per question: rise * 0.05 per 50ms tick ≈ rise * seconds
-    threat += node.rise * time * riseMult;
-    if (node.drain) stamina -= node.drain * time;
-
-    const out = questionOutcome(acc, timeoutRate, rnd);
-    if (out.correct) {
-      done++;
-      let ease = typeof node.ease === 'number' ? node.ease : BALANCE.EASE_ON_CORRECT;
-      if (node.noBoonEase) ease = 0;
-      else if (boons.vent) ease += 2;
-      threat = Math.max(0, threat - ease);
-    } else {
-      let cost = out.timeout ? costs.timeout : costs.miss;
-      if (node.escalate) cost += missCount * node.escalate;
-      missCount++;
-      stamina -= cost;
-      threat += node.miss;
-    }
-
-    while (threat >= max && stamina > 0) {
-      threat = Math.max(0, threat - BALANCE.THREAT_RESET);
-      let hit = node.hit;
-      if (boons.pitanchor) hit = Math.round(hit * 0.62);
-      stamina -= hit;
-      strikes++;
-    }
-
-    if (stamina <= 0) return { stamina: 0, cleared: false, strikes };
-  }
-
-  const clearGain = Math.round(node.restore * BALANCE.CLEAR_RESTORE_MULT);
-  return { stamina: Math.min(BALANCE.STAM_MAX, stamina + clearGain), cleared: true, strikes };
-}
-
-export function simulateClimb(opts = {}) {
-  const acc = opts.accuracy ?? 0.82;
-  const timeoutRate = opts.timeoutRate ?? 0.06;
-  const boons = opts.boons ?? {};
-  const rnd = opts.rnd ?? Math.random;
-  const route = opts.route ?? defaultRoute(rnd);
-
-  let stamina = BALANCE.STAM_MAX;
-  let summited = false;
-  let totalStrikes = 0;
-  let act3Entry = null;
-
-  for (const node of route) {
-    if (node.act === 3 && act3Entry === null) act3Entry = stamina;
-
-    // Choice nodes (shrine offerings, Cairn Keeper tales) are player-driven
-    // and roughly stamina-neutral across their options — treat as no-ops.
-    if (node.kind === 'shrine' || node.kind === 'tale') continue;
-    if (node.kind === 'rest') {
-      stamina = Math.min(BALANCE.STAM_MAX, stamina + node.restore);
-      continue;
-    }
-
-    const res = simPitch(node, stamina, acc, timeoutRate, boons, rnd);
-    stamina = res.stamina;
-    totalStrikes += res.strikes;
-
-    if (!res.cleared) return { summited: false, stamina, act3Entry, totalStrikes };
-    if (node.kind === 'summit') summited = true;
-  }
-
-  return { summited, stamina, act3Entry, totalStrikes };
+/** Back-compat: scenario boons were once passed as {id: true} flags. */
+function boonIds(boons) {
+  if (!boons) return [];
+  if (Array.isArray(boons)) return boons;
+  return Object.keys(boons).filter((k) => boons[k]);
 }
 
 export function runMonteCarlo(n = 3000, opts = {}) {
   let wins = 0;
   let act3Alive = 0;
   let totalStrikes = 0;
-  const rnd = opts.seed != null ? createSeededRng(opts.seed) : Math.random;
+  const seedRnd = createSeededRng(opts.seed != null ? opts.seed : 1);
 
   for (let i = 0; i < n; i++) {
-    const r = simulateClimb({ ...opts, rnd });
+    const r = simulateClimb({ ...opts, seed: Math.floor(seedRnd() * 2 ** 31) });
     if (r.summited) wins++;
     if (r.act3Entry !== null && r.act3Entry > 0) act3Alive++;
     totalStrikes += r.totalStrikes;

@@ -1723,7 +1723,7 @@ function enterCurrentNode(){
   _enterCurrentNode(node);
 }
 function _enterCurrentNode(node){
-  ENC={ node:node, need:node.need, done:0, threat:0, max:node.max, lifelineUsed:false, firstMissUsed:false, firstTimeoutUsed:false, rallyUsed:false, bulwarkUsed:false, streakEase:0, cairnBank:0, missCount:0, spikeT:0, shieldLeft:(node.shield||0), easeMul:1, timeMul:1, phaseMul:1, phased:false, luckyUsed:false, cruxTold:false, streak:0, lastId:-1 };
+  ENC=Trail.engine.blankEnc(node, { threat: Trail.engine.entryThreat(node) });
   RUN.altitude=node.alt; RUN.ending=false;
   if(node.kind==='gate'){
     if(RUN.topic){ ENC.node.domain=RUN.topic; ENC.node.blurb="It stands where the route narrows, and it has read your ledger. It will ask about "+RUN.topic+". Wrong answers feed it. Right ones back it off."; }
@@ -1733,10 +1733,10 @@ function _enterCurrentNode(node){
     setTimeout(function(){ banner('Gatekeeper waits','Domain '+gd+': '+DOMAINS[gd].n); },200);
     }
   }
-  if(node.kind==='serac'){ ENC.threat=25; setTimeout(function(){ banner('The ice groans','it was waiting for you'); },250); }
+  if(node.kind==='serac'){ setTimeout(function(){ banner('The ice groans','it was waiting for you'); },250); }
   if(node.kind==='storm'){ setTimeout(function(){ banner('Rising squall','only speed clears this ridge'); },250); }
-  if(node.kind==='summit'){ ENC.threat=20; setTimeout(function(){ banner('The final pitch','all that is left is what you know'); },250); }
-  if(node.startThreat){ ENC.threat=Math.max(ENC.threat, node.startThreat); if(node.kind!=='serac'&&node.kind!=='summit') setTimeout(function(){ banner('It was warned','something told this pitch you were coming'); },250); }
+  if(node.kind==='summit'){ setTimeout(function(){ banner('The final pitch','all that is left is what you know'); },250); }
+  if(node.startThreat && node.kind!=='serac' && node.kind!=='summit'){ setTimeout(function(){ banner('It was warned','something told this pitch you were coming'); },250); }
   var pent=Trail.emit('pitch:enter', trailCtx());
   if(pent.staminaDelta) addStamina(pent.staminaDelta);
   showBanners(pent.banners);
@@ -1763,34 +1763,35 @@ function nextInEncounter(){
 function onPick(correct, srcEl){ if(RUN.busy||RUN.paused) return; RUN.busy=true; clearInterval(RUN.timer); resolve(correct,false,srcEl); }
 function onTimeout(){ if(RUN.busy) return; RUN.busy=true; if(RUN.view) RUN.view.reveal(); resolve(false,true,null); }
 
+/* Presentation layer over the Climb Engine: state changes happen in
+ * Trail.engine; this maps the engine's event stream onto DOM/audio. */
+function syncVitals(){ RENDER.stam(); if(ENC) RENDER.threat();
+  if(typeof document!=='undefined' && document.body && document.body.classList) document.body.classList.toggle('lastlegs', RUN.stamina>0 && RUN.stamina<=25 && !!ENC); }
+function applyEngineEvents(ev){ if(!ev) return;
+  for(var i=0;i<ev.length;i++){ var e=ev[i];
+    if(e.t==='strike'){ if(e.blocked){ AUDIO.tick(); RENDER.encChrome(); } else { AUDIO.strike(); RENDER.encChrome(); banner('The mountain pushes back','&#8722;'+e.hit+' stamina'); } }
+    else if(e.t==='banners'||e.t==='gust'){ showBanners(e.banners); }
+    else if(e.t==='shield'){ banner('The face cracks', e.left>0?(e.left+' layer'+(e.left>1?'s':'')+' to break'):'the shell gives way \u2014 climb'); }
+    else if(e.t==='phase'){ banner('The slope lets go','it releases all at once'); }
+    else if(e.t==='crux'){ banner('The crux','one hard move from the ledge'); }
+    else if(e.t==='knockback'){ if(RENDER.encChrome) RENDER.encChrome(); banner('Knocked back','you slide down the ridge'); }
+    else if(e.t==='spike'){ AUDIO.tick(); }
+    else if(e.t==='lastlegs'){ banner('Last legs','no room left for a slip'); }
+    else if(e.t==='iceaxe'){ banner('\u26cf\ufe0f The ice axe bites','you arrest the fall \u2014 1 stamina'); }
+    else if(e.t==='fell'){ if(RUN.timer) clearInterval(RUN.timer); setTimeout(function(){ endRun('fell'); }, 650); }
+  } }
+
 function resolve(correct, viaTimeout, srcEl){
   var q=RUN.current; var before=RUN.prog[q.id]?RUN.prog[q.id].tier:0;
   var p=SCHED.grade(q.id, correct, viaTimeout); RUN.seen++;
   if(!correct){ RUN.stones[q.id]=RUN.seen+4; }
   else if(RUN.stoneNow===q.id){ RUN.recovered=(RUN.recovered||0)+1; if(RUN.relics&&RUN.relics.has('chalk')){ ENC.threat=0; RENDER.threat(); } if(RUN.nodeIdx>=Math.floor(RUN.route.length*0.55)) RUN.mastered.add(q.id); banner('Loose stone reclaimed','you brought it back'); }
   RUN.stoneNow=null;
-  if(correct){
-    RUN.right++; ENC.streak++; RUN.bestStreak=Math.max(RUN.bestStreak,ENC.streak);
-    if(ENC.shieldLeft>0){ ENC.shieldLeft--; banner('The face cracks', ENC.shieldLeft>0?(ENC.shieldLeft+' layer'+(ENC.shieldLeft>1?'s':'')+' to break'):'the shell gives way \u2014 climb'); }
-    else { ENC.done++; if(ENC.node.phase && !ENC.phased && ENC.done>=Math.ceil(ENC.need/2)){ ENC.phased=true; ENC.phaseMul=1.5; raiseThreat(22); banner('The slope lets go','it releases all at once'); }
-      if(ENC.need>1 && ENC.done===ENC.need-1 && !ENC.cruxTold){ ENC.cruxTold=true; banner('The crux','one hard move from the ledge'); } }
-    AUDIO.correct(); flash('ok'); if(srcEl) burst(srcEl);
-    if(before<lockTierNow() && p.tier>=lockTierNow()) sealLocked();
-    var bout=Trail.emit('answer:correct', trailCtx());
-    if(bout.staminaDelta) addStamina(bout.staminaDelta);
-    if(bout.timeDelta) RUN.timeLeft=Math.min(RUN.maxTime, RUN.timeLeft+bout.timeDelta);
-    if(bout.threatDelta) raiseThreat(bout.threatDelta);
-    showBanners(bout.banners);
-  } else {
-    AUDIO.wrong(viaTimeout); flash('no'); var _sc=document.getElementById('card'); _sc.classList.remove('shake'); void _sc.offsetWidth; _sc.classList.add('shake');
-    var wout=Trail.emit('answer:wrong', trailCtx({ viaTimeout: viaTimeout }));
-    if(!wout.keepStreak){ ENC.streak=0; ENC.streakEase=0; }
-    if(wout.staminaCost>0) addStamina(-wout.staminaCost);
-    else if(wout.staminaDelta) addStamina(wout.staminaDelta);
-    if(wout.threatDelta) raiseThreat(wout.threatDelta);
-    showBanners(wout.banners);
-    if(ENC.node.streakGate){ ENC.done=Math.max(0, ENC.done-2); if(RENDER.encChrome) RENDER.encChrome(); banner('Knocked back','you slide down the ridge'); }
-  }
+  if(correct){ AUDIO.correct(); flash('ok'); if(srcEl) burst(srcEl); if(before<lockTierNow() && p.tier>=lockTierNow()) sealLocked(); }
+  else { AUDIO.wrong(viaTimeout); flash('no'); var _sc=document.getElementById('card'); _sc.classList.remove('shake'); void _sc.offsetWidth; _sc.classList.add('shake'); }
+  var res=Trail.engine.resolveAnswer(Trail, RUN, ENC, { correct: correct, viaTimeout: viaTimeout, rnd: rnd });
+  syncVitals(); applyEngineEvents(res.events);
+  if(res.timeDelta) RUN.timeLeft=Math.min(RUN.maxTime, RUN.timeLeft+res.timeDelta);
   RENDER.encChrome(); RENDER.tierBadge(q); RENDER.momentum();
   RENDER.explain(q, correct, viaTimeout, before, p.tier);
   if(RUN.stamina<=0){ return; }
@@ -1810,24 +1811,13 @@ function clearEncounter(){
   openLedge(ENC.node,'clear');
 }
 
-/* threat + stamina */
-function raiseThreat(x){ if(!ENC) return; ENC.threat=Math.max(0,Math.min(ENC.max,ENC.threat+x));
-  if(ENC.threat>=ENC.max) mountainStrikes(); RENDER.threat(); }
-function mountainStrikes(){
-  ENC.threat=Math.max(0,ENC.threat-CONFIG.THREAT_RESET);
-  var sout=Trail.emit('mountain:strike', trailCtx());
-  if(sout.blocked){ AUDIO.tick(); RENDER.encChrome(); return; }
-  var _hit=sout.hit!=null?sout.hit:ENC.node.hit;
-  if(ENC.node.kind==='gate' && typeof oathGateHitMult==='function') _hit=Math.round(_hit*oathGateHitMult(RUN));
-  if(RUN.relics&&RUN.relics.has('carabiner')&&!ENC.luckyUsed){ ENC.luckyUsed=true; _hit=Math.round(_hit*0.5); }
-  if(RUN.relics&&RUN.relics.has('rope')&&ENC.node.kind==='gate') _hit=Math.round(_hit*0.75);
-  addStamina(-_hit); AUDIO.strike();
-  RENDER.encChrome(); banner('The mountain pushes back', '&#8722;'+_hit+' stamina'); }
-function addStamina(x){ RUN.stamina=Math.max(0,Math.min(CONFIG.STAM_MAX, RUN.stamina+x)); RENDER.stam();
-  if(typeof document!=='undefined' && document.body && document.body.classList){ var _ll=(RUN.stamina>0 && RUN.stamina<=25 && !!ENC); document.body.classList.toggle('lastlegs', _ll); if(_ll && !RUN.lastLegsTold){ RUN.lastLegsTold=true; banner('Last legs','no room left for a slip'); } }
-  if(RUN.stamina<=0 && ENC && !RUN.ending){
-    if(CONFIG.MODS.relics && RUN.relics && RUN.relics.has('iceaxe') && !RUN.iceaxeUsed){ RUN.iceaxeUsed=true; RUN.stamina=1; RENDER.stam(); banner('\u26CF\uFE0F The ice axe bites','you arrest the fall \u2014 1 stamina'); return; }
-    RUN.ending=true; if(RUN.timer) clearInterval(RUN.timer); setTimeout(function(){ endRun('fell'); }, 650); } }
+/* threat + stamina \u2014 math lives in the Climb Engine; these wrappers render */
+function raiseThreat(x){ if(!ENC) return; var ev=[];
+  Trail.engine.raiseThreat(Trail, RUN, ENC, x, rnd, ev);
+  syncVitals(); applyEngineEvents(ev); }
+function addStamina(x){ var ev=[];
+  Trail.engine.addStamina(Trail, RUN, ENC||null, x, ev);
+  syncVitals(); applyEngineEvents(ev); }
 
 /* focus timer */
 function startTimer(){
@@ -1841,10 +1831,8 @@ function startTick(){
   var wrap=document.getElementById('focus'), bar=document.getElementById('focusbar');
   RUN.timer=setInterval(function(){
     RUN.timeLeft-=0.05; var frac=Math.max(0,RUN.timeLeft/RUN.maxTime); bar.style.width=(frac*100)+'%';
-    if(ENC.node.rise){ var _rm=Trail.agents.boon.api.riseMultiplier(trailCtx()); if(ENC.node.enrage && ENC.threat>=ENC.max*0.6) _rm*=ENC.node.enrage; if(ENC.phaseMul) _rm*=ENC.phaseMul; if(ENC.need>1 && ENC.done>=ENC.need-1) _rm*=CONFIG.CRUX_RISE_MULT; _rm=Math.min(_rm,2.0); var _oathR=typeof oathRiseMult==='function'?oathRiseMult(RUN):1; raiseThreat(ENC.node.rise*0.05*_rm*(RUN.weather?RUN.weather.rise:1)*_oathR); }
-    if(ENC.node.gust && rnd()<ENC.node.gust*0.05){ var gustAmt=12+Math.floor(rnd()*10); var gout=Trail.emit('hazard:gust', trailCtx({ gust: gustAmt })); raiseThreat(gout.threatDelta!=null?gout.threatDelta:gustAmt); showBanners(gout.banners); }
-    if(ENC.node.drain) addStamina(-ENC.node.drain*0.05);
-    if(ENC.node.spike){ ENC.spikeT+=0.05; if(ENC.spikeT>=(ENC.node.spikeEvery||3.5)){ ENC.spikeT=0; AUDIO.tick(); raiseThreat(ENC.node.spike); } }
+    var ev=[]; Trail.engine.tickDrift(Trail, RUN, ENC, 0.05, rnd, ev);
+    syncVitals(); applyEngineEvents(ev);
     if(frac<=0.28){ wrap.classList.add('low'); }
     if(RUN.timeLeft<=0){ clearInterval(RUN.timer); onTimeout(); }
   },50);
@@ -1893,18 +1881,10 @@ function openShrine(node){
   box.appendChild(give); box.appendChild(pass);
   RUN.nodeIdx++; renderHeld(); show('ledge');
 }
-function nextCombatNode(){
-  for(var i=RUN.nodeIdx;i<RUN.route.length;i++){ var k=RUN.route[i].kind;
-    if(k!=='rest'&&k!=='shrine'&&k!=='tale') return RUN.route[i]; }
-  return null;
-}
 function applyTaleFx(fx){
-  if(!fx) return;
-  if(fx.stam) addStamina(fx.stam);
-  if(fx.relic) grantRelic();
-  if(fx.draftNext){ RUN.freeDraft=true; RUN.freeDraftFrom='tale'; }
-  if(fx.threatNext){ var n=nextCombatNode(); if(n) n.startThreat=Math.min(90,(n.startThreat||0)+fx.threatNext); }
-  if(fx.easeNext){ var m=nextCombatNode(); if(m&&m.need) m.need=Math.max(2,m.need-fx.easeNext); }
+  var ev=[];
+  Trail.engine.applyTaleFx(Trail, RUN, fx, { enc: (typeof ENC!=='undefined'?ENC:null), grantRelic: grantRelic, events: ev });
+  syncVitals(); applyEngineEvents(ev);
 }
 function openTale(node){
   clearInterval(RUN.timer); RUN.altitude=node.alt||RUN.altitude;

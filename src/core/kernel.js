@@ -1,5 +1,6 @@
 import { createAgentBus } from './agent-bus.js';
 import { CONFIG } from './config.js';
+import * as ClimbEngine from './climb-engine.js';
 import { createBoonArchitect } from '../agents/boon-architect.js';
 import { createEconomyApi, WEATHERS, RELICS, pitchRestore } from '../agents/mountain-economy.js';
 import {
@@ -195,6 +196,7 @@ export function createKernel() {
     makeCtx,
     emit,
     economy,
+    engine: ClimbEngine,
     buildRoute: (rnd, topic) => buildRoute(rnd, topic, CONFIG, HazardWarden),
     weakestDomain: (run, bank) => weakestDomainLetter(run, bank),
     pitchRestore: (node, mode, run) => pitchRestore(node, mode, run, CONFIG),

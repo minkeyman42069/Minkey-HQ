@@ -38,6 +38,36 @@ Core wiring lives in `src/core/`:
 - `agent-bus.js` — pub/sub hook dispatcher
 - `kernel.js` — agent registration and `Trail.emit()`
 - `config.js` — shared tuning constants
+- `climb-engine.js` — **the one combat truth** (see below)
+
+## Climb Engine — one combat truth, four frontends
+
+`src/core/climb-engine.js` owns every point of combat math: encounter state
+(`blankRun` / `blankEnc` / `entryThreat`), answer resolution
+(`resolveAnswer` — streaks, shields, phase releases, crux, streak-gate
+knockbacks, every boon hook), threat and strikes (`raiseThreat` with oath /
+relic mitigation), passive hazard behavior (`tickDrift` — rise, gusts,
+drain, spikes), stamina and falls (`addStamina` — last-legs, ice-axe
+arrest), pitch clears (`clearPitch`), tale effects (`applyTaleFx`), a
+single-pitch simulator (`simulatePitchNode`), and a full headless climb
+(`playClimb`) that walks a real route end-to-end through the real bus.
+
+The engine never touches the DOM. It mutates run/enc state and appends
+presentation events (`{t:'strike'|'shield'|'phase'|'fell'|…}`) that each
+frontend maps to its own rendering:
+
+| Frontend | How it drives the engine |
+|----------|--------------------------|
+| **Browser** (`index.html`) | wraps `resolveAnswer` / `tickDrift` / `raiseThreat` / `addStamina`, maps events to DOM, audio, and banners |
+| **Staff Sandbox** (Pitch Lab, Route Setter grading) | Sandbox Steward's `simulatePitch` delegates to `simulatePitchNode` |
+| **Balance gate** (`npm run balance`, CI) | Monte-Carlos `playClimb` — real climbs, not a parallel model |
+| **Terminal client** (`npm run play`) | readline frontend over the same primitives, with a chess-clock timer |
+
+All randomness is injected, so a seeded climb is identical in every
+frontend. The refactor that introduced the engine was verified
+behavior-identical against the pre-refactor browser: a seeded 110-question
+full-summit trajectory (every stamina/threat/streak/draft value after every
+answer) matches byte-for-byte.
 
 ## Build pipeline
 
@@ -91,8 +121,13 @@ Everything is deterministic from the shared **seed** control. Run it with
 
 ## Balance & quality tooling
 
-- `scripts/simulate-balance.mjs` — Monte Carlo climb outcomes
-- `scripts/simulate-hazards.mjs` — per-hazard Monte Carlo at 50ms tick fidelity (gusts, spikes, decay, shields, streak gates); ranks every enemy within its tier and flags outliers
+- `scripts/simulate-balance.mjs` — Monte Carlo climb outcomes; since the
+  engine unification every simulated climb is played by
+  `climb-engine.playClimb` through the real hook bus (the only remaining
+  model assumptions are the player ones: accuracy, timeout rate, and
+  `ANSWER_SECONDS` — shared with the Route Setter's grader)
+- `scripts/simulate-hazards.mjs` — per-hazard Monte Carlo at 50ms tick fidelity (gusts, spikes, decay, shields, streak gates); ranks every enemy within its tier and flags outliers. Deliberately keeps its own tick-level model for intra-tier ranking resolution
+- `scripts/play-climb.mjs` — the terminal expedition client (`npm run play`)
 - `scripts/quality-audit.mjs` — BACB-aligned question scoring
 - `playground/index.html` — browse flagged questions visually
 - `sandbox/index.html` — interactive staff-team control room (`npm run sandbox`)

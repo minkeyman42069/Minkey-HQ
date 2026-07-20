@@ -102,6 +102,44 @@ if (simA.final.stamina !== simB.final.stamina) throw new Error('Steward sim is n
 const draftPrev = steward.previewDraft(Trail, { owned: [], seed: 3, count: 3 });
 if (draftPrev.length !== 3) throw new Error('Steward previewDraft failed');
 
+// --- Climb Engine: one combat truth ---
+const eng = Trail.engine;
+if (!eng || typeof eng.resolveAnswer !== 'function' || typeof eng.playClimb !== 'function') {
+  throw new Error('Climb engine missing from kernel');
+}
+const half = () => 0.5;
+// Shielded pitch: a correct answer cracks a layer before progress counts.
+const shieldNode = steward.spawnNode(Trail, { kind: 'sealedface', act: 2, need: 3 });
+const sRun = eng.blankRun({});
+const sEnc = eng.blankEnc(shieldNode, { threat: eng.entryThreat(shieldNode) });
+sRun.seen++;
+eng.resolveAnswer(Trail, sRun, sEnc, { correct: true, viaTimeout: false, rnd: half });
+if (sEnc.shieldLeft !== shieldNode.shield - 1 || sEnc.done !== 0) throw new Error('Shield math broken');
+if (sRun.right !== 1) throw new Error('Engine should own run.right');
+// Streak-gate pitch: a miss slides progress back two.
+const knifeNode = steward.spawnNode(Trail, { kind: 'knife', act: 1, need: 4 });
+const kRun = eng.blankRun({});
+const kEnc = eng.blankEnc(knifeNode);
+kEnc.done = 3;
+kRun.seen++;
+eng.resolveAnswer(Trail, kRun, kEnc, { correct: false, viaTimeout: false, rnd: half });
+if (kEnc.done !== 1) throw new Error('Streak-gate knockback broken');
+// Entry threat: kind seeds merge with route-set startThreat.
+if (eng.entryThreat({ kind: 'serac' }) !== 25) throw new Error('Serac entry threat broken');
+if (eng.entryThreat({ kind: 'summit', startThreat: 33 }) !== 33) throw new Error('startThreat merge broken');
+// Headless whole climbs through the real bus: deterministic, skill-monotone.
+const climbA = eng.playClimb(Trail, { seed: 99, accuracy: 0.85 });
+const climbB = eng.playClimb(Trail, { seed: 99, accuracy: 0.85 });
+if (JSON.stringify(climbA) !== JSON.stringify(climbB)) throw new Error('playClimb is not deterministic');
+let summitsHi = 0;
+let summitsLo = 0;
+for (let i = 1; i <= 60; i++) {
+  if (eng.playClimb(Trail, { seed: i, accuracy: 0.95, timeoutRate: 0.02, answerSeconds: 5 }).summited) summitsHi++;
+  if (eng.playClimb(Trail, { seed: i, accuracy: 0.4, timeoutRate: 0.1 }).summited) summitsLo++;
+}
+if (summitsHi < 30) throw new Error(`Skilled headless climber should usually summit (got ${summitsHi}/60)`);
+if (summitsLo > 3) throw new Error(`Guessing should not summit (got ${summitsLo}/60)`);
+
 // --- Trail Chronicler telemetry ---
 const chron = Trail.agents.chronicler.api;
 chron.clear();

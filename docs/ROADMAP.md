@@ -59,7 +59,13 @@ per pass, not one sweep.
   fragment closers, the parallel-cringe ("Write true, climb true"), a couple of
   smug aphorisms, and one self-aware line ("that is the whole game"). Voice kept.
 - ○ **Examiner dialogue** — Bram, Odile, the Last Examiner.
-- ○ **Banners & event lines** — the mid-climb call-outs.
+- ✅ **Banners & event lines** — the mid-climb call-outs. Cut the tics (the
+  em-dash asides, the fortune-cookie "all that is left is what you know") and
+  built a variety system: the frequent banners (strikes, crux, knockback, last
+  legs, clutch, reclaimed stones, phase, shield, streak marks) now draw from
+  several clean variants at random, so the same climb stops repeating itself.
+  Flavor uses `Math.random`, never the gameplay rng, so seeded runs stay
+  deterministic.
 - ○ **Weather, oath & gear descriptions.**
 - ○ **Trailhead & UI microcopy.**
 

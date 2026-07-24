@@ -20,14 +20,14 @@ export const TALES = [
     ic: '🪢',
     title: 'The Ghost Rope',
     minAct: 1,
-    text: 'An old fixed rope hangs down the crux, anchors bleeding rust. Whoever set it meant to come back. It would save you an hour — if it holds.',
+    text: 'An old fixed rope hangs down the crux, anchors bleeding rust. Whoever set it meant to come back. It would save you an hour of climbing, if it holds.',
     choices: [
       {
         ic: '🧗', label: 'Trust the old line',
         desc: 'If it holds, you save real strength. If not, it’s a long fall to a short ledge.',
         gamble: {
           p: 0.6,
-          win: { stam: 16 }, winText: 'It holds. Barely, and with complaints — but it holds. You reach the top with strength to spare.',
+          win: { stam: 16 }, winText: 'It holds. Not comfortably and not quietly, but it holds, and you top the pitch with strength to spare.',
           lose: { stam: -12 }, loseText: 'It parts at the second anchor. You catch a flake and climb the rest of it angry.',
         },
       },
@@ -50,13 +50,13 @@ export const TALES = [
         ic: '⛏️', label: 'Dig it out',
         desc: 'Costs 8 stamina. Whatever was worth hauling up here is yours.',
         fx: { stam: -8, relic: true },
-        after: 'The frozen canvas fights you the whole way. Inside: something the mountain never claimed.',
+        after: 'The frozen canvas fights you the whole way. Inside is gear somebody carried all this way and never got to use.',
       },
       {
         ic: '📓', label: 'Mark it and move on',
         desc: 'Keep your rhythm. +5 stamina.',
         fx: { stam: 5 },
-        after: 'You stack three stones on the frame for the next climber and keep your pace. The rhythm pays.',
+        after: 'You stack three stones on the frame for the next climber and keep your pace.',
       },
     ],
   },
@@ -118,7 +118,7 @@ export const TALES = [
         gamble: {
           p: 0.5,
           win: { stam: 12 }, winText: 'Your voice comes back doubled and steady, like a rope team you didn’t know you had.',
-          lose: { threatNext: 12 }, loseText: 'Something else answers. Lower. From above. It knows the route ahead of you, and now it’s waiting on it.',
+          lose: { threatNext: 12 }, loseText: 'Something answers, and it comes from above you, not from the valley. It already knows the pitch you have not reached yet, and it is waiting there.',
         },
       },
       {
@@ -134,7 +134,7 @@ export const TALES = [
     ic: '⛺',
     title: 'Whiteout Bivouac',
     minAct: 2,
-    text: 'The cloud drops like a lid. A bivouac ledge opens to your left — dry, walled, room for one. Weather passes. So does time.',
+    text: 'The cloud drops like a lid. A bivouac ledge opens to your left — dry, walled, room for one. Weather like this always passes. The cost is in how long you wait for it.',
     choices: [
       {
         ic: '🛏️', label: 'Wait it out',
@@ -161,7 +161,7 @@ export const TALES = [
         ic: '🪨', label: 'Tend the cairn',
         desc: 'Costs 10 stamina to restack the stones. What they carried passes to you.',
         fx: { stam: -10, relic: true },
-        after: 'You rebuild it stone by stone. Under the axe head, wrapped in oilcloth: something the mountain never claimed.',
+        after: 'You rebuild it stone by stone. Under the axe head, wrapped in oilcloth, is what they carried up here and never got to spend.',
       },
       {
         ic: '🎩', label: 'Pass in respect',
@@ -182,7 +182,7 @@ export const TALES = [
         ic: '🧊', label: 'Read it where it froze',
         desc: 'Costs 5 stamina in the cold. Their route notes buy you gear at the next camp.',
         fx: { stam: -5, draftNext: true },
-        after: 'The last legible line: “the high camp fire owes the next one through.” That’s you.',
+        after: 'The last legible line: “the high camp fire owes the next one through.” You are the one it means.',
       },
       {
         ic: '⛏️', label: 'Chip it free and carry it',
@@ -209,7 +209,7 @@ export const TALES = [
         ic: '🫀', label: 'Keep your lungs',
         desc: 'Refuse the trade. The mountain takes it personally — next pitch opens with 10 threat.',
         fx: { threatNext: 10 },
-        after: 'You keep what you came with. Above you, the route closes back into a fist. Fair.',
+        after: 'You keep what you came with. Above you, the route closes back into a fist. You expected that.',
       },
     ],
   },
@@ -266,7 +266,7 @@ export const TALES = [
         ic: '🗣️', label: 'Trade him a fact',
         desc: 'Tell him something you know cold. He fills in your next pitch — it opens calm.',
         fx: { flag: 'emil' },
-        after: 'He writes your fact into the margin like it is a bearing. "Good. Solid ground on paper is solid ground underfoot." He shows you where the next pitch breathes — and where it holds its breath.',
+        after: 'He writes your fact into the margin like it is a bearing. "Good. Solid ground on paper is solid ground underfoot." He shows you where the next pitch eases off, and where it does not.',
       },
       {
         ic: '🎁', label: 'Ask what he has spare',
@@ -287,7 +287,7 @@ export const TALES = [
         ic: '✍️', label: 'Write something true',
         desc: 'Leave a line for the next climber. Some things you only learn by saying them. +8 stamina.',
         fx: { stam: 8, flag: 'letter' },
-        after: 'You write the truest thing you know about being this tired and this far up, and feel better the moment the lid closes. Strange how that works. It will be there when someone needs it.',
+        after: 'You write the truest thing you know about being this tired and this far up, and feel better the moment the lid closes. It will be there when someone needs it.',
       },
       {
         ic: '📖', label: 'Read them all',
@@ -329,13 +329,13 @@ export const TALES = [
         ic: '🔔', label: 'Ring it',
         desc: 'Make the summit a promise. The next pitch opens with 8 threat — the mountain heard you.',
         fx: { threatNext: 8, flag: 'bell' },
-        after: 'One clear note, and the wind goes quiet around it — listening, or counting. There is no taking it back now. The top knows you are coming.',
+        after: 'One clear note, and the wind goes still around the sound. There is no taking it back now, and the top of the mountain is expecting you.',
       },
       {
         ic: '🤫', label: 'Leave it silent',
         desc: 'Promises are heavy at altitude. Save your breath. +8 stamina.',
         fx: { stam: 8 },
-        after: 'You pass without a sound. The bell hangs still, patient as the mountain under it. It has waited out braver silences than yours.',
+        after: 'You pass without a sound. The bell hangs still on its post, in no hurry. It has been here far longer than you, and it will be here after.',
       },
     ],
   },
@@ -352,10 +352,10 @@ export function campLine(run, rnd) {
   const lines = [];
   if (f.bird) lines.push('🐦 The ptarmigan is here. It has clearly been waiting. It inspects your camp, approves of nothing, and settles in by the fire like family.');
   if (f.tea) lines.push('🫖 There is a tin cup by the fire ring that was not in your pack this morning. Marta moves fast for her age. It improves the evening enormously.');
-  if (f.letter) lines.push('✉️ You think about your line in the letter tin, and the stranger who will read it someday. Write true, climb true.');
+  if (f.letter) lines.push('✉️ You think about your line in the letter tin, and the stranger who will read it someday.');
   if (f.apprentice) lines.push('🧒 Two ledges down, a headlamp is repeating your route, move for move. The apprentice is climbing again. That one is yours.');
   if (f.emil) lines.push('🗺️ Far below, a small light traces slow circles on a ledge. Emil, charting the night wind. You sleep better knowing the gusts are being taken seriously.');
-  if (run.clutch > 0) lines.push('🔥 Your hands have finally stopped shaking from that last pitch. The fire helps. Being alive helps more.');
+  if (run.clutch > 0) lines.push('🔥 Your hands finally stop shaking from that last pitch, somewhere between the fire and the plain fact of having lived through it.');
   if (run.bestStreak >= 8) lines.push('🔥 Somewhere on the wind you would swear you hear Marta: "Eight in a row. Now do it tired." You are tired. You grin anyway.');
   if (run.relics && run.relics.size >= 2) lines.push('🎒 You lay the mountain\u2019s gifts out by the fire and take inventory like a dragon. A small hoard, honestly earned.');
   lines.push('🏕️ The fire cracks. The stars are doing their enormous quiet thing. For one full minute you forget to study, and that is fine too.');
@@ -370,18 +370,18 @@ export function campLine(run, rnd) {
 export function epilogue(run, kind) {
   const f = run.storyFlags || {};
   if (kind === 'summit') {
-    if (f.bell) return 'The bell\u2019s answer reaches you on the summit — one clear note rising through the cloud. You kept your word. The mountain keeps count.';
+    if (f.bell) return 'The bell\u2019s answer reaches you on the summit — one clear note rising through the cloud. You kept your word, and it turns out the mountain was keeping track.';
     if (f.bird) return 'On the summit cairn sits a fat white bird, entirely unimpressed by the view. It waited for you. You split what is left of lunch, as is now tradition.';
-    if (f.apprentice) return 'From the top you can see the whole line you climbed — and a small figure on the lower ridge, climbing it after you. Somewhere below, the apprentice found their nerve. Pass it on. That is the whole game.';
+    if (f.apprentice) return 'From the top you can see the whole line you climbed, and a small figure low on the ridge climbing it after you. The apprentice found their nerve, and some of that was down to you.';
     if (f.letter) return 'Standing on top, you finally know what you should have written in the tin. Next climb, you tell yourself. The mountain will hold you to it.';
-    if (f.tea) return 'The summit wind smells faintly, impossibly, of Marta\u2019s tea. "Everything good needs a minute," she said. This took considerably more than a minute. Worth it.';
-    if ((run.clutch || 0) >= 2) return 'You topped out on fumes and stubbornness, twice nearly nothing left. Those are the summits you remember. Nobody frames a photo of an easy day.';
+    if (f.tea) return 'The summit wind smells faintly, impossibly, of Marta\u2019s tea. "Everything good needs a minute," she said. This took a good deal more than a minute, and she would have called that the point.';
+    if ((run.clutch || 0) >= 2) return 'You topped out on fumes and stubbornness, twice nearly nothing left. Those are the summits that stay with you long after the easy ones blur together.';
     return 'The top, at last — wind, light, and the whole world arranged below you like a map of everything you now know. Write it in the ledger. This one is yours.';
   }
   if (f.apprentice) return 'The mountain sent you down today. So it goes. Somewhere below, an apprentice is still climbing because of what you told them — so get up. You have your own advice to follow.';
   if (f.bird) return 'You fell, and a certain fat white bird escorted you partway down, offering no sympathy whatsoever. Eat something. Sleep. The route is not going anywhere, and neither is the bird.';
   if (f.tea) return '"Everyone comes down the mountain," Marta says, pouring without asking. "The good ones come down taking notes." Drink your tea. Read your misses. Go again.';
-  return 'The mountain kept this one. Fine — it keeps the first draft of everybody. What you learned on the way down is yours forever, and the route will still be there at first light.';
+  return 'The mountain kept this one. It keeps the first draft of most people. What you learned on the way down is yours to keep, and the route will still be here at first light.';
 }
 
 /**

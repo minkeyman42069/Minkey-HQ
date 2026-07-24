@@ -50,12 +50,15 @@ Read each text surface closely, name what is smug, hedged, machine-made, or
 bloated, rewrite it plain and concrete with the compass as reference. One surface
 per pass, not one sweep.
 
-- ✅ **Encounter blurbs** — the node descriptions. Cut the aphoristic closers and
-  the antithesis tricks across ~17 hazards; each now states the place plainly and
-  ties to what the hazard actually does.
-- ○ **Examiner & cast dialogue** — Bram, Odile, the Last Examiner; Marta, Emil,
-  the apprentice.
-- ○ **Waymark stories** — the choice encounters and their outcomes.
+- ✅ **Encounter blurbs** — the node descriptions. Cut the aphoristic closers, the
+  antithesis tricks, the em-dash asides, and the punchy fragment closers across
+  the hazards; each now states the place plainly and ties to what it does.
+- ✅ **Cast & waymark stories** — Marta, Emil, the apprentice, the ptarmigan; the
+  choice encounters, camp lines, and epilogues. The tales were already the
+  strongest writing in the game, so this was surgical: excised the punchy
+  fragment closers, the parallel-cringe ("Write true, climb true"), a couple of
+  smug aphorisms, and one self-aware line ("that is the whole game"). Voice kept.
+- ○ **Examiner dialogue** — Bram, Odile, the Last Examiner.
 - ○ **Banners & event lines** — the mid-climb call-outs.
 - ○ **Weather, oath & gear descriptions.**
 - ○ **Trailhead & UI microcopy.**
@@ -83,4 +86,6 @@ list of imported gimmicks guessed at cold.
 
 ## Current step
 
-▶ Writing audit continues at the next surface: **examiner & cast dialogue.**
+▶ Writing audit continues. Remaining surfaces: examiner dialogue, the mid-climb
+banners and event lines, the weather/oath/gear descriptions, and the trailhead
+microcopy. Pick whichever reads worst next.

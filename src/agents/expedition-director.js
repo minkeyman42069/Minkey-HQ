@@ -48,7 +48,7 @@ export const ACHIEVEMENTS = [
   { id: 'oath_summit', ic: '🤝', name: 'Bound', desc: 'Summit with an expedition oath sworn.' },
   { id: 'grade_s', ic: '💎', name: 'Alpine Grade', desc: 'Earn an S grade on a summit run.' },
   { id: 'first_ascent', ic: '⛏️', name: 'First Ascent', desc: 'Summit a set line from the guidebook.' },
-  { id: 'tale_5', ic: '🗿', name: "Keeper's Audience", desc: 'Face five trail tales at the story cairns.' },
+  { id: 'tale_5', ic: '🗿', name: "Keeper's Audience", desc: 'Face five stories at the waymarks.' },
 ];
 
 const HARD_KINDS = new Set([

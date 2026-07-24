@@ -63,6 +63,7 @@ const banners = (evs) => {
     if (e.t === 'strike' && e.blocked) console.log(cyan('  🛡️  The strike is blocked'));
     if (e.t === 'shield') console.log(cyan(`  💠 The face cracks — ${e.left > 0 ? e.left + ' layer(s) to break' : 'the shell gives way'}`));
     if (e.t === 'phase') console.log(yellow('  💥 The slope lets go — it releases all at once'));
+    if (e.t === 'stage') console.log(yellow(`  🏔  ${strip(e.title)} — ${strip(e.sub)}`));
     if (e.t === 'crux') console.log(yellow('  🔺 The crux — one hard move from the ledge'));
     if (e.t === 'knockback') console.log(red('  🗡️  Knocked back — you slide down the ridge'));
     if (e.t === 'lastlegs') console.log(red('  🫀 Last legs — no room left for a slip'));
@@ -97,6 +98,7 @@ async function offerDraft(run, enc, label) {
   const idx = parseInt(a, 10) - 1;
   if (isNaN(idx) || !picks[idx]) return;
   if (picks[idx] === '_stamina') { addStamina(trail, run, null, 15, null); console.log(green('  +15 stamina.')); return; }
+  if (run.boons.size >= C.MAX_BOONS) { const oldest = run.boons.values().next().value; run.boons.delete(oldest); console.log(dim('  (pack full — you leave ' + oldest + ' behind)')); }
   run.boons.add(picks[idx]);
   trail.agents.boon.api.onAcquire(trail.makeCtx(run, enc, { rnd }), picks[idx]);
   console.log(green('  Packed.'));

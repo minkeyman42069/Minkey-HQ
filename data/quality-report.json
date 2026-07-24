@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-07-24T15:17:21.612Z",
+  "generatedAt": "2026-07-24T16:59:21.195Z",
   "summary": {
     "total": 433,
     "avgQuality": 91,
     "grades": {
-      "A": 335,
-      "B": 98,
+      "A": 342,
+      "B": 91,
       "C": 0,
       "D": 0,
       "F": 0
@@ -14,7 +14,7 @@
       "EXPLANATION_NO_CONTRAST": 317,
       "DEFINITION_ONLY": 23,
       "THIN_STEM": 53,
-      "ANSWER_LEAK": 61
+      "ANSWER_LEAK": 24
     },
     "needsWork": [
       {
@@ -464,7 +464,6 @@
         "quality": 86,
         "grade": "A",
         "flags": [
-          "ANSWER_LEAK",
           "EXPLANATION_NO_CONTRAST"
         ],
         "cat": "Extinction & Replacement",
@@ -859,7 +858,6 @@
         "quality": 100,
         "grade": "A",
         "flags": [
-          "ANSWER_LEAK",
           "EXPLANATION_NO_CONTRAST"
         ],
         "cat": "Chaining",
@@ -873,7 +871,6 @@
         "quality": 98,
         "grade": "A",
         "flags": [
-          "ANSWER_LEAK",
           "EXPLANATION_NO_CONTRAST"
         ],
         "cat": "Chaining",
@@ -902,7 +899,6 @@
         "grade": "A",
         "flags": [
           "THIN_STEM",
-          "ANSWER_LEAK",
           "EXPLANATION_NO_CONTRAST"
         ],
         "cat": "Chaining",
@@ -1125,19 +1121,6 @@
         "type": "mc",
         "q": "An RBT lays out five reinforcers, lets the client choose one, removes the chosen item, and repeats with the remaining items until all are ranked. This procedure is:",
         "preview": "An RBT lays out five reinforcers, lets the client choose one, removes the chosen item, and"
-      },
-      {
-        "id": 92,
-        "quality": 98,
-        "grade": "A",
-        "flags": [
-          "ANSWER_LEAK"
-        ],
-        "cat": "Preference Assessment",
-        "dom": "B",
-        "type": "mc",
-        "q": "Before starting a new client's token program, the BCBA asks the RBT to run a preference assessment because:",
-        "preview": "Before starting a new client's token program, the BCBA asks the RBT to run a preference as"
       },
       {
         "id": 93,
@@ -1462,7 +1445,6 @@
         "quality": 100,
         "grade": "A",
         "flags": [
-          "ANSWER_LEAK",
           "EXPLANATION_NO_CONTRAST"
         ],
         "cat": "Professionalism & Scope",
@@ -1531,7 +1513,6 @@
         "grade": "B",
         "flags": [
           "THIN_STEM",
-          "ANSWER_LEAK",
           "EXPLANATION_NO_CONTRAST"
         ],
         "cat": "Graphing & Data",
@@ -1545,7 +1526,6 @@
         "quality": 78,
         "grade": "B",
         "flags": [
-          "ANSWER_LEAK",
           "EXPLANATION_NO_CONTRAST"
         ],
         "cat": "Graphing & Data",
@@ -2051,11 +2031,10 @@
       },
       {
         "id": 170,
-        "quality": 78,
-        "grade": "B",
+        "quality": 86,
+        "grade": "A",
         "flags": [
-          "THIN_STEM",
-          "ANSWER_LEAK"
+          "THIN_STEM"
         ],
         "cat": "Differential Reinforcement",
         "dom": "D",
@@ -2222,11 +2201,10 @@
       },
       {
         "id": 184,
-        "quality": 78,
-        "grade": "B",
+        "quality": 86,
+        "grade": "A",
         "flags": [
           "THIN_STEM",
-          "ANSWER_LEAK",
           "EXPLANATION_NO_CONTRAST"
         ],
         "cat": "Verbal Operants",
@@ -2237,11 +2215,10 @@
       },
       {
         "id": 185,
-        "quality": 78,
-        "grade": "B",
+        "quality": 86,
+        "grade": "A",
         "flags": [
-          "THIN_STEM",
-          "ANSWER_LEAK"
+          "THIN_STEM"
         ],
         "cat": "Verbal Operants",
         "dom": "C",
@@ -2369,10 +2346,9 @@
       },
       {
         "id": 195,
-        "quality": 98,
+        "quality": 100,
         "grade": "A",
         "flags": [
-          "ANSWER_LEAK",
           "EXPLANATION_NO_CONTRAST"
         ],
         "cat": "Reinforcement & Punishment",
@@ -2513,11 +2489,10 @@
       },
       {
         "id": 206,
-        "quality": 78,
-        "grade": "B",
+        "quality": 86,
+        "grade": "A",
         "flags": [
-          "THIN_STEM",
-          "ANSWER_LEAK"
+          "THIN_STEM"
         ],
         "cat": "Chaining",
         "dom": "C",
@@ -2697,24 +2672,10 @@
         "preview": "Right after a big lunch, food is much less reinforcing. This is an example of a(n):"
       },
       {
-        "id": 221,
-        "quality": 100,
-        "grade": "A",
-        "flags": [
-          "ANSWER_LEAK"
-        ],
-        "cat": "Motivating Operations",
-        "dom": "C",
-        "type": "mc",
-        "q": "Before a session, the BCBA reports the client had a poor night's sleep and has not eaten breakfast. The RBT should recognize these as variables that operate:",
-        "preview": "Before a session, the BCBA reports the client had a poor night's sleep and has not eaten b"
-      },
-      {
         "id": 222,
         "quality": 86,
         "grade": "A",
         "flags": [
-          "ANSWER_LEAK",
           "EXPLANATION_NO_CONTRAST"
         ],
         "cat": "Shaping",
@@ -2725,11 +2686,10 @@
       },
       {
         "id": 223,
-        "quality": 78,
-        "grade": "B",
+        "quality": 86,
+        "grade": "A",
         "flags": [
           "THIN_STEM",
-          "ANSWER_LEAK",
           "EXPLANATION_NO_CONTRAST"
         ],
         "cat": "Shaping",
@@ -2846,10 +2806,9 @@
       },
       {
         "id": 232,
-        "quality": 78,
-        "grade": "B",
+        "quality": 86,
+        "grade": "A",
         "flags": [
-          "ANSWER_LEAK",
           "EXPLANATION_NO_CONTRAST"
         ],
         "cat": "Assessment & FBA",
@@ -2876,7 +2835,6 @@
         "quality": 100,
         "grade": "A",
         "flags": [
-          "ANSWER_LEAK",
           "EXPLANATION_NO_CONTRAST"
         ],
         "cat": "Professionalism & Scope",
@@ -2910,19 +2868,6 @@
         "type": "mc",
         "q": "Getting genuine agreement/willingness from a client (especially one who can't give legal consent) to participate is called:",
         "preview": "Getting genuine agreement/willingness from a client (especially one who can't give legal c"
-      },
-      {
-        "id": 237,
-        "quality": 98,
-        "grade": "A",
-        "flags": [
-          "ANSWER_LEAK"
-        ],
-        "cat": "Professionalism & Scope",
-        "dom": "F",
-        "type": "mc",
-        "q": "Under HIPAA's 'minimum necessary' rule, an RBT should:",
-        "preview": "Under HIPAA's 'minimum necessary' rule, an RBT should:"
       },
       {
         "id": 238,
@@ -3082,11 +3027,10 @@
       },
       {
         "id": 289,
-        "quality": 78,
-        "grade": "B",
+        "quality": 86,
+        "grade": "A",
         "flags": [
           "THIN_STEM",
-          "ANSWER_LEAK",
           "EXPLANATION_NO_CONTRAST"
         ],
         "cat": "Shaping",
@@ -3258,7 +3202,6 @@
         "grade": "A",
         "flags": [
           "THIN_STEM",
-          "ANSWER_LEAK",
           "EXPLANATION_NO_CONTRAST"
         ],
         "cat": "Data Collection & Graphing",
@@ -3655,7 +3598,6 @@
         "grade": "B",
         "flags": [
           "THIN_STEM",
-          "ANSWER_LEAK",
           "EXPLANATION_NO_CONTRAST"
         ],
         "cat": "Extinction",
@@ -3717,24 +3659,10 @@
         "preview": "During the peak of a crisis, the RBT's first priority is:"
       },
       {
-        "id": 351,
-        "quality": 100,
-        "grade": "A",
-        "flags": [
-          "ANSWER_LEAK"
-        ],
-        "cat": "Documentation & Reporting",
-        "dom": "E",
-        "type": "mc",
-        "q": "Which session-note statement is objective?",
-        "preview": "Which session-note statement is objective?"
-      },
-      {
         "id": 352,
         "quality": 100,
         "grade": "A",
         "flags": [
-          "ANSWER_LEAK",
           "EXPLANATION_NO_CONTRAST"
         ],
         "cat": "Documentation & Reporting",
@@ -3748,7 +3676,6 @@
         "quality": 78,
         "grade": "B",
         "flags": [
-          "ANSWER_LEAK",
           "EXPLANATION_NO_CONTRAST"
         ],
         "cat": "Documentation & Reporting",
@@ -3759,10 +3686,9 @@
       },
       {
         "id": 355,
-        "quality": 98,
+        "quality": 100,
         "grade": "A",
         "flags": [
-          "ANSWER_LEAK",
           "EXPLANATION_NO_CONTRAST"
         ],
         "cat": "Documentation & Reporting",
@@ -3803,7 +3729,6 @@
         "quality": 100,
         "grade": "A",
         "flags": [
-          "ANSWER_LEAK",
           "EXPLANATION_NO_CONTRAST"
         ],
         "cat": "Ethics & Scope",
@@ -3830,7 +3755,6 @@
         "quality": 86,
         "grade": "A",
         "flags": [
-          "ANSWER_LEAK",
           "EXPLANATION_NO_CONTRAST"
         ],
         "cat": "Ethics & Scope",
@@ -3844,8 +3768,7 @@
         "quality": 86,
         "grade": "A",
         "flags": [
-          "THIN_STEM",
-          "ANSWER_LEAK"
+          "THIN_STEM"
         ],
         "cat": "Ethics & Scope",
         "dom": "F",
@@ -3858,7 +3781,6 @@
         "quality": 98,
         "grade": "A",
         "flags": [
-          "ANSWER_LEAK",
           "EXPLANATION_NO_CONTRAST"
         ],
         "cat": "Ethics & Scope",
@@ -3927,8 +3849,7 @@
         "grade": "A",
         "flags": [
           "DEFINITION_ONLY",
-          "THIN_STEM",
-          "ANSWER_LEAK"
+          "THIN_STEM"
         ],
         "cat": "Reinforcement & Punishment",
         "dom": "C",
@@ -4142,7 +4063,6 @@
         "grade": "A",
         "flags": [
           "THIN_STEM",
-          "ANSWER_LEAK",
           "EXPLANATION_NO_CONTRAST"
         ],
         "cat": "Assessment & FBA",
@@ -4192,7 +4112,7 @@
       },
       {
         "id": 399,
-        "quality": 98,
+        "quality": 100,
         "grade": "A",
         "flags": [
           "ANSWER_LEAK",
@@ -4209,7 +4129,6 @@
         "quality": 98,
         "grade": "A",
         "flags": [
-          "ANSWER_LEAK",
           "EXPLANATION_NO_CONTRAST"
         ],
         "cat": "Documentation & Reporting",
@@ -4236,7 +4155,6 @@
         "quality": 98,
         "grade": "A",
         "flags": [
-          "ANSWER_LEAK",
           "EXPLANATION_NO_CONTRAST"
         ],
         "cat": "Documentation & Reporting",
@@ -4251,7 +4169,6 @@
         "grade": "A",
         "flags": [
           "THIN_STEM",
-          "ANSWER_LEAK",
           "EXPLANATION_NO_CONTRAST"
         ],
         "cat": "Documentation & Reporting",
@@ -4488,7 +4405,6 @@
         "quality": 100,
         "grade": "A",
         "flags": [
-          "ANSWER_LEAK",
           "EXPLANATION_NO_CONTRAST"
         ],
         "cat": "Documentation & Reporting",
@@ -4529,7 +4445,6 @@
         "quality": 100,
         "grade": "A",
         "flags": [
-          "ANSWER_LEAK",
           "EXPLANATION_NO_CONTRAST"
         ],
         "cat": "Ethics & Scope",
@@ -5056,7 +4971,6 @@
       "quality": 86,
       "grade": "A",
       "flags": [
-        "ANSWER_LEAK",
         "EXPLANATION_NO_CONTRAST"
       ],
       "cat": "Extinction & Replacement",
@@ -5484,7 +5398,6 @@
       "quality": 100,
       "grade": "A",
       "flags": [
-        "ANSWER_LEAK",
         "EXPLANATION_NO_CONTRAST"
       ],
       "cat": "Chaining",
@@ -5498,7 +5411,6 @@
       "quality": 98,
       "grade": "A",
       "flags": [
-        "ANSWER_LEAK",
         "EXPLANATION_NO_CONTRAST"
       ],
       "cat": "Chaining",
@@ -5527,7 +5439,6 @@
       "grade": "A",
       "flags": [
         "THIN_STEM",
-        "ANSWER_LEAK",
         "EXPLANATION_NO_CONTRAST"
       ],
       "cat": "Chaining",
@@ -5764,11 +5675,9 @@
     },
     {
       "id": 92,
-      "quality": 98,
+      "quality": 100,
       "grade": "A",
-      "flags": [
-        "ANSWER_LEAK"
-      ],
+      "flags": [],
       "cat": "Preference Assessment",
       "dom": "B",
       "type": "mc",
@@ -6142,7 +6051,6 @@
       "quality": 100,
       "grade": "A",
       "flags": [
-        "ANSWER_LEAK",
         "EXPLANATION_NO_CONTRAST"
       ],
       "cat": "Professionalism & Scope",
@@ -6211,7 +6119,6 @@
       "grade": "B",
       "flags": [
         "THIN_STEM",
-        "ANSWER_LEAK",
         "EXPLANATION_NO_CONTRAST"
       ],
       "cat": "Graphing & Data",
@@ -6225,7 +6132,6 @@
       "quality": 78,
       "grade": "B",
       "flags": [
-        "ANSWER_LEAK",
         "EXPLANATION_NO_CONTRAST"
       ],
       "cat": "Graphing & Data",
@@ -6775,11 +6681,10 @@
     },
     {
       "id": 170,
-      "quality": 78,
-      "grade": "B",
+      "quality": 86,
+      "grade": "A",
       "flags": [
-        "THIN_STEM",
-        "ANSWER_LEAK"
+        "THIN_STEM"
       ],
       "cat": "Differential Reinforcement",
       "dom": "D",
@@ -6957,11 +6862,10 @@
     },
     {
       "id": 184,
-      "quality": 78,
-      "grade": "B",
+      "quality": 86,
+      "grade": "A",
       "flags": [
         "THIN_STEM",
-        "ANSWER_LEAK",
         "EXPLANATION_NO_CONTRAST"
       ],
       "cat": "Verbal Operants",
@@ -6972,11 +6876,10 @@
     },
     {
       "id": 185,
-      "quality": 78,
-      "grade": "B",
+      "quality": 86,
+      "grade": "A",
       "flags": [
-        "THIN_STEM",
-        "ANSWER_LEAK"
+        "THIN_STEM"
       ],
       "cat": "Verbal Operants",
       "dom": "C",
@@ -7104,10 +7007,9 @@
     },
     {
       "id": 195,
-      "quality": 98,
+      "quality": 100,
       "grade": "A",
       "flags": [
-        "ANSWER_LEAK",
         "EXPLANATION_NO_CONTRAST"
       ],
       "cat": "Reinforcement & Punishment",
@@ -7248,11 +7150,10 @@
     },
     {
       "id": 206,
-      "quality": 78,
-      "grade": "B",
+      "quality": 86,
+      "grade": "A",
       "flags": [
-        "THIN_STEM",
-        "ANSWER_LEAK"
+        "THIN_STEM"
       ],
       "cat": "Chaining",
       "dom": "C",
@@ -7446,9 +7347,7 @@
       "id": 221,
       "quality": 100,
       "grade": "A",
-      "flags": [
-        "ANSWER_LEAK"
-      ],
+      "flags": [],
       "cat": "Motivating Operations",
       "dom": "C",
       "type": "mc",
@@ -7460,7 +7359,6 @@
       "quality": 86,
       "grade": "A",
       "flags": [
-        "ANSWER_LEAK",
         "EXPLANATION_NO_CONTRAST"
       ],
       "cat": "Shaping",
@@ -7471,11 +7369,10 @@
     },
     {
       "id": 223,
-      "quality": 78,
-      "grade": "B",
+      "quality": 86,
+      "grade": "A",
       "flags": [
         "THIN_STEM",
-        "ANSWER_LEAK",
         "EXPLANATION_NO_CONTRAST"
       ],
       "cat": "Shaping",
@@ -7592,10 +7489,9 @@
     },
     {
       "id": 232,
-      "quality": 78,
-      "grade": "B",
+      "quality": 86,
+      "grade": "A",
       "flags": [
-        "ANSWER_LEAK",
         "EXPLANATION_NO_CONTRAST"
       ],
       "cat": "Assessment & FBA",
@@ -7622,7 +7518,6 @@
       "quality": 100,
       "grade": "A",
       "flags": [
-        "ANSWER_LEAK",
         "EXPLANATION_NO_CONTRAST"
       ],
       "cat": "Professionalism & Scope",
@@ -7659,11 +7554,9 @@
     },
     {
       "id": 237,
-      "quality": 98,
+      "quality": 100,
       "grade": "A",
-      "flags": [
-        "ANSWER_LEAK"
-      ],
+      "flags": [],
       "cat": "Professionalism & Scope",
       "dom": "F",
       "type": "mc",
@@ -8257,11 +8150,10 @@
     },
     {
       "id": 289,
-      "quality": 78,
-      "grade": "B",
+      "quality": 86,
+      "grade": "A",
       "flags": [
         "THIN_STEM",
-        "ANSWER_LEAK",
         "EXPLANATION_NO_CONTRAST"
       ],
       "cat": "Shaping",
@@ -8532,7 +8424,6 @@
       "grade": "A",
       "flags": [
         "THIN_STEM",
-        "ANSWER_LEAK",
         "EXPLANATION_NO_CONTRAST"
       ],
       "cat": "Data Collection & Graphing",
@@ -8984,7 +8875,6 @@
       "grade": "B",
       "flags": [
         "THIN_STEM",
-        "ANSWER_LEAK",
         "EXPLANATION_NO_CONTRAST"
       ],
       "cat": "Extinction",
@@ -9060,9 +8950,7 @@
       "id": 351,
       "quality": 100,
       "grade": "A",
-      "flags": [
-        "ANSWER_LEAK"
-      ],
+      "flags": [],
       "cat": "Documentation & Reporting",
       "dom": "E",
       "type": "mc",
@@ -9074,7 +8962,6 @@
       "quality": 100,
       "grade": "A",
       "flags": [
-        "ANSWER_LEAK",
         "EXPLANATION_NO_CONTRAST"
       ],
       "cat": "Documentation & Reporting",
@@ -9088,7 +8975,6 @@
       "quality": 78,
       "grade": "B",
       "flags": [
-        "ANSWER_LEAK",
         "EXPLANATION_NO_CONTRAST"
       ],
       "cat": "Documentation & Reporting",
@@ -9110,10 +8996,9 @@
     },
     {
       "id": 355,
-      "quality": 98,
+      "quality": 100,
       "grade": "A",
       "flags": [
-        "ANSWER_LEAK",
         "EXPLANATION_NO_CONTRAST"
       ],
       "cat": "Documentation & Reporting",
@@ -9165,7 +9050,6 @@
       "quality": 100,
       "grade": "A",
       "flags": [
-        "ANSWER_LEAK",
         "EXPLANATION_NO_CONTRAST"
       ],
       "cat": "Ethics & Scope",
@@ -9192,7 +9076,6 @@
       "quality": 86,
       "grade": "A",
       "flags": [
-        "ANSWER_LEAK",
         "EXPLANATION_NO_CONTRAST"
       ],
       "cat": "Ethics & Scope",
@@ -9206,8 +9089,7 @@
       "quality": 86,
       "grade": "A",
       "flags": [
-        "THIN_STEM",
-        "ANSWER_LEAK"
+        "THIN_STEM"
       ],
       "cat": "Ethics & Scope",
       "dom": "F",
@@ -9220,7 +9102,6 @@
       "quality": 98,
       "grade": "A",
       "flags": [
-        "ANSWER_LEAK",
         "EXPLANATION_NO_CONTRAST"
       ],
       "cat": "Ethics & Scope",
@@ -9311,8 +9192,7 @@
       "grade": "A",
       "flags": [
         "DEFINITION_ONLY",
-        "THIN_STEM",
-        "ANSWER_LEAK"
+        "THIN_STEM"
       ],
       "cat": "Reinforcement & Punishment",
       "dom": "C",
@@ -9581,7 +9461,6 @@
       "grade": "A",
       "flags": [
         "THIN_STEM",
-        "ANSWER_LEAK",
         "EXPLANATION_NO_CONTRAST"
       ],
       "cat": "Assessment & FBA",
@@ -9675,7 +9554,7 @@
     },
     {
       "id": 399,
-      "quality": 98,
+      "quality": 100,
       "grade": "A",
       "flags": [
         "ANSWER_LEAK",
@@ -9692,7 +9571,6 @@
       "quality": 98,
       "grade": "A",
       "flags": [
-        "ANSWER_LEAK",
         "EXPLANATION_NO_CONTRAST"
       ],
       "cat": "Documentation & Reporting",
@@ -9719,7 +9597,6 @@
       "quality": 98,
       "grade": "A",
       "flags": [
-        "ANSWER_LEAK",
         "EXPLANATION_NO_CONTRAST"
       ],
       "cat": "Documentation & Reporting",
@@ -9756,7 +9633,6 @@
       "grade": "A",
       "flags": [
         "THIN_STEM",
-        "ANSWER_LEAK",
         "EXPLANATION_NO_CONTRAST"
       ],
       "cat": "Documentation & Reporting",
@@ -10037,7 +9913,6 @@
       "quality": 100,
       "grade": "A",
       "flags": [
-        "ANSWER_LEAK",
         "EXPLANATION_NO_CONTRAST"
       ],
       "cat": "Documentation & Reporting",
@@ -10089,7 +9964,6 @@
       "quality": 100,
       "grade": "A",
       "flags": [
-        "ANSWER_LEAK",
         "EXPLANATION_NO_CONTRAST"
       ],
       "cat": "Ethics & Scope",

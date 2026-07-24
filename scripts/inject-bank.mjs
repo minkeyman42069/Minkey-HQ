@@ -40,7 +40,7 @@ bank.forEach((q) => {
   }
   body += serialize(q) + ',\n';
 });
-body += '];\nBANK.forEach(function(q,i){ q.id=i; if(!q.type) q.type=\'mc\'; });';
+body += '];\nBANK.forEach(function(q,i){ q.id=i; if(!q.type) q.type=\'mc\'; });\n';
 
 const out = html.slice(0, start) + body + html.slice(forEachEnd);
 writeFileSync(htmlPath, out);

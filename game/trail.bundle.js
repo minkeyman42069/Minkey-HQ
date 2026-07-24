@@ -55,7 +55,7 @@ var TrailBundle = (() => {
     STAM_MAX: 100,
     MISS_COST: 14,
     TIMEOUT_COST: 10,
-    REST_RESTORE: 38,
+    REST_RESTORE: 42,
     CLEAR_RESTORE_MULT: 0.92,
     THREAT_RESET: 75,
     CRUX_RISE_MULT: 1.2,
@@ -260,6 +260,16 @@ var TrailBundle = (() => {
           raiseThreat(trail, run, enc, 22, rnd2, events);
           events.push({ t: "phase" });
         }
+        if (enc.node.stages) {
+          for (const st of enc.node.stages) {
+            if (!st.entered && enc.done >= st.at && enc.done < enc.need) {
+              st.entered = true;
+              if (st.set) Object.assign(enc.node, st.set);
+              if (st.threat) raiseThreat(trail, run, enc, st.threat, rnd2, events);
+              events.push({ t: "stage", title: st.title, sub: st.sub });
+            }
+          }
+        }
         if (enc.need > 1 && enc.done === enc.need - 1 && !enc.cruxTold) {
           enc.cruxTold = true;
           events.push({ t: "crux" });
@@ -335,6 +345,7 @@ var TrailBundle = (() => {
           if (e.t === "gust" && e.banners) step.banners.push(...e.banners);
           if (e.t === "shield") step.shield = e.left;
           if (e.t === "phase") step.banners.push({ title: "The slope lets go", sub: "it releases all at once" });
+          if (e.t === "stage") step.banners.push({ title: e.title, sub: e.sub });
           if (e.t === "knockback") step.banners.push({ title: "Knocked back", sub: "you slide down the ridge" });
         }
       }
@@ -679,7 +690,7 @@ var TrailBundle = (() => {
       kind: "gate",
       icon: "\u{1F6E1}\uFE0F",
       title: "Gatekeeper",
-      blurb: domain ? "It stands where the route narrows, and it has read your ledger. It will ask about " + domain + ". Wrong answers feed it. Right ones back it off." : "It stands where the route narrows, and it has read your ledger. It will ask what you least want asked. Wrong answers feed it. Right ones back it off.",
+      blurb: domain ? "The route narrows to a test. It asks " + domain + " \u2014 nothing else \u2014 and it hits harder than anything below it." : "The route narrows to a test. It asks your weakest subject \u2014 nothing else \u2014 and it hits harder than anything below it.",
       need,
       tier: 5,
       time: 16,
@@ -714,7 +725,7 @@ var TrailBundle = (() => {
       kind: "summit",
       icon: "\u{1F3D4}\uFE0F",
       title: "Summit Push",
-      blurb: "The last pitch. Wind you lean into, cold in your teeth, the dark starting to thin. All that stands between you and the top is everything you know.",
+      blurb: "Six moves of ridge left. The shoulder is steady, the cornice is not, and the last two moves belong to whoever wants them more.",
       need,
       tier: 5,
       time: 15,
@@ -726,6 +737,10 @@ var TrailBundle = (() => {
       restore: 14,
       boon: false,
       alt,
+      stages: [
+        { at: 2, title: "The Shoulder is behind you", sub: "the ridge narrows \u2014 the wind picks a side", set: { rise: 2.7 }, threat: 12 },
+        { at: 4, title: "The Cornice", sub: "snow over empty air \u2014 nothing heavy stands here", set: { rise: 3.2, time: 12 }, threat: 16 }
+      ],
       tname: "Summit push",
       tic: "\u2744\uFE0F"
     };
@@ -739,7 +754,7 @@ var TrailBundle = (() => {
       need,
       tier: 5,
       time: 13,
-      rise: 2.35,
+      rise: 2.6,
       miss: 22,
       ease: 10,
       max: 100,
@@ -830,7 +845,7 @@ var TrailBundle = (() => {
       hit: 13,
       restore: 16,
       boon: true,
-      drain: 0.28,
+      drain: 0.34,
       alt,
       tname: "Thin air",
       tic: "\u{1FAC1}"
@@ -852,8 +867,8 @@ var TrailBundle = (() => {
       hit: 15,
       restore: 16,
       boon: true,
-      spike: 12,
-      spikeEvery: 5.5,
+      spike: 13,
+      spikeEvery: 5,
       alt,
       tname: "The icefall",
       tic: "\u2604\uFE0F"
@@ -864,7 +879,7 @@ var TrailBundle = (() => {
       kind: "void",
       icon: "\u{1F311}",
       title: "Bare Ridge",
-      blurb: "Rock scoured bare by a hundred winters. Nothing in your pack works this high \u2014 no boons, no notes, no flare. Just you, and whatever stuck.",
+      blurb: "Rock scoured bare by a hundred winters. Nothing in your pack works up here \u2014 no gear, no notes, no flare. Just you, and whatever stuck.",
       need,
       tier: 3,
       time: 15,
@@ -1004,7 +1019,7 @@ var TrailBundle = (() => {
       hit: 16,
       restore: 16,
       boon: true,
-      gust: 0.08,
+      gust: 0.11,
       alt,
       tname: "The gust field",
       tic: "\u{1F300}"
@@ -1070,7 +1085,7 @@ var TrailBundle = (() => {
       hit: 18,
       restore: 18,
       boon: true,
-      enrage: 1.7,
+      enrage: 1.9,
       alt,
       tname: "The tempest",
       tic: "\u{1F32A}\uFE0F"
@@ -1170,7 +1185,7 @@ var TrailBundle = (() => {
       kind: "shrine",
       icon: "\u26E9\uFE0F",
       title: "Weathered Shrine",
-      blurb: "Cairns and faded prayer flags, older than any name in the ledger. Climbers leave something here. The mountain remembers.",
+      blurb: "Stacked stones and faded prayer flags. Climbers leave an offering here for luck. Sometimes the luck is real.",
       need: 0,
       restore: 0,
       boon: false,
@@ -1181,8 +1196,8 @@ var TrailBundle = (() => {
     return {
       kind: "tale",
       icon: "\u{1F5FF}",
-      title: "Story Cairn",
-      blurb: "A cairn taller than the trail needs, stacked by hands that wanted it noticed. Something waits here besides the wind, and it will ask you to choose.",
+      title: "Waymark",
+      blurb: "Something off the route wants a decision from you. No clock, no threat \u2014 just a choice you keep.",
       need: 0,
       restore: 0,
       boon: false,
@@ -1205,7 +1220,7 @@ var TrailBundle = (() => {
       hit: 15,
       restore: 18,
       boon: true,
-      gust: 0.03,
+      gust: 0.05,
       streakGate: true,
       alt,
       tname: "The wind lip",
@@ -1229,7 +1244,7 @@ var TrailBundle = (() => {
       restore: 20,
       boon: true,
       shield: 3,
-      enrage: 1.5,
+      enrage: 1.8,
       alt,
       tname: "The glacier block",
       tic: "\u{1F9CA}"
@@ -1243,11 +1258,12 @@ var TrailBundle = (() => {
   function scaleNode(n, act) {
     n.act = act;
     if (n.kind === "rest") return n;
-    const sc = 1 + (act - 1) * 0.2;
+    const sc = 1 + (act - 1) * 0.22;
     n.rise = +(n.rise * sc).toFixed(2);
     n.miss = Math.round(n.miss * (1 + (act - 1) * 0.08));
     n.hit = Math.round(n.hit * (1 + (act - 1) * 0.1));
     n.time = Math.max(8, n.time - (act - 1) * 2);
+    if (n.restore) n.restore = Math.max(8, Math.round(n.restore * (1 - (act - 1) * 0.08)));
     return n;
   }
   var BESTIARY = [
@@ -1276,7 +1292,7 @@ var TrailBundle = (() => {
     { fn: nFrozenTitan, a: "Armored elite", m: "Armored elite. Three shield layers, and it enrages when threat runs high." },
     { fn: (n, al) => nGate(n, al, null), a: "Competence duel", m: "Competence duel. Draws every question from your weakest exam domain." },
     { fn: nSerac, a: "Elite", m: "Elite. Starts angry \u2014 a quarter of the threat bar is already lit." },
-    { fn: nSummit, a: "Final pitch", m: "Final pitch. Long, fast-building, and it opens with threat on the board." }
+    { fn: nSummit, a: "Final pitch", m: "Final pitch in three stages \u2014 shoulder, cornice, top \u2014 each faster and angrier than the last." }
   ].map((e) => ({ ...e, t: e.fn(1, 0).tier }));
   function nodeEmoji(kind) {
     const m = {
@@ -1319,7 +1335,7 @@ var TrailBundle = (() => {
     if (node.kind === "gate") return node.domain ? "Weakest domain \u2014 " + node.domain : "Gatekeeper duel";
     if (node.kind === "rest") return "Catch your breath, then draft a boon";
     if (node.kind === "shrine") return "Leave an offering for a relic, or pass by";
-    if (node.kind === "tale") return "A trail tale waits \u2014 hear it out, then choose";
+    if (node.kind === "tale") return "A story, not a fight \u2014 it ends how you choose";
     if (node.kind === "serac") return "Fast and punishing \u2014 " + n + " before the ice lets go";
     if (node.kind === "summit") return "The final pitch \u2014 " + n + " to top out";
     if (node.kind === "whiteout") return "Move fast \u2014 " + n + " before the cloud closes";
@@ -1574,7 +1590,7 @@ var TrailBundle = (() => {
     { id: "oath_summit", ic: "\u{1F91D}", name: "Bound", desc: "Summit with an expedition oath sworn." },
     { id: "grade_s", ic: "\u{1F48E}", name: "Alpine Grade", desc: "Earn an S grade on a summit run." },
     { id: "first_ascent", ic: "\u26CF\uFE0F", name: "First Ascent", desc: "Summit a set line from the guidebook." },
-    { id: "tale_5", ic: "\u{1F5FF}", name: "Keeper's Audience", desc: "Face five trail tales at the story cairns." }
+    { id: "tale_5", ic: "\u{1F5FF}", name: "Keeper's Audience", desc: "Face five stories at the waymarks." }
   ];
   var HARD_KINDS = /* @__PURE__ */ new Set([
     "void",
@@ -1998,7 +2014,8 @@ var TrailBundle = (() => {
         return { pool, weights };
       },
       pickDraft(ctx, rnd2, count = 3) {
-        if (ctx.run.boons.size >= (ctx.config?.MAX_BOONS ?? 5)) return ["_stamina"];
+        const full = ctx.run.boons.size >= (ctx.config?.MAX_BOONS ?? 5);
+        if (full) count = 2;
         const { pool, weights } = api.draftPool(ctx);
         const pick = [];
         const work = pool.slice();
@@ -2016,6 +2033,7 @@ var TrailBundle = (() => {
           work.splice(k, 1);
           w.splice(k, 1);
         }
+        if (full) pick.push("_stamina");
         return pick;
       },
       onAcquire(ctx, id) {
@@ -2814,72 +2832,72 @@ var TrailBundle = (() => {
       ic: "\u{1FAA2}",
       title: "The Ghost Rope",
       minAct: 1,
-      text: "A fixed line hangs down the face, anchors rusted, sheath bleached by more seasons than anyone has counted. Whoever set it never came back for it. It would save you an hour of honest climbing \u2014 if it holds.",
+      text: "An old fixed rope hangs down the crux, anchors bleeding rust. Whoever set it meant to come back. It would save you an hour \u2014 if it holds.",
       choices: [
         {
           ic: "\u{1F9D7}",
           label: "Trust the old line",
-          desc: "Climb the rope. If it holds you save real strength. If it doesn\u2019t\u2026",
+          desc: "If it holds, you save real strength. If not, it\u2019s a long fall to a short ledge.",
           gamble: {
             p: 0.6,
             win: { stam: 16 },
-            winText: "The anchors creak but hold. You top the pitch with strength to spare.",
+            winText: "It holds. Barely, and with complaints \u2014 but it holds. You reach the top with strength to spare.",
             lose: { stam: -12 },
-            loseText: "The sheath parts at the second anchor. You catch yourself, barely, and climb the rest the hard way."
+            loseText: "It parts at the second anchor. You catch a flake and climb the rest of it angry."
           }
         },
         {
           ic: "\u{1F97E}",
           label: "Break your own trail",
-          desc: "Ignore the rope and read the rock yourself. The next pitch asks one less of you.",
+          desc: "Slower, but you learn every hold yourself. The next pitch asks one less of you.",
           fx: { easeNext: 1 },
-          after: "Slower, but every hold is yours now. You know this ground before the mountain can ask about it."
+          after: "You top out knowing the ground like your own kitchen. The pitch above has fewer surprises left."
         }
       ]
     },
     {
       id: "portercache",
       ic: "\u{1F392}",
-      title: "The Lost Porter\u2019s Cache",
+      title: "The Porter\u2019s Cache",
       minAct: 1,
-      text: "A pack frame juts from the snow off the trail, canvas gone stiff, straps still buckled. Someone carried this high and set it down meaning to come back. The snow says that was a long time ago.",
+      text: "A pack frame sticks out of the snow, straps still buckled. Somebody carried this high, set it down, and never came back for it.",
       choices: [
         {
           ic: "\u26CF\uFE0F",
           label: "Dig it out",
-          desc: "Cost: 8 stamina. Whatever was worth carrying up here is yours now.",
+          desc: "Costs 8 stamina. Whatever was worth hauling up here is yours.",
           fx: { stam: -8, relic: true },
-          after: "The digging costs you, but the cache was packed by someone who knew the mountain."
+          after: "The frozen canvas fights you the whole way. Inside: something the mountain never claimed."
         },
         {
           ic: "\u{1F4D3}",
           label: "Mark it and move on",
-          desc: "Note it in the ledger for whoever comes next. Keep your pace. +5 stamina.",
+          desc: "Keep your rhythm. +5 stamina.",
           fx: { stam: 5 },
-          after: "You stack three stones over the frame and keep moving. The rhythm of the climb carries you."
+          after: "You stack three stones on the frame for the next climber and keep your pace. The rhythm pays."
         }
       ]
     },
     {
       id: "keeper",
       ic: "\u{1F5FF}",
-      title: "The Keeper of Cairns",
+      title: "The Keeper of the Waymarks",
       minAct: 1,
-      text: 'An old climber sits beside the cairn as if the two were built together, restacking its stones by feel. "Every climber who passes leaves something," the Keeper says. "Most leave what they think they know. Recite, or rest. Either is honest."',
+      text: "An old climber sits by the waymark, restacking its stones by feel. \u201CEveryone leaves something,\u201D they say. \u201CRecite what you know, or admit what you don\u2019t. Both are worth something up here.\u201D",
       choices: [
         {
           ic: "\u{1F5E3}\uFE0F",
           label: "Recite what you know",
-          desc: "Give the Keeper your ledger, line by line. A boon is promised at the next camp.",
+          desc: "Say your ledger out loud. There\u2019s gear in it for you at the next camp.",
           fx: { draftNext: true },
-          after: 'The Keeper listens without a word, then nods once. "The next fire you sit at will owe you something."'
+          after: "\u201CNot bad.\u201D They nod once. \u201CThe next fire you sit at owes you a favor.\u201D"
         },
         {
           ic: "\u{1F932}",
           label: "Admit what you don\u2019t",
-          desc: "Name the trails where you are thinnest. Honesty rests easy. +10 stamina.",
+          desc: "Honesty rests easy. +10 stamina.",
           fx: { stam: 10 },
-          after: '"Good," says the Keeper. "The mountain only punishes the ones who lie about it." You leave lighter than you came.'
+          after: "\u201CGood. The mountain only punishes climbers who lie about it.\u201D You walk away lighter than you came."
         }
       ]
     },
@@ -2888,24 +2906,24 @@ var TrailBundle = (() => {
       ic: "\u{1FA9E}",
       title: "The Signal Mirror",
       minAct: 1,
-      text: "Something glints on a shelf above the route \u2014 glass or steel, angled like it was left to be seen. It is a hard scramble off the line to reach it, over rock the guidebook never graded.",
+      text: "Something glints on a shelf above the route. Glass or steel, angled to be seen. It\u2019s a hard scramble off your line to find out which.",
       choices: [
         {
           ic: "\u{1F9D7}",
           label: "Climb to it",
-          desc: "Off-route and ungraded. It might be worth the detour. It might just be far.",
+          desc: "Ungraded rock, unknown reward.",
           gamble: {
             p: 0.55,
             win: { relic: true },
-            winText: "A signal kit, oiled and wrapped, left by someone who planned to need it. Now it\u2019s yours.",
+            winText: "A signal kit, oiled and wrapped. Somebody planned to need this. Now it\u2019s yours.",
             lose: { stam: -14 },
-            loseText: "A sardine tin, polished by wind. The scramble back down costs more than the shine was worth."
+            loseText: "A sardine tin, polished by forty years of wind. The scramble down costs more than the shine was worth."
           }
         },
         {
           ic: "\u{1F463}",
           label: "Stay on the line",
-          desc: "Shiny things put climbers in the ledger\u2019s margins. Keep moving. +5 stamina.",
+          desc: "Shiny things get climbers killed. Keep moving. +5 stamina.",
           fx: { stam: 5 },
           after: "You keep your feet on the route and your eyes on the next hold. The glint watches you go."
         }
@@ -2916,26 +2934,26 @@ var TrailBundle = (() => {
       ic: "\u{1F4E3}",
       title: "The Echo Chamber",
       minAct: 2,
-      text: "The couloir narrows until the walls hold your breathing and hand it back to you. Guides say the mountain answers anyone who calls their name here. They disagree about what it answers with.",
+      text: "The couloir narrows until it hands your breathing back to you. Guides say the mountain answers anyone who shouts their name here. They argue about what it answers with.",
       choices: [
         {
           ic: "\u{1F5E3}\uFE0F",
           label: "Call your name",
-          desc: "Let the mountain answer. Guides disagree on what comes back.",
+          desc: "Fifty-fifty, the guides say.",
           gamble: {
             p: 0.5,
             win: { stam: 12 },
-            winText: "Your own voice returns steady and doubled, like a rope team you didn\u2019t know you had. The walls feel wider going out.",
+            winText: "Your voice comes back doubled and steady, like a rope team you didn\u2019t know you had.",
             lose: { threatNext: 12 },
-            loseText: "Something else answers \u2014 lower, and from above. It knows the route ahead of you, and now it is waiting on it."
+            loseText: "Something else answers. Lower. From above. It knows the route ahead of you, and now it\u2019s waiting on it."
           }
         },
         {
           ic: "\u{1F92B}",
           label: "Pass in silence",
-          desc: "Listen instead. The walls teach you the ground ahead \u2014 the next pitch asks one less.",
+          desc: "Listen instead. The next pitch asks one less of you.",
           fx: { easeNext: 1 },
-          after: "You move through on quiet feet, and the couloir tells you everything it has heard about the pitch above."
+          after: "You move through on quiet feet and leave knowing more than you came with."
         }
       ]
     },
@@ -2944,21 +2962,21 @@ var TrailBundle = (() => {
       ic: "\u26FA",
       title: "Whiteout Bivouac",
       minAct: 2,
-      text: "The cloud comes down the face like a lid closing, and an old bivouac ledge opens to your left \u2014 dry, walled, room for one. Weather like this passes. So does time, and the mountain keeps ahead of anyone who stands still.",
+      text: "The cloud drops like a lid. A bivouac ledge opens to your left \u2014 dry, walled, room for one. Weather passes. So does time.",
       choices: [
         {
           ic: "\u{1F6CF}\uFE0F",
           label: "Wait it out",
-          desc: "+18 stamina \u2014 but the mountain gets ahead of you. The next pitch opens with 15 threat.",
+          desc: "+18 stamina \u2014 but the mountain gets ahead of you. Next pitch opens with 15 threat.",
           fx: { stam: 18, threatNext: 15 },
-          after: "You wake to clear air and stiff legs. Somewhere above, the route has been rearranging itself without you."
+          after: "You wake to clear air and stiff legs. The route spent the night rearranging itself without you."
         },
         {
           ic: "\u{1F32B}\uFE0F",
           label: "Push through the cloud",
-          desc: "Cost: 10 stamina. Arrive before the weather settles \u2014 the next pitch asks one less.",
+          desc: "Costs 10 stamina. Beat the weather up \u2014 the next pitch asks one less.",
           fx: { stam: -10, easeNext: 1 },
-          after: "You climb inside the whiteout by feel and count. When it lifts, you are above it, and the pitch ahead never saw you coming."
+          after: "You climb by feel and count. When the cloud lifts, you are above it."
         }
       ]
     },
@@ -2967,44 +2985,44 @@ var TrailBundle = (() => {
       ic: "\u{1FAA6}",
       title: "The Unmarked Grave",
       minAct: 2,
-      text: "A mound of stones off the trail, too deliberate for rockfall, too old for names. An ice axe stands at its head, the way climbers mark the ones who stopped climbing. The wind has been the only visitor for years.",
+      text: "A mound of stones off the trail, too deliberate for rockfall. An ice axe stands at its head, the way climbers mark the ones who stopped here.",
       choices: [
         {
           ic: "\u{1FAA8}",
           label: "Tend the cairn",
-          desc: "Cost: 10 stamina to restack the stones. What the climber carried passes to you.",
+          desc: "Costs 10 stamina to restack the stones. What they carried passes to you.",
           fx: { stam: -10, relic: true },
-          after: "You rebuild the mound stone by stone. Beneath the axe head, wrapped in oilcloth, something the mountain never claimed."
+          after: "You rebuild it stone by stone. Under the axe head, wrapped in oilcloth: something the mountain never claimed."
         },
         {
           ic: "\u{1F3A9}",
           label: "Pass in respect",
-          desc: "A nod, and onward. Some ledgers are closed. +8 stamina.",
+          desc: "Some ledgers are closed. +8 stamina.",
           fx: { stam: 8 },
-          after: "You touch the axe once and keep walking. Whoever they were, they would have told you to save your strength for the ridge."
+          after: "You touch the axe once and move on. Whoever they were, they\u2019d have told you to save your strength."
         }
       ]
     },
     {
       id: "oldledger",
       ic: "\u{1F4D6}",
-      title: "The Old Guide\u2019s Ledger",
+      title: "The Old Guide\u2019s Journal",
       minAct: 3,
-      text: "Frozen into the ice at head height: a leather journal, pages fanned open mid-entry. The hand is steady until the last line, which is not. It is a record of an attempt on this exact route \u2014 one that ends above where you stand.",
+      text: "A leather journal frozen into the ice at head height, open mid-entry. The handwriting is steady until the last line, which isn\u2019t. It\u2019s a record of this exact route \u2014 one that ends above where you stand.",
       choices: [
         {
           ic: "\u{1F9CA}",
           label: "Read it where it froze",
-          desc: "Cost: 5 stamina in the cold. Their route notes earn you a promised boon at the next camp.",
+          desc: "Costs 5 stamina in the cold. Their route notes buy you gear at the next camp.",
           fx: { stam: -5, draftNext: true },
-          after: 'The cold works into your gloves while you read. The last legible line: "the high camp fire owes the next one through." It meant you.'
+          after: "The last legible line: \u201Cthe high camp fire owes the next one through.\u201D That\u2019s you."
         },
         {
           ic: "\u26CF\uFE0F",
           label: "Chip it free and carry it",
-          desc: "Cost: 8 stamina. A closed record belongs off this mountain \u2014 and the mountain pays its debts.",
+          desc: "Costs 8 stamina. Closed records belong off the mountain \u2014 and the mountain pays its debts.",
           fx: { stam: -8, relic: true },
-          after: "The ice gives it up an inch at a time. The weight in your pack feels less like paper and more like something owed being repaid."
+          after: "The ice gives it up an inch at a time. The weight in your pack feels like a debt being repaid."
         }
       ]
     },
@@ -3013,21 +3031,21 @@ var TrailBundle = (() => {
       ic: "\u{1FAC1}",
       title: "The Thin Air Bargain",
       minAct: 3,
-      text: "Above the last camp the mountain finally speaks plainly, the way places do when the air runs out. What it says is a price. What it offers is the next pitch, already half-climbed. Nothing up here is free, and nothing is a trick either.",
+      text: "Above the last camp the mountain quits being subtle. It names a price. It offers the next pitch half-climbed. No trick \u2014 just a trade.",
       choices: [
         {
           ic: "\u{1F4A8}",
           label: "Pay in breath",
-          desc: "Cost: 15 stamina. The next pitch asks two fewer of you.",
+          desc: "Costs 15 stamina. The next pitch asks two fewer of you.",
           fx: { stam: -15, easeNext: 2 },
-          after: "You give the mountain what it asked. The route above visibly relaxes, like a fist half-opening."
+          after: "You pay. The route above visibly relaxes, like a fist half-opening."
         },
         {
           ic: "\u{1FAC0}",
           label: "Keep your lungs",
-          desc: "Refuse the trade. The mountain takes offense \u2014 the next pitch opens with 10 threat.",
+          desc: "Refuse the trade. The mountain takes it personally \u2014 next pitch opens with 10 threat.",
           fx: { threatNext: 10 },
-          after: "You climb on with everything you came with. Above you, the route tightens back into a fist. Fair is fair."
+          after: "You keep what you came with. Above you, the route closes back into a fist. Fair."
         }
       ]
     }
@@ -3051,7 +3069,7 @@ var TrailBundle = (() => {
     return {
       id: "cairn-keeper",
       name: "Cairn Keeper",
-      role: "Trail tales \u2014 narrative choice encounters drawn at story cairns",
+      role: "Waymark stories \u2014 narrative choice encounters on the route",
       api: { TALES, drawTale, resolveChoice },
       register() {
       }

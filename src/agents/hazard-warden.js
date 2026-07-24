@@ -52,8 +52,8 @@ export function nGate(need, alt, domain) {
   return {
     kind: 'gate', icon: '🛡️', title: 'Gatekeeper',
     blurb: domain
-      ? 'It stands where the route narrows, and it has read your ledger. It will ask about ' + domain + '. Wrong answers feed it. Right ones back it off.'
-      : 'It stands where the route narrows, and it has read your ledger. It will ask what you least want asked. Wrong answers feed it. Right ones back it off.',
+      ? 'The route narrows to a test. It asks ' + domain + ' — nothing else — and it hits harder than anything below it.'
+      : 'The route narrows to a test. It asks your weakest subject — nothing else — and it hits harder than anything below it.',
     need, tier: 5, time: 16, rise: 1.55, miss: 30, ease: 10, max: 100, hit: 20, restore: 22, boon: true, domain, gateDomain: null, alt,
     tname: 'The Gatekeeper', tic: '🛡️',
   };
@@ -70,8 +70,12 @@ export function nRest(alt, configRef) {
 export function nSummit(need, alt) {
   return {
     kind: 'summit', icon: '🏔️', title: 'Summit Push',
-    blurb: 'The last pitch. Wind you lean into, cold in your teeth, the dark starting to thin. All that stands between you and the top is everything you know.',
+    blurb: 'Six moves of ridge left. The shoulder is steady, the cornice is not, and the last two moves belong to whoever wants them more.',
     need, tier: 5, time: 15, rise: 2.1, miss: 22, ease: 8, max: 100, hit: 20, restore: 14, boon: false, alt,
+    stages: [
+      { at: 2, title: 'The Shoulder is behind you', sub: 'the ridge narrows — the wind picks a side', set: { rise: 2.7 }, threat: 12 },
+      { at: 4, title: 'The Cornice', sub: 'snow over empty air — nothing heavy stands here', set: { rise: 3.2, time: 12 }, threat: 16 },
+    ],
     tname: 'Summit push', tic: '❄️',
   };
 }
@@ -80,7 +84,7 @@ export function nSerac(need, alt) {
   return {
     kind: 'serac', icon: '🧊', title: 'Falling Serac',
     blurb: 'A hanging wall of ice, creaking before you even rope up. It was falling today with or without you. Be quick, and be elsewhere.',
-    need, tier: 5, time: 13, rise: 2.35, miss: 22, ease: 10, max: 100, hit: 22, restore: 20, boon: true, alt,
+    need, tier: 5, time: 13, rise: 2.6, miss: 22, ease: 10, max: 100, hit: 22, restore: 20, boon: true, alt,
     tname: 'The serac', tic: '🧊',
   };
 }
@@ -116,7 +120,7 @@ export function nThinAir(need, alt) {
   return {
     kind: 'thinair', icon: '🫁', title: 'The Thin Air',
     blurb: 'The air up here is a rumor. Your body burns whether you move or not — so move.',
-    need, tier: 4, time: 16, rise: 1.1, miss: 18, ease: 8, max: 100, hit: 13, restore: 16, boon: true, drain: 0.28, alt,
+    need, tier: 4, time: 16, rise: 1.1, miss: 18, ease: 8, max: 100, hit: 13, restore: 16, boon: true, drain: 0.34, alt,
     tname: 'Thin air', tic: '🫁',
   };
 }
@@ -125,7 +129,7 @@ export function nIcefall(need, alt) {
   return {
     kind: 'icefall', icon: '☄️', title: 'The Icefall',
     blurb: 'The serac field above calves on its own clock, tons at a time. Watch. Count. Cross. The ice does not aim, and it does not need to.',
-    need, tier: 4, time: 14, rise: 0.8, miss: 18, ease: 9, max: 100, hit: 15, restore: 16, boon: true, spike: 12, spikeEvery: 5.5, alt,
+    need, tier: 4, time: 14, rise: 0.8, miss: 18, ease: 9, max: 100, hit: 15, restore: 16, boon: true, spike: 13, spikeEvery: 5, alt,
     tname: 'The icefall', tic: '☄️',
   };
 }
@@ -133,7 +137,7 @@ export function nIcefall(need, alt) {
 export function nVoid(need, alt) {
   return {
     kind: 'void', icon: '🌑', title: 'Bare Ridge',
-    blurb: 'Rock scoured bare by a hundred winters. Nothing in your pack works this high — no boons, no notes, no flare. Just you, and whatever stuck.',
+    blurb: 'Rock scoured bare by a hundred winters. Nothing in your pack works up here — no gear, no notes, no flare. Just you, and whatever stuck.',
     need, tier: 3, time: 15, rise: 1.6, miss: 22, ease: 9, max: 100, hit: 17, restore: 18, boon: false, suppress: true, alt,
     tname: 'Bare ridge', tic: '🌑',
   };
@@ -188,7 +192,7 @@ export function nWindslab(need, alt) {
   return {
     kind: 'windslab', icon: '🌀', title: 'Gust Field',
     blurb: 'Wind-packed slabs that boom underfoot. The gusts keep no schedule and send no warning. Stay low and keep moving.',
-    need, tier: 2, time: 14, rise: 1.0, miss: 16, ease: 8, max: 100, hit: 16, restore: 16, boon: true, gust: 0.08, alt,
+    need, tier: 2, time: 14, rise: 1.0, miss: 16, ease: 8, max: 100, hit: 16, restore: 16, boon: true, gust: 0.11, alt,
     tname: 'The gust field', tic: '🌀',
   };
 }
@@ -215,7 +219,7 @@ export function nTempest(need, alt) {
   return {
     kind: 'tempest', icon: '🌪️', title: 'The Tempest',
     blurb: 'A storm with an appetite. Let the danger build and the wind rises to meet it, driving you toward the edge it wants you over. Starve it calm.',
-    need, tier: 4, time: 13, rise: 1.55, miss: 22, ease: 8, max: 100, hit: 18, restore: 18, boon: true, enrage: 1.7, alt,
+    need, tier: 4, time: 13, rise: 1.55, miss: 22, ease: 8, max: 100, hit: 18, restore: 18, boon: true, enrage: 1.9, alt,
     tname: 'The tempest', tic: '🌪️',
   };
 }
@@ -259,15 +263,15 @@ export function nVerglas(need, alt) {
 export function nShrine(alt) {
   return {
     kind: 'shrine', icon: '⛩️', title: 'Weathered Shrine',
-    blurb: 'Cairns and faded prayer flags, older than any name in the ledger. Climbers leave something here. The mountain remembers.',
+    blurb: 'Stacked stones and faded prayer flags. Climbers leave an offering here for luck. Sometimes the luck is real.',
     need: 0, restore: 0, boon: false, alt,
   };
 }
 
 export function nTale(alt) {
   return {
-    kind: 'tale', icon: '🗿', title: 'Story Cairn',
-    blurb: 'A cairn taller than the trail needs, stacked by hands that wanted it noticed. Something waits here besides the wind, and it will ask you to choose.',
+    kind: 'tale', icon: '🗿', title: 'Waymark',
+    blurb: 'Something off the route wants a decision from you. No clock, no threat — just a choice you keep.',
     need: 0, restore: 0, boon: false, alt,
   };
 }
@@ -276,7 +280,7 @@ export function nCorniceRidge(need, alt) {
   return {
     kind: 'corniceridge', icon: '🌬️', title: 'Wind Lip',
     blurb: 'A lip of snow curled over empty air by wind that has not stopped in years. It bucks without warning, and a slip undoes honest work.',
-    need, tier: 3, time: 15, rise: 0.9, miss: 14, ease: 9, max: 100, hit: 15, restore: 18, boon: true, gust: 0.03, streakGate: true, alt,
+    need, tier: 3, time: 15, rise: 0.9, miss: 14, ease: 9, max: 100, hit: 15, restore: 18, boon: true, gust: 0.05, streakGate: true, alt,
     tname: 'The wind lip', tic: '🌬️',
   };
 }
@@ -285,7 +289,7 @@ export function nFrozenTitan(need, alt) {
   return {
     kind: 'frozentitan', icon: '🧊', title: 'Glacier Block',
     blurb: 'A pillar of glacier ice three winters thick. All three layers break before the climbing counts, and old ice splinters hard when it starts to lose.',
-    need, tier: 4, time: 14, rise: 1.1, miss: 19, ease: 9, max: 100, hit: 17, restore: 20, boon: true, shield: 3, enrage: 1.5, alt,
+    need, tier: 4, time: 14, rise: 1.1, miss: 19, ease: 9, max: 100, hit: 17, restore: 20, boon: true, shield: 3, enrage: 1.8, alt,
     tname: 'The glacier block', tic: '🧊',
   };
 }
@@ -299,11 +303,13 @@ export const ACTS = [
 export function scaleNode(n, act) {
   n.act = act;
   if (n.kind === 'rest') return n;
-  const sc = 1 + (act - 1) * 0.20;
+  const sc = 1 + (act - 1) * 0.22;
   n.rise = +(n.rise * sc).toFixed(2);
   n.miss = Math.round(n.miss * (1 + (act - 1) * 0.08));
   n.hit = Math.round(n.hit * (1 + (act - 1) * 0.10));
   n.time = Math.max(8, n.time - (act - 1) * 2);
+  // Thin air gives less back: pitch payouts shrink as the acts climb.
+  if (n.restore) n.restore = Math.max(8, Math.round(n.restore * (1 - (act - 1) * 0.08)));
   return n;
 }
 
@@ -335,7 +341,7 @@ export const BESTIARY = [
   { fn: nFrozenTitan, a: 'Armored elite', m: 'Armored elite. Three shield layers, and it enrages when threat runs high.' },
   { fn: (n, al) => nGate(n, al, null), a: 'Competence duel', m: 'Competence duel. Draws every question from your weakest exam domain.' },
   { fn: nSerac, a: 'Elite', m: 'Elite. Starts angry — a quarter of the threat bar is already lit.' },
-  { fn: nSummit, a: 'Final pitch', m: 'Final pitch. Long, fast-building, and it opens with threat on the board.' },
+  { fn: nSummit, a: 'Final pitch', m: 'Final pitch in three stages — shoulder, cornice, top — each faster and angrier than the last.' },
 ].map((e) => ({ ...e, t: e.fn(1, 0).tier }));
 
 export function nodeEmoji(kind) {
@@ -355,7 +361,7 @@ export function nodeSub(node) {
   if (node.kind === 'gate') return node.domain ? 'Weakest domain — ' + node.domain : 'Gatekeeper duel';
   if (node.kind === 'rest') return 'Catch your breath, then draft a boon';
   if (node.kind === 'shrine') return 'Leave an offering for a relic, or pass by';
-  if (node.kind === 'tale') return 'A trail tale waits — hear it out, then choose';
+  if (node.kind === 'tale') return 'A story, not a fight — it ends how you choose';
   if (node.kind === 'serac') return 'Fast and punishing — ' + n + ' before the ice lets go';
   if (node.kind === 'summit') return 'The final pitch — ' + n + ' to top out';
   if (node.kind === 'whiteout') return 'Move fast — ' + n + ' before the cloud closes';

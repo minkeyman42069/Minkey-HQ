@@ -780,6 +780,9 @@ var TrailBundle = (() => {
       restore: 20,
       boon: true,
       alt,
+      stages: [
+        { at: 3, title: "The ice lets go above", sub: "run the last moves \u2014 do not look up", set: { rise: 3.1 }, threat: 18 }
+      ],
       tname: "The serac",
       tic: "\u{1F9CA}"
     };
@@ -1621,7 +1624,9 @@ var TrailBundle = (() => {
     { id: "oath_summit", ic: "\u{1F91D}", name: "Bound", desc: "Summit with an expedition oath sworn." },
     { id: "grade_s", ic: "\u{1F48E}", name: "Alpine Grade", desc: "Earn an S grade on a summit run." },
     { id: "first_ascent", ic: "\u26CF\uFE0F", name: "First Ascent", desc: "Summit a set line from the guidebook." },
-    { id: "tale_5", ic: "\u{1F5FF}", name: "Keeper's Audience", desc: "Face five stories at the waymarks." }
+    { id: "tale_5", ic: "\u{1F5FF}", name: "Keeper's Audience", desc: "Face five stories at the waymarks." },
+    { id: "bird_friend", ic: "\u{1F426}", name: "Bird of Good Standing", desc: "Feed the ptarmigan, then summit. It keeps accounts." },
+    { id: "review_5", ic: "\u{1FAA8}", name: "Stone Mason", desc: "Reclaim loose stones in five Morning Reviews." }
   ];
   var HARD_KINDS = /* @__PURE__ */ new Set([
     "void",
@@ -2348,7 +2353,7 @@ var TrailBundle = (() => {
   function domainOf(q) {
     return q.dom || DOMAIN_OF[q.cat] || "C";
   }
-  function weakestDomainLetter(run, bank) {
+  function weakestDomainLetter(run, bank, lapses) {
     const seen = { A: 0, B: 0, C: 0, D: 0, E: 0, F: 0 };
     const wrong = { A: 0, B: 0, C: 0, D: 0, E: 0, F: 0 };
     Object.keys(run.prog || {}).forEach((id) => {
@@ -2357,6 +2362,11 @@ var TrailBundle = (() => {
       const d = domainOf(q);
       seen[d] = (seen[d] || 0) + 1;
       wrong[d] += run.prog[id].wrong || 0;
+    });
+    Object.keys(lapses || {}).forEach((id) => {
+      const q = bank[id];
+      if (!q) return;
+      wrong[domainOf(q)] += (lapses[id] || 0) * 0.5;
     });
     const order = ["E", "B", "A", "F", "D", "C"];
     let pick = "C";
@@ -3446,7 +3456,7 @@ var TrailBundle = (() => {
       economy,
       engine: climb_engine_exports,
       buildRoute: (rnd2, topic) => buildRoute(rnd2, topic, CONFIG, hazard_warden_exports),
-      weakestDomain: (run, bank) => weakestDomainLetter(run, bank),
+      weakestDomain: (run, bank, lapses) => weakestDomainLetter(run, bank, lapses),
       pitchRestore: (node, mode, run) => pitchRestore(node, mode, run, CONFIG),
       createScheduler: () => scheduler
     };
@@ -3520,7 +3530,8 @@ var TrailBundle = (() => {
     window[k] = H[k];
   });
   window.weakestDomainLetter = function() {
-    return Trail.weakestDomain(typeof RUN !== "undefined" ? RUN : { prog: {} }, typeof BANK !== "undefined" ? BANK : []);
+    const lapses = typeof META !== "undefined" && META.lapses ? META.lapses : {};
+    return Trail.weakestDomain(typeof RUN !== "undefined" ? RUN : { prog: {} }, typeof BANK !== "undefined" ? BANK : [], lapses);
   };
   window.pitchRestore = function(node, mode) {
     const run = typeof RUN !== "undefined" ? RUN : { weather: null };

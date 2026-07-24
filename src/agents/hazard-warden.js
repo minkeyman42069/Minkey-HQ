@@ -85,6 +85,9 @@ export function nSerac(need, alt) {
     kind: 'serac', icon: '🧊', title: 'Falling Serac',
     blurb: 'A hanging wall of ice, creaking before you even rope up. It was falling today with or without you. Be quick, and be elsewhere.',
     need, tier: 5, time: 13, rise: 2.6, miss: 22, ease: 10, max: 100, hit: 22, restore: 20, boon: true, alt,
+    stages: [
+      { at: 3, title: 'The ice lets go above', sub: 'run the last moves — do not look up', set: { rise: 3.1 }, threat: 18 },
+    ],
     tname: 'The serac', tic: '🧊',
   };
 }

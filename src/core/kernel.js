@@ -198,7 +198,7 @@ export function createKernel() {
     economy,
     engine: ClimbEngine,
     buildRoute: (rnd, topic) => buildRoute(rnd, topic, CONFIG, HazardWarden),
-    weakestDomain: (run, bank) => weakestDomainLetter(run, bank),
+    weakestDomain: (run, bank, lapses) => weakestDomainLetter(run, bank, lapses),
     pitchRestore: (node, mode, run) => pitchRestore(node, mode, run, CONFIG),
     createScheduler: () => scheduler,
   };

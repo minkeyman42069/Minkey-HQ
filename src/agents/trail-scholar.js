@@ -46,7 +46,7 @@ export function domainOf(q) {
   return q.dom || DOMAIN_OF[q.cat] || 'C';
 }
 
-export function weakestDomainLetter(run, bank) {
+export function weakestDomainLetter(run, bank, lapses) {
   const seen = { A: 0, B: 0, C: 0, D: 0, E: 0, F: 0 };
   const wrong = { A: 0, B: 0, C: 0, D: 0, E: 0, F: 0 };
   Object.keys(run.prog || {}).forEach((id) => {
@@ -55,6 +55,13 @@ export function weakestDomainLetter(run, bank) {
     const d = domainOf(q);
     seen[d] = (seen[d] || 0) + 1;
     wrong[d] += run.prog[id].wrong || 0;
+  });
+  // Lifetime lapse memory: the examiners remember every climb, not just
+  // this one. Old misses weigh half as much as fresh ones.
+  Object.keys(lapses || {}).forEach((id) => {
+    const q = bank[id];
+    if (!q) return;
+    wrong[domainOf(q)] += (lapses[id] || 0) * 0.5;
   });
   const order = ['E', 'B', 'A', 'F', 'D', 'C'];
   let pick = 'C';

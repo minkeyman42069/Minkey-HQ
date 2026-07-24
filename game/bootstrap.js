@@ -50,7 +50,8 @@ const H = Trail.agents.hazard.api;
 ].forEach((k) => { window[k] = H[k]; });
 
 window.weakestDomainLetter = function () {
-  return Trail.weakestDomain(typeof RUN !== 'undefined' ? RUN : { prog: {} }, typeof BANK !== 'undefined' ? BANK : []);
+  const lapses = (typeof META !== 'undefined' && META.lapses) ? META.lapses : {};
+  return Trail.weakestDomain(typeof RUN !== 'undefined' ? RUN : { prog: {} }, typeof BANK !== 'undefined' ? BANK : [], lapses);
 };
 
 window.pitchRestore = function (node, mode) {

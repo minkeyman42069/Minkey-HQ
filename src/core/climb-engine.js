@@ -61,6 +61,8 @@ export function blankRun(over = {}) {
     freeDraft: false,
     freeDraftFrom: null,
     usedTales: [],
+    storyFlags: {},
+    featherUsed: false,
     recent: [],
     ending: false,
   };
@@ -183,10 +185,14 @@ export function tickDrift(trail, run, enc, dt, rnd, events) {
     const oathR = trail.agents.expedition.api.oathRiseMult(run);
     raiseThreat(trail, run, enc, node.rise * dt * rm * (run.weather ? run.weather.rise : 1) * oathR, rnd, events);
   }
+  const whistle = !node.suppress && run.boons && run.boons.has('whistle');
   if (node.gust && rnd() < node.gust * dt) {
-    const gustAmt = 12 + Math.floor(rnd() * 10);
+    let gustAmt = 12 + Math.floor(rnd() * 10);
+    if (whistle) gustAmt = Math.round(gustAmt / 2);
     const gout = trail.emit('hazard:gust', ctxOf(trail, run, enc, rnd, { gust: gustAmt }));
-    raiseThreat(trail, run, enc, gout.threatDelta != null ? gout.threatDelta : gustAmt, rnd, events);
+    let gustHit = gout.threatDelta != null ? gout.threatDelta : gustAmt;
+    if (whistle && gout.threatDelta != null) gustHit = Math.round(gustHit / 2);
+    raiseThreat(trail, run, enc, gustHit, rnd, events);
     if (events) events.push({ t: 'gust', amount: gustAmt, banners: gout.banners || [] });
   }
   if (node.drain) addStamina(trail, run, enc, -node.drain * dt, events);
@@ -195,7 +201,7 @@ export function tickDrift(trail, run, enc, dt, rnd, events) {
     while (enc.spikeT >= (node.spikeEvery || 3.5)) {
       enc.spikeT -= node.spikeEvery || 3.5;
       if (events) events.push({ t: 'spike' });
-      raiseThreat(trail, run, enc, node.spike, rnd, events);
+      raiseThreat(trail, run, enc, whistle ? Math.round(node.spike / 2) : node.spike, rnd, events);
     }
   }
 }
@@ -247,17 +253,28 @@ export function resolveAnswer(trail, run, enc, opts) {
         events.push({ t: 'crux' });
       }
     }
+    if (enc.streak === 4 || enc.streak === 8 || enc.streak === 12) {
+      events.push({ t: 'streakmark', streak: enc.streak });
+    }
     const bout = trail.emit('answer:correct', ctxOf(trail, run, enc, rnd));
     if (bout.staminaDelta) addStamina(trail, run, enc, bout.staminaDelta, events);
     if (bout.timeDelta) timeDelta = bout.timeDelta;
     if (bout.threatDelta) raiseThreat(trail, run, enc, bout.threatDelta, rnd, events);
     if (bout.banners && bout.banners.length) events.push({ t: 'banners', banners: bout.banners });
   } else {
+    // Ptarmigan Feather: once per climb, a timeout costs nothing and the
+    // streak survives. A small bird pays a small debt.
+    const feather = viaTimeout && !run.featherUsed &&
+      trail.CONFIG.MODS.relics && run.relics && run.relics.has('feather');
+    if (feather) run.featherUsed = true;
     const wout = trail.emit('answer:wrong', ctxOf(trail, run, enc, rnd, { viaTimeout: !!viaTimeout }));
-    if (!wout.keepStreak) {
+    if (!wout.keepStreak && !feather) {
       enc.streak = 0;
       enc.streakEase = 0;
     }
+    if (feather) {
+      events.push({ t: 'feather' });
+    } else
     if (wout.staminaCost > 0) addStamina(trail, run, enc, -wout.staminaCost, events);
     else if (wout.staminaDelta) addStamina(trail, run, enc, wout.staminaDelta, events);
     if (wout.threatDelta) raiseThreat(trail, run, enc, wout.threatDelta, rnd, events);
@@ -289,6 +306,10 @@ export function applyTaleFx(trail, run, fx, opts = {}) {
   if (!fx) return;
   if (fx.stam) addStamina(trail, run, opts.enc || null, fx.stam, opts.events);
   if (fx.relic && opts.grantRelic) opts.grantRelic();
+  if (fx.flag) {
+    run.storyFlags = run.storyFlags || {};
+    run.storyFlags[fx.flag] = true;
+  }
   if (fx.draftNext) {
     run.freeDraft = true;
     run.freeDraftFrom = 'tale';

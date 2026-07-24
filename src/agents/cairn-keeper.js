@@ -213,7 +213,176 @@ export const TALES = [
       },
     ],
   },
+  {
+    id: 'martatea',
+    ic: '🫖',
+    title: 'Tea with Marta',
+    minAct: 1,
+    text: 'Marta the Keeper has a kettle going in the lee of a boulder, like it is the most normal thing in the world at four thousand meters. "Sit. It needs a minute. Everything good needs a minute." She pours two cups without asking.',
+    choices: [
+      {
+        ic: '🍵', label: 'Sit and drink',
+        desc: 'The tea is hot and the company is better. +12 stamina.',
+        fx: { stam: 12, flag: 'tea' },
+        after: 'You talk about nothing. The route, the weather, a bird she is feuding with. It is the best twenty minutes of the climb so far, and she waves you off before you can thank her.',
+      },
+      {
+        ic: '🚶', label: 'Politely keep moving',
+        desc: 'Light is short. The next pitch asks one less — Marta points out the good line as you go.',
+        fx: { easeNext: 1 },
+        after: '"Suit yourself." She points with her cup. "Stay left of the dark rock. The dark rock is lying to you." She is, of course, right.',
+      },
+    ],
+  },
+  {
+    id: 'ptarmigan',
+    ic: '🐦',
+    title: 'The Ptarmigan',
+    minAct: 1,
+    text: 'A fat white bird lands on your pack and looks at you the way a landlord looks at a tenant. It is standing on your food. It knows it is standing on your food.',
+    choices: [
+      {
+        ic: '🥪', label: 'Share your lunch',
+        desc: 'Cost: 6 stamina. You cannot explain why this feels important. It does.',
+        fx: { stam: -6, flag: 'bird' },
+        after: 'It eats like it paid for the meal, bobs once — which you choose to read as gratitude — and flies up the route. Somehow you feel lighter, six stamina poorer, and completely certain you will see it again.',
+      },
+      {
+        ic: '👋', label: 'Shoo it off',
+        desc: 'It is YOUR lunch. +6 stamina, and the moral high ground.',
+        fx: { stam: 6 },
+        after: 'It leaves slowly, insultingly slowly, taking one crumb as a tax. You get the feeling you have made a very small, very patient enemy.',
+      },
+    ],
+  },
+  {
+    id: 'cartographer',
+    ic: '🗺️',
+    title: 'Emil, Mapping the Wind',
+    minAct: 2,
+    text: 'A man sits cross-legged on the ledge with pencils lined up by length, drawing a map of things that move. "Emil," he says, not looking up. "I chart the gusts. Everyone laughs. Then they climb into one." He taps an empty stretch of paper. "I will trade you a corner of tomorrow for a fact you are sure of."',
+    choices: [
+      {
+        ic: '🗣️', label: 'Trade him a fact',
+        desc: 'Tell him something you know cold. He fills in your next pitch — it opens calm.',
+        fx: { flag: 'emil' },
+        after: 'He writes your fact into the margin like it is a bearing. "Good. Solid ground on paper is solid ground underfoot." He shows you where the next pitch breathes — and where it holds its breath.',
+      },
+      {
+        ic: '🎁', label: 'Ask what he has spare',
+        desc: 'Cost: 8 stamina hauling his kit up a step. Mapmakers carry strange, useful things.',
+        fx: { stam: -8, relic: true },
+        after: 'You carry his crate up the awkward step and he rummages in it with real joy. "For your trouble. I have two, and the second one was never mine to keep."',
+      },
+    ],
+  },
+  {
+    id: 'letters',
+    ic: '✉️',
+    title: 'The Letter Tin',
+    minAct: 2,
+    text: 'A biscuit tin wedged under a flat stone, streaked with old wax. Inside, letters — climbers writing to whoever comes next. The top one reads: "If you are reading this, the weather let you. Write something true and go on."',
+    choices: [
+      {
+        ic: '✍️', label: 'Write something true',
+        desc: 'Leave a line for the next climber. Some things you only learn by saying them. +8 stamina.',
+        fx: { stam: 8, flag: 'letter' },
+        after: 'You write the truest thing you know about being this tired and this far up, and feel better the moment the lid closes. Strange how that works. It will be there when someone needs it.',
+      },
+      {
+        ic: '📖', label: 'Read them all',
+        desc: 'Cost: 5 stamina sitting in the cold. Sixty years of advice from people who stood right here.',
+        fx: { stam: -5, draftNext: true },
+        after: 'Grocery lists. Confessions. A recipe. And threaded through all of it, real route advice from people who wanted a stranger to make it. The next camp will make more sense because of them.',
+      },
+    ],
+  },
+  {
+    id: 'younggide',
+    ic: '🧒',
+    title: 'The Apprentice',
+    minAct: 2,
+    text: 'A young guide is re-coiling a rope for the fourth time, jaw set, eyes wet with frustration and altitude. "I froze on the traverse. Marta says everyone freezes once. Did you freeze?" They look at you like the answer matters. It does.',
+    choices: [
+      {
+        ic: '💬', label: 'Tell them the truth',
+        desc: 'Yes. You froze. Talk them through what unfroze you. Teaching it locks it in — the next pitch asks one less.',
+        fx: { easeNext: 1, flag: 'apprentice' },
+        after: 'You explain it plainly — the freeze, the breath, the first small move that breaks it. Saying it out loud, you finally understand it yourself. They nod, and coil the rope right on the fifth try.',
+      },
+      {
+        ic: '🤝', label: 'Rope up with them a while',
+        desc: 'Cost: 10 stamina at their pace. Nobody should re-learn courage alone.',
+        fx: { stam: -10, draftNext: true, flag: 'apprentice' },
+        after: 'You climb a rope-length together, slow and honest. At the anchor they press something from their kit into your hand. "Marta says gear you are given works better than gear you buy." ',
+      },
+    ],
+  },
+  {
+    id: 'summitbell',
+    ic: '🔔',
+    title: 'The Bell Above the Clouds',
+    minAct: 3,
+    text: 'A small bronze bell hangs from an iron post, older than every map of this mountain. The rule, scratched beneath it in four languages: RING IT GOING UP AND YOU OWE THE TOP THE TRUTH. IT RINGS BACK FOR EVERY CLIMBER WHO KEPT THEIR WORD.',
+    choices: [
+      {
+        ic: '🔔', label: 'Ring it',
+        desc: 'Make the summit a promise. The next pitch opens with 8 threat — the mountain heard you.',
+        fx: { threatNext: 8, flag: 'bell' },
+        after: 'One clear note, and the wind goes quiet around it — listening, or counting. There is no taking it back now. The top knows you are coming.',
+      },
+      {
+        ic: '🤫', label: 'Leave it silent',
+        desc: 'Promises are heavy at altitude. Save your breath. +8 stamina.',
+        fx: { stam: 8 },
+        after: 'You pass without a sound. The bell hangs still, patient as the mountain under it. It has waited out braver silences than yours.',
+      },
+    ],
+  },
 ];
+
+/* ---------- The cast around the fire ---------- */
+
+/**
+ * One reactive line for a ledge camp, chosen from run state. The cast talks
+ * to you like people who want you to make it — because they do.
+ */
+export function campLine(run, rnd) {
+  const f = run.storyFlags || {};
+  const lines = [];
+  if (f.bird) lines.push('🐦 The ptarmigan is here. It has clearly been waiting. It inspects your camp, approves of nothing, and settles in by the fire like family.');
+  if (f.tea) lines.push('🫖 There is a tin cup by the fire ring that was not in your pack this morning. Marta moves fast for her age. It improves the evening enormously.');
+  if (f.letter) lines.push('✉️ You think about your line in the letter tin, and the stranger who will read it someday. Write true, climb true.');
+  if (f.apprentice) lines.push('🧒 Two ledges down, a headlamp is repeating your route, move for move. The apprentice is climbing again. That one is yours.');
+  if (f.emil) lines.push('🗺️ Far below, a small light traces slow circles on a ledge. Emil, charting the night wind. You sleep better knowing the gusts are being taken seriously.');
+  if (run.clutch > 0) lines.push('🔥 Your hands have finally stopped shaking from that last pitch. The fire helps. Being alive helps more.');
+  if (run.bestStreak >= 8) lines.push('🔥 Somewhere on the wind you would swear you hear Marta: "Eight in a row. Now do it tired." You are tired. You grin anyway.');
+  if (run.relics && run.relics.size >= 2) lines.push('🎒 You lay the mountain\u2019s gifts out by the fire and take inventory like a dragon. A small hoard, honestly earned.');
+  lines.push('🏕️ The fire cracks. The stars are doing their enormous quiet thing. For one full minute you forget to study, and that is fine too.');
+  lines.push('🏕️ Wind on the tent fly, tea going cold too fast, every muscle honest about the day. You would not trade this for a desk. Not tonight.');
+  return lines[Math.floor(rnd() * lines.length)];
+}
+
+/**
+ * The last word on a climb. Reactive to how it actually went — the flags
+ * you set, the saves you survived, the promises you made.
+ */
+export function epilogue(run, kind) {
+  const f = run.storyFlags || {};
+  if (kind === 'summit') {
+    if (f.bell) return 'The bell\u2019s answer reaches you on the summit — one clear note rising through the cloud. You kept your word. The mountain keeps count.';
+    if (f.bird) return 'On the summit cairn sits a fat white bird, entirely unimpressed by the view. It waited for you. You split what is left of lunch, as is now tradition.';
+    if (f.apprentice) return 'From the top you can see the whole line you climbed — and a small figure on the lower ridge, climbing it after you. Somewhere below, the apprentice found their nerve. Pass it on. That is the whole game.';
+    if (f.letter) return 'Standing on top, you finally know what you should have written in the tin. Next climb, you tell yourself. The mountain will hold you to it.';
+    if (f.tea) return 'The summit wind smells faintly, impossibly, of Marta\u2019s tea. "Everything good needs a minute," she said. This took considerably more than a minute. Worth it.';
+    if ((run.clutch || 0) >= 2) return 'You topped out on fumes and stubbornness, twice nearly nothing left. Those are the summits you remember. Nobody frames a photo of an easy day.';
+    return 'The top, at last — wind, light, and the whole world arranged below you like a map of everything you now know. Write it in the ledger. This one is yours.';
+  }
+  if (f.apprentice) return 'The mountain sent you down today. So it goes. Somewhere below, an apprentice is still climbing because of what you told them — so get up. You have your own advice to follow.';
+  if (f.bird) return 'You fell, and a certain fat white bird escorted you partway down, offering no sympathy whatsoever. Eat something. Sleep. The route is not going anywhere, and neither is the bird.';
+  if (f.tea) return '"Everyone comes down the mountain," Marta says, pouring without asking. "The good ones come down taking notes." Drink your tea. Read your misses. Go again.';
+  return 'The mountain kept this one. Fine — it keeps the first draft of everybody. What you learned on the way down is yours forever, and the route will still be there at first light.';
+}
 
 /**
  * Draw one story for the given act, skipping ids already used this run.
@@ -245,7 +414,7 @@ export function createCairnKeeper() {
     id: 'cairn-keeper',
     name: 'Cairn Keeper',
     role: 'Waymark stories — narrative choice encounters on the route',
-    api: { TALES, drawTale, resolveChoice },
+    api: { TALES, drawTale, resolveChoice, campLine, epilogue },
     register() {},
   };
 }

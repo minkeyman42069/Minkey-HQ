@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-24T16:56:26.267Z",
+  "generatedAt": "2026-07-24T17:31:53.394Z",
   "runsPerScenario": 4000,
   "balance": {
     "STAM_MAX": 100,
@@ -46,7 +46,7 @@
   "scenarios": {
     "base": {
       "runs": 4000,
-      "summitRate": 0.308,
+      "summitRate": 0.307,
       "act3Survival": 0.782,
       "avgStrikes": 4.05,
       "opts": {
@@ -56,7 +56,7 @@
     },
     "boon": {
       "runs": 4000,
-      "summitRate": 0.43,
+      "summitRate": 0.431,
       "act3Survival": 0.845,
       "avgStrikes": 3.89,
       "opts": {
@@ -70,9 +70,9 @@
     },
     "drafting": {
       "runs": 4000,
-      "summitRate": 0.634,
-      "act3Survival": 0.888,
-      "avgStrikes": 3.57,
+      "summitRate": 0.63,
+      "act3Survival": 0.884,
+      "avgStrikes": 3.61,
       "opts": {
         "accuracy": 0.82,
         "timeoutRate": 0.05,
@@ -86,9 +86,9 @@
     },
     "stacked": {
       "runs": 4000,
-      "summitRate": 0.615,
+      "summitRate": 0.616,
       "act3Survival": 0.894,
-      "avgStrikes": 4.42,
+      "avgStrikes": 4.43,
       "opts": {
         "accuracy": 0.82,
         "timeoutRate": 0.05,
@@ -101,9 +101,9 @@
     },
     "skilled": {
       "runs": 4000,
-      "summitRate": 0.718,
+      "summitRate": 0.717,
       "act3Survival": 0.96,
-      "avgStrikes": 3.86,
+      "avgStrikes": 3.87,
       "opts": {
         "accuracy": 0.88,
         "timeoutRate": 0.04
@@ -111,9 +111,9 @@
     },
     "struggling": {
       "runs": 4000,
-      "summitRate": 0.014,
+      "summitRate": 0.013,
       "act3Survival": 0.277,
-      "avgStrikes": 3.03,
+      "avgStrikes": 3.04,
       "opts": {
         "accuracy": 0.72,
         "timeoutRate": 0.1

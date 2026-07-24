@@ -1769,10 +1769,10 @@ function _enterCurrentNode(node){
     }
     if(_tell) setTimeout(function(){ banner('⚔️ '+(ENC.node.title||'The examiner'), _tell); },1050);
   }
-  if(node.kind==='serac'){ setTimeout(function(){ banner('The ice groans','it was waiting for you'); },250); }
+  if(node.kind==='serac'){ setTimeout(function(){ banner('The ice groans','the wall above is already moving'); },250); }
   if(node.kind==='storm'){ setTimeout(function(){ banner('Rising squall','only speed clears this ridge'); },250); }
-  if(node.kind==='summit'){ setTimeout(function(){ banner('The final pitch','all that is left is what you know'); },250); }
-  if(node.startThreat && node.kind!=='serac' && node.kind!=='summit'){ setTimeout(function(){ banner('It was warned','something told this pitch you were coming'); },250); }
+  if(node.kind==='summit'){ setTimeout(function(){ banner('The final pitch','the last of the mountain between you and the top'); },250); }
+  if(node.startThreat && node.kind!=='serac' && node.kind!=='summit'){ setTimeout(function(){ banner('This pitch is braced','it opens with the threat already up'); },250); }
   var pent=Trail.emit('pitch:enter', trailCtx());
   if(pent.staminaDelta) addStamina(pent.staminaDelta);
   showBanners(pent.banners);
@@ -1804,20 +1804,31 @@ function onTimeout(){ if(RUN.busy) return; RUN.busy=true; if(RUN.view) RUN.view.
  * Trail.engine; this maps the engine's event stream onto DOM/audio. */
 function syncVitals(){ RENDER.stam(); if(ENC) RENDER.threat();
   if(typeof document!=='undefined' && document.body && document.body.classList) document.body.classList.toggle('lastlegs', RUN.stamina>0 && RUN.stamina<=25 && !!ENC); }
+/* Banner variety — cosmetic flavor drawn with Math.random, never the gameplay
+ * rng, so a seeded climb stays deterministic and only the wording rotates. */
+function bpick(a){ return a[Math.floor(Math.random()*a.length)]; }
+var BAN_STRIKE=['The mountain pushes back','The wind takes a swing at you','The slope heaves under you','You get shoved off your line','A hard gust, and you give ground','The face bucks and you lose the line'];
+var BAN_CRUX=[{t:'The crux',s:'one hard move from the ledge'},{t:'The crux',s:'the whole pitch comes down to this'},{t:'Last hard move',s:'one clean answer and you are up'},{t:'The crux',s:'everything narrows to the next hold'}];
+var BAN_KNOCK=[{t:'Knocked back',s:'you slide down the ridge'},{t:'You lose your footing',s:'and drop back down the line'},{t:'Knocked back',s:'ground you already climbed, gone'},{t:'A slip',s:'and the ridge takes two moves back'}];
+var BAN_LAST=[{t:'Last legs',s:'no room left for a slip'},{t:'Running on fumes',s:'one more mistake ends the climb'},{t:'Nearly spent',s:'there is nothing left in reserve'},{t:'Last legs',s:'you are climbing on grit now'}];
+var BAN_CLUTCH=[{t:'Clutch pitch',s:'cleared on your last legs'},{t:'Cleared on empty',s:'nothing left, and you made it anyway'},{t:'Somehow, up',s:'you had no business clearing that'},{t:'Clutch pitch',s:'cleared with nothing to spare'}];
+var BAN_STONE=[{t:'Loose stone reclaimed',s:'you brought it back'},{t:'Recovered',s:'the miss from earlier, answered'},{t:'You catch it this time',s:'the one that got away before'},{t:'Reclaimed',s:'a concept you dropped, back in hand'}];
+var BAN_PHASE=[{t:'The slope lets go',s:'it releases all at once'},{t:'The whole slope releases',s:'and the threat spikes with it'},{t:'It breaks loose',s:'all of it, right now'}];
+var BAN_SHIELD_T=['The face cracks','A layer splits','The shell fractures'];
 function applyEngineEvents(ev){ if(!ev) return;
   for(var i=0;i<ev.length;i++){ var e=ev[i];
-    if(e.t==='strike'){ if(e.blocked){ AUDIO.tick(); RENDER.encChrome(); } else { AUDIO.strike(); RENDER.encChrome(); banner('The mountain pushes back','&#8722;'+e.hit+' stamina'); } }
+    if(e.t==='strike'){ if(e.blocked){ AUDIO.tick(); RENDER.encChrome(); } else { AUDIO.strike(); RENDER.encChrome(); banner(bpick(BAN_STRIKE),'&#8722;'+e.hit+' stamina'); } }
     else if(e.t==='banners'||e.t==='gust'){ showBanners(e.banners); }
-    else if(e.t==='shield'){ banner('The face cracks', e.left>0?(e.left+' layer'+(e.left>1?'s':'')+' to break'):'the shell gives way \u2014 climb'); }
-    else if(e.t==='phase'){ banner('The slope lets go','it releases all at once'); }
+    else if(e.t==='shield'){ banner(bpick(BAN_SHIELD_T), e.left>0?(e.left+' layer'+(e.left>1?'s':'')+' to break'):'the shell gives way, climb'); }
+    else if(e.t==='phase'){ var _bp=bpick(BAN_PHASE); banner(_bp.t,_bp.s); }
     else if(e.t==='stage'){ AUDIO.strike(); RENDER.encChrome(); banner(e.title, e.sub); }
-    else if(e.t==='feather'){ AUDIO.correct(); banner('\uD83E\uDEB6 The feather stirs','the ptarmigan pays its debt \u2014 no harm done, streak intact'); }
-    else if(e.t==='streakmark'){ var _sm={4:'Four straight \u2014 the ridge is listening',8:'Eight straight \u2014 the wind stopped arguing',12:'Twelve straight \u2014 even Marta would whistle'}[e.streak]; if(_sm) banner('\uD83D\uDD25 '+e.streak+' in a row', _sm); }
-    else if(e.t==='crux'){ banner('The crux','one hard move from the ledge'); }
-    else if(e.t==='knockback'){ if(RENDER.encChrome) RENDER.encChrome(); banner('Knocked back','you slide down the ridge'); }
+    else if(e.t==='feather'){ AUDIO.correct(); banner('\uD83E\uDEB6 The feather stirs','the ptarmigan pays its debt, and no harm comes of it'); }
+    else if(e.t==='streakmark'){ var _sm={4:'the rhythm has found you',8:'nothing up here is rattling you',12:'as clean a run as this pitch has seen'}[e.streak]; if(_sm) banner('\uD83D\uDD25 '+e.streak+' in a row', _sm); }
+    else if(e.t==='crux'){ var _bc=bpick(BAN_CRUX); banner(_bc.t,_bc.s); }
+    else if(e.t==='knockback'){ if(RENDER.encChrome) RENDER.encChrome(); var _bk=bpick(BAN_KNOCK); banner(_bk.t,_bk.s); }
     else if(e.t==='spike'){ AUDIO.tick(); }
-    else if(e.t==='lastlegs'){ banner('Last legs','no room left for a slip'); }
-    else if(e.t==='iceaxe'){ banner('\u26cf\ufe0f The ice axe bites','you arrest the fall \u2014 1 stamina'); }
+    else if(e.t==='lastlegs'){ var _bll=bpick(BAN_LAST); banner(_bll.t,_bll.s); }
+    else if(e.t==='iceaxe'){ banner('\u26cf\ufe0f The ice axe bites','you arrest the fall and hold on at 1 stamina'); }
     else if(e.t==='fell'){ if(RUN.timer) clearInterval(RUN.timer); setTimeout(function(){ endRun('fell'); }, 650); }
   } }
 
@@ -1826,8 +1837,8 @@ function resolve(correct, viaTimeout, srcEl){
   var p=SCHED.grade(q.id, correct, viaTimeout); RUN.seen++;
   if(!correct){ RUN.stones[q.id]=RUN.seen+4;
     var _wd=domainOf(q); RUN.domMiss=RUN.domMiss||{}; RUN.domMiss[_wd]=(RUN.domMiss[_wd]||0)+1;
-    if(RUN.domMiss[_wd]===2) setTimeout(function(){ banner('\uD83E\uDDE0 The Sage marks your ledger', DOMAINS[_wd].n+' has slipped twice this climb \u2014 the examiners will notice'); }, 900); }
-  else if(RUN.stoneNow===q.id){ RUN.recovered=(RUN.recovered||0)+1; if(RUN.relics&&RUN.relics.has('chalk')){ ENC.threat=0; RENDER.threat(); } if(RUN.nodeIdx>=Math.floor(RUN.route.length*0.55)) RUN.mastered.add(q.id); banner('Loose stone reclaimed','you brought it back'); }
+    if(RUN.domMiss[_wd]===2) setTimeout(function(){ banner('\uD83E\uDDE0 The Sage marks your ledger', DOMAINS[_wd].n+' has slipped twice this climb, and the examiners will notice'); }, 900); }
+  else if(RUN.stoneNow===q.id){ RUN.recovered=(RUN.recovered||0)+1; if(RUN.relics&&RUN.relics.has('chalk')){ ENC.threat=0; RENDER.threat(); } if(RUN.nodeIdx>=Math.floor(RUN.route.length*0.55)) RUN.mastered.add(q.id); var _bst=bpick(BAN_STONE); banner(_bst.t,_bst.s); }
   RUN.stoneNow=null;
   if(correct){ AUDIO.correct(); flash('ok'); if(srcEl) burst(srcEl); if(before<lockTierNow() && p.tier>=lockTierNow()) sealLocked();
     if(ENC && ENC.node && ENC.node.lapsePool && typeof META!=='undefined' && META.lapses && META.lapses[q.id]){
@@ -1848,7 +1859,7 @@ function clearEncounter(){
   clearInterval(RUN.timer); RUN.nodeCleared++;
   var cout=Trail.emit('pitch:clear', trailCtx());
   var _bonus=cout.clearBonus||0;
-  if(RUN.stamina>0 && RUN.stamina<=25){ RUN.clutch=(RUN.clutch||0)+1; banner('Clutch pitch','cleared on your last legs'); }
+  if(RUN.stamina>0 && RUN.stamina<=25){ RUN.clutch=(RUN.clutch||0)+1; var _bcl=bpick(BAN_CLUTCH); banner(_bcl.t,_bcl.s); }
   addStamina(pitchRestore(ENC.node,'clear') + _bonus);
   if(['whiteout','thinair','icefall','tempest','closing','avalanche','frozentitan'].indexOf(ENC.node.kind)>=0 && rnd()<(RUN.weather&&RUN.weather.name==='Dead of Night'?0.5:0.3)) grantRelic();
   RUN.nodeIdx++;

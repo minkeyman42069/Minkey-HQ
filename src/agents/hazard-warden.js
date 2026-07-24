@@ -298,9 +298,9 @@ export function nFrozenTitan(need, alt) {
 }
 
 export const ACTS = [
-  { name: 'The Approach', flavor: 'Firm rock, open glacier, the last of the day’s warmth still in the stone. The summit is a long way up. Down here the ground is easy, and it does not stay that way.' },
+  { name: 'The Approach', flavor: 'Firm rock, open glacier, the last of the day’s warmth still in the stone. The summit stands a long way overhead.' },
   { name: 'The Headwall', flavor: 'The glacier ends at a wall of rock and blue ice, dead vertical. The walking is finished. From here it is your hands, your edges, and what you actually know.' },
-  { name: 'The Death Zone', flavor: 'Above the last camp the air holds half the oxygen it did below. Your legs burn, your thinking blurs, and nothing you do recovers. Keep moving.' },
+  { name: 'The Death Zone', flavor: 'Above the last camp the air holds half the oxygen it did below. Your legs burn, your thoughts blur, your body stops recovering. Keep moving.' },
 ];
 
 /** The three examiners. Every climber meets them in order. */

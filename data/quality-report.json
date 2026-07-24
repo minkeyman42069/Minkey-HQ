@@ -1,21 +1,20 @@
 {
-  "generatedAt": "2026-07-12T23:07:02.562Z",
+  "generatedAt": "2026-07-24T15:17:21.612Z",
   "summary": {
     "total": 433,
     "avgQuality": 91,
     "grades": {
-      "A": 332,
+      "A": 335,
       "B": 98,
-      "C": 3,
+      "C": 0,
       "D": 0,
       "F": 0
     },
     "flagCounts": {
       "EXPLANATION_NO_CONTRAST": 317,
       "DEFINITION_ONLY": 23,
-      "THIN_STEM": 54,
-      "ANSWER_LEAK": 64,
-      "UNBALANCED_OPTIONS": 3
+      "THIN_STEM": 53,
+      "ANSWER_LEAK": 61
     },
     "needsWork": [
       {
@@ -2039,19 +2038,16 @@
       },
       {
         "id": 169,
-        "quality": 66,
-        "grade": "C",
+        "quality": 100,
+        "grade": "A",
         "flags": [
-          "THIN_STEM",
-          "ANSWER_LEAK",
-          "UNBALANCED_OPTIONS",
           "EXPLANATION_NO_CONTRAST"
         ],
         "cat": "Differential Reinforcement",
         "dom": "D",
         "type": "mc",
-        "q": "The difference between DRA and DRI is:",
-        "preview": "The difference between DRA and DRI is:"
+        "q": "To reduce hand-flapping during table work, the RBT reinforces keeping hands folded on the table — a behavior that cannot physically happen at the same time as flapping. This procedure is:",
+        "preview": "To reduce hand-flapping during table work, the RBT reinforces keeping hands folded on the "
       },
       {
         "id": 170,
@@ -2360,18 +2356,16 @@
       },
       {
         "id": 194,
-        "quality": 66,
-        "grade": "C",
+        "quality": 100,
+        "grade": "A",
         "flags": [
-          "ANSWER_LEAK",
-          "UNBALANCED_OPTIONS",
           "EXPLANATION_NO_CONTRAST"
         ],
         "cat": "Reinforcement & Punishment",
         "dom": "C",
         "type": "mc",
-        "q": "The difference between response cost and time-out from reinforcement is:",
-        "preview": "The difference between response cost and time-out from reinforcement is:"
+        "q": "A learner loses two previously earned tokens for hitting. Later, hitting leads to sitting apart from a game for two minutes with no chance to earn tokens. In order, these procedures are:",
+        "preview": "A learner loses two previously earned tokens for hitting. Later, hitting leads to sitting "
       },
       {
         "id": 195,
@@ -2893,18 +2887,16 @@
       },
       {
         "id": 235,
-        "quality": 66,
-        "grade": "C",
+        "quality": 100,
+        "grade": "A",
         "flags": [
-          "ANSWER_LEAK",
-          "UNBALANCED_OPTIONS",
           "EXPLANATION_NO_CONTRAST"
         ],
         "cat": "Professionalism & Scope",
         "dom": "F",
         "type": "mc",
-        "q": "The difference between 'scope of competence' and 'scope of practice' is:",
-        "preview": "The difference between 'scope of competence' and 'scope of practice' is:"
+        "q": "The RBT credential permits implementing token economies, but this RBT has never been trained to run one. Running one anyway means acting:",
+        "preview": "The RBT credential permits implementing token economies, but this RBT has never been train"
       },
       {
         "id": 236,
@@ -6770,19 +6762,16 @@
     },
     {
       "id": 169,
-      "quality": 66,
-      "grade": "C",
+      "quality": 100,
+      "grade": "A",
       "flags": [
-        "THIN_STEM",
-        "ANSWER_LEAK",
-        "UNBALANCED_OPTIONS",
         "EXPLANATION_NO_CONTRAST"
       ],
       "cat": "Differential Reinforcement",
       "dom": "D",
       "type": "mc",
-      "q": "The difference between DRA and DRI is:",
-      "preview": "The difference between DRA and DRI is:"
+      "q": "To reduce hand-flapping during table work, the RBT reinforces keeping hands folded on the table — a behavior that cannot physically happen at the same time as flapping. This procedure is:",
+      "preview": "To reduce hand-flapping during table work, the RBT reinforces keeping hands folded on the "
     },
     {
       "id": 170,
@@ -7102,18 +7091,16 @@
     },
     {
       "id": 194,
-      "quality": 66,
-      "grade": "C",
+      "quality": 100,
+      "grade": "A",
       "flags": [
-        "ANSWER_LEAK",
-        "UNBALANCED_OPTIONS",
         "EXPLANATION_NO_CONTRAST"
       ],
       "cat": "Reinforcement & Punishment",
       "dom": "C",
       "type": "mc",
-      "q": "The difference between response cost and time-out from reinforcement is:",
-      "preview": "The difference between response cost and time-out from reinforcement is:"
+      "q": "A learner loses two previously earned tokens for hitting. Later, hitting leads to sitting apart from a game for two minutes with no chance to earn tokens. In order, these procedures are:",
+      "preview": "A learner loses two previously earned tokens for hitting. Later, hitting leads to sitting "
     },
     {
       "id": 195,
@@ -7646,18 +7633,16 @@
     },
     {
       "id": 235,
-      "quality": 66,
-      "grade": "C",
+      "quality": 100,
+      "grade": "A",
       "flags": [
-        "ANSWER_LEAK",
-        "UNBALANCED_OPTIONS",
         "EXPLANATION_NO_CONTRAST"
       ],
       "cat": "Professionalism & Scope",
       "dom": "F",
       "type": "mc",
-      "q": "The difference between 'scope of competence' and 'scope of practice' is:",
-      "preview": "The difference between 'scope of competence' and 'scope of practice' is:"
+      "q": "The RBT credential permits implementing token economies, but this RBT has never been trained to run one. Running one anyway means acting:",
+      "preview": "The RBT credential permits implementing token economies, but this RBT has never been train"
     },
     {
       "id": 236,
@@ -8311,7 +8296,7 @@
     },
     {
       "id": 292,
-      "quality": 71,
+      "quality": 79,
       "grade": "B",
       "flags": [],
       "cat": "Shaping",
@@ -9257,7 +9242,7 @@
     },
     {
       "id": 365,
-      "quality": 71,
+      "quality": 79,
       "grade": "B",
       "flags": [],
       "cat": "Ethics & Scope",

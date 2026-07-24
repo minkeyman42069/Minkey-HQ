@@ -51,8 +51,8 @@ export function simulateClimb(opts = {}) {
     timeoutRate: opts.timeoutRate ?? 0.06,
     answerSeconds: opts.answerSeconds ?? ANSWER_SECONDS,
     fixedBoons: opts.fixedBoons ?? boonIds(opts.boons),
-    draftPolicy: 'none',
-    talePolicy: 'skip',
+    draftPolicy: opts.draftPolicy ?? 'none',
+    talePolicy: opts.talePolicy ?? 'skip',
     shrinePolicy: 'pass',
     weather: null,
   });
@@ -93,12 +93,17 @@ export function runMonteCarlo(n = 3000, opts = {}) {
   };
 }
 
-/** Targets for a fair roguelite study climb. */
+/** Targets for a fair roguelite study climb (post-sharpening contract).
+ * base     — no gear at all: intentionally stern.
+ * boon     — two fixed pieces, no drafting: conservative floor.
+ * drafting — the representative player: drafts at camps, plays the stories. */
 export const TARGETS = {
-  baseSummitMin: 0.32,
-  baseSummitMax: 0.48,
-  boonSummitMin: 0.48,
-  boonSummitMax: 0.65,
+  baseSummitMin: 0.24,
+  baseSummitMax: 0.40,
+  boonSummitMin: 0.36,
+  boonSummitMax: 0.52,
+  draftingSummitMin: 0.52,
+  draftingSummitMax: 0.72,
 };
 
 export function assessBalance(report) {
@@ -114,6 +119,14 @@ export function assessBalance(report) {
   }
   if (report.boon.summitRate > TARGETS.boonSummitMax) {
     issues.push(`Boon summit rate ${(report.boon.summitRate * 100).toFixed(1)}% is above target ${TARGETS.boonSummitMax * 100}%`);
+  }
+  if (report.drafting) {
+    if (report.drafting.summitRate < TARGETS.draftingSummitMin) {
+      issues.push(`Drafting summit rate ${(report.drafting.summitRate * 100).toFixed(1)}% is below target ${TARGETS.draftingSummitMin * 100}%`);
+    }
+    if (report.drafting.summitRate > TARGETS.draftingSummitMax) {
+      issues.push(`Drafting summit rate ${(report.drafting.summitRate * 100).toFixed(1)}% is above target ${TARGETS.draftingSummitMax * 100}%`);
+    }
   }
   return issues;
 }

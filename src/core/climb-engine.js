@@ -232,6 +232,16 @@ export function resolveAnswer(trail, run, enc, opts) {
         raiseThreat(trail, run, enc, 22, rnd, events);
         events.push({ t: 'phase' });
       }
+      if (enc.node.stages) {
+        for (const st of enc.node.stages) {
+          if (!st.entered && enc.done >= st.at && enc.done < enc.need) {
+            st.entered = true;
+            if (st.set) Object.assign(enc.node, st.set);
+            if (st.threat) raiseThreat(trail, run, enc, st.threat, rnd, events);
+            events.push({ t: 'stage', title: st.title, sub: st.sub });
+          }
+        }
+      }
       if (enc.need > 1 && enc.done === enc.need - 1 && !enc.cruxTold) {
         enc.cruxTold = true;
         events.push({ t: 'crux' });
@@ -330,6 +340,7 @@ export function simulatePitchNode(trail, node, opts = {}) {
         if (e.t === 'gust' && e.banners) step.banners.push(...e.banners);
         if (e.t === 'shield') step.shield = e.left;
         if (e.t === 'phase') step.banners.push({ title: 'The slope lets go', sub: 'it releases all at once' });
+        if (e.t === 'stage') step.banners.push({ title: e.title, sub: e.sub });
         if (e.t === 'knockback') step.banners.push({ title: 'Knocked back', sub: 'you slide down the ridge' });
       }
     }

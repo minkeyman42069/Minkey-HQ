@@ -24,6 +24,13 @@ const stacked = runMonteCarlo(RUNS, {
   timeoutRate: 0.05,
   boons: { provisions: true, pitanchor: true, vent: true },
 });
+const drafting = runMonteCarlo(RUNS, {
+  accuracy: 0.82,
+  timeoutRate: 0.05,
+  fixedBoons: ['provisions', 'vent'],
+  draftPolicy: 'first',
+  talePolicy: 'first',
+});
 const skilled = runMonteCarlo(RUNS, { accuracy: 0.88, timeoutRate: 0.04 });
 const struggling = runMonteCarlo(RUNS, { accuracy: 0.72, timeoutRate: 0.10 });
 
@@ -32,10 +39,10 @@ const report = {
   runsPerScenario: RUNS,
   balance: BALANCE,
   targets: TARGETS,
-  scenarios: { base, boon, stacked, skilled, struggling },
+  scenarios: { base, boon, drafting, stacked, skilled, struggling },
 };
 
-const issues = assessBalance({ base, boon });
+const issues = assessBalance({ base, boon, drafting });
 
 console.log('\n=== RBT Trail Climb Balance Report ===\n');
 console.log(`Simulations per scenario: ${RUNS}`);
@@ -50,6 +57,7 @@ for (const [name, r] of Object.entries(report.scenarios)) {
 console.log('\nTargets:');
 console.log(`  base summit     ${TARGETS.baseSummitMin * 100}–${TARGETS.baseSummitMax * 100}%`);
 console.log(`  boon summit     ${TARGETS.boonSummitMin * 100}–${TARGETS.boonSummitMax * 100}%`);
+console.log(`  drafting summit ${TARGETS.draftingSummitMin * 100}–${TARGETS.draftingSummitMax * 100}%`);
 
 if (issues.length) {
   console.log('\n⚠ Balance warnings:');

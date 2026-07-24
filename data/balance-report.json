@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-24T15:17:48.372Z",
+  "generatedAt": "2026-07-24T16:56:26.267Z",
   "runsPerScenario": 4000,
   "balance": {
     "STAM_MAX": 100,
@@ -27,7 +27,7 @@
         "timeoutCost": 12
       }
     },
-    "REST_RESTORE": 38,
+    "REST_RESTORE": 42,
     "CLEAR_RESTORE_MULT": 0.92,
     "EASE_ON_CORRECT": 6,
     "THREAT_RESET": 75,
@@ -36,17 +36,19 @@
     "ANSWER_SECONDS": 6
   },
   "targets": {
-    "baseSummitMin": 0.32,
-    "baseSummitMax": 0.48,
-    "boonSummitMin": 0.48,
-    "boonSummitMax": 0.65
+    "baseSummitMin": 0.24,
+    "baseSummitMax": 0.4,
+    "boonSummitMin": 0.36,
+    "boonSummitMax": 0.52,
+    "draftingSummitMin": 0.52,
+    "draftingSummitMax": 0.72
   },
   "scenarios": {
     "base": {
       "runs": 4000,
-      "summitRate": 0.401,
-      "act3Survival": 0.805,
-      "avgStrikes": 3.51,
+      "summitRate": 0.308,
+      "act3Survival": 0.782,
+      "avgStrikes": 4.05,
       "opts": {
         "accuracy": 0.82,
         "timeoutRate": 0.06
@@ -54,9 +56,9 @@
     },
     "boon": {
       "runs": 4000,
-      "summitRate": 0.533,
-      "act3Survival": 0.858,
-      "avgStrikes": 3.28,
+      "summitRate": 0.43,
+      "act3Survival": 0.845,
+      "avgStrikes": 3.89,
       "opts": {
         "accuracy": 0.82,
         "timeoutRate": 0.05,
@@ -66,11 +68,27 @@
         }
       }
     },
+    "drafting": {
+      "runs": 4000,
+      "summitRate": 0.634,
+      "act3Survival": 0.888,
+      "avgStrikes": 3.57,
+      "opts": {
+        "accuracy": 0.82,
+        "timeoutRate": 0.05,
+        "fixedBoons": [
+          "provisions",
+          "vent"
+        ],
+        "draftPolicy": "first",
+        "talePolicy": "first"
+      }
+    },
     "stacked": {
       "runs": 4000,
-      "summitRate": 0.696,
-      "act3Survival": 0.902,
-      "avgStrikes": 3.64,
+      "summitRate": 0.615,
+      "act3Survival": 0.894,
+      "avgStrikes": 4.42,
       "opts": {
         "accuracy": 0.82,
         "timeoutRate": 0.05,
@@ -83,9 +101,9 @@
     },
     "skilled": {
       "runs": 4000,
-      "summitRate": 0.798,
-      "act3Survival": 0.964,
-      "avgStrikes": 2.68,
+      "summitRate": 0.718,
+      "act3Survival": 0.96,
+      "avgStrikes": 3.86,
       "opts": {
         "accuracy": 0.88,
         "timeoutRate": 0.04
@@ -93,9 +111,9 @@
     },
     "struggling": {
       "runs": 4000,
-      "summitRate": 0.024,
-      "act3Survival": 0.294,
-      "avgStrikes": 2.9,
+      "summitRate": 0.014,
+      "act3Survival": 0.277,
+      "avgStrikes": 3.03,
       "opts": {
         "accuracy": 0.72,
         "timeoutRate": 0.1

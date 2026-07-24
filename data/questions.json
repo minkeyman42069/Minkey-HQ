@@ -573,10 +573,10 @@
     "cat": "Extinction & Replacement",
     "q": "A behavior that serves the SAME function as a problem behavior but is more acceptable is a…",
     "a": [
-      "discriminative stimulus",
-      "functionally equivalent replacement behavior",
-      "conditioned reinforcer",
-      "prompt"
+      "A discriminative stimulus",
+      "A functionally equivalent replacement behavior",
+      "A generalized conditioned reinforcer",
+      "A conditioned motivating operation"
     ],
     "c": 1,
     "e": "A <b>FERB</b> gets the same need met in a better way (e.g., 'Remote, please' vs. grabbing).",
@@ -1068,10 +1068,10 @@
     "cat": "Chaining",
     "q": "In backward chaining, reinforcement is delivered right after the learner completes the…",
     "a": [
-      "first step",
-      "step currently being taught",
-      "hardest step",
-      "middle step"
+      "the first step of the task analysis",
+      "the step currently being taught",
+      "the hardest step in the chain",
+      "the entire chain, once independent"
     ],
     "c": 1,
     "e": "In backward chaining the taught step is the <b>last</b> one, so reinforcement follows task completion every time.",
@@ -1083,10 +1083,10 @@
     "cat": "Chaining",
     "q": "A key benefit of backward chaining is that the learner…",
     "a": [
-      "never needs prompts",
-      "always ends the trial on success, boosting motivation",
-      "skips the task analysis",
-      "learns steps out of order"
+      "rarely needs prompts after the first trial",
+      "ends every trial with success and reinforcement",
+      "can skip the task analysis entirely",
+      "learns the steps in any order"
     ],
     "c": 1,
     "e": "Ending on success each time <b>reduces frustration and increases motivation</b>.",
@@ -1113,10 +1113,10 @@
     "cat": "Chaining",
     "q": "In total task chaining, reinforcement can be delivered…",
     "a": [
-      "only at the very end",
+      "only after the final step of the chain",
       "after each correct step, especially early on",
-      "only on the first step",
-      "never"
+      "only on the single step being taught",
+      "only once the full chain is independent"
     ],
     "c": 1,
     "e": "Total task lets you reinforce <b>after each correct step</b>, particularly early in learning.",
@@ -1383,10 +1383,10 @@
     "cat": "Preference Assessment",
     "q": "Before starting a new client's token program, the BCBA asks the RBT to run a preference assessment because:",
     "a": [
-      "Reinforcers are individual — what motivates one client may not motivate another",
-      "All clients prefer the same primary reinforcers",
-      "Assessments replace ongoing data collection",
-      "Pairing is unnecessary after assessment"
+      "Reinforcers are individual — one client's motivator may not work for another",
+      "Primary reinforcers are effective for nearly all clients",
+      "A single assessment removes the need for ongoing checks",
+      "Token systems standardize what clients will work for"
     ],
     "c": 0,
     "e": "Effective reinforcement requires identifying what is <b>actually motivating for this individual</b>. Assuming universal preferences leads to weak programs. Assessment complements, not replaces, data collection.",
@@ -1818,10 +1818,10 @@
     "cat": "Professionalism & Scope",
     "q": "To become an RBT you must complete a 40-hour training and…",
     "a": [
-      "a master's degree",
+      "complete a master's degree in behavior analysis",
       "pass the BACB certification exam",
-      "2000 fieldwork hours",
-      "32 CEUs"
+      "log 2,000 supervised fieldwork hours",
+      "earn 32 continuing-education units"
     ],
     "c": 1,
     "e": "RBT requires the 40-hour training plus <b>passing the BACB exam</b> (the master's/2000 hrs are BCBA).",
@@ -1893,10 +1893,10 @@
     "cat": "Graphing & Data",
     "q": "You can gauge variability by…",
     "a": [
-      "counting sessions",
+      "counting the number of sessions plotted",
       "subtracting the lowest data point from the highest",
-      "reading the x-axis",
-      "finding the mean only"
+      "reading values along the x-axis",
+      "calculating the mean of the data path"
     ],
     "c": 1,
     "e": "<b>Variability</b> ≈ highest data point minus the lowest — how spread out the data is.",
@@ -1909,9 +1909,9 @@
     "q": "On an acquisition graph, the x-axis usually shows ___ and the y-axis shows ___.",
     "a": [
       "percent correct; sessions",
-      "sessions/time; number or percent correct",
-      "function; rate",
-      "trend; variability"
+      "sessions or time; number or percent correct",
+      "behavior function; response rate",
+      "trend direction; variability range"
     ],
     "c": 1,
     "e": "X-axis = <b>time/sessions</b>; y-axis = <b>number or percent correct</b>.",
@@ -2553,12 +2553,12 @@
     "cat": "Differential Reinforcement",
     "q": "Why is DRO generally NOT used to MAINTAIN a skill?",
     "a": [
-      "It targets the ABSENCE of a behavior, not the continued performance of a skill",
-      "It reinforces too often",
-      "It only works with tokens",
-      "It requires punishment"
+      "Its reinforcement schedule is too dense to thin",
+      "It reinforces the absence of behavior, not skill performance",
+      "It only works when paired with token systems",
+      "It requires a punishment component to work"
     ],
-    "c": 0,
+    "c": 1,
     "e": "<b>DRO reinforces not doing something</b>, so it doesn't build or maintain an active skill — maintenance relies on intermittent reinforcement of the skill itself.",
     "id": 170,
     "type": "mc",
@@ -2763,10 +2763,10 @@
     "cat": "Verbal Operants",
     "q": "The main difference between a mand and a tact is:",
     "a": [
-      "A mand is a request driven by motivation; a tact is a label driven by what's present",
-      "A mand labels; a tact requests",
-      "A mand is written; a tact is spoken",
-      "They are the same operant"
+      "A mand is driven by motivation; a tact by what is present",
+      "A mand labels the environment; a tact makes requests",
+      "A mand must be vocal; a tact can be any modality",
+      "They differ only in their schedule of reinforcement"
     ],
     "c": 0,
     "e": "<b>Mand = request</b> under an MO (get what you want). <b>Tact = label</b> under stimulus control (name what you see).",
@@ -2778,10 +2778,10 @@
     "cat": "Verbal Operants",
     "q": "Which verbal operant is usually taught FIRST, and why?",
     "a": [
-      "The mand — it directly gets the learner what they want, so reinforcement is powerful",
-      "The tact — labeling is easiest",
-      "The echoic — copying is automatic",
-      "Transcription — writing builds fluency"
+      "The mand — it gets the learner what they want, so reinforcement is strong",
+      "The tact — labels are the easiest operant to prompt",
+      "The echoic — imitation is already in the repertoire",
+      "The intraverbal — conversation builds rapport first"
     ],
     "c": 0,
     "e": "<b>Mands</b> are taught first because the reinforcement (getting the desired item) is immediate and motivating, making learning efficient.",
@@ -2928,10 +2928,10 @@
     "cat": "Reinforcement & Punishment",
     "q": "In the RBT's toolbox, punishment procedures should be used:",
     "a": [
-      "Only as a last resort after less intrusive strategies, and aversives only when there's risk of serious harm",
-      "First, because they work fastest",
-      "Routinely for any problem behavior",
-      "Whenever a parent requests them"
+      "Only as a last resort, after less intrusive strategies have failed",
+      "First, because they change behavior the fastest",
+      "Routinely, paired with every reinforcement plan",
+      "Whenever a caregiver specifically requests them"
     ],
     "c": 0,
     "e": "Punishment is a <b>last resort</b>; the most intrusive/aversive procedures are reserved for behavior posing a risk of serious harm or death.",
@@ -3093,10 +3093,10 @@
     "cat": "Chaining",
     "q": "A key motivational advantage of BACKWARD chaining is:",
     "a": [
-      "Every teaching trial ends on the learner succeeding and being reinforced",
-      "It skips the task analysis",
-      "It teaches many skills at once",
-      "It never uses prompts"
+      "Every trial ends with the learner succeeding and being reinforced",
+      "The task analysis can be much shorter than usual",
+      "Multiple skills can be targeted in a single chain",
+      "Prompting becomes unnecessary after one session"
     ],
     "c": 0,
     "e": "Because the learner completes the final step, <b>backward chaining always ends on success</b>, which is reinforcing and motivating.",
@@ -3319,9 +3319,9 @@
     "q": "Before a session, the BCBA reports the client had a poor night's sleep and has not eaten breakfast. The RBT should recognize these as variables that operate:",
     "a": [
       "Before the target behavior, altering reinforcer value",
-      "After the behavior, as consequences",
-      "Only during reinforcement delivery",
-      "As permanent product measures"
+      "After the behavior, functioning as its consequence",
+      "During delivery, changing reinforcer magnitude",
+      "Between sessions, as a permanent product record"
     ],
     "c": 0,
     "e": "<b>Motivating operations</b> are antecedent variables — they change how effective a reinforcer will be <b>before</b> the learner responds. They are not consequences and are not measurement procedures.",
@@ -3333,7 +3333,7 @@
     "cat": "Shaping",
     "q": "Reinforcing closer and closer approximations toward a final goal behavior is:",
     "a": [
-      "Shaping via successive approximations",
+      "Shaping",
       "Chaining",
       "Extinction",
       "Prompting"
@@ -3348,10 +3348,10 @@
     "cat": "Shaping",
     "q": "In shaping, the 'baseline' you start reinforcing is:",
     "a": [
-      "The closest approximation the learner already does without prompts",
-      "The final terminal behavior",
-      "A completely new behavior never seen",
-      "The last step of a chain"
+      "The closest approximation the learner already shows",
+      "The full terminal behavior at criterion",
+      "A novel behavior outside the repertoire",
+      "The final step of the task analysis"
     ],
     "c": 0,
     "e": "Shaping begins from the <b>current closest approximation</b> the learner performs unprompted, then builds toward the terminal behavior.",
@@ -3483,10 +3483,10 @@
     "cat": "Assessment & FBA",
     "q": "What is the purpose of the PLAY (control) condition in a functional analysis?",
     "a": [
-      "A baseline with rich reinforcement and no demands, for comparison",
-      "To evoke the highest rate of behavior",
-      "To deliver punishment",
-      "To test escape only"
+      "A comparison condition rich in reinforcement with no demands",
+      "The condition expected to evoke the most behavior",
+      "A test of escape and avoidance responding",
+      "The condition where consequences are strongest"
     ],
     "c": 0,
     "e": "The <b>play/control</b> condition provides free reinforcement and no demands, serving as the comparison baseline where behavior should be low.",
@@ -3513,10 +3513,10 @@
     "cat": "Professionalism & Scope",
     "q": "Which situation must an RBT report to their supervisor RIGHT AWAY?",
     "a": [
-      "A sudden, unexplained increase in self-injury or aggression",
-      "A client having a good session",
-      "Running slightly ahead of schedule",
-      "A preferred item being chosen"
+      "A sudden, unexplained increase in self-injury",
+      "An unusually productive teaching session",
+      "A session running ahead of planned schedule",
+      "A new preferred item found during play"
     ],
     "c": 0,
     "e": "Unexpected changes like <b>spikes in SIB/aggression</b>, health changes, or safety concerns must be reported immediately.",
@@ -3558,10 +3558,10 @@
     "cat": "Professionalism & Scope",
     "q": "Under HIPAA's 'minimum necessary' rule, an RBT should:",
     "a": [
-      "Share only the client information needed for the specific purpose",
-      "Share all records with anyone who asks",
-      "Post progress on social media",
-      "Keep no documentation"
+      "Share only the information needed for the purpose",
+      "Share full records with any requesting provider",
+      "Summarize sessions publicly with names removed",
+      "Discuss cases only inside the clinic building"
     ],
     "c": 0,
     "e": "The <b>minimum necessary</b> standard means disclosing only the PHI required for the task at hand.",
@@ -4194,10 +4194,10 @@
     "cat": "Shaping",
     "q": "When starting a shaping program, the first thing you reinforce is:",
     "a": [
-      "The closest approximation the learner already does without prompts",
-      "The full terminal behavior",
+      "The closest approximation the learner already shows",
+      "The full terminal behavior at criterion",
       "A completely novel behavior",
-      "The last step of a chain"
+      "The final step of a chain"
     ],
     "c": 0,
     "e": "You begin at <b>baseline</b> — the nearest approximation the learner already performs unprompted — and build from there.",
@@ -4502,9 +4502,9 @@
     "q": "Which target is written in observable, measurable terms?",
     "a": [
       "Hits peers with an open hand",
-      "Is aggressive",
-      "Gets frustrated",
-      "Has a bad attitude"
+      "Acts aggressively toward peers",
+      "Gets frustrated during demands",
+      "Has a bad attitude about work"
     ],
     "c": 0,
     "e": "Observable and measurable = you can see and count it. “Hits peers with an open hand” qualifies.",
@@ -4994,9 +4994,9 @@
     "q": "Extinction means:",
     "a": [
       "Withholding the reinforcer that maintained the behavior",
-      "Adding a punisher",
-      "Reinforcing a new behavior",
-      "Ignoring all behavior forever"
+      "Delivering a punisher contingent on the behavior",
+      "Reinforcing an alternative behavior instead",
+      "Blocking every response the client makes"
     ],
     "c": 0,
     "e": "<b>Extinction</b> stops delivering the maintaining reinforcer so the behavior weakens.",
@@ -5078,9 +5078,9 @@
     "q": "Which session-note statement is objective?",
     "a": [
       "Client completed 8 of 10 trials independently",
-      "Client had a great day",
-      "Client was in a bad mood",
-      "Client seemed to enjoy it"
+      "Client had a genuinely great day today",
+      "Client was in a bad mood all session",
+      "Client seemed to really enjoy the activity"
     ],
     "c": 0,
     "e": "Objective notes report observable, measurable facts — not opinions or mood guesses (E.4).",
@@ -5092,10 +5092,10 @@
     "dom": "E",
     "q": "A parent mentions the child started a new medication. The RBT should:",
     "a": [
-      "Document it and tell the supervisor promptly",
-      "Ignore it",
-      "Change the program",
-      "End the session"
+      "Document it and inform the supervisor promptly",
+      "Leave it out of the note as private medical data",
+      "Adjust the program to offset side effects",
+      "Pause sessions until the BCBA responds"
     ],
     "c": 0,
     "e": "Variables that may affect progress (illness, medication, schedule) are reported in a timely manner (E.3).",
@@ -5107,10 +5107,10 @@
     "dom": "E",
     "q": "You notice the data look off and aren't sure how to proceed. You should:",
     "a": [
-      "Seek clinical direction from your supervisor",
-      "Decide on your own",
-      "Ask the parent to choose",
-      "Skip data that day"
+      "Seek clinical direction from the supervisor",
+      "Use professional judgment and decide alone",
+      "Let the caregiver choose how to proceed",
+      "Pause data collection until it looks right"
     ],
     "c": 0,
     "e": "Seek and prioritize clinical direction through the chain of command (E.2).",
@@ -5131,10 +5131,10 @@
     "dom": "E",
     "q": "Session notes must be:",
     "a": [
-      "Accurate, objective, and completed per legal/workplace requirements",
-      "Written from memory days later",
-      "Based on how you felt",
-      "Optional when you're busy"
+      "Accurate, objective, and completed on time",
+      "Written from memory within a few days",
+      "Focused on overall impressions of the day",
+      "Required only when insurance requests them"
     ],
     "c": 0,
     "e": "Notes must objectively reflect what occurred and meet legal/regulatory/workplace rules (E.4).",
@@ -5191,10 +5191,10 @@
     "dom": "F",
     "q": "A caregiver sends you a social-media friend request. Best practice is to:",
     "a": [
-      "Keep professional boundaries and decline",
-      "Accept to build rapport",
-      "Accept but never post",
-      "Ask the client's opinion"
+      "Decline and keep the relationship professional",
+      "Accept to strengthen caregiver rapport",
+      "Accept but keep the account fully private",
+      "Ask the BCBA to accept on your behalf"
     ],
     "c": 0,
     "e": "Avoid public/social-media entanglements that blur professional boundaries (F.6).",
@@ -5221,10 +5221,10 @@
     "dom": "F",
     "q": "A family offers you an expensive gift. Following the ethics code, you:",
     "a": [
-      "Follow the BACB gift guidelines and decline",
-      "Accept it warmly",
-      "Accept and don't mention it",
-      "Trade it for extra sessions"
+      "Decline, following the BACB gift guidelines",
+      "Accept it warmly to respect the gesture",
+      "Accept it but leave it out of the record",
+      "Exchange it for additional session time"
     ],
     "c": 0,
     "e": "Adhere to the BACB gift-giving/receiving guidelines; significant gifts are declined (F.8).",
@@ -5236,10 +5236,10 @@
     "dom": "F",
     "q": "Ongoing cultural humility and responsiveness means:",
     "a": [
-      "Examining your own biases and respecting the family's values",
-      "Assuming your way is best",
-      "Treating every family identically",
-      "Avoiding cultural topics entirely"
+      "Examining your biases and respecting family values",
+      "Applying the clinic standard to every family",
+      "Treating every family exactly the same way",
+      "Leaving cultural topics to the caregivers"
     ],
     "c": 0,
     "e": "Cultural humility means identifying personal biases and responding respectfully to each family (F.10).",
@@ -5251,10 +5251,10 @@
     "dom": "F",
     "q": "Maintaining client dignity includes:",
     "a": [
-      "Speaking respectfully and protecting privacy during care",
-      "Discussing the client in public",
-      "Using nicknames about their behavior",
-      "Ignoring their preferences"
+      "Speaking respectfully and protecting privacy",
+      "Sharing session stories with other families",
+      "Using playful nicknames for behaviors",
+      "Choosing goals without client input"
     ],
     "c": 0,
     "e": "Core ethics: treat others with compassion, dignity, and respect (F.1).",
@@ -5350,10 +5350,10 @@
     "dom": "C",
     "q": "The defining feature of a reinforcer is that it:",
     "a": [
-      "Increases the future frequency of the behavior",
-      "Feels pleasant to the person",
-      "Is a preferred item",
-      "Is delivered immediately"
+      "It increases the future frequency of behavior",
+      "It feels pleasant to the person receiving it",
+      "It is an item the person strongly prefers",
+      "It is delivered immediately after behavior"
     ],
     "c": 0,
     "e": "Reinforcement is defined by its <b>effect</b> — the behavior increases — not by how it feels.",
@@ -5654,9 +5654,9 @@
     "q": "Which is the LEAST direct way to identify a behavior's function?",
     "a": [
       "An indirect interview or rating scale",
-      "A functional analysis",
-      "Direct ABC observation",
-      "Descriptive observation"
+      "An experimental functional analysis",
+      "Direct observation with ABC recording",
+      "Descriptive assessment in the setting"
     ],
     "c": 0,
     "e": "<b>Indirect</b> methods rely on others' reports rather than observing behavior directly.",
@@ -5761,10 +5761,10 @@
     "dom": "E",
     "q": "The family mentions the client didn't sleep and skipped breakfast. The RBT should:",
     "a": [
-      "Note it, since it may affect behavior and data, and tell the supervisor",
-      "Ignore it",
-      "Cancel the session",
-      "Change the treatment goals"
+      "Note it — setting events can affect data — and tell the supervisor",
+      "Leave it out; sleep is not behavioral data",
+      "Cancel the session until routines resume",
+      "Rewrite the goals around the missed meal"
     ],
     "c": 0,
     "e": "Sleep, illness, and meals are variables that can affect behavior — document and report them (E.3).",
@@ -5776,10 +5776,10 @@
     "dom": "E",
     "q": "When unsure how to run part of a program, the RBT should:",
     "a": [
-      "Ask the supervising BCBA for clinical direction",
-      "Improvise a reasonable approach",
-      "Ask the parent to decide",
-      "Skip that program"
+      "Ask the supervising BCBA for direction",
+      "Improvise the closest reasonable version",
+      "Have the caregiver demonstrate it first",
+      "Set that program aside for the session"
     ],
     "c": 0,
     "e": "Seek and prioritize clinical direction through the chain of command (E.2).",
@@ -5807,9 +5807,9 @@
     "q": "The RBT feels a program no longer seems to be working. The best action is to:",
     "a": [
       "Communicate the concern to the supervisor promptly",
-      "Quietly stop running it",
-      "Redesign it independently",
-      "Wait months to see if it changes"
+      "Quietly stop running it until asked",
+      "Redesign the procedure independently",
+      "Give it a few more months unchanged"
     ],
     "c": 0,
     "e": "Relay team concerns and suggestions to the supervisor in a timely manner (E.1).",
@@ -5846,9 +5846,9 @@
     "q": "Accurate documentation matters because notes may be used for:",
     "a": [
       "Billing, legal, and clinical decision-making",
-      "Only the RBT's own memory",
-      "Nothing important",
-      "Marketing the clinic"
+      "The RBT's personal record of the day",
+      "Internal team memory between sessions",
+      "Showcasing outcomes to future clients"
     ],
     "c": 0,
     "e": "Notes must meet legal, regulatory, and workplace requirements — they carry real weight (E.4).",
@@ -6187,10 +6187,10 @@
     "task": "E.3",
     "q": "The client arrives after a poor night of sleep and has not eaten breakfast. The RBT should:",
     "a": [
-      "Record the variables in the note and inform the supervisor",
-      "Cancel data collection for the day",
-      "Increase demands to test resilience",
-      "Ignore it unless behavior escalates"
+      "Record the variables and inform the supervisor",
+      "Suspend data collection for the session",
+      "Raise demands to test motivation levels",
+      "Note it only if problem behavior occurs"
     ],
     "c": 0,
     "e": "Setting events (sleep, meals) can affect behavior and data quality. Document and <b>report in a timely manner</b>.",
@@ -6251,10 +6251,10 @@
     "task": "F.6",
     "q": "A caregiver invites the RBT to a personal social media group for \"team updates.\" The best response is to:",
     "a": [
-      "Decline and keep communication on approved professional channels",
-      "Join but avoid posting",
-      "Join and post weekly progress photos",
-      "Join only if the BCBA is also a member"
+      "Decline and use approved professional channels",
+      "Join but stay a silent observer",
+      "Join and share weekly progress photos",
+      "Join only alongside the supervising BCBA"
     ],
     "c": 0,
     "e": "Professional <b>boundaries</b> limit social-media entanglements that blur the therapeutic relationship (F.6).",

@@ -248,7 +248,10 @@ export function createBoonArchitect() {
       return { pool, weights };
     },
     pickDraft(ctx, rnd, count = 3) {
-      if (ctx.run.boons.size >= (ctx.config?.MAX_BOONS ?? 5)) return ['_stamina'];
+      // Full pack: still deal two picks so camps can offer a swap, with a
+      // stamina cache as the walk-away option.
+      const full = ctx.run.boons.size >= (ctx.config?.MAX_BOONS ?? 5);
+      if (full) count = 2;
       const { pool, weights } = api.draftPool(ctx);
       const pick = [];
       const work = pool.slice();
@@ -263,6 +266,7 @@ export function createBoonArchitect() {
         work.splice(k, 1);
         w.splice(k, 1);
       }
+      if (full) pick.push('_stamina');
       return pick;
     },
     onAcquire(ctx, id) {

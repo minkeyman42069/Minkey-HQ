@@ -326,6 +326,35 @@ export function scaleNode(n, act) {
   n.time = Math.max(8, n.time - (act - 1) * 2);
   // Thin air gives less back: pitch payouts shrink as the acts climb.
   if (n.restore) n.restore = Math.max(8, Math.round(n.restore * (1 - (act - 1) * 0.08)));
+
+  // The three examiners are three different fights, not one renamed thrice.
+  if (n.kind === 'gate') {
+    if (act === 1) {
+      // BRAM — the rapid fire. A clock that tightens with every question,
+      // testing fluency on the low ground. Firm, but the fairest of the three.
+      n.decay = true;
+      n.miss = Math.round(n.miss * 0.8);
+    } else if (act === 2) {
+      // ODILE — the exacting. A miss knocks your progress back down the
+      // ridge, and she builds faster once the pressure is on. The setback is
+      // her teeth, so the stamina bite is lighter than an ordinary gate.
+      n.streakGate = true;
+      n.enrage = 1.3;
+      n.miss = Math.round(n.miss * 0.68);
+    } else if (act === 3) {
+      // THE LAST EXAMINER — the reckoning. It reads from everything you have
+      // ever missed (wired in the UI) and turns the screws in stages as it
+      // finds your edges. It opens angry and only gets worse.
+      n.enrage = 1.4;
+      n.lapsePool = true;
+      n.startThreat = Math.max(n.startThreat || 0, 8);
+      n.miss = Math.round(n.miss * 0.82);
+      n.stages = [
+        { at: 2, title: 'It turns a page', sub: 'the questions sharpen — it has found an edge', set: { rise: +(n.rise * 1.12).toFixed(2) }, threat: 9 },
+        { at: 4, title: 'It reads the last line', sub: 'everything you have missed, all at once', set: { rise: +(n.rise * 1.28).toFixed(2) }, threat: 12 },
+      ];
+    }
+  }
   return n;
 }
 
@@ -355,7 +384,7 @@ export const BESTIARY = [
   { fn: nAvalanche, a: 'Release', m: 'Release. At the halfway mark the slope lets go all at once.' },
   { fn: nCorniceRidge, a: 'Chaos ridge', m: 'Chaos ridge. Gusts without warning, and a miss slides you back.' },
   { fn: nFrozenTitan, a: 'Armored elite', m: 'Armored elite. Three shield layers, and it enrages when threat runs high.' },
-  { fn: (n, al) => nGate(n, al, null), a: 'Competence duel', m: 'Competence duel. Draws every question from your weakest exam domain.' },
+  { fn: (n, al) => nGate(n, al, null), a: 'The examiners', m: 'Three fights, not one: Bram rapid-fires on a tightening clock, Odile knocks you back on a miss, the Last Examiner drills everything you have ever missed in stages.' },
   { fn: nSerac, a: 'Elite', m: 'Elite. Starts angry — a quarter of the threat bar is already lit.' },
   { fn: nSummit, a: 'Final pitch', m: 'Final pitch in three stages — shoulder, cornice, top — each faster and angrier than the last.' },
 ].map((e) => ({ ...e, t: e.fn(1, 0).tier }));

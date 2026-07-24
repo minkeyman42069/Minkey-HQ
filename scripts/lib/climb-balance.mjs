@@ -95,12 +95,17 @@ export function runMonteCarlo(n = 3000, opts = {}) {
 
 /** Targets for a fair roguelite study climb (post-sharpening contract).
  * base     — no gear at all: intentionally stern.
- * boon     — two fixed pieces, no drafting: conservative floor.
+ * boon     — two fixed pieces, no drafting: conservative floor. Lowered 2pp
+ *            when the three examiners became real fights (Bram's decay clock,
+ *            Odile's knockback, the Last Examiner's staged reckoning) — the
+ *            gates are deliberately harder now, and a fixed-gear player who
+ *            never drafts feels that most. The drafting scenario below is the
+ *            real guardrail for the player we actually expect.
  * drafting — the representative player: drafts at camps, plays the stories. */
 export const TARGETS = {
   baseSummitMin: 0.24,
   baseSummitMax: 0.40,
-  boonSummitMin: 0.36,
+  boonSummitMin: 0.34,
   boonSummitMax: 0.52,
   draftingSummitMin: 0.52,
   draftingSummitMax: 0.72,

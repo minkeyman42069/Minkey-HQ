@@ -42,7 +42,7 @@ export function nSwitch(need, alt) {
 export function nStorm(need, alt) {
   return {
     kind: 'storm', icon: '🌩️', title: 'Rising Squall',
-    blurb: 'Snow driving in sideways, harder by the second. Answering right will not calm this one — only speed gets you clear of it.',
+    blurb: 'Snow driving in sideways, worse by the second. No answer you give will settle a squall like this; the only way past it is speed.',
     need, tier: 2, time: 12, rise: 1.85, miss: 15, ease: 0, max: 100, hit: 15, restore: 16, boon: true, noBoonEase: true, alt,
     tname: 'The squall', tic: '🌩️',
   };
@@ -95,7 +95,7 @@ export function nSerac(need, alt) {
 export function nWhiteout(need, alt) {
   return {
     kind: 'whiteout', icon: '🌫️', title: 'Blinding Whiteout',
-    blurb: 'The cloud swallows the face and everything goes white — no ridge, no sky, no sense of down. You climb this one by feel, and you climb it fast.',
+    blurb: 'The cloud swallows the face and everything turns white. No ridge, no sky, no sense of which way is down. A whiteout is climbed on feel alone, and it will not wait for you to find your bearings.',
     need, tier: 4, time: 10, rise: 2.4, miss: 13, ease: 5, max: 100, hit: 15, restore: 16, boon: true, alt,
     tname: 'The whiteout', tic: '🌫️',
   };
@@ -122,7 +122,7 @@ export function nTraverse(need, alt) {
 export function nThinAir(need, alt) {
   return {
     kind: 'thinair', icon: '🫁', title: 'The Thin Air',
-    blurb: 'This high, every breath gives back less than it should. Your body burns through itself whether you climb or stand still, so keep climbing.',
+    blurb: 'This high, every breath returns less than it should. Your body burns through its own reserves whether you climb or stand still.',
     need, tier: 4, time: 16, rise: 1.1, miss: 18, ease: 8, max: 100, hit: 13, restore: 16, boon: true, drain: 0.34, alt,
     tname: 'Thin air', tic: '🫁',
   };
@@ -131,7 +131,7 @@ export function nThinAir(need, alt) {
 export function nIcefall(need, alt) {
   return {
     kind: 'icefall', icon: '☄️', title: 'The Icefall',
-    blurb: 'The ice field above sheds on its own schedule, tons of it at a time. Learn the timing between the falls and cross in the gaps.',
+    blurb: 'The ice above sheds on its own schedule, tons at a time. The falls keep a rough rhythm, and the quiet between them is your only window across.',
     need, tier: 4, time: 14, rise: 0.8, miss: 18, ease: 9, max: 100, hit: 15, restore: 16, boon: true, spike: 13, spikeEvery: 5, alt,
     tname: 'The icefall', tic: '☄️',
   };
@@ -167,7 +167,7 @@ export function nBergschrund(need, alt) {
 export function nSnowfield(need, alt) {
   return {
     kind: 'snowfield', icon: '🌨️', title: 'The Snowfield',
-    blurb: 'Thigh-deep powder. Every step is work, but the soft snow forgives a clumsy one. Slow, tiring, and the gentlest ground you will find up here. Find a rhythm and keep it.',
+    blurb: 'Thigh-deep powder. Every step is work, but the soft snow forgives a clumsy one. It is slow and tiring, and about the kindest ground the mountain offers.',
     need, tier: 1, time: 18, rise: 0.7, miss: 12, ease: 10, max: 100, hit: 10, restore: 14, boon: true, alt,
     tname: 'The snowfield', tic: '🌨️',
   };
@@ -194,7 +194,7 @@ export function nIcewall(need, alt) {
 export function nWindslab(need, alt) {
   return {
     kind: 'windslab', icon: '🌀', title: 'Gust Field',
-    blurb: 'Wind-packed slabs that boom underfoot. The gusts come with no pattern and no warning. Stay low and keep moving.',
+    blurb: 'Wind-packed slabs that boom underfoot. The gusts arrive with no pattern and no warning, and nothing about the slope tells you when.',
     need, tier: 2, time: 14, rise: 1.0, miss: 16, ease: 8, max: 100, hit: 16, restore: 16, boon: true, gust: 0.11, alt,
     tname: 'The gust field', tic: '🌀',
   };
@@ -221,7 +221,7 @@ export function nLongWall(need, alt) {
 export function nTempest(need, alt) {
   return {
     kind: 'tempest', icon: '🌪️', title: 'The Tempest',
-    blurb: 'This storm builds on itself. Let the threat climb past halfway and the wind doubles, shoving you toward the drop. Keep the threat low and it stays climbable.',
+    blurb: 'A violent storm on fully exposed ground, and it only builds. There is no lull to wait out. The longer it runs the harder it blows, and its worst comes late, when you are already worn down.',
     need, tier: 4, time: 13, rise: 1.55, miss: 22, ease: 8, max: 100, hit: 18, restore: 18, boon: true, enrage: 1.9, alt,
     tname: 'The tempest', tic: '🌪️',
   };
@@ -230,7 +230,7 @@ export function nTempest(need, alt) {
 export function nClosing(need, alt) {
   return {
     kind: 'closing', icon: '⏳', title: 'The Closing Window',
-    blurb: 'The weather window is closing, and fast. Each question leaves you less time than the one before. Move.',
+    blurb: 'The weather window is closing, and closing fast. Each question leaves you a little less time than the one before it.',
     need, tier: 4, time: 14, rise: 2.0, miss: 24, ease: 7, max: 100, hit: 17, restore: 18, boon: true, decay: true, alt,
     tname: 'The closing window', tic: '⏳',
   };

@@ -1607,7 +1607,7 @@ var TrailBundle = (() => {
       id: "none",
       name: "Open Route",
       ic: "\u{1F9ED}",
-      desc: "No vow, no strings. The mountain as it comes.",
+      desc: "No vow taken. You climb it as it comes, with nothing tilted for you or against you.",
       mods: {}
     },
     {
@@ -1893,7 +1893,7 @@ var TrailBundle = (() => {
       name: "Tailwind",
       tag: "speed",
       rare: false,
-      desc: "+5 seconds on every clock. Time is stamina you have not spent yet."
+      desc: "+5 more seconds on the timer, every question."
     },
     coldfront: {
       ic: "\u2744\uFE0F",
@@ -2001,7 +2001,7 @@ var TrailBundle = (() => {
     buddyrope: { ic: "\u{1FAA2}", name: "Buddy Rope", tag: "safety", rare: true, desc: "Retired. Now Fixed Line." },
     anchor: { ic: "\u2693", name: "Storm Anchor", tag: "safety", rare: true, desc: "Retired. Now Pit Anchor." },
     woolsocks: { ic: "\u{1F9E6}", name: "Wool Socks", tag: "opening", rare: false, desc: "Dry feet fix more than you would think. Camps and cleared ledges heal +6 more." },
-    whetstone: { ic: "\u{1FAA8}", name: "Whetstone", tag: "threat", rare: false, desc: "Your first correct answer each pitch bites deep \u2014 it sheds 15 extra threat." },
+    whetstone: { ic: "\u{1FAA8}", name: "Whetstone", tag: "threat", rare: false, desc: "Your first correct answer each pitch sheds 15 extra threat." },
     whistle: { ic: "\u{1F3B6}", name: "Tin Whistle", tag: "safety", rare: true, desc: "The mountain likes a tune. Gusts and falling-ice volleys hit for half." }
   };
   var DUOS = [
@@ -2258,8 +2258,8 @@ var TrailBundle = (() => {
     oxygen: { ic: "\u{1F4A8}", name: "Oxygen Cache", desc: "Firing a flare also restores 12 stamina." },
     chalk: { ic: "\u{1F45D}", name: "Chalk Bag", desc: "Answer a question you once missed and the threat goes fully quiet." },
     rope: { ic: "\u{1F9F6}", name: "Woven Rope", desc: "Gatekeepers strike 25% softer." },
-    stone: { ic: "\u{1F48E}", name: "Summit Stone", desc: "Does nothing but weigh a little and mean a lot. +15 summit score \u2014 it wants to go home." },
-    feather: { ic: "\u{1FAB6}", name: "Ptarmigan Feather", desc: "Once per climb, a timeout costs nothing and your streak survives. A small bird pays a small debt." }
+    stone: { ic: "\u{1F48E}", name: "Summit Stone", desc: "Adds +15 to your summit score, and is otherwise dead weight. A climber is meant to carry it back down." },
+    feather: { ic: "\u{1FAB6}", name: "Ptarmigan Feather", desc: "Once per climb, a timeout costs nothing and your streak survives. Call it the ptarmigan repaying an old kindness." }
   };
   function pitchRestore(node, mode, run, config) {
     const heal = run.weather ? run.weather.heal : 1;

@@ -13,9 +13,9 @@ export const RELICS = {
   iceaxe: { ic: '\u26CF\uFE0F', name: 'Ice Axe', desc: 'Once per climb, arrest a fatal fall and hold on at 1 stamina.' },
   carabiner: { ic: '\uD83D\uDD17', name: 'Lucky Carabiner', desc: 'The first strike each pitch costs half.' },
   oxygen: { ic: '\uD83D\uDCA8', name: 'Oxygen Cache', desc: 'Firing a flare also restores 12 stamina.' },
-  chalk: { ic: '\uD83D\uDC5D', name: 'Chalk Bag', desc: 'Reclaiming a loose stone fully calms the threat.' },
+  chalk: { ic: '\uD83D\uDC5D', name: 'Chalk Bag', desc: 'Answer a question you once missed and the threat goes fully quiet.' },
   rope: { ic: '\uD83E\uDDF6', name: 'Woven Rope', desc: 'Gatekeepers strike 25% softer.' },
-  stone: { ic: '\uD83D\uDC8E', name: 'Summit Stone', desc: 'Worth +15 summit score. It wants to go home.' },
+  stone: { ic: '\uD83D\uDC8E', name: 'Summit Stone', desc: 'Does nothing but weigh a little and mean a lot. +15 summit score \u2014 it wants to go home.' },
   feather: { ic: '\uD83E\uDEB6', name: 'Ptarmigan Feather', desc: 'Once per climb, a timeout costs nothing and your streak survives. A small bird pays a small debt.' },
 };
 

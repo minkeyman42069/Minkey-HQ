@@ -63,7 +63,9 @@ per pass, not one sweep.
 - ✅ **Weather** — the four sky conditions. Cut the em-dash aside and the punchy
   "Pack patience" closer, dropped the game-y "short clocks," and made each one
   state its actual effect (faster threat, less time, less healing, or nothing).
-- ○ **Oath & gear descriptions.**
+- ✅ **Oath & gear descriptions** — cleaned the aphorism (Tailwind), the
+  em-dash asides (Whetstone, Summit Stone), and the cutesy closers; every gear
+  line now states its effect plainly.
 - ✅ **Banners & event lines** — the mid-climb call-outs. Cut the tics (the
   em-dash asides, the fortune-cookie "all that is left is what you know") and
   built a variety system: the frequent banners (strikes, crux, knockback, last
@@ -71,7 +73,6 @@ per pass, not one sweep.
   several clean variants at random, so the same climb stops repeating itself.
   Flavor uses `Math.random`, never the gameplay rng, so seeded runs stay
   deterministic.
-- ○ **Weather, oath & gear descriptions.**
 - ○ **Trailhead & UI microcopy.**
 
 ### Mechanical elevations — grown from the systems already here
@@ -97,6 +98,6 @@ list of imported gimmicks guessed at cold.
 
 ## Current step
 
-▶ Writing audit continues. Remaining surfaces: examiner dialogue, the mid-climb
-banners and event lines, the weather/oath/gear descriptions, and the trailhead
-microcopy. Pick whichever reads worst next.
+▶ Writing audit continues. One surface remains: the trailhead & UI microcopy.
+Everything else — blurbs, cast, examiners, weather, oath/gear, banners — has had
+its pass.

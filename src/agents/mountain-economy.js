@@ -15,8 +15,8 @@ export const RELICS = {
   oxygen: { ic: '\uD83D\uDCA8', name: 'Oxygen Cache', desc: 'Firing a flare also restores 12 stamina.' },
   chalk: { ic: '\uD83D\uDC5D', name: 'Chalk Bag', desc: 'Answer a question you once missed and the threat goes fully quiet.' },
   rope: { ic: '\uD83E\uDDF6', name: 'Woven Rope', desc: 'Gatekeepers strike 25% softer.' },
-  stone: { ic: '\uD83D\uDC8E', name: 'Summit Stone', desc: 'Does nothing but weigh a little and mean a lot. +15 summit score \u2014 it wants to go home.' },
-  feather: { ic: '\uD83E\uDEB6', name: 'Ptarmigan Feather', desc: 'Once per climb, a timeout costs nothing and your streak survives. A small bird pays a small debt.' },
+  stone: { ic: '\uD83D\uDC8E', name: 'Summit Stone', desc: 'Adds +15 to your summit score, and is otherwise dead weight. A climber is meant to carry it back down.' },
+  feather: { ic: '\uD83E\uDEB6', name: 'Ptarmigan Feather', desc: 'Once per climb, a timeout costs nothing and your streak survives. Call it the ptarmigan repaying an old kindness.' },
 };
 
 export function pitchRestore(node, mode, run, config) {

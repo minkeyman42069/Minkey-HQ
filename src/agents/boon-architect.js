@@ -64,7 +64,7 @@ export const BOONS = {
     name: 'Tailwind',
     tag: 'speed',
     rare: false,
-    desc: '+5 seconds on every clock. Time is stamina you have not spent yet.',
+    desc: '+5 more seconds on the timer, every question.',
   },
   coldfront: {
     ic: '❄️',
@@ -174,7 +174,7 @@ export const LEGACY_BOONS = {
   buddyrope: { ic: '🪢', name: 'Buddy Rope', tag: 'safety', rare: true, desc: 'Retired. Now Fixed Line.' },
   anchor: { ic: '⚓', name: 'Storm Anchor', tag: 'safety', rare: true, desc: 'Retired. Now Pit Anchor.' },
   woolsocks: { ic: '🧦', name: 'Wool Socks', tag: 'opening', rare: false, desc: 'Dry feet fix more than you would think. Camps and cleared ledges heal +6 more.' },
-  whetstone: { ic: '🪨', name: 'Whetstone', tag: 'threat', rare: false, desc: 'Your first correct answer each pitch bites deep — it sheds 15 extra threat.' },
+  whetstone: { ic: '🪨', name: 'Whetstone', tag: 'threat', rare: false, desc: 'Your first correct answer each pitch sheds 15 extra threat.' },
   whistle: { ic: '🎶', name: 'Tin Whistle', tag: 'safety', rare: true, desc: 'The mountain likes a tune. Gusts and falling-ice volleys hit for half.' },
 };
 

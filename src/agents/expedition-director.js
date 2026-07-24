@@ -11,7 +11,7 @@ export const OATHS = [
     id: 'none',
     name: 'Open Route',
     ic: '🧭',
-    desc: 'No vow, no strings. The mountain as it comes.',
+    desc: 'No vow taken. You climb it as it comes, with nothing tilted for you or against you.',
     mods: {},
   },
   {

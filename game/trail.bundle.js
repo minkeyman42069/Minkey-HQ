@@ -665,7 +665,7 @@ var TrailBundle = (() => {
       kind: "switchback",
       icon: "\u{1FAA8}",
       title: "Scree Slope",
-      blurb: "A slope of loose, broken rock that shifts under your boots. Test each hold and keep your weight easy; the scree slides when you hurry it.",
+      blurb: "A slope of loose, shifting rock. Take your time and it is easy ground. Make one wrong move, though, and the whole slope slides out from under you.",
       need,
       tier: 1,
       time: 18,
@@ -1008,7 +1008,7 @@ var TrailBundle = (() => {
       kind: "icewall",
       icon: "\u{1F4A0}",
       title: "The Ice Wall",
-      blurb: "Ninety degrees of blue ice. Swing the axe, test it, weight it, step up, and again. Rush one placement and it fails with your weight on it.",
+      blurb: "Ninety degrees of blue ice. Swing the axe, test it, weight it, step up, and again. Rush one of those moves and it fails with your weight on it.",
       need,
       tier: 3,
       time: 14,
@@ -1184,7 +1184,7 @@ var TrailBundle = (() => {
       kind: "verglas",
       icon: "\u{1FA9E}",
       title: "Black Ice",
-      blurb: "Meltwater froze over the rock in a skin too thin to see. Your edges bite for a moment after every move. Move again before they skate.",
+      blurb: "Meltwater froze over the rock in a skin too thin to see. Your boots hold for a second after each step, then start to slide. The only way up is to keep moving before they do.",
       need,
       tier: 3,
       time: 15,
@@ -1273,7 +1273,7 @@ var TrailBundle = (() => {
   }
   var ACTS = [
     { name: "The Approach", flavor: "Firm rock, open glacier, the last of the day\u2019s warmth still in the stone. The summit stands a long way overhead." },
-    { name: "The Headwall", flavor: "The glacier ends at a wall of rock and blue ice, dead vertical. The walking is finished. From here it is your hands, your edges, and what you actually know." },
+    { name: "The Headwall", flavor: "The glacier ends at a wall of rock and blue ice, dead vertical. The walking is over. Everything above here is climbed by hand, and it runs on how much you actually know." },
     { name: "The Death Zone", flavor: "Above the last camp the air holds half the oxygen it did below. Your legs burn, your thoughts blur, your body stops recovering. Keep moving." }
   ];
   var GATEKEEPERS = {

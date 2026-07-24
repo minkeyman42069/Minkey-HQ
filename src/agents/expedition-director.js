@@ -49,6 +49,8 @@ export const ACHIEVEMENTS = [
   { id: 'grade_s', ic: '💎', name: 'Alpine Grade', desc: 'Earn an S grade on a summit run.' },
   { id: 'first_ascent', ic: '⛏️', name: 'First Ascent', desc: 'Summit a set line from the guidebook.' },
   { id: 'tale_5', ic: '🗿', name: "Keeper's Audience", desc: 'Face five stories at the waymarks.' },
+  { id: 'bird_friend', ic: '🐦', name: 'Bird of Good Standing', desc: 'Feed the ptarmigan, then summit. It keeps accounts.' },
+  { id: 'review_5', ic: '🪨', name: 'Stone Mason', desc: 'Reclaim loose stones in five Morning Reviews.' },
 ];
 
 const HARD_KINDS = new Set([

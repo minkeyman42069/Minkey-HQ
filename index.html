@@ -433,6 +433,20 @@ body.wx-clear-dawn #aurora{opacity:.08!important;}
   padding:13px 15px;font-size:13.5px;line-height:1.55;margin:14px 0;}
 .weakcard.clean{background:rgba(95,206,159,.1);border-color:var(--pine);}
 .weakcard b{color:var(--rust);} .weakcard.clean b{color:var(--pine);}
+.ledger-block{margin:14px 0 4px;background:rgba(10,25,40,.55);border:1px solid var(--line);border-radius:var(--r-sm);padding:14px 15px;text-align:left;}
+.ledger-hd{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px;}
+.ledger-t{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#7fd4a0;}
+.ledger-n{font-size:11.5px;color:var(--mut);font-family:'Space Mono',monospace;}
+.ledger-row{display:flex;align-items:center;gap:8px;margin:5px 0;font-size:12px;color:var(--mut);}
+.ledger-row .ln{flex:0 0 116px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ledger-row .lb{flex:1;height:6px;background:#081522;border-radius:99px;overflow:hidden;}
+.ledger-row .lb span{display:block;height:100%;background:var(--pine);}
+.ledger-row.thin .lb span{background:var(--rust);}
+.ledger-row .lp{flex:0 0 40px;text-align:right;font-family:'Space Mono',monospace;font-size:11px;}
+.review-btn{display:block;width:100%;margin-top:11px;padding:11px;border-radius:12px;border:1px solid rgba(127,212,160,.5);
+  background:rgba(95,206,159,.1);color:var(--ink);font-weight:700;font-size:13.5px;cursor:pointer;}
+.review-btn:disabled{opacity:.55;cursor:default;}
+.review-btn small{display:block;font-weight:400;color:var(--mut);font-size:11px;margin-top:2px;}
 .sagecard{display:none;background:rgba(127,212,160,.07);border:1px solid rgba(127,212,160,.4);border-radius:var(--r-sm);
   padding:13px 15px;font-size:13.5px;line-height:1.55;margin:14px 0;}
 .sagecard .sg-hd{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#7fd4a0;margin-bottom:6px;}
@@ -801,6 +815,7 @@ body.lastlegs::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:
       <div class="daily-row">
         <button type="button" class="daily-btn" id="dailyBtn" onclick="beginDailyRidge()">&#127749; Today's Ridge</button>
       </div>
+      <div class="ledger-block" id="ledgerBlock"></div>
       <div class="oath-block">
         <div class="oath-label">Swear an expedition oath</div>
         <div class="oath-row" id="oathRow"></div>
@@ -1680,7 +1695,7 @@ function freshRun(topic, opts){
   var mb=mergedBank();
   var oath=(typeof getSelectedOath==='function'?getSelectedOath():'none');
   var _r={ topic:topic, oath:oath, route:buildRoute(topic), nodeIdx:0, actShown:{}, freeDraft:false,
-    daily:!!opts.daily, knownDuos:new Set(), usedTales:[], freeDraftFrom:null, storyFlags:{}, featherUsed:false,
+    daily:!!opts.daily, knownDuos:new Set(), usedTales:[], freeDraftFrom:null, storyFlags:{}, featherUsed:false, domMiss:{},
     prog:{}, locked:new Set(), mastered:new Set(), boons:new Set(), flares:0,
     stamina:CONFIG.STAM_MAX, altitude:1600,
     seen:0, right:0, bestStreak:0, nodeCleared:0, summited:false, stones:{}, stoneNow:null, recovered:0,
@@ -1787,7 +1802,9 @@ function applyEngineEvents(ev){ if(!ev) return;
 function resolve(correct, viaTimeout, srcEl){
   var q=RUN.current; var before=RUN.prog[q.id]?RUN.prog[q.id].tier:0;
   var p=SCHED.grade(q.id, correct, viaTimeout); RUN.seen++;
-  if(!correct){ RUN.stones[q.id]=RUN.seen+4; }
+  if(!correct){ RUN.stones[q.id]=RUN.seen+4;
+    var _wd=domainOf(q); RUN.domMiss=RUN.domMiss||{}; RUN.domMiss[_wd]=(RUN.domMiss[_wd]||0)+1;
+    if(RUN.domMiss[_wd]===2) setTimeout(function(){ banner('\uD83E\uDDE0 The Sage marks your ledger', DOMAINS[_wd].n+' has slipped twice this climb \u2014 the examiners will notice'); }, 900); }
   else if(RUN.stoneNow===q.id){ RUN.recovered=(RUN.recovered||0)+1; if(RUN.relics&&RUN.relics.has('chalk')){ ENC.threat=0; RENDER.threat(); } if(RUN.nodeIdx>=Math.floor(RUN.route.length*0.55)) RUN.mastered.add(q.id); banner('Loose stone reclaimed','you brought it back'); }
   RUN.stoneNow=null;
   if(correct){ AUDIO.correct(); flash('ok'); if(srcEl) burst(srcEl); if(before<lockTierNow() && p.tier>=lockTierNow()) sealLocked(); }
@@ -2210,8 +2227,13 @@ function examQuestion(){
 function examPick(correct){
   if(EXAM.busy) return; EXAM.busy=true; RUN.busy=true;
   var id=EXAM.ids[EXAM.i], q=BANK[id];
-  EXAM.seen++; if(correct){ EXAM.right++; AUDIO.correct(); META.bank[id]=Math.max(META.bank[id]||0, CONFIG.LOCK_TIER); }
-  else { AUDIO.wrong(false); EXAM.missed.push(id); }
+  EXAM.seen++;
+  if(correct){ EXAM.right++; AUDIO.correct();
+    if(EXAM.mode==='review'){ META.bank[id]=Math.min(CONFIG.MASTER_TIER,(META.bank[id]||0)+1);
+      if(META.lapses[id]){ META.lapses[id]--; if(META.lapses[id]<=0) delete META.lapses[id]; } }
+    else { META.bank[id]=Math.max(META.bank[id]||0, CONFIG.LOCK_TIER); } }
+  else { AUDIO.wrong(false); EXAM.missed.push(id);
+    META.lapses[id]=Math.min(9,(META.lapses[id]||0)+1); }
   var dk=domainOf(q); var d=EXAM.dom[dk]||{seen:0,right:0}; d.seen++; if(correct) d.right++; EXAM.dom[dk]=d;
   var ans = q.type==='tf' ? (q.correct?'True':'False') : (q.a&&q.a[q.c]!=null?q.a[q.c]:'');
   var ex=document.getElementById('examEx'); ex.className='explain show';
@@ -2226,16 +2248,26 @@ function examNext(){
   examQuestion();
 }
 function examEnd(early){
-  if(!EXAM) return; saveMeta();
+  if(!EXAM) return;
+  if(EXAM.mode==='review'){ META.reviews=(META.reviews||0)+1; if(META.reviews>=5) unlockAchievement('review_5'); }
+  saveMeta();
   var pct=EXAM.seen?Math.round(EXAM.right/EXAM.seen*100):0, pass=examPassed(pct);
   var order=['A','B','C','D','E','F'];
   var rows=order.filter(function(k){return EXAM.dom[k];}).map(function(k){ var d=EXAM.dom[k]; var pc=Math.round(d.right/d.seen*100); return '<div class="trow'+(pc<70?' weak':'')+'"><span class="tn">'+DOMAINS[k].n+' <em>'+DOMAINS[k].pct+'%</em></span><span class="tb"><span style="width:'+pc+'%"></span></span><span class="tp">'+d.right+'/'+d.seen+'</span></div>'; }).join('');
   var missRows=EXAM.missed.slice(0,12).map(function(id){ var q=BANK[id]; var ans=q.type==='tf'?(q.correct?'True':'False'):(q.a&&q.a[q.c]!=null?q.a[q.c]:''); return '<div class="missrow"><div class="mq">'+q.q+'</div><div class="ma">&#10003; '+ans+'</div>'+(q.e?'<div class="me">'+q.e+'</div>':'')+'</div>'; }).join('');
   var el=document.getElementById('examResult'); el.style.display='flex';
   var _et=document.querySelector('#exam .examtop'), _qb=document.querySelector('#exam .qbar'); if(_et)_et.style.display='none'; if(_qb)_qb.style.display='none';
-  el.innerHTML='<div class="examverdict '+(pass?'pass':'fail')+'">'+(pass?'&#10003; PASS':'KEEP CLIMBING')+'</div>'
-    +'<div class="exambig">'+pct+'%</div>'
-    +'<div class="examsub">'+EXAM.right+' of '+EXAM.seen+' correct \u00b7 ~'+(CONFIG.EXAM_PASS||80)+'% readiness target \u00b7 weighted to the RBT 3rd-ed blueprint'+(early?' \u00b7 ended early':'')+'</div>'
+  var _isReview=EXAM.mode==='review';
+  var _stonesLeft=lapseIds().length;
+  el.innerHTML=(_isReview
+      ? '<div class="examverdict '+(EXAM.right>0?'pass':'fail')+'">\uD83E\uDEA8 '+EXAM.right+' STONE'+(EXAM.right===1?'':'S')+' RECLAIMED</div>'
+        +'<div class="exambig">'+pct+'%</div>'
+        +'<div class="examsub">'+(_stonesLeft
+            ? _stonesLeft+' loose stone'+(_stonesLeft===1?'':'s')+' still on the trail \u2014 the Sage suggests tomorrow morning.'
+            : 'Your ledger is clean. The examiners will have to try something new.')+(early?' \u00b7 ended early':'')+'</div>'
+      : '<div class="examverdict '+(pass?'pass':'fail')+'">'+(pass?'&#10003; PASS':'KEEP CLIMBING')+'</div>'
+        +'<div class="exambig">'+pct+'%</div>'
+        +'<div class="examsub">'+EXAM.right+' of '+EXAM.seen+' correct \u00b7 ~'+(CONFIG.EXAM_PASS||80)+'% readiness target \u00b7 weighted to the RBT 3rd-ed blueprint'+(early?' \u00b7 ended early':'')+'</div>')
     +'<div class="examdoms">'+rows+'</div>'
     +(missRows?'<details class="missdetails" style="margin-top:14px"><summary>Review the '+EXAM.missed.length+' you missed &mdash; tap to open</summary><div class="misswrap">'+missRows+(EXAM.missed.length>12?'<div class="mmore">+'+(EXAM.missed.length-12)+' more</div>':'')+'</div></details>':'')
     +'<button class="cta big" style="margin-top:16px" onclick="toMenu()">Back to the trailhead</button>';
@@ -2246,6 +2278,49 @@ function examEnd(early){
   AUDIO.summitSnd(); renderMeta(); renderDailyBtn();
   if(pass) unlockAchievement('exam_pass');
   try{ el.scrollIntoView({behavior:'smooth',block:'start'}); }catch(e){}
+}
+/* ---------- THE LEDGER — what the mountain knows you know ---------- */
+function lapseIds(){ var L=META.lapses||{}; return Object.keys(L).filter(function(id){ return L[id]>0 && BANK[+id]; }); }
+function renderLedger(){
+  var el=document.getElementById('ledgerBlock'); if(!el) return;
+  var pseudo={prog:{}};
+  Object.keys(META.bank||{}).forEach(function(id){ pseudo.prog[id]={tier:META.bank[id],seen:1,right:0,wrong:0}; });
+  Object.keys(META.lapses||{}).forEach(function(id){ (pseudo.prog[id]=pseudo.prog[id]||{tier:0,seen:1,right:0,wrong:0}).wrong=META.lapses[id]; });
+  var rows=Trail.agents.sage.api.domainBreakdown(pseudo, BANK, CONFIG);
+  var anySeen=rows.some(function(r){return r.ready>0||r.wrong>0;});
+  var stones=lapseIds();
+  var bars=rows.map(function(r){
+    var thin=r.readyPct<40;
+    return '<div class="ledger-row'+(thin?' thin':'')+'"><span class="ln">'+r.domain+' \u00b7 '+r.name+'</span>'
+      +'<span class="lb"><span style="width:'+r.readyPct+'%"></span></span><span class="lp">'+r.ready+'/'+r.total+'</span></div>';
+  }).join('');
+  var btn = stones.length
+    ? '<button type="button" class="review-btn" onclick="startReview()">\uD83E\uDEA8 Morning Review \u2014 reclaim your loose stones<small>'+stones.length+' concept'+(stones.length===1?'':'s')+' you have missed are waiting. Ten minutes, no mountain.</small></button>'
+    : '<button type="button" class="review-btn" disabled>\uD83E\uDEA8 Morning Review<small>No loose stones \u2014 climb, and the ledger will find your edges.</small></button>';
+  el.innerHTML='<div class="ledger-hd"><span class="ledger-t">\uD83D\uDCD3 Your ledger</span><span class="ledger-n">'+boardReady()+'/'+BANK.length+' board-ready</span></div>'
+    +(anySeen?bars:'<div class="ledger-row"><span style="color:var(--mut);font-size:12.5px">The Grandfather has not met you yet. Climb once and this page starts filling in.</span></div>')
+    +btn;
+}
+
+/* ---------- MORNING REVIEW — spaced repetition on your actual misses ---------- */
+function pickReviewIds(n){
+  var L=META.lapses||{}, B=META.bank||{};
+  var ids=lapseIds().sort(function(a,b){ return (L[b]-L[a]) || ((B[a]||0)-(B[b]||0)); });
+  if(ids.length<n){
+    var lows=Object.keys(B).filter(function(id){ return BANK[+id] && B[id]>0 && B[id]<CONFIG.LOCK_TIER && ids.indexOf(id)<0; });
+    lows=shuffle(lows); while(ids.length<n && lows.length) ids.push(lows.shift());
+  }
+  return ids.slice(0,n).map(Number);
+}
+function startReview(){
+  if(CONFIG.AUDIO) AUDIO.unlock(); RNG.fn=Math.random; RNG.seeded=false;
+  var ids=pickReviewIds(10); if(!ids.length) return;
+  EXAM={ ids:ids, i:0, right:0, seen:0, dom:{}, missed:[], busy:false, view:null, mode:'review' };
+  document.getElementById('examResult').style.display='none';
+  document.getElementById('examQuit').style.display='';
+  var _et0=document.querySelector('#exam .examtop'), _qb0=document.querySelector('#exam .qbar'); if(_et0)_et0.style.display=''; if(_qb0)_qb0.style.display='';
+  document.getElementById('examNext').classList.remove('show');
+  show('exam'); examQuestion();
 }
 function renderMissed(){
   var el=document.getElementById('missedCard'); if(!el) return;
@@ -2490,7 +2565,7 @@ function shuffle(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floo
 function uniqueCats(){ var seen={}, out=[]; BANK.forEach(function(q){ if(!seen[q.cat]){ seen[q.cat]=1; out.push(q.cat); } }); return out; }
 function fmt(n){ return Math.round(n).toLocaleString('en-US'); }
 function show(id){ var ss=document.querySelectorAll('.screen'); for(var i=0;i<ss.length;i++) ss[i].classList.remove('active'); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); setSky(); }
-function toMenu(){ if(RUN.timer) clearInterval(RUN.timer); renderMeta(); renderAchievements(); renderDailyBtn(); show('menu'); }
+function toMenu(){ if(RUN.timer) clearInterval(RUN.timer); renderMeta(); renderAchievements(); renderDailyBtn(); renderLedger(); show('menu'); }
 function nodeSub(node){
   var n=node.need;
   if(node.kind==='switchback') return 'Footing over speed — '+n+' to clear';
@@ -2525,15 +2600,16 @@ function nodeSub(node){
   return n+' to clear';
 }
 /* ---------- META-PROGRESSION (permanent bank so a fall is never a reset) ---------- */
-var META={bank:{},runs:0,summits:0,bestAlt:0,miles:0,achievements:[],dailyDone:0,tales:0};
-function loadMeta(){ try{ var s=localStorage.getItem('rbtTrailMeta'); if(s){ var o=JSON.parse(s); META={bank:o.bank||{},runs:o.runs||0,summits:o.summits||0,bestAlt:o.bestAlt||0,miles:o.miles||0,achievements:o.achievements||[],dailyDone:o.dailyDone||0,tales:o.tales||0}; } }catch(e){} }
+var META={bank:{},runs:0,summits:0,bestAlt:0,miles:0,achievements:[],dailyDone:0,tales:0,lapses:{},reviews:0};
+function loadMeta(){ try{ var s=localStorage.getItem('rbtTrailMeta'); if(s){ var o=JSON.parse(s); META={bank:o.bank||{},runs:o.runs||0,summits:o.summits||0,bestAlt:o.bestAlt||0,miles:o.miles||0,achievements:o.achievements||[],dailyDone:o.dailyDone||0,tales:o.tales||0,lapses:o.lapses||{},reviews:o.reviews||0}; } }catch(e){} }
 function saveMeta(){ try{ localStorage.setItem('rbtTrailMeta',JSON.stringify(META)); }catch(e){} }
 function mergedBank(){ var m={},b=META.bank||{}; Object.keys(b).forEach(function(id){ m[id]=b[id]; }); Object.keys(SAVED).forEach(function(id){ m[id]=Math.max(m[id]||0,SAVED[id]); }); return m; }
 function boardReady(){ var b=META.bank||{},n=0; Object.keys(b).forEach(function(id){ if(b[id]>=CONFIG.LOCK_TIER) n++; }); return n; }
 var RANKS=[[0,'Novice'],[8,'Apprentice'],[25,'Technician'],[60,'Seasoned'],[120,'Board-Ready']];
 function careerRank(){ var br=boardReady(),name='Novice'; for(var i=0;i<RANKS.length;i++){ if(br>=RANKS[i][0]) name=RANKS[i][1]; } return name; }
 function commitRun(kind){
-  Object.keys(RUN.prog).forEach(function(id){ var t=RUN.prog[id].tier||0; if(t>0) META.bank[id]=Math.max(META.bank[id]||0,t); });
+  Object.keys(RUN.prog).forEach(function(id){ var t=RUN.prog[id].tier||0; if(t>0) META.bank[id]=Math.max(META.bank[id]||0,t);
+    var w=RUN.prog[id].wrong||0; if(w>0) META.lapses[id]=Math.min(9,(META.lapses[id]||0)+w); });
   META.runs++; if(kind==='summit') META.summits++;
   if(RUN.daily && kind==='summit' && typeof dailySeed==='function') META.dailyDone=dailySeed();
   META.bestAlt=Math.max(META.bestAlt, Math.round(RUN.altitude));
@@ -2557,6 +2633,7 @@ function checkAchievements(kind){
     if(RUN.oath && RUN.oath!=='none') unlockAchievement('oath_summit');
     if(gradeRun()==='S') unlockAchievement('grade_s');
     if(RUN.daily) unlockAchievement('daily_ridge');
+    if(RUN.storyFlags && RUN.storyFlags.bird) unlockAchievement('bird_friend');
   }
   if((RUN.clutch||0)>=3) unlockAchievement('clutch_3');
   if(boardReady()>=50) unlockAchievement('board_50');
@@ -2570,7 +2647,7 @@ function renderAchievements(){
   }
   el.innerHTML='<div class="achieve-hd"><span class="achieve-title">Badges</span><span class="achieve-count">'+unlocked.length+'/'+ACHIEVEMENTS.length+'</span></div>';
 }
-function renderOaths(){
+function renderOaths(){ renderLedger();
   var row=document.getElementById('oathRow'); if(!row||!OATHS) return;
   var sel=getSelectedOath(); row.innerHTML='';
   OATHS.forEach(function(o){

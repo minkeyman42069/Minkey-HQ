@@ -130,6 +130,8 @@ var TrailBundle = (() => {
       freeDraft: false,
       freeDraftFrom: null,
       usedTales: [],
+      storyFlags: {},
+      featherUsed: false,
       recent: [],
       ending: false
     };
@@ -225,10 +227,14 @@ var TrailBundle = (() => {
       const oathR = trail.agents.expedition.api.oathRiseMult(run);
       raiseThreat(trail, run, enc, node.rise * dt * rm * (run.weather ? run.weather.rise : 1) * oathR, rnd2, events);
     }
+    const whistle = !node.suppress && run.boons && run.boons.has("whistle");
     if (node.gust && rnd2() < node.gust * dt) {
-      const gustAmt = 12 + Math.floor(rnd2() * 10);
+      let gustAmt = 12 + Math.floor(rnd2() * 10);
+      if (whistle) gustAmt = Math.round(gustAmt / 2);
       const gout = trail.emit("hazard:gust", ctxOf(trail, run, enc, rnd2, { gust: gustAmt }));
-      raiseThreat(trail, run, enc, gout.threatDelta != null ? gout.threatDelta : gustAmt, rnd2, events);
+      let gustHit = gout.threatDelta != null ? gout.threatDelta : gustAmt;
+      if (whistle && gout.threatDelta != null) gustHit = Math.round(gustHit / 2);
+      raiseThreat(trail, run, enc, gustHit, rnd2, events);
       if (events) events.push({ t: "gust", amount: gustAmt, banners: gout.banners || [] });
     }
     if (node.drain) addStamina(trail, run, enc, -node.drain * dt, events);
@@ -237,7 +243,7 @@ var TrailBundle = (() => {
       while (enc.spikeT >= (node.spikeEvery || 3.5)) {
         enc.spikeT -= node.spikeEvery || 3.5;
         if (events) events.push({ t: "spike" });
-        raiseThreat(trail, run, enc, node.spike, rnd2, events);
+        raiseThreat(trail, run, enc, whistle ? Math.round(node.spike / 2) : node.spike, rnd2, events);
       }
     }
   }
@@ -275,18 +281,25 @@ var TrailBundle = (() => {
           events.push({ t: "crux" });
         }
       }
+      if (enc.streak === 4 || enc.streak === 8 || enc.streak === 12) {
+        events.push({ t: "streakmark", streak: enc.streak });
+      }
       const bout = trail.emit("answer:correct", ctxOf(trail, run, enc, rnd2));
       if (bout.staminaDelta) addStamina(trail, run, enc, bout.staminaDelta, events);
       if (bout.timeDelta) timeDelta = bout.timeDelta;
       if (bout.threatDelta) raiseThreat(trail, run, enc, bout.threatDelta, rnd2, events);
       if (bout.banners && bout.banners.length) events.push({ t: "banners", banners: bout.banners });
     } else {
+      const feather = viaTimeout && !run.featherUsed && trail.CONFIG.MODS.relics && run.relics && run.relics.has("feather");
+      if (feather) run.featherUsed = true;
       const wout = trail.emit("answer:wrong", ctxOf(trail, run, enc, rnd2, { viaTimeout: !!viaTimeout }));
-      if (!wout.keepStreak) {
+      if (!wout.keepStreak && !feather) {
         enc.streak = 0;
         enc.streakEase = 0;
       }
-      if (wout.staminaCost > 0) addStamina(trail, run, enc, -wout.staminaCost, events);
+      if (feather) {
+        events.push({ t: "feather" });
+      } else if (wout.staminaCost > 0) addStamina(trail, run, enc, -wout.staminaCost, events);
       else if (wout.staminaDelta) addStamina(trail, run, enc, wout.staminaDelta, events);
       if (wout.threatDelta) raiseThreat(trail, run, enc, wout.threatDelta, rnd2, events);
       if (wout.banners && wout.banners.length) events.push({ t: "banners", banners: wout.banners });
@@ -308,6 +321,10 @@ var TrailBundle = (() => {
     if (!fx) return;
     if (fx.stam) addStamina(trail, run, opts.enc || null, fx.stam, opts.events);
     if (fx.relic && opts.grantRelic) opts.grantRelic();
+    if (fx.flag) {
+      run.storyFlags = run.storyFlags || {};
+      run.storyFlags[fx.flag] = true;
+    }
     if (fx.draftNext) {
       run.freeDraft = true;
       run.freeDraftFrom = "tale";
@@ -566,6 +583,7 @@ var TrailBundle = (() => {
     ACTS: () => ACTS,
     BESTIARY: () => BESTIARY,
     FOE_COLORS: () => FOE_COLORS,
+    GATEKEEPERS: () => GATEKEEPERS,
     TIER_COMBAT: () => TIER_COMBAT,
     foeColor: () => foeColor,
     nAvalanche: () => nAvalanche,
@@ -965,7 +983,7 @@ var TrailBundle = (() => {
     return {
       kind: "couloir",
       icon: "\u{1F5FB}",
-      title: "The Couloir",
+      title: "The Chute",
       blurb: "A chute of ice between rock walls. Everything the mountain sheds comes down through here, and your route goes up it. Do not linger.",
       need,
       tier: 2,
@@ -978,7 +996,7 @@ var TrailBundle = (() => {
       restore: 16,
       boon: true,
       alt,
-      tname: "The couloir",
+      tname: "The chute",
       tic: "\u{1F5FB}"
     };
   }
@@ -1162,7 +1180,7 @@ var TrailBundle = (() => {
     return {
       kind: "verglas",
       icon: "\u{1FA9E}",
-      title: "The Verglas",
+      title: "Black Ice",
       blurb: "Meltwater froze over the rock in a skin too thin to see. Your edges bite for a moment after every move. Move again before they skate.",
       need,
       tier: 3,
@@ -1176,7 +1194,7 @@ var TrailBundle = (() => {
       boon: true,
       swift: 9,
       alt,
-      tname: "The verglas",
+      tname: "The black ice",
       tic: "\u{1FA9E}"
     };
   }
@@ -1251,12 +1269,23 @@ var TrailBundle = (() => {
     };
   }
   var ACTS = [
-    { name: "The Approach", flavor: "Warm rock and open glacier under a late moon. The mountain lets you settle in. It can afford to." },
-    { name: "The Headwall", flavor: "The face goes vertical and easy ground becomes a memory. Nothing past this point is given away." },
-    { name: "The Death Zone", flavor: "Above the last camp the air stops helping. Whatever the mountain held in reserve, it spends on you now." }
+    { name: "The Approach", flavor: 'Warm rock, easy glacier, a whole mountain overhead. "Enjoy this part," Marta says. "It is the only part that is enjoying you back."' },
+    { name: "The Headwall", flavor: "The face goes vertical and stops being polite about it. Everything you climb from here, you earn." },
+    { name: "The Death Zone", flavor: "Above the last camp the air quits helping and the mountain plays its whole hand. Climb like you mean to be remembered." }
   ];
+  var GATEKEEPERS = {
+    1: { name: "Bram of the First Narrows", line: '"Everyone thinks they know the low ground. Show me."', beaten: '"Hm. Go on, then. Odile is less patient than I am."' },
+    2: { name: "Odile of the Headwall", line: '"Bram goes easy. I am the reason climbers study."', beaten: '"Adequate. Say nothing to the one above \u2014 words are wasted there."' },
+    3: { name: "The Last Examiner", line: "It says nothing. It simply opens the ledger of everything you have ever missed.", beaten: "It closes the ledger, and for one moment \u2014 you would swear \u2014 it bows." }
+  };
   function scaleNode(n, act) {
     n.act = act;
+    if (n.kind === "gate" && GATEKEEPERS[act]) {
+      n.title = GATEKEEPERS[act].name;
+      n.bossLine = GATEKEEPERS[act].line;
+      n.bossBeaten = GATEKEEPERS[act].beaten;
+      n.tname = GATEKEEPERS[act].name.split(" ")[0] === "The" ? "The Examiner" : GATEKEEPERS[act].name.split(" ")[0];
+    }
     if (n.kind === "rest") return n;
     const sc = 1 + (act - 1) * 0.22;
     n.rise = +(n.rise * sc).toFixed(2);
@@ -1330,36 +1359,38 @@ var TrailBundle = (() => {
   }
   function nodeSub(node) {
     const n = node.need;
-    if (node.kind === "switchback") return "Footing over speed \u2014 " + n + " to clear";
-    if (node.kind === "storm") return "Speed only \u2014 correct answers won't calm it (" + n + ")";
-    if (node.kind === "gate") return node.domain ? "Weakest domain \u2014 " + node.domain : "Gatekeeper duel";
-    if (node.kind === "rest") return "Catch your breath, then draft a boon";
-    if (node.kind === "shrine") return "Leave an offering for a relic, or pass by";
-    if (node.kind === "tale") return "A story, not a fight \u2014 it ends how you choose";
-    if (node.kind === "serac") return "Fast and punishing \u2014 " + n + " before the ice lets go";
-    if (node.kind === "summit") return "The final pitch \u2014 " + n + " to top out";
-    if (node.kind === "whiteout") return "Move fast \u2014 " + n + " before the cloud closes";
-    if (node.kind === "crevasse") return "One clean step at a time \u2014 " + n + " to cross";
-    if (node.kind === "traverse") return "Endurance \u2014 " + n + " across the long line";
-    if (node.kind === "thinair") return "Race your own lungs \u2014 " + n + " before the air takes you";
-    if (node.kind === "icefall") return "Between the volleys \u2014 " + n + " to clear";
-    if (node.kind === "void") return "No boons, no tricks \u2014 just " + n + " and what you know";
-    if (node.kind === "knife") return "Stay clean \u2014 a slip sends you back (" + n + ")";
-    if (node.kind === "berg") return "Each slip costs more \u2014 " + n + " across the crack";
-    if (node.kind === "snowfield") return "Find your pace \u2014 " + n + " to cross";
-    if (node.kind === "couloir") return "Keep pace \u2014 " + n + " before it wears you";
-    if (node.kind === "icewall") return "Every placement counts \u2014 " + n + " to the top";
-    if (node.kind === "windslab") return "Brace for gusts \u2014 " + n + " through the chaos";
-    if (node.kind === "sealedface") return "Break the ice shell first \u2014 " + n + " past the layers";
-    if (node.kind === "longwall") return "It never ends \u2014 " + n + ", and rest gives less each time";
-    if (node.kind === "tempest") return "It feeds on danger \u2014 " + n + " before it rages";
-    if (node.kind === "closing") return "The window is closing \u2014 " + n + ", faster each time";
-    if (node.kind === "avalanche") return "It waits, then breaks \u2014 " + n + " before the slope goes";
-    if (node.kind === "corniceridge") return "Gusts + setbacks \u2014 " + n + " across the wind lip";
-    if (node.kind === "frozentitan") return "Break 3 ice layers \u2014 " + n + " past the glacier block";
-    if (node.kind === "rockfall") return "Move between the volleys \u2014 " + n + " to clear";
-    if (node.kind === "verglas") return "Answer fast, shed threat \u2014 " + n + " across the glaze";
-    return n + " to clear";
+    const map = {
+      switchback: `Loose rock. Take it slow and clean \u2014 ${n} careful answers gets you up.`,
+      storm: `Right answers won't calm this one. Only speed will. Outclimb it in ${n}.`,
+      gate: node.domain ? `An examiner. It asks ${node.domain}, and nothing else.` : `An examiner. It asks whatever you know least.`,
+      rest: `A fire, a flat spot, and a moment to pick new gear.`,
+      shrine: `Leave an offering if you like. Sometimes the mountain answers.`,
+      tale: `A story is waiting here. How it ends is up to you.`,
+      serac: `The ice above is already falling. Be gone in ${n} before it lands.`,
+      summit: `The last ${n}. Three stages, each meaner than the one before.`,
+      whiteout: `You can't see three meters. Answer ${n} fast, on instinct.`,
+      crevasse: `A thin snow bridge. ${n} steady steps across \u2014 a slip here costs dearly.`,
+      traverse: `A long, easy line that never quite ends. Pace yourself through ${n}.`,
+      thinair: `The air itself drains you every second. Finish ${n} before your legs notice.`,
+      icefall: `Ice falls on a rhythm here. Learn the rhythm, clear ${n} between volleys.`,
+      void: `Nothing in your pack works up here. Just you and ${n} honest answers.`,
+      knife: `A ridge the width of your boot. One slip knocks you back down it. ${n} to cross.`,
+      berg: `A widening crack beside the route. Every slip feeds it, and each one costs more. ${n} to pass.`,
+      snowfield: `Deep, forgiving snow. Find a rhythm and put ${n} behind you.`,
+      couloir: `A narrow chute that funnels everything the mountain drops. Move \u2014 ${n} and out.`,
+      icewall: `Vertical blue ice. Misses are expensive here. ${n} solid placements to the top.`,
+      windslab: `Gusts with no schedule and no warning. Hold steady through ${n}.`,
+      sealedface: `The face is sealed in an ice shell. Crack it first, then climb ${n}.`,
+      longwall: `A wall that keeps going. Each breather helps less than the last. ${n} to top out.`,
+      tempest: `A storm that feeds on danger. Keep the threat starved while you clear ${n}.`,
+      closing: `Your weather window is closing, and every chance is shorter. ${n}, quickly.`,
+      avalanche: `The slope is loaded. Past halfway, it lets go \u2014 plan your ${n} around it.`,
+      corniceridge: `Wind, gusts, and a lip of snow that punishes slips. ${n} across.`,
+      frozentitan: `Old glacier ice in three layers. Break all three, then land ${n} \u2014 and it gets angry late.`,
+      rockfall: `Pebbles come down in timed bursts. Move in the quiet. ${n} to clear.`,
+      verglas: `Ice too thin to see. Answer fast and it sheds threat; hesitate and it doesn't. ${n} to cross.`
+    };
+    return map[node.kind] || `${n} to clear.`;
   }
 
   // src/agents/sandbox-steward.js
@@ -1944,7 +1975,10 @@ var TrailBundle = (() => {
     secondhand: { ic: "\u23F1\uFE0F", name: "Second Hand", tag: "speed", rare: true, desc: "Retired. Now Quick Draw." },
     gambit: { ic: "\u{1F3B2}", name: "Gambit", tag: "threat", rare: true, desc: "Retired. Now All In." },
     buddyrope: { ic: "\u{1FAA2}", name: "Buddy Rope", tag: "safety", rare: true, desc: "Retired. Now Fixed Line." },
-    anchor: { ic: "\u2693", name: "Storm Anchor", tag: "safety", rare: true, desc: "Retired. Now Pit Anchor." }
+    anchor: { ic: "\u2693", name: "Storm Anchor", tag: "safety", rare: true, desc: "Retired. Now Pit Anchor." },
+    woolsocks: { ic: "\u{1F9E6}", name: "Wool Socks", tag: "opening", rare: false, desc: "Dry feet fix more than you would think. Camps and cleared ledges heal +6 more." },
+    whetstone: { ic: "\u{1FAA8}", name: "Whetstone", tag: "threat", rare: false, desc: "Your first correct answer each pitch bites deep \u2014 it sheds 15 extra threat." },
+    whistle: { ic: "\u{1F3B6}", name: "Tin Whistle", tag: "safety", rare: true, desc: "The mountain likes a tune. Gusts and falling-ice volleys hit for half." }
   };
   var DUOS = [
     { ids: ["momentum", "allin"], name: "Runout", ic: "\u{1F3D4}\uFE0F", desc: "On a 5+ streak, correct answers shove threat back hard." },
@@ -1957,7 +1991,9 @@ var TrailBundle = (() => {
     { ids: ["tailwind", "quickdraw"], name: "Slipstream", ic: "\u{1F300}", desc: "Quick Draw returns more time per correct." },
     { ids: ["surefoot", "fixedline"], name: "Belay", ic: "\u{1F91D}", desc: "Crampons' free miss also restores 3 stamina." },
     { ids: ["firstlight", "momentum"], name: "Dawn Line", ic: "\u{1F304}", desc: "First Light bonus fires again after your opening correct." },
-    { ids: ["headlamp", "fieldnotes"], name: "Night School", ic: "\u{1F319}", desc: "Headlamp also tags the question type on each stem." }
+    { ids: ["headlamp", "fieldnotes"], name: "Night School", ic: "\u{1F319}", desc: "Headlamp also tags the question type on each stem." },
+    { ids: ["woolsocks", "provisions"], name: "Home Comforts", ic: "\u{1F3E1}", desc: "Camps and ledges heal +9 instead. The mountain almost feels like a kitchen." },
+    { ids: ["whetstone", "vent"], name: "Sharp Edge", ic: "\u{1F52A}", desc: "The Whetstone opener sheds 24 threat instead of 15." }
   ];
   function hasDuo(ctx, name) {
     return (ctx.duos || []).some((d) => d.name === name);
@@ -2066,6 +2102,12 @@ var TrailBundle = (() => {
         return {};
       },
       onCorrect(ctx) {
+        if (canUse(ctx, "whetstone") && !ctx.enc.whetUsed) {
+          ctx.enc.whetUsed = true;
+          const bite = hasDuo(ctx, "Sharp Edge") ? 24 : 15;
+          ctx.threatDelta = (ctx.threatDelta || 0) - bite;
+          (ctx.banners = ctx.banners || []).push({ title: "Whetstone", sub: "first answer bites \u2014 threat \u2212" + bite });
+        }
         const banners = [];
         let threatDelta = 0;
         let staminaDelta = 0;
@@ -2181,10 +2223,10 @@ var TrailBundle = (() => {
 
   // src/agents/mountain-economy.js
   var WEATHERS = [
-    { name: "Clear Dawn", ic: "\u{1F304}", rise: 1, time: 1, heal: 1, score: 1, desc: "A rare kind morning. The mountain, as it is." },
-    { name: "Gathering Storm", ic: "\u26C8\uFE0F", rise: 1.18, time: 1, heal: 1, score: 1.1, desc: "Threat builds faster all climb. Summits count for more." },
-    { name: "Dead of Night", ic: "\u{1F30C}", rise: 1, time: 0.88, heal: 1, score: 1.15, desc: "Shorter focus windows in the dark \u2014 but the mountain yields more relics." },
-    { name: "Thin Season", ic: "\u{1F976}", rise: 1, time: 1, heal: 0.75, score: 1.12, desc: "The mountain gives less back. Endure." }
+    { name: "Clear Dawn", ic: "\u{1F304}", rise: 1, time: 1, heal: 1, score: 1, desc: "A rare, kind morning. No tricks today \u2014 just you and the route." },
+    { name: "Gathering Storm", ic: "\u26C8\uFE0F", rise: 1.18, time: 1, heal: 1, score: 1.1, desc: "Trouble builds faster all day. Summit in this and it counts for more." },
+    { name: "Dead of Night", ic: "\u{1F30C}", rise: 1, time: 0.88, heal: 1, score: 1.15, desc: "Short clocks in the dark, but the mountain drops more treasure at night." },
+    { name: "Thin Season", ic: "\u{1F976}", rise: 1, time: 1, heal: 0.75, score: 1.12, desc: "Camps and ledges heal less this season. Pack patience." }
   ];
   var RELICS = {
     iceaxe: { ic: "\u26CF\uFE0F", name: "Ice Axe", desc: "Once per climb, arrest a fatal fall and hold on at 1 stamina." },
@@ -2192,12 +2234,17 @@ var TrailBundle = (() => {
     oxygen: { ic: "\u{1F4A8}", name: "Oxygen Cache", desc: "Firing a flare also restores 12 stamina." },
     chalk: { ic: "\u{1F45D}", name: "Chalk Bag", desc: "Reclaiming a loose stone fully calms the threat." },
     rope: { ic: "\u{1F9F6}", name: "Woven Rope", desc: "Gatekeepers strike 25% softer." },
-    stone: { ic: "\u{1F48E}", name: "Summit Stone", desc: "Worth +15 summit score. It wants to go home." }
+    stone: { ic: "\u{1F48E}", name: "Summit Stone", desc: "Worth +15 summit score. It wants to go home." },
+    feather: { ic: "\u{1FAB6}", name: "Ptarmigan Feather", desc: "Once per climb, a timeout costs nothing and your streak survives. A small bird pays a small debt." }
   };
   function pitchRestore(node, mode, run, config) {
     const heal = run.weather ? run.weather.heal : 1;
-    if (mode === "rest") return Math.round(node.restore * heal);
-    return Math.round(node.restore * config.CLEAR_RESTORE_MULT * heal);
+    let socks = 0;
+    if (run.boons && run.boons.has("woolsocks")) {
+      socks = run.boons.has("provisions") ? 9 : 6;
+    }
+    if (mode === "rest") return Math.round(node.restore * heal) + socks;
+    return Math.round(node.restore * config.CLEAR_RESTORE_MULT * heal) + socks;
   }
   function hasDuo2(ctx, name) {
     if (ctx.hasDuo) return ctx.hasDuo(name);
@@ -3048,8 +3095,177 @@ var TrailBundle = (() => {
           after: "You keep what you came with. Above you, the route closes back into a fist. Fair."
         }
       ]
+    },
+    {
+      id: "martatea",
+      ic: "\u{1FAD6}",
+      title: "Tea with Marta",
+      minAct: 1,
+      text: 'Marta the Keeper has a kettle going in the lee of a boulder, like it is the most normal thing in the world at four thousand meters. "Sit. It needs a minute. Everything good needs a minute." She pours two cups without asking.',
+      choices: [
+        {
+          ic: "\u{1F375}",
+          label: "Sit and drink",
+          desc: "The tea is hot and the company is better. +12 stamina.",
+          fx: { stam: 12, flag: "tea" },
+          after: "You talk about nothing. The route, the weather, a bird she is feuding with. It is the best twenty minutes of the climb so far, and she waves you off before you can thank her."
+        },
+        {
+          ic: "\u{1F6B6}",
+          label: "Politely keep moving",
+          desc: "Light is short. The next pitch asks one less \u2014 Marta points out the good line as you go.",
+          fx: { easeNext: 1 },
+          after: '"Suit yourself." She points with her cup. "Stay left of the dark rock. The dark rock is lying to you." She is, of course, right.'
+        }
+      ]
+    },
+    {
+      id: "ptarmigan",
+      ic: "\u{1F426}",
+      title: "The Ptarmigan",
+      minAct: 1,
+      text: "A fat white bird lands on your pack and looks at you the way a landlord looks at a tenant. It is standing on your food. It knows it is standing on your food.",
+      choices: [
+        {
+          ic: "\u{1F96A}",
+          label: "Share your lunch",
+          desc: "Cost: 6 stamina. You cannot explain why this feels important. It does.",
+          fx: { stam: -6, flag: "bird" },
+          after: "It eats like it paid for the meal, bobs once \u2014 which you choose to read as gratitude \u2014 and flies up the route. Somehow you feel lighter, six stamina poorer, and completely certain you will see it again."
+        },
+        {
+          ic: "\u{1F44B}",
+          label: "Shoo it off",
+          desc: "It is YOUR lunch. +6 stamina, and the moral high ground.",
+          fx: { stam: 6 },
+          after: "It leaves slowly, insultingly slowly, taking one crumb as a tax. You get the feeling you have made a very small, very patient enemy."
+        }
+      ]
+    },
+    {
+      id: "cartographer",
+      ic: "\u{1F5FA}\uFE0F",
+      title: "Emil, Mapping the Wind",
+      minAct: 2,
+      text: 'A man sits cross-legged on the ledge with pencils lined up by length, drawing a map of things that move. "Emil," he says, not looking up. "I chart the gusts. Everyone laughs. Then they climb into one." He taps an empty stretch of paper. "I will trade you a corner of tomorrow for a fact you are sure of."',
+      choices: [
+        {
+          ic: "\u{1F5E3}\uFE0F",
+          label: "Trade him a fact",
+          desc: "Tell him something you know cold. He fills in your next pitch \u2014 it opens calm.",
+          fx: { flag: "emil" },
+          after: 'He writes your fact into the margin like it is a bearing. "Good. Solid ground on paper is solid ground underfoot." He shows you where the next pitch breathes \u2014 and where it holds its breath.'
+        },
+        {
+          ic: "\u{1F381}",
+          label: "Ask what he has spare",
+          desc: "Cost: 8 stamina hauling his kit up a step. Mapmakers carry strange, useful things.",
+          fx: { stam: -8, relic: true },
+          after: 'You carry his crate up the awkward step and he rummages in it with real joy. "For your trouble. I have two, and the second one was never mine to keep."'
+        }
+      ]
+    },
+    {
+      id: "letters",
+      ic: "\u2709\uFE0F",
+      title: "The Letter Tin",
+      minAct: 2,
+      text: 'A biscuit tin wedged under a flat stone, streaked with old wax. Inside, letters \u2014 climbers writing to whoever comes next. The top one reads: "If you are reading this, the weather let you. Write something true and go on."',
+      choices: [
+        {
+          ic: "\u270D\uFE0F",
+          label: "Write something true",
+          desc: "Leave a line for the next climber. Some things you only learn by saying them. +8 stamina.",
+          fx: { stam: 8, flag: "letter" },
+          after: "You write the truest thing you know about being this tired and this far up, and feel better the moment the lid closes. Strange how that works. It will be there when someone needs it."
+        },
+        {
+          ic: "\u{1F4D6}",
+          label: "Read them all",
+          desc: "Cost: 5 stamina sitting in the cold. Sixty years of advice from people who stood right here.",
+          fx: { stam: -5, draftNext: true },
+          after: "Grocery lists. Confessions. A recipe. And threaded through all of it, real route advice from people who wanted a stranger to make it. The next camp will make more sense because of them."
+        }
+      ]
+    },
+    {
+      id: "younggide",
+      ic: "\u{1F9D2}",
+      title: "The Apprentice",
+      minAct: 2,
+      text: 'A young guide is re-coiling a rope for the fourth time, jaw set, eyes wet with frustration and altitude. "I froze on the traverse. Marta says everyone freezes once. Did you freeze?" They look at you like the answer matters. It does.',
+      choices: [
+        {
+          ic: "\u{1F4AC}",
+          label: "Tell them the truth",
+          desc: "Yes. You froze. Talk them through what unfroze you. Teaching it locks it in \u2014 the next pitch asks one less.",
+          fx: { easeNext: 1, flag: "apprentice" },
+          after: "You explain it plainly \u2014 the freeze, the breath, the first small move that breaks it. Saying it out loud, you finally understand it yourself. They nod, and coil the rope right on the fifth try."
+        },
+        {
+          ic: "\u{1F91D}",
+          label: "Rope up with them a while",
+          desc: "Cost: 10 stamina at their pace. Nobody should re-learn courage alone.",
+          fx: { stam: -10, draftNext: true, flag: "apprentice" },
+          after: 'You climb a rope-length together, slow and honest. At the anchor they press something from their kit into your hand. "Marta says gear you are given works better than gear you buy." '
+        }
+      ]
+    },
+    {
+      id: "summitbell",
+      ic: "\u{1F514}",
+      title: "The Bell Above the Clouds",
+      minAct: 3,
+      text: "A small bronze bell hangs from an iron post, older than every map of this mountain. The rule, scratched beneath it in four languages: RING IT GOING UP AND YOU OWE THE TOP THE TRUTH. IT RINGS BACK FOR EVERY CLIMBER WHO KEPT THEIR WORD.",
+      choices: [
+        {
+          ic: "\u{1F514}",
+          label: "Ring it",
+          desc: "Make the summit a promise. The next pitch opens with 8 threat \u2014 the mountain heard you.",
+          fx: { threatNext: 8, flag: "bell" },
+          after: "One clear note, and the wind goes quiet around it \u2014 listening, or counting. There is no taking it back now. The top knows you are coming."
+        },
+        {
+          ic: "\u{1F92B}",
+          label: "Leave it silent",
+          desc: "Promises are heavy at altitude. Save your breath. +8 stamina.",
+          fx: { stam: 8 },
+          after: "You pass without a sound. The bell hangs still, patient as the mountain under it. It has waited out braver silences than yours."
+        }
+      ]
     }
   ];
+  function campLine(run, rnd2) {
+    const f = run.storyFlags || {};
+    const lines = [];
+    if (f.bird) lines.push("\u{1F426} The ptarmigan is here. It has clearly been waiting. It inspects your camp, approves of nothing, and settles in by the fire like family.");
+    if (f.tea) lines.push("\u{1FAD6} There is a tin cup by the fire ring that was not in your pack this morning. Marta moves fast for her age. It improves the evening enormously.");
+    if (f.letter) lines.push("\u2709\uFE0F You think about your line in the letter tin, and the stranger who will read it someday. Write true, climb true.");
+    if (f.apprentice) lines.push("\u{1F9D2} Two ledges down, a headlamp is repeating your route, move for move. The apprentice is climbing again. That one is yours.");
+    if (f.emil) lines.push("\u{1F5FA}\uFE0F Far below, a small light traces slow circles on a ledge. Emil, charting the night wind. You sleep better knowing the gusts are being taken seriously.");
+    if (run.clutch > 0) lines.push("\u{1F525} Your hands have finally stopped shaking from that last pitch. The fire helps. Being alive helps more.");
+    if (run.bestStreak >= 8) lines.push('\u{1F525} Somewhere on the wind you would swear you hear Marta: "Eight in a row. Now do it tired." You are tired. You grin anyway.');
+    if (run.relics && run.relics.size >= 2) lines.push("\u{1F392} You lay the mountain\u2019s gifts out by the fire and take inventory like a dragon. A small hoard, honestly earned.");
+    lines.push("\u{1F3D5}\uFE0F The fire cracks. The stars are doing their enormous quiet thing. For one full minute you forget to study, and that is fine too.");
+    lines.push("\u{1F3D5}\uFE0F Wind on the tent fly, tea going cold too fast, every muscle honest about the day. You would not trade this for a desk. Not tonight.");
+    return lines[Math.floor(rnd2() * lines.length)];
+  }
+  function epilogue(run, kind) {
+    const f = run.storyFlags || {};
+    if (kind === "summit") {
+      if (f.bell) return "The bell\u2019s answer reaches you on the summit \u2014 one clear note rising through the cloud. You kept your word. The mountain keeps count.";
+      if (f.bird) return "On the summit cairn sits a fat white bird, entirely unimpressed by the view. It waited for you. You split what is left of lunch, as is now tradition.";
+      if (f.apprentice) return "From the top you can see the whole line you climbed \u2014 and a small figure on the lower ridge, climbing it after you. Somewhere below, the apprentice found their nerve. Pass it on. That is the whole game.";
+      if (f.letter) return "Standing on top, you finally know what you should have written in the tin. Next climb, you tell yourself. The mountain will hold you to it.";
+      if (f.tea) return 'The summit wind smells faintly, impossibly, of Marta\u2019s tea. "Everything good needs a minute," she said. This took considerably more than a minute. Worth it.';
+      if ((run.clutch || 0) >= 2) return "You topped out on fumes and stubbornness, twice nearly nothing left. Those are the summits you remember. Nobody frames a photo of an easy day.";
+      return "The top, at last \u2014 wind, light, and the whole world arranged below you like a map of everything you now know. Write it in the ledger. This one is yours.";
+    }
+    if (f.apprentice) return "The mountain sent you down today. So it goes. Somewhere below, an apprentice is still climbing because of what you told them \u2014 so get up. You have your own advice to follow.";
+    if (f.bird) return "You fell, and a certain fat white bird escorted you partway down, offering no sympathy whatsoever. Eat something. Sleep. The route is not going anywhere, and neither is the bird.";
+    if (f.tea) return '"Everyone comes down the mountain," Marta says, pouring without asking. "The good ones come down taking notes." Drink your tea. Read your misses. Go again.';
+    return "The mountain kept this one. Fine \u2014 it keeps the first draft of everybody. What you learned on the way down is yours forever, and the route will still be there at first light.";
+  }
   function drawTale(rnd2, act, usedIds) {
     const used = usedIds || [];
     let pool = TALES.filter((t) => t.minAct <= (act || 1) && used.indexOf(t.id) < 0);
@@ -3070,7 +3286,7 @@ var TrailBundle = (() => {
       id: "cairn-keeper",
       name: "Cairn Keeper",
       role: "Waymark stories \u2014 narrative choice encounters on the route",
-      api: { TALES, drawTale, resolveChoice },
+      api: { TALES, drawTale, resolveChoice, campLine, epilogue },
       register() {
       }
     };

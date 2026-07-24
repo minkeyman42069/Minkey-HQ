@@ -793,7 +793,7 @@ body.lastlegs::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:
         </div>
         <h1 class="title">THE RBT <span class="k">TRAIL</span></h1>
         <p class="trail-tag">Know your terms, or the mountain wins.</p>
-        <p class="trail-lore">The hazards up there test what you can still recall with the wind up, and every camp offers help you must choose between. Fall as often as it takes &mdash; the ledger keeps each concept you lock in.</p>
+        <p class="trail-lore">Climbers call it the Grandfather. It asks you everything you know, one pitch at a time, and it is scrupulously fair: fall as often as it takes &mdash; every concept you lock in stays locked, and the fires up there are friendlier than you have heard.</p>
       </div>
       <div class="trail-cta">
         <button class="cta big prime" id="climbBtn" onclick="beginRun(null)">&#129406; Climb the mountain</button>
@@ -1680,7 +1680,7 @@ function freshRun(topic, opts){
   var mb=mergedBank();
   var oath=(typeof getSelectedOath==='function'?getSelectedOath():'none');
   var _r={ topic:topic, oath:oath, route:buildRoute(topic), nodeIdx:0, actShown:{}, freeDraft:false,
-    daily:!!opts.daily, knownDuos:new Set(), usedTales:[], freeDraftFrom:null,
+    daily:!!opts.daily, knownDuos:new Set(), usedTales:[], freeDraftFrom:null, storyFlags:{}, featherUsed:false,
     prog:{}, locked:new Set(), mastered:new Set(), boons:new Set(), flares:0,
     stamina:CONFIG.STAM_MAX, altitude:1600,
     seen:0, right:0, bestStreak:0, nodeCleared:0, summited:false, stones:{}, stoneNow:null, recovered:0,
@@ -1725,11 +1725,12 @@ function _enterCurrentNode(node){
   ENC=Trail.engine.blankEnc(node, { threat: Trail.engine.entryThreat(node) });
   RUN.altitude=node.alt; RUN.ending=false;
   if(node.kind==='gate'){
-    if(RUN.topic){ ENC.node.domain=RUN.topic; ENC.node.blurb="It stands where the route narrows, and it has read your ledger. It will ask about "+RUN.topic+". Wrong answers feed it. Right ones back it off."; }
+    var _bossLine=ENC.node.bossLine||'The examiner is waiting.';
+    if(RUN.topic){ ENC.node.domain=RUN.topic; ENC.node.blurb=_bossLine+' The subject today is '+RUN.topic+'.'; }
     else {
     var gd=weakestDomainLetter(); ENC.node.gateDomain=gd; ENC.node.domain=DOMAINS[gd].n;
-    ENC.node.blurb="It stands where the route narrows, and it has read your ledger. It will ask about "+DOMAINS[gd].n+" — the trail where you are thinnest. Wrong answers feed it. Right ones back it off.";
-    setTimeout(function(){ banner('Gatekeeper waits','Domain '+gd+': '+DOMAINS[gd].n); },200);
+    ENC.node.blurb=_bossLine+' The subject today is '+DOMAINS[gd].n+' — the one you know least. No pressure.';
+    setTimeout(function(){ banner(ENC.node.title||'The examiner', 'Domain '+gd+': '+DOMAINS[gd].n); },200);
     }
   }
   if(node.kind==='serac'){ setTimeout(function(){ banner('The ice groans','it was waiting for you'); },250); }
@@ -1773,6 +1774,8 @@ function applyEngineEvents(ev){ if(!ev) return;
     else if(e.t==='shield'){ banner('The face cracks', e.left>0?(e.left+' layer'+(e.left>1?'s':'')+' to break'):'the shell gives way \u2014 climb'); }
     else if(e.t==='phase'){ banner('The slope lets go','it releases all at once'); }
     else if(e.t==='stage'){ AUDIO.strike(); RENDER.encChrome(); banner(e.title, e.sub); }
+    else if(e.t==='feather'){ AUDIO.correct(); banner('\uD83E\uDEB6 The feather stirs','the ptarmigan pays its debt \u2014 no harm done, streak intact'); }
+    else if(e.t==='streakmark'){ var _sm={4:'Four straight \u2014 the ridge is listening',8:'Eight straight \u2014 the wind stopped arguing',12:'Twelve straight \u2014 even Marta would whistle'}[e.streak]; if(_sm) banner('\uD83D\uDD25 '+e.streak+' in a row', _sm); }
     else if(e.t==='crux'){ banner('The crux','one hard move from the ledge'); }
     else if(e.t==='knockback'){ if(RENDER.encChrome) RENDER.encChrome(); banner('Knocked back','you slide down the ridge'); }
     else if(e.t==='spike'){ AUDIO.tick(); }
@@ -1918,10 +1921,11 @@ function openLedge(node, mode){
   if(mode==='rest'){ addStamina(pitchRestore(node,'rest')); RUN.nodeIdx++; }
   var isRest=(mode==='rest');
   document.getElementById('ledgeIc').innerHTML = isRest ? '&#127957;&#65039;' : (node.kind==='gate'?'&#128737;&#65039;':'&#9968;&#65039;');
-  document.getElementById('ledgeTitle').textContent = isRest ? 'Ledge Camp' : (node.kind==='gate'?'Gatekeeper down':'Ledge reached');
+  document.getElementById('ledgeTitle').textContent = isRest ? 'Ledge Camp' : (node.kind==='gate'?(node.title||'The examiner')+' yields':'Ledge reached');
+  var _campLine = (isRest && Trail.agents.keeper && Trail.agents.keeper.api.campLine) ? Trail.agents.keeper.api.campLine(RUN, rnd) : null;
   document.getElementById('ledgeSub').innerHTML = isRest
-    ? 'Fire&rsquo;s warm. You catch your breath before the next pitch.'
-    : (node.kind==='gate'?'The ridge lets you pass. That stretch is behind you.':'Solid ground. A moment before the trail climbs again.');
+    ? (_campLine || 'Fire&rsquo;s warm. You catch your breath before the next pitch.')
+    : (node.kind==='gate' ? (node.bossBeaten||'The ridge lets you pass. That stretch is behind you.') : 'Solid ground. A moment before the trail climbs again.');
   var rr=document.getElementById('rewardRow');
   var clearGain=isRest?pitchRestore(node,'rest'):pitchRestore(node,'clear');
   rr.innerHTML='<span class="pill pine">&#129482; +'+clearGain+' stamina</span><span class="pill ice">&#9968;&#65039; '+fmt(node.alt||RUN.altitude)+' m</span>';
@@ -2272,7 +2276,8 @@ function endRun(kind){
   }
   document.getElementById('dbic').innerHTML=m[0];
   document.getElementById('dbt').textContent=m[1];
-  document.getElementById('dbs').textContent=m[2];
+  var _epi=(kind!=='quit' && Trail.agents.keeper && Trail.agents.keeper.api.epilogue) ? Trail.agents.keeper.api.epilogue(RUN, kind) : null;
+  document.getElementById('dbs').textContent=_epi || m[2];
   document.getElementById('dbmaster').textContent=RUN.locked.size;
   document.getElementById('grid').innerHTML =
     cell(RUN.mastered.size,'Mastered')+cell(fmt(RUN.altitude)+'m','Altitude')+cell(acc+'%','Accuracy')+cell(RUN.bestStreak+'\u00d7','Best run');

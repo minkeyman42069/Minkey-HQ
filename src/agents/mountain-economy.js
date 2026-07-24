@@ -3,10 +3,10 @@
  */
 
 export const WEATHERS = [
-  { name: 'Clear Dawn', ic: '\uD83C\uDF04', rise: 1, time: 1, heal: 1, score: 1, desc: 'A rare kind morning. The mountain, as it is.' },
-  { name: 'Gathering Storm', ic: '\u26C8\uFE0F', rise: 1.18, time: 1, heal: 1, score: 1.1, desc: 'Threat builds faster all climb. Summits count for more.' },
-  { name: 'Dead of Night', ic: '\uD83C\uDF0C', rise: 1, time: 0.88, heal: 1, score: 1.15, desc: 'Shorter focus windows in the dark \u2014 but the mountain yields more relics.' },
-  { name: 'Thin Season', ic: '\uD83E\uDD76', rise: 1, time: 1, heal: 0.75, score: 1.12, desc: 'The mountain gives less back. Endure.' },
+  { name: 'Clear Dawn', ic: '\uD83C\uDF04', rise: 1, time: 1, heal: 1, score: 1, desc: 'A rare, kind morning. No tricks today — just you and the route.' },
+  { name: 'Gathering Storm', ic: '\u26C8\uFE0F', rise: 1.18, time: 1, heal: 1, score: 1.1, desc: 'Trouble builds faster all day. Summit in this and it counts for more.' },
+  { name: 'Dead of Night', ic: '\uD83C\uDF0C', rise: 1, time: 0.88, heal: 1, score: 1.15, desc: 'Short clocks in the dark, but the mountain drops more treasure at night.' },
+  { name: 'Thin Season', ic: '\uD83E\uDD76', rise: 1, time: 1, heal: 0.75, score: 1.12, desc: 'Camps and ledges heal less this season. Pack patience.' },
 ];
 
 export const RELICS = {
@@ -16,12 +16,19 @@ export const RELICS = {
   chalk: { ic: '\uD83D\uDC5D', name: 'Chalk Bag', desc: 'Reclaiming a loose stone fully calms the threat.' },
   rope: { ic: '\uD83E\uDDF6', name: 'Woven Rope', desc: 'Gatekeepers strike 25% softer.' },
   stone: { ic: '\uD83D\uDC8E', name: 'Summit Stone', desc: 'Worth +15 summit score. It wants to go home.' },
+  feather: { ic: '\uD83E\uDEB6', name: 'Ptarmigan Feather', desc: 'Once per climb, a timeout costs nothing and your streak survives. A small bird pays a small debt.' },
 };
 
 export function pitchRestore(node, mode, run, config) {
   const heal = run.weather ? run.weather.heal : 1;
-  if (mode === 'rest') return Math.round(node.restore * heal);
-  return Math.round(node.restore * config.CLEAR_RESTORE_MULT * heal);
+  // Wool Socks: every camp and every cleared ledge heals a little more.
+  // With Provisions it becomes Home Comforts and heals more still.
+  let socks = 0;
+  if (run.boons && run.boons.has('woolsocks')) {
+    socks = run.boons.has('provisions') ? 9 : 6;
+  }
+  if (mode === 'rest') return Math.round(node.restore * heal) + socks;
+  return Math.round(node.restore * config.CLEAR_RESTORE_MULT * heal) + socks;
 }
 
 function hasDuo(ctx, name) {

@@ -172,10 +172,10 @@ export function nSnowfield(need, alt) {
 
 export function nCouloir(need, alt) {
   return {
-    kind: 'couloir', icon: '🗻', title: 'The Couloir',
+    kind: 'couloir', icon: '🗻', title: 'The Chute',
     blurb: 'A chute of ice between rock walls. Everything the mountain sheds comes down through here, and your route goes up it. Do not linger.',
     need, tier: 2, time: 13, rise: 1.9, miss: 18, ease: 6, max: 100, hit: 17, restore: 16, boon: true, alt,
-    tname: 'The couloir', tic: '🗻',
+    tname: 'The chute', tic: '🗻',
   };
 }
 
@@ -253,10 +253,10 @@ export function nRockfall(need, alt) {
 
 export function nVerglas(need, alt) {
   return {
-    kind: 'verglas', icon: '🪞', title: 'The Verglas',
+    kind: 'verglas', icon: '🪞', title: 'Black Ice',
     blurb: 'Meltwater froze over the rock in a skin too thin to see. Your edges bite for a moment after every move. Move again before they skate.',
     need, tier: 3, time: 15, rise: 1.9, miss: 18, ease: 4, max: 100, hit: 17, restore: 18, boon: true, swift: 9, alt,
-    tname: 'The verglas', tic: '🪞',
+    tname: 'The black ice', tic: '🪞',
   };
 }
 
@@ -295,13 +295,26 @@ export function nFrozenTitan(need, alt) {
 }
 
 export const ACTS = [
-  { name: 'The Approach', flavor: 'Warm rock and open glacier under a late moon. The mountain lets you settle in. It can afford to.' },
-  { name: 'The Headwall', flavor: 'The face goes vertical and easy ground becomes a memory. Nothing past this point is given away.' },
-  { name: 'The Death Zone', flavor: 'Above the last camp the air stops helping. Whatever the mountain held in reserve, it spends on you now.' },
+  { name: 'The Approach', flavor: 'Warm rock, easy glacier, a whole mountain overhead. "Enjoy this part," Marta says. "It is the only part that is enjoying you back."' },
+  { name: 'The Headwall', flavor: 'The face goes vertical and stops being polite about it. Everything you climb from here, you earn.' },
+  { name: 'The Death Zone', flavor: 'Above the last camp the air quits helping and the mountain plays its whole hand. Climb like you mean to be remembered.' },
 ];
+
+/** The three examiners. Every climber meets them in order. */
+export const GATEKEEPERS = {
+  1: { name: 'Bram of the First Narrows', line: '"Everyone thinks they know the low ground. Show me."', beaten: '"Hm. Go on, then. Odile is less patient than I am."' },
+  2: { name: 'Odile of the Headwall', line: '"Bram goes easy. I am the reason climbers study."', beaten: '"Adequate. Say nothing to the one above — words are wasted there."' },
+  3: { name: 'The Last Examiner', line: 'It says nothing. It simply opens the ledger of everything you have ever missed.', beaten: 'It closes the ledger, and for one moment — you would swear — it bows.' },
+};
 
 export function scaleNode(n, act) {
   n.act = act;
+  if (n.kind === 'gate' && GATEKEEPERS[act]) {
+    n.title = GATEKEEPERS[act].name;
+    n.bossLine = GATEKEEPERS[act].line;
+    n.bossBeaten = GATEKEEPERS[act].beaten;
+    n.tname = GATEKEEPERS[act].name.split(' ')[0] === 'The' ? 'The Examiner' : GATEKEEPERS[act].name.split(' ')[0];
+  }
   if (n.kind === 'rest') return n;
   const sc = 1 + (act - 1) * 0.22;
   n.rise = +(n.rise * sc).toFixed(2);
@@ -356,34 +369,36 @@ export function nodeEmoji(kind) {
 
 export function nodeSub(node) {
   const n = node.need;
-  if (node.kind === 'switchback') return 'Footing over speed — ' + n + ' to clear';
-  if (node.kind === 'storm') return "Speed only — correct answers won't calm it (" + n + ')';
-  if (node.kind === 'gate') return node.domain ? 'Weakest domain — ' + node.domain : 'Gatekeeper duel';
-  if (node.kind === 'rest') return 'Catch your breath, then draft a boon';
-  if (node.kind === 'shrine') return 'Leave an offering for a relic, or pass by';
-  if (node.kind === 'tale') return 'A story, not a fight — it ends how you choose';
-  if (node.kind === 'serac') return 'Fast and punishing — ' + n + ' before the ice lets go';
-  if (node.kind === 'summit') return 'The final pitch — ' + n + ' to top out';
-  if (node.kind === 'whiteout') return 'Move fast — ' + n + ' before the cloud closes';
-  if (node.kind === 'crevasse') return 'One clean step at a time — ' + n + ' to cross';
-  if (node.kind === 'traverse') return 'Endurance — ' + n + ' across the long line';
-  if (node.kind === 'thinair') return 'Race your own lungs — ' + n + ' before the air takes you';
-  if (node.kind === 'icefall') return 'Between the volleys — ' + n + ' to clear';
-  if (node.kind === 'void') return 'No boons, no tricks — just ' + n + ' and what you know';
-  if (node.kind === 'knife') return 'Stay clean — a slip sends you back (' + n + ')';
-  if (node.kind === 'berg') return 'Each slip costs more — ' + n + ' across the crack';
-  if (node.kind === 'snowfield') return 'Find your pace — ' + n + ' to cross';
-  if (node.kind === 'couloir') return 'Keep pace — ' + n + ' before it wears you';
-  if (node.kind === 'icewall') return 'Every placement counts — ' + n + ' to the top';
-  if (node.kind === 'windslab') return 'Brace for gusts — ' + n + ' through the chaos';
-  if (node.kind === 'sealedface') return 'Break the ice shell first — ' + n + ' past the layers';
-  if (node.kind === 'longwall') return 'It never ends — ' + n + ', and rest gives less each time';
-  if (node.kind === 'tempest') return 'It feeds on danger — ' + n + ' before it rages';
-  if (node.kind === 'closing') return 'The window is closing — ' + n + ', faster each time';
-  if (node.kind === 'avalanche') return 'It waits, then breaks — ' + n + ' before the slope goes';
-  if (node.kind === 'corniceridge') return 'Gusts + setbacks — ' + n + ' across the wind lip';
-  if (node.kind === 'frozentitan') return 'Break 3 ice layers — ' + n + ' past the glacier block';
-  if (node.kind === 'rockfall') return 'Move between the volleys — ' + n + ' to clear';
-  if (node.kind === 'verglas') return 'Answer fast, shed threat — ' + n + ' across the glaze';
-  return n + ' to clear';
+  const map = {
+    switchback: `Loose rock. Take it slow and clean — ${n} careful answers gets you up.`,
+    storm: `Right answers won't calm this one. Only speed will. Outclimb it in ${n}.`,
+    gate: node.domain ? `An examiner. It asks ${node.domain}, and nothing else.` : `An examiner. It asks whatever you know least.`,
+    rest: `A fire, a flat spot, and a moment to pick new gear.`,
+    shrine: `Leave an offering if you like. Sometimes the mountain answers.`,
+    tale: `A story is waiting here. How it ends is up to you.`,
+    serac: `The ice above is already falling. Be gone in ${n} before it lands.`,
+    summit: `The last ${n}. Three stages, each meaner than the one before.`,
+    whiteout: `You can't see three meters. Answer ${n} fast, on instinct.`,
+    crevasse: `A thin snow bridge. ${n} steady steps across — a slip here costs dearly.`,
+    traverse: `A long, easy line that never quite ends. Pace yourself through ${n}.`,
+    thinair: `The air itself drains you every second. Finish ${n} before your legs notice.`,
+    icefall: `Ice falls on a rhythm here. Learn the rhythm, clear ${n} between volleys.`,
+    void: `Nothing in your pack works up here. Just you and ${n} honest answers.`,
+    knife: `A ridge the width of your boot. One slip knocks you back down it. ${n} to cross.`,
+    berg: `A widening crack beside the route. Every slip feeds it, and each one costs more. ${n} to pass.`,
+    snowfield: `Deep, forgiving snow. Find a rhythm and put ${n} behind you.`,
+    couloir: `A narrow chute that funnels everything the mountain drops. Move — ${n} and out.`,
+    icewall: `Vertical blue ice. Misses are expensive here. ${n} solid placements to the top.`,
+    windslab: `Gusts with no schedule and no warning. Hold steady through ${n}.`,
+    sealedface: `The face is sealed in an ice shell. Crack it first, then climb ${n}.`,
+    longwall: `A wall that keeps going. Each breather helps less than the last. ${n} to top out.`,
+    tempest: `A storm that feeds on danger. Keep the threat starved while you clear ${n}.`,
+    closing: `Your weather window is closing, and every chance is shorter. ${n}, quickly.`,
+    avalanche: `The slope is loaded. Past halfway, it lets go — plan your ${n} around it.`,
+    corniceridge: `Wind, gusts, and a lip of snow that punishes slips. ${n} across.`,
+    frozentitan: `Old glacier ice in three layers. Break all three, then land ${n} — and it gets angry late.`,
+    rockfall: `Pebbles come down in timed bursts. Move in the quiet. ${n} to clear.`,
+    verglas: `Ice too thin to see. Answer fast and it sheds threat; hesitate and it doesn't. ${n} to cross.`,
+  };
+  return map[node.kind] || `${n} to clear.`;
 }

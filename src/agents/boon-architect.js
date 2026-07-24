@@ -173,6 +173,9 @@ export const LEGACY_BOONS = {
   gambit: { ic: '🎲', name: 'Gambit', tag: 'threat', rare: true, desc: 'Retired. Now All In.' },
   buddyrope: { ic: '🪢', name: 'Buddy Rope', tag: 'safety', rare: true, desc: 'Retired. Now Fixed Line.' },
   anchor: { ic: '⚓', name: 'Storm Anchor', tag: 'safety', rare: true, desc: 'Retired. Now Pit Anchor.' },
+  woolsocks: { ic: '🧦', name: 'Wool Socks', tag: 'opening', rare: false, desc: 'Dry feet fix more than you would think. Camps and cleared ledges heal +6 more.' },
+  whetstone: { ic: '🪨', name: 'Whetstone', tag: 'threat', rare: false, desc: 'Your first correct answer each pitch bites deep — it sheds 15 extra threat.' },
+  whistle: { ic: '🎶', name: 'Tin Whistle', tag: 'safety', rare: true, desc: 'The mountain likes a tune. Gusts and falling-ice volleys hit for half.' },
 };
 
 export const DUOS = [
@@ -187,6 +190,8 @@ export const DUOS = [
   { ids: ['surefoot', 'fixedline'], name: 'Belay', ic: '🤝', desc: 'Crampons\' free miss also restores 3 stamina.' },
   { ids: ['firstlight', 'momentum'], name: 'Dawn Line', ic: '🌄', desc: 'First Light bonus fires again after your opening correct.' },
   { ids: ['headlamp', 'fieldnotes'], name: 'Night School', ic: '🌙', desc: 'Headlamp also tags the question type on each stem.' },
+  { ids: ['woolsocks', 'provisions'], name: 'Home Comforts', ic: '🏡', desc: 'Camps and ledges heal +9 instead. The mountain almost feels like a kitchen.' },
+  { ids: ['whetstone', 'vent'], name: 'Sharp Edge', ic: '🔪', desc: 'The Whetstone opener sheds 24 threat instead of 15.' },
 ];
 
 function hasDuo(ctx, name) {
@@ -299,6 +304,12 @@ export function createBoonArchitect() {
       return {};
     },
     onCorrect(ctx) {
+      if (canUse(ctx, 'whetstone') && !ctx.enc.whetUsed) {
+        ctx.enc.whetUsed = true;
+        const bite = hasDuo(ctx, 'Sharp Edge') ? 24 : 15;
+        ctx.threatDelta = (ctx.threatDelta || 0) - bite;
+        (ctx.banners = ctx.banners || []).push({ title: 'Whetstone', sub: 'first answer bites — threat −' + bite });
+      }
       const banners = [];
       let threatDelta = 0;
       let staminaDelta = 0;

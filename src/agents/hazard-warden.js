@@ -176,7 +176,7 @@ export function nSnowfield(need, alt) {
 export function nCouloir(need, alt) {
   return {
     kind: 'couloir', icon: '🗻', title: 'The Chute',
-    blurb: 'A chute of ice between rock walls. Everything the mountain sheds comes down through here, and your route goes up it. Do not linger.',
+    blurb: 'A chute of ice between two rock walls. Everything the mountain drops from above funnels down through it, and your line goes straight up the middle. The less time you spend in it, the better.',
     need, tier: 2, time: 13, rise: 1.9, miss: 18, ease: 6, max: 100, hit: 17, restore: 16, boon: true, alt,
     tname: 'The chute', tic: '🗻',
   };
@@ -248,7 +248,7 @@ export function nAvalanche(need, alt) {
 export function nRockfall(need, alt) {
   return {
     kind: 'rockfall', icon: '🥌', title: 'Rockfall Gully',
-    blurb: 'Pebbles come down the gully in bursts, rattling off the walls ahead of you. Count the quiet between volleys. That is when you move.',
+    blurb: 'Pebbles come down the gully in bursts, rattling off the walls above you. The rock goes quiet for a few beats between volleys, and that quiet is when you climb.',
     need, tier: 1, time: 18, rise: 0.7, miss: 14, ease: 8, max: 100, hit: 12, restore: 15, boon: true, spike: 7, spikeEvery: 7, alt,
     tname: 'The rockfall', tic: '🥌',
   };
@@ -306,8 +306,8 @@ export const ACTS = [
 /** The three examiners. Every climber meets them in order. */
 export const GATEKEEPERS = {
   1: { name: 'Bram of the First Narrows', line: '"Everyone thinks they know the low ground. Show me."', beaten: '"Hm. Go on, then. Odile is less patient than I am."' },
-  2: { name: 'Odile of the Headwall', line: '"Bram goes easy. I am the reason climbers study."', beaten: '"Adequate. Say nothing to the one above — words are wasted there."' },
-  3: { name: 'The Last Examiner', line: 'It says nothing. It simply opens the ledger of everything you have ever missed.', beaten: 'It closes the ledger, and for one moment — you would swear — it bows.' },
+  2: { name: 'Odile of the Headwall', line: '"Bram goes easy on people. That is his failing, not mine."', beaten: '"Adequate. Save your breath for the one above you; it has no use for words."' },
+  3: { name: 'The Last Examiner', line: 'It says nothing. It simply opens the ledger of everything you have ever missed.', beaten: 'It closes the ledger. For a moment you could almost believe it inclines its head to you.' },
 };
 
 export function scaleNode(n, act) {

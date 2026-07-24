@@ -1750,7 +1750,7 @@ function _enterCurrentNode(node){
     var _bossLine=ENC.node.bossLine||'The examiner is waiting.';
     var _tell = node.lapsePool ? 'It asks only what you have missed before. Answer, and the ledger closes a little.'
               : node.streakGate ? 'Miss here and she sends you two moves back down the ridge.'
-              : node.decay ? 'His clock tightens with every question. Answer on instinct.'
+              : node.decay ? 'His clock gets shorter with every question, so answer before you can second-guess it.'
               : '';
     var _lap=[];
     if(node.lapsePool && typeof META!=='undefined' && META.lapses){

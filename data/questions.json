@@ -379,12 +379,12 @@
     "q": "While teaching a brand-new skill, the RBT delivers praise and a token after every correct response. This schedule is:",
     "a": [
       "Continuous reinforcement (CRF)",
-      "Fixed ratio (FR-1)",
+      "Fixed ratio (FR-5)",
       "Variable ratio",
       "Fixed interval"
     ],
     "c": 0,
-    "e": "Reinforcing <b>every occurrence</b> during initial acquisition is <b>continuous reinforcement (CRF)</b>. Although FR-1 also delivers after each response, CRF is the standard term for 100% reinforcement during early teaching.",
+    "e": "Reinforcing <b>every occurrence</b> during initial acquisition is <b>continuous reinforcement (CRF)</b>. FR-5 would require five responses per reinforcer; VR varies the count; FI waits for time to pass.",
     "type": "mc",
     "dom": "C",
     "id": 25
@@ -2536,15 +2536,15 @@
   },
   {
     "cat": "Differential Reinforcement",
-    "q": "The difference between DRA and DRI is:",
+    "q": "To reduce hand-flapping during table work, the RBT reinforces keeping hands folded on the table — a behavior that cannot physically happen at the same time as flapping. This procedure is:",
     "a": [
-      "DRI's replacement behavior physically cannot co-occur with the problem; DRA's just needs to be an appropriate alternative",
-      "DRA reinforces absence; DRI reinforces presence",
-      "DRA is for high rates; DRI is for low rates",
-      "There is no difference"
+      "DRI (incompatible)",
+      "DRA (alternative)",
+      "DRO (omission)",
+      "DRL (low rates)"
     ],
     "c": 0,
-    "e": "Both reinforce a replacement, but <b>DRI</b> requires the alternative to be INCOMPATIBLE (can't happen at the same time), while <b>DRA</b> just needs an appropriate alternative.",
+    "e": "Hands folded <b>cannot co-occur</b> with flapping, so this is <b>DRI</b>. A replacement that is merely appropriate (like asking for a break) would be <b>DRA</b>; reinforcing the absence of the behavior for an interval would be <b>DRO</b>.",
     "id": 169,
     "type": "mc",
     "dom": "D"
@@ -2911,15 +2911,15 @@
   },
   {
     "cat": "Reinforcement & Punishment",
-    "q": "The difference between response cost and time-out from reinforcement is:",
+    "q": "A learner loses two previously earned tokens for hitting. Later, hitting leads to sitting apart from a game for two minutes with no chance to earn tokens. In order, these procedures are:",
     "a": [
-      "Response cost removes a specific reinforcer already earned; time-out removes access to reinforcement for a period",
-      "Response cost adds an aversive; time-out removes one",
-      "Response cost is reinforcement; time-out is punishment",
-      "There is no difference"
+      "Response cost, then time-out from reinforcement",
+      "Time-out from reinforcement, then response cost",
+      "Extinction, then response cost",
+      "Negative reinforcement, then time-out"
     ],
     "c": 0,
-    "e": "<b>Response cost</b> takes away an owned reinforcer (tokens); <b>time-out</b> suspends access to the reinforcing environment/activity temporarily.",
+    "e": "Losing <b>earned tokens</b> is <b>response cost</b>; losing <b>access to reinforcement for a period</b> is <b>time-out</b>. Both are negative punishment — nothing aversive is added, and neither is extinction (withholding the maintaining reinforcer).",
     "id": 194,
     "type": "mc",
     "dom": "C"
@@ -3526,15 +3526,15 @@
   },
   {
     "cat": "Professionalism & Scope",
-    "q": "The difference between 'scope of competence' and 'scope of practice' is:",
+    "q": "The RBT credential permits implementing token economies, but this RBT has never been trained to run one. Running one anyway means acting:",
     "a": [
-      "Scope of practice is what the credential allows; scope of competence is what YOU are actually trained and able to do",
-      "They are identical",
-      "Competence is broader than practice",
-      "Practice is set by the family"
+      "outside their scope of competence, within the scope of practice",
+      "outside the scope of practice, within their scope of competence",
+      "within both scope of practice and scope of competence",
+      "outside both scope of practice and scope of competence"
     ],
     "c": 0,
-    "e": "<b>Scope of practice</b> = the profession's permitted activities; <b>scope of competence</b> = your individual demonstrated skills, which may be narrower.",
+    "e": "<b>Scope of practice</b> is what the credential permits; <b>scope of competence</b> is what YOU are trained and able to do. Token economies are RBT practice, but without training this RBT lacks competence — seek training and supervision first.",
     "id": 235,
     "type": "mc",
     "dom": "F"
@@ -4236,11 +4236,11 @@
     "a": [
       "Successive approximation",
       "Terminal behavior",
-      "Baseline approximation",
+      "Differential reinforcement",
       "Response cost"
     ],
     "c": 3,
-    "e": "<b>Response cost</b> is a punishment procedure. The others are shaping concepts.",
+    "e": "<b>Response cost</b> is a punishment procedure. Shaping works through <b>differential reinforcement of successive approximations</b> toward a terminal behavior.",
     "id": 292,
     "dom": "C"
   },
@@ -5279,10 +5279,10 @@
       "Identify your personal biases",
       "Respect the family's values",
       "Adapt your communication respectfully",
-      "Ignore the family's language needs"
+      "Use the same materials and style with every family"
     ],
     "c": 3,
-    "e": "Ignoring language needs is the opposite of cultural responsiveness (F.10).",
+    "e": "A one-size-fits-all approach is the opposite of cultural responsiveness (F.10) — the other three actively adapt to the family.",
     "id": 365
   },
   {

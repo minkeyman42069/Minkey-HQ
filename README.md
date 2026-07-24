@@ -30,10 +30,13 @@ You can also open `index.html` directly in a browser — works offline after the
 
 | Mode | What it does |
 |------|----------------|
-| **Climb the mountain** | Full roguelike run with Leitner scheduling, boon drafts, and hazard encounters |
+| **Climb the mountain** | Full roguelike run with Leitner scheduling, boon drafts, hazard encounters, and trail tales at the story cairns |
 | **Today's Ridge** | Daily seeded route — same line for every climber each day |
 | **Board Sim** | 40-question mock exam weighted to TCO domains |
 | **Bestiary** | Hazard reference + duo synergy codex |
+| **Terminal climb** | `npm run play` — the whole game in your terminal, same engine as the browser |
+
+On the route you'll pass **story cairns** — the Cairn Keeper's trail tales, short narrative encounters with a real mechanical choice (wager stamina on a ghost rope, trade breath for an easier pitch, tend an unmarked grave). Every outcome is deterministic from the run seed, so Today's Ridge tells every climber the same tales. After a climb, the **Summit Sage** reads your ledger on the debrief screen: which exam domain to focus, where accuracy dipped, and which concepts to open the next climb with.
 
 After each run you receive an `RBT5:…` trail-log code. Paste it on the trailhead to import concept tiers from finished climbs.
 
@@ -51,7 +54,7 @@ data/
   quality-report.json      # Latest audit output (generated)
   balance-report.json      # Balance sim output (generated)
 src/
-  core/                    # Agent bus, kernel, shared config
+  core/                    # Agent bus, kernel, shared config, climb engine
   agents/                  # Modular game systems / staff team (see docs/ARCHITECTURE.md)
 playground/index.html      # Visual question-quality reviewer
 sandbox/index.html         # Interactive staff-team control room (npm run sandbox)
@@ -62,7 +65,7 @@ docs/ARCHITECTURE.md       # How the codebase is organized
 ## Staff Sandbox
 
 `npm run sandbox` opens an interactive control room for the game's full staff
-team (nine modular agents). Spawn any hazard, build a loadout, and **simulate a
+team (ten modular agents). Spawn any hazard, build a loadout, and **simulate a
 pitch through the real hook bus**; preview seeded boon drafts; assemble a
 three-act route; run a Leitner study session and get coached by the Summit Sage;
 and watch every hook fire in the Trail Chronicler bus log — all deterministic
@@ -70,7 +73,8 @@ from one seed. See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#staff-sandbox).
 
 **Where to read code**
 
-- **Gameplay & UI** → `index.html` (encounter engine, rendering, audio, meta)
+- **Combat math (one source of truth)** → `src/core/climb-engine.js` — answer resolution, threat, strikes, drift, falls; the browser, sandbox, balance gate, and terminal client all run this same code
+- **Gameplay flow & UI** → `index.html` (screens, rendering, audio, meta — presentation over the engine)
 - **Boons, weather, hazards, scheduling** → `src/agents/`
 - **Questions** → `data/questions.json` (synced into `index.html` via `npm run sync`)
 
@@ -79,6 +83,7 @@ from one seed. See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#staff-sandbox).
 | Command | Purpose |
 |---------|---------|
 | `npm run dev` | Local game server (port 4173) |
+| `npm run play` | Play a full climb in the terminal (`-- --seed N` for a set line, `-- --calm` untimed) |
 | `npm run playground` | Quality reviewer (port 4174) |
 | `npm run sandbox` | Staff-team control room (port 4175, open `/sandbox/`) |
 | `npm run check` | Validate bank, sync, build bundle, verify trail |

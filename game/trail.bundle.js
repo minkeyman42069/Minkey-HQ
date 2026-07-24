@@ -60,7 +60,7 @@ var TrailBundle = (() => {
     THREAT_RESET: 75,
     CRUX_RISE_MULT: 1.2,
     MAX_BOONS: 5,
-    MODS: { weather: true, relics: true, shrines: true },
+    MODS: { weather: true, relics: true, shrines: true, tales: true },
     LOCK_TIER: 3,
     MASTER_TIER: 4,
     BOX_WEIGHTS: [9, 6.5, 5, 3.5, 2],
@@ -69,6 +69,485 @@ var TrailBundle = (() => {
     EXAM_N: 40,
     EXAM_PASS: 80
   };
+
+  // src/core/climb-engine.js
+  var climb_engine_exports = {};
+  __export(climb_engine_exports, {
+    addStamina: () => addStamina,
+    applyTaleFx: () => applyTaleFx,
+    blankEnc: () => blankEnc,
+    blankRun: () => blankRun,
+    clearPitch: () => clearPitch,
+    entryThreat: () => entryThreat,
+    nextCombatNode: () => nextCombatNode,
+    playClimb: () => playClimb,
+    raiseThreat: () => raiseThreat,
+    resolveAnswer: () => resolveAnswer,
+    seededRng: () => seededRng,
+    simulatePitchNode: () => simulatePitchNode,
+    tickDrift: () => tickDrift
+  });
+  function seededRng(seed) {
+    let a = seed >>> 0 || 1;
+    return function() {
+      a |= 0;
+      a = a + 1831565813 | 0;
+      let t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  function clamp(v, lo, hi) {
+    return Math.max(lo, Math.min(hi, v));
+  }
+  function blankRun(over = {}) {
+    const run = {
+      topic: over.topic || null,
+      oath: over.oath || "none",
+      route: over.route || [],
+      nodeIdx: over.nodeIdx || 0,
+      prog: over.prog || {},
+      locked: new Set(over.locked || []),
+      mastered: new Set(over.mastered || []),
+      boons: new Set(over.boons || []),
+      flares: over.flares || 0,
+      stamina: over.stamina != null ? over.stamina : 100,
+      altitude: over.altitude || 1600,
+      seen: 0,
+      right: 0,
+      bestStreak: 0,
+      nodeCleared: 0,
+      summited: false,
+      stones: {},
+      stoneNow: null,
+      recovered: 0,
+      weather: over.weather || null,
+      relics: new Set(over.relics || []),
+      relicLog: [],
+      iceaxeUsed: false,
+      clutch: 0,
+      lastLegsTold: false,
+      freeDraft: false,
+      freeDraftFrom: null,
+      usedTales: [],
+      recent: [],
+      ending: false
+    };
+    if (run.boons.has("flare")) run.flares = run.flares || 2;
+    return run;
+  }
+  function blankEnc(node, over = {}) {
+    return {
+      node,
+      need: node.need,
+      done: 0,
+      threat: over.threat != null ? over.threat : node.startThreat || 0,
+      max: node.max || 100,
+      lifelineUsed: false,
+      firstMissUsed: false,
+      firstTimeoutUsed: false,
+      rallyUsed: false,
+      bulwarkUsed: false,
+      streakEase: 0,
+      cairnBank: 0,
+      missCount: 0,
+      spikeT: 0,
+      shieldLeft: node.shield || 0,
+      easeMul: 1,
+      timeMul: 1,
+      phaseMul: 1,
+      phased: false,
+      luckyUsed: false,
+      cruxTold: false,
+      streak: 0,
+      lastId: -1
+    };
+  }
+  function entryThreat(node) {
+    let t = node.startThreat || 0;
+    if (node.kind === "serac") t = Math.max(t, 25);
+    if (node.kind === "summit") t = Math.max(t, 20);
+    return t;
+  }
+  var ctxOf = (trail, run, enc, rnd2, extra) => trail.makeCtx(run, enc, { rnd: rnd2, ...extra || {} });
+  function addStamina(trail, run, enc, x, events) {
+    const C = trail.CONFIG;
+    run.stamina = clamp(run.stamina + x, 0, C.STAM_MAX);
+    if (run.stamina > 0 && run.stamina <= 25 && enc && !run.lastLegsTold) {
+      run.lastLegsTold = true;
+      if (events) events.push({ t: "lastlegs" });
+    }
+    if (run.stamina <= 0 && enc && !run.ending) {
+      if (C.MODS.relics && run.relics && run.relics.has("iceaxe") && !run.iceaxeUsed) {
+        run.iceaxeUsed = true;
+        run.stamina = 1;
+        if (events) events.push({ t: "iceaxe" });
+        return;
+      }
+      run.ending = true;
+      if (events) events.push({ t: "fell" });
+    }
+  }
+  function mountainStrike(trail, run, enc, rnd2, events) {
+    const C = trail.CONFIG;
+    enc.threat = Math.max(0, enc.threat - C.THREAT_RESET);
+    const sout = trail.emit("mountain:strike", ctxOf(trail, run, enc, rnd2));
+    if (sout.blocked) {
+      if (events) events.push({ t: "strike", blocked: true, hit: 0, banners: sout.banners || [] });
+      return;
+    }
+    let hit = sout.hit != null ? sout.hit : enc.node.hit;
+    if (enc.node.kind === "gate") {
+      hit = Math.round(hit * trail.agents.expedition.api.oathGateHitMult(run));
+    }
+    if (run.relics && run.relics.has("carabiner") && !enc.luckyUsed) {
+      enc.luckyUsed = true;
+      hit = Math.round(hit * 0.5);
+    }
+    if (run.relics && run.relics.has("rope") && enc.node.kind === "gate") hit = Math.round(hit * 0.75);
+    addStamina(trail, run, enc, -hit, events);
+    if (events) events.push({ t: "strike", blocked: false, hit, banners: sout.banners || [] });
+  }
+  function raiseThreat(trail, run, enc, x, rnd2, events) {
+    if (!enc) return;
+    enc.threat = clamp(enc.threat + x, 0, enc.max);
+    if (enc.threat >= enc.max) mountainStrike(trail, run, enc, rnd2, events);
+  }
+  function tickDrift(trail, run, enc, dt, rnd2, events) {
+    const C = trail.CONFIG;
+    const node = enc.node;
+    if (node.rise) {
+      let rm = trail.agents.boon.api.riseMultiplier(ctxOf(trail, run, enc, rnd2));
+      if (node.enrage && enc.threat >= enc.max * 0.6) rm *= node.enrage;
+      if (enc.phaseMul) rm *= enc.phaseMul;
+      if (enc.need > 1 && enc.done >= enc.need - 1) rm *= C.CRUX_RISE_MULT;
+      rm = Math.min(rm, 2);
+      const oathR = trail.agents.expedition.api.oathRiseMult(run);
+      raiseThreat(trail, run, enc, node.rise * dt * rm * (run.weather ? run.weather.rise : 1) * oathR, rnd2, events);
+    }
+    if (node.gust && rnd2() < node.gust * dt) {
+      const gustAmt = 12 + Math.floor(rnd2() * 10);
+      const gout = trail.emit("hazard:gust", ctxOf(trail, run, enc, rnd2, { gust: gustAmt }));
+      raiseThreat(trail, run, enc, gout.threatDelta != null ? gout.threatDelta : gustAmt, rnd2, events);
+      if (events) events.push({ t: "gust", amount: gustAmt, banners: gout.banners || [] });
+    }
+    if (node.drain) addStamina(trail, run, enc, -node.drain * dt, events);
+    if (node.spike) {
+      enc.spikeT += dt;
+      while (enc.spikeT >= (node.spikeEvery || 3.5)) {
+        enc.spikeT -= node.spikeEvery || 3.5;
+        if (events) events.push({ t: "spike" });
+        raiseThreat(trail, run, enc, node.spike, rnd2, events);
+      }
+    }
+  }
+  function resolveAnswer(trail, run, enc, opts) {
+    const { correct, viaTimeout, rnd: rnd2 } = opts;
+    const events = opts.events || [];
+    let timeDelta = 0;
+    if (correct) {
+      run.right++;
+      enc.streak++;
+      run.bestStreak = Math.max(run.bestStreak, enc.streak);
+      if (enc.shieldLeft > 0) {
+        enc.shieldLeft--;
+        events.push({ t: "shield", left: enc.shieldLeft });
+      } else {
+        enc.done++;
+        if (enc.node.phase && !enc.phased && enc.done >= Math.ceil(enc.need / 2)) {
+          enc.phased = true;
+          enc.phaseMul = 1.5;
+          raiseThreat(trail, run, enc, 22, rnd2, events);
+          events.push({ t: "phase" });
+        }
+        if (enc.need > 1 && enc.done === enc.need - 1 && !enc.cruxTold) {
+          enc.cruxTold = true;
+          events.push({ t: "crux" });
+        }
+      }
+      const bout = trail.emit("answer:correct", ctxOf(trail, run, enc, rnd2));
+      if (bout.staminaDelta) addStamina(trail, run, enc, bout.staminaDelta, events);
+      if (bout.timeDelta) timeDelta = bout.timeDelta;
+      if (bout.threatDelta) raiseThreat(trail, run, enc, bout.threatDelta, rnd2, events);
+      if (bout.banners && bout.banners.length) events.push({ t: "banners", banners: bout.banners });
+    } else {
+      const wout = trail.emit("answer:wrong", ctxOf(trail, run, enc, rnd2, { viaTimeout: !!viaTimeout }));
+      if (!wout.keepStreak) {
+        enc.streak = 0;
+        enc.streakEase = 0;
+      }
+      if (wout.staminaCost > 0) addStamina(trail, run, enc, -wout.staminaCost, events);
+      else if (wout.staminaDelta) addStamina(trail, run, enc, wout.staminaDelta, events);
+      if (wout.threatDelta) raiseThreat(trail, run, enc, wout.threatDelta, rnd2, events);
+      if (wout.banners && wout.banners.length) events.push({ t: "banners", banners: wout.banners });
+      if (enc.node.streakGate) {
+        enc.done = Math.max(0, enc.done - 2);
+        events.push({ t: "knockback" });
+      }
+    }
+    return { events, timeDelta, cleared: enc.done >= enc.need };
+  }
+  function nextCombatNode(run) {
+    for (let i = run.nodeIdx; i < run.route.length; i++) {
+      const k = run.route[i].kind;
+      if (k !== "rest" && k !== "shrine" && k !== "tale") return run.route[i];
+    }
+    return null;
+  }
+  function applyTaleFx(trail, run, fx, opts = {}) {
+    if (!fx) return;
+    if (fx.stam) addStamina(trail, run, opts.enc || null, fx.stam, opts.events);
+    if (fx.relic && opts.grantRelic) opts.grantRelic();
+    if (fx.draftNext) {
+      run.freeDraft = true;
+      run.freeDraftFrom = "tale";
+    }
+    if (fx.threatNext) {
+      const n = nextCombatNode(run);
+      if (n) n.startThreat = Math.min(90, (n.startThreat || 0) + fx.threatNext);
+    }
+    if (fx.easeNext) {
+      const m = nextCombatNode(run);
+      if (m && m.need) m.need = Math.max(2, m.need - fx.easeNext);
+    }
+  }
+  function simulatePitchNode(trail, node, opts = {}) {
+    const C = trail.CONFIG;
+    const rnd2 = seededRng(opts.seed || 1);
+    const run = blankRun({
+      boons: opts.boons || [],
+      relics: opts.relics || [],
+      weather: opts.weather || null,
+      stamina: opts.stamina != null ? opts.stamina : C.STAM_MAX,
+      nodeIdx: opts.nodeIdx || 0
+    });
+    const enc = blankEnc(node, { threat: node.startThreat || 0 });
+    const steps = [];
+    let strikes = 0;
+    const evts = [];
+    const drain = (step) => {
+      for (const e of evts) {
+        if (e.t === "strike") {
+          if (!e.blocked) strikes++;
+          steps.push({ kind: "strike", blocked: e.blocked, hit: e.hit, banners: e.banners || [] });
+        } else if (step) {
+          if (e.t === "banners" && e.banners) step.banners.push(...e.banners);
+          if (e.t === "gust" && e.banners) step.banners.push(...e.banners);
+          if (e.t === "shield") step.shield = e.left;
+          if (e.t === "phase") step.banners.push({ title: "The slope lets go", sub: "it releases all at once" });
+          if (e.t === "knockback") step.banners.push({ title: "Knocked back", sub: "you slide down the ridge" });
+        }
+      }
+      evts.length = 0;
+    };
+    const pe = trail.emit("pitch:enter", ctxOf(trail, run, enc, rnd2));
+    if (pe.staminaDelta) addStamina(trail, run, enc, pe.staminaDelta, evts);
+    drain(null);
+    const start = { stamina: run.stamina, threat: Math.round(enc.threat), banners: pe.banners || [] };
+    const answers = (opts.answers || []).map(
+      (a) => typeof a === "boolean" ? { correct: a, viaTimeout: false } : a
+    );
+    const dps = opts.secondsPerQuestion || 0;
+    for (let i = 0; i < answers.length && run.stamina > 0; i++) {
+      const a = answers[i];
+      if (dps) tickDrift(trail, run, enc, dps, rnd2, evts);
+      drain(null);
+      if (run.stamina <= 0) break;
+      const qs = trail.emit("question:start", ctxOf(trail, run, enc, rnd2));
+      if (qs.staminaDelta) addStamina(trail, run, enc, qs.staminaDelta, evts);
+      const step = { n: i + 1, correct: a.correct, viaTimeout: !!a.viaTimeout, banners: [] };
+      if (qs.banners && qs.banners.length) step.banners.push(...qs.banners);
+      run.seen++;
+      resolveAnswer(trail, run, enc, { correct: a.correct, viaTimeout: !!a.viaTimeout, rnd: rnd2, events: evts });
+      drain(step);
+      step.stamina = run.stamina;
+      step.threat = Math.round(enc.threat);
+      step.streak = enc.streak;
+      step.done = enc.done;
+      steps.push(step);
+      if (enc.done >= enc.need) {
+        step.cleared = true;
+        break;
+      }
+    }
+    const cleared = enc.done >= enc.need;
+    let clearRestore = 0;
+    if (cleared) {
+      const co = trail.emit("pitch:clear", ctxOf(trail, run, enc, rnd2));
+      clearRestore = (co.clearBonus || 0) + trail.pitchRestore(node, "clear", run);
+      addStamina(trail, run, null, clearRestore, null);
+    }
+    return {
+      node,
+      start,
+      steps,
+      strikes,
+      cleared,
+      final: {
+        stamina: run.stamina,
+        threat: Math.round(enc.threat),
+        streak: enc.streak,
+        bestStreak: run.bestStreak,
+        done: enc.done,
+        need: enc.need,
+        clearRestore,
+        survived: run.stamina > 0
+      }
+    };
+  }
+  function questionOutcome(accuracy, timeoutRate, rnd2) {
+    const r = rnd2();
+    if (r < accuracy) return { correct: true, viaTimeout: false };
+    return { correct: false, viaTimeout: r < accuracy + timeoutRate };
+  }
+  var RELIC_DROP_KINDS = ["whiteout", "thinair", "icefall", "tempest", "closing", "avalanche", "frozentitan"];
+  function clearPitch(trail, run, enc, opts = {}) {
+    const rnd2 = opts.rnd || Math.random;
+    run.nodeCleared++;
+    const cout = trail.emit("pitch:clear", ctxOf(trail, run, enc, rnd2));
+    const clutch = run.stamina > 0 && run.stamina <= 25;
+    if (clutch) run.clutch = (run.clutch || 0) + 1;
+    const restore = trail.pitchRestore(enc.node, "clear", run) + (cout.clearBonus || 0);
+    addStamina(trail, run, null, restore, null);
+    let relic = false;
+    if (RELIC_DROP_KINDS.indexOf(enc.node.kind) >= 0 && rnd2() < (run.weather && run.weather.name === "Dead of Night" ? 0.5 : 0.3)) {
+      relic = true;
+      if (opts.grantRelic) opts.grantRelic();
+    }
+    return { restore, clutch, relic };
+  }
+  function playClimb(trail, opts = {}) {
+    const C = trail.CONFIG;
+    const rnd2 = seededRng(opts.seed != null ? opts.seed : 1);
+    const accuracy = opts.accuracy != null ? opts.accuracy : 0.82;
+    const timeoutRate = opts.timeoutRate != null ? opts.timeoutRate : 0.06;
+    const answerSeconds = opts.answerSeconds != null ? opts.answerSeconds : 7;
+    const draftPolicy = opts.draftPolicy || "none";
+    const talePolicy = opts.talePolicy || "skip";
+    const run = blankRun({ weather: opts.weather || null, stamina: C.STAM_MAX });
+    run.route = trail.buildRoute(rnd2, opts.topic || null);
+    const grantRelic = () => trail.economy.grantRelic({ run, config: C, rnd: rnd2, banner: null, renderHeld: null });
+    for (const id of opts.fixedBoons || []) {
+      run.boons.add(id);
+      trail.agents.boon.api.onAcquire(ctxOf(trail, run, null, rnd2), id);
+    }
+    const takeDraft = (enc) => {
+      if (draftPolicy === "none") return;
+      if (run.boons.size >= C.MAX_BOONS) return;
+      const picks = trail.agents.boon.api.pickDraft(ctxOf(trail, run, enc, rnd2), rnd2);
+      const real = (picks || []).filter((p) => p !== "_stamina");
+      if (real.length) {
+        run.boons.add(real[0]);
+        trail.agents.boon.api.onAcquire(ctxOf(trail, run, enc, rnd2), real[0]);
+      }
+    };
+    let act3Entry = null;
+    let strikes = 0;
+    let questions = 0;
+    for (let ni = 0; ni < run.route.length; ni++) {
+      const node = run.route[ni];
+      run.nodeIdx = ni;
+      if (node.act === 3 && act3Entry === null) act3Entry = run.stamina;
+      if (node.kind === "rest") {
+        addStamina(trail, run, null, trail.pitchRestore(node, "rest", run), null);
+        const scholarDraft = run.freeDraft;
+        if (scholarDraft) {
+          run.freeDraft = false;
+          run.freeDraftFrom = null;
+        }
+        if (draftPolicy !== "none" || scholarDraft) takeDraft(null);
+        continue;
+      }
+      if (node.kind === "shrine") {
+        if (opts.shrinePolicy === "offer") {
+          addStamina(trail, run, null, -12, null);
+          grantRelic();
+        }
+        continue;
+      }
+      if (node.kind === "tale") {
+        if (talePolicy === "skip") continue;
+        const keeper = trail.agents.keeper.api;
+        const tale = keeper.drawTale(rnd2, node.act || 1, run.usedTales);
+        run.usedTales.push(tale.id);
+        const choice = tale.choices[talePolicy === "second" ? 1 : 0] || tale.choices[0];
+        const out = keeper.resolveChoice(choice, rnd2);
+        applyTaleFx(trail, run, out.fx, { grantRelic });
+        continue;
+      }
+      const enc = blankEnc(node, { threat: entryThreat(node) });
+      run.altitude = node.alt || run.altitude;
+      const evts = [];
+      const pe = trail.emit("pitch:enter", ctxOf(trail, run, enc, rnd2));
+      if (pe.staminaDelta) addStamina(trail, run, enc, pe.staminaDelta, evts);
+      const cap = opts.maxQuestionsPerPitch || node.need * 3 + 10;
+      let asked = 0;
+      while (run.stamina > 0 && enc.done < enc.need && asked < cap) {
+        asked++;
+        questions++;
+        tickDrift(trail, run, enc, answerSeconds, rnd2, evts);
+        if (run.stamina <= 0) break;
+        const qs = trail.emit("question:start", ctxOf(trail, run, enc, rnd2));
+        if (qs.staminaDelta) addStamina(trail, run, enc, qs.staminaDelta, evts);
+        const o = questionOutcome(accuracy, timeoutRate, rnd2);
+        run.seen++;
+        resolveAnswer(trail, run, enc, { correct: o.correct, viaTimeout: o.viaTimeout, rnd: rnd2, events: evts });
+      }
+      strikes += evts.filter((e) => e.t === "strike" && !e.blocked).length;
+      if (run.stamina <= 0 || enc.done < enc.need) {
+        return {
+          summited: false,
+          fell: true,
+          stamina: run.stamina,
+          act3Entry,
+          strikes,
+          seen: run.seen,
+          right: run.right,
+          bestStreak: run.bestStreak,
+          nodeCleared: run.nodeCleared,
+          altitude: run.altitude,
+          questions
+        };
+      }
+      clearPitch(trail, run, enc, { rnd: rnd2, grantRelic });
+      if (node.kind === "summit") {
+        run.summited = true;
+        return {
+          summited: true,
+          fell: false,
+          stamina: run.stamina,
+          act3Entry,
+          strikes,
+          seen: run.seen,
+          right: run.right,
+          bestStreak: run.bestStreak,
+          nodeCleared: run.nodeCleared,
+          altitude: run.altitude,
+          questions
+        };
+      }
+      const spoils = trail.agents.expedition.api.spoilsDraftEligible(node, "clear") && rnd2() < 0.42;
+      const promised = run.freeDraft;
+      if (promised) {
+        run.freeDraft = false;
+        run.freeDraftFrom = null;
+      }
+      if (node.kind === "gate" || spoils || promised) takeDraft(enc);
+    }
+    return {
+      summited: false,
+      fell: run.stamina <= 0,
+      stamina: run.stamina,
+      act3Entry,
+      strikes,
+      seen: run.seen,
+      right: run.right,
+      bestStreak: run.bestStreak,
+      nodeCleared: run.nodeCleared,
+      altitude: run.altitude,
+      questions
+    };
+  }
 
   // src/agents/hazard-warden.js
   var hazard_warden_exports = {};
@@ -99,6 +578,7 @@ var TrailBundle = (() => {
     nStorm: () => nStorm,
     nSummit: () => nSummit,
     nSwitch: () => nSwitch,
+    nTale: () => nTale,
     nTempest: () => nTempest,
     nThinAir: () => nThinAir,
     nTraverse: () => nTraverse,
@@ -138,7 +618,8 @@ var TrailBundle = (() => {
     rockfall: "#c2a178",
     verglas: "#8fd0e8",
     shrine: "#c9a86a",
-    rest: "#d89b52"
+    rest: "#d89b52",
+    tale: "#b9a2d8"
   };
   function foeColor(kind) {
     return FOE_COLORS[kind] || "#8a97ab";
@@ -696,6 +1177,18 @@ var TrailBundle = (() => {
       alt
     };
   }
+  function nTale(alt) {
+    return {
+      kind: "tale",
+      icon: "\u{1F5FF}",
+      title: "Story Cairn",
+      blurb: "A cairn taller than the trail needs, stacked by hands that wanted it noticed. Something waits here besides the wind, and it will ask you to choose.",
+      need: 0,
+      restore: 0,
+      boon: false,
+      alt
+    };
+  }
   function nCorniceRidge(need, alt) {
     return {
       kind: "corniceridge",
@@ -814,7 +1307,8 @@ var TrailBundle = (() => {
       frozentitan: "\u{1F9CA}",
       rockfall: "\u{1F94C}",
       verglas: "\u{1FA9E}",
-      shrine: "\u26E9\uFE0F"
+      shrine: "\u26E9\uFE0F",
+      tale: "\u{1F5FF}"
     };
     return m[kind] || "\u26F0\uFE0F";
   }
@@ -825,6 +1319,7 @@ var TrailBundle = (() => {
     if (node.kind === "gate") return node.domain ? "Weakest domain \u2014 " + node.domain : "Gatekeeper duel";
     if (node.kind === "rest") return "Catch your breath, then draft a boon";
     if (node.kind === "shrine") return "Leave an offering for a relic, or pass by";
+    if (node.kind === "tale") return "A trail tale waits \u2014 hear it out, then choose";
     if (node.kind === "serac") return "Fast and punishing \u2014 " + n + " before the ice lets go";
     if (node.kind === "summit") return "The final pitch \u2014 " + n + " to top out";
     if (node.kind === "whiteout") return "Move fast \u2014 " + n + " before the cloud closes";
@@ -880,83 +1375,21 @@ var TrailBundle = (() => {
     rockfall: "nRockfall",
     verglas: "nVerglas"
   };
-  function seededRng(seed) {
-    let a = seed >>> 0 || 1;
-    return function() {
-      a |= 0;
-      a = a + 1831565813 | 0;
-      let t = Math.imul(a ^ a >>> 15, 1 | a);
-      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
-      return ((t ^ t >>> 14) >>> 0) / 4294967296;
-    };
-  }
-  function clamp(v, lo, hi) {
+  var seededRng2 = seededRng;
+  function clamp2(v, lo, hi) {
     return Math.max(lo, Math.min(hi, v));
   }
   function createSandboxSteward() {
     const api = {
       factories: NODE_FACTORIES,
-      seededRng,
+      seededRng: seededRng2,
       /** All pitch kinds this sandbox can spawn. */
       pitchKinds() {
         return Object.keys(NODE_FACTORIES);
       },
-      /** Build a throwaway RUN shaped like index.html's freshRun (minimal). */
-      blankRun(over = {}) {
-        const run = {
-          topic: over.topic || null,
-          route: [],
-          nodeIdx: over.nodeIdx || 0,
-          prog: over.prog || {},
-          locked: new Set(over.locked || []),
-          mastered: new Set(over.mastered || []),
-          boons: new Set(over.boons || []),
-          flares: over.flares || 0,
-          stamina: over.stamina != null ? over.stamina : 100,
-          altitude: over.altitude || 1600,
-          seen: 0,
-          right: 0,
-          bestStreak: 0,
-          nodeCleared: 0,
-          summited: false,
-          stones: {},
-          recovered: 0,
-          weather: over.weather || null,
-          relics: new Set(over.relics || []),
-          relicLog: [],
-          recent: []
-        };
-        if (run.boons.has("flare")) run.flares = run.flares || 2;
-        return run;
-      },
-      /** Build a throwaway ENC shaped like index.html's encounter state. */
-      blankEnc(node, over = {}) {
-        return {
-          node,
-          need: node.need,
-          done: 0,
-          threat: over.threat != null ? over.threat : node.startThreat || 0,
-          max: node.max || 100,
-          lifelineUsed: false,
-          firstMissUsed: false,
-          firstTimeoutUsed: false,
-          rallyUsed: false,
-          bulwarkUsed: false,
-          streakEase: 0,
-          cairnBank: 0,
-          missCount: 0,
-          spikeT: 0,
-          shieldLeft: node.shield || 0,
-          easeMul: 1,
-          timeMul: 1,
-          phaseMul: 1,
-          phased: false,
-          luckyUsed: false,
-          cruxTold: false,
-          streak: 0,
-          lastId: -1
-        };
-      },
+      /** Throwaway RUN/ENC state comes straight from the Climb Engine. */
+      blankRun,
+      blankEnc,
       /** Spawn any pitch node via the real Hazard Warden factories, scaled to an act. */
       spawnNode(trail, opts = {}) {
         const H2 = trail.agents.hazard.api;
@@ -965,7 +1398,7 @@ var TrailBundle = (() => {
         if (!fnName || !H2[fnName]) throw new Error("Unknown pitch kind: " + kind);
         const need = opts.need != null ? opts.need : 4;
         const alt = opts.alt != null ? opts.alt : 2e3;
-        const act = clamp(opts.act || 1, 1, 3);
+        const act = clamp2(opts.act || 1, 1, 3);
         let node;
         if (kind === "gate") node = H2.nGate(need, alt, opts.domain || null);
         else node = H2[fnName](need, alt);
@@ -982,22 +1415,23 @@ var TrailBundle = (() => {
         });
         const enc = api.blankEnc(api.spawnNode(trail, { kind: "switchback" }));
         const ctx = trail.makeCtx(run, enc);
-        const rnd2 = seededRng(opts.seed || 1);
+        const rnd2 = seededRng2(opts.seed || 1);
         return trail.agents.boon.api.pickDraft(ctx, rnd2, opts.count || 3);
       },
       /**
-       * Simulate a single pitch by driving the real hook bus.
+       * Simulate a single pitch by driving the real hook bus — spawns the node
+       * here, then hands off to the Climb Engine (the same code the browser
+       * runs). Since the engine unification this includes full hazard drift:
+       * gusts, spikes, and drain now count when secondsPerQuestion > 0.
        *
        * @param {object} trail  kernel handle (window.Trail)
        * @param {object} opts
        *   kind, act, need, boons[], relics[], weather (object), seed,
        *   answers: array of booleans OR {correct, viaTimeout},
-       *   secondsPerQuestion: passive threat drift applied between answers (0 = off)
+       *   secondsPerQuestion: passive hazard seconds between answers (0 = off)
        * @returns {{node, start, steps, final, cleared, strikes}}
        */
       simulatePitch(trail, opts = {}) {
-        const CONFIG2 = trail.CONFIG;
-        const rnd2 = seededRng(opts.seed || 1);
         const node = api.spawnNode(trail, {
           kind: opts.kind,
           need: opts.need,
@@ -1005,134 +1439,7 @@ var TrailBundle = (() => {
           alt: opts.alt,
           domain: opts.domain
         });
-        const run = api.blankRun({
-          boons: opts.boons || [],
-          relics: opts.relics || [],
-          weather: opts.weather || null,
-          stamina: opts.stamina != null ? opts.stamina : CONFIG2.STAM_MAX,
-          nodeIdx: opts.nodeIdx || 0
-        });
-        const enc = api.blankEnc(node, { threat: node.startThreat || 0 });
-        const steps = [];
-        let strikes = 0;
-        const ctx = (extra) => trail.makeCtx(run, enc, { rnd: rnd2, ...extra || {} });
-        const addStamina = (x) => {
-          run.stamina = clamp(run.stamina + x, 0, CONFIG2.STAM_MAX);
-        };
-        const raiseThreat = (x) => {
-          enc.threat = clamp(enc.threat + x, 0, enc.max);
-          if (enc.threat >= enc.max) {
-            enc.threat = Math.max(0, enc.threat - CONFIG2.THREAT_RESET);
-            const sout = trail.emit("mountain:strike", ctx());
-            if (sout.blocked) {
-              steps.push({ kind: "strike", blocked: true, banners: sout.banners || [] });
-              return;
-            }
-            let hit = sout.hit != null ? sout.hit : node.hit;
-            if (run.relics.has("carabiner") && !enc.luckyUsed) {
-              enc.luckyUsed = true;
-              hit = Math.round(hit * 0.5);
-            }
-            if (run.relics.has("rope") && node.kind === "gate") hit = Math.round(hit * 0.75);
-            addStamina(-hit);
-            strikes++;
-            steps.push({ kind: "strike", blocked: false, hit, banners: sout.banners || [] });
-          }
-        };
-        const weatherRise = run.weather ? run.weather.rise : 1;
-        const driftPerSec = opts.secondsPerQuestion || 0;
-        const applyDrift = () => {
-          if (!driftPerSec || !node.rise) return;
-          let rm = trail.agents.boon.api.riseMultiplier(ctx());
-          if (node.enrage && enc.threat >= enc.max * 0.6) rm *= node.enrage;
-          if (enc.phaseMul) rm *= enc.phaseMul;
-          if (enc.need > 1 && enc.done >= enc.need - 1) rm *= CONFIG2.CRUX_RISE_MULT;
-          rm = Math.min(rm, 2);
-          raiseThreat(node.rise * rm * weatherRise * driftPerSec);
-        };
-        const pe = trail.emit("pitch:enter", ctx());
-        if (pe.staminaDelta) addStamina(pe.staminaDelta);
-        const start = { stamina: run.stamina, threat: Math.round(enc.threat), banners: pe.banners || [] };
-        const answers = (opts.answers || []).map(
-          (a) => typeof a === "boolean" ? { correct: a, viaTimeout: false } : a
-        );
-        for (let i = 0; i < answers.length && run.stamina > 0; i++) {
-          const a = answers[i];
-          applyDrift();
-          const qs = trail.emit("question:start", ctx());
-          if (qs.staminaDelta) addStamina(qs.staminaDelta);
-          const step = { n: i + 1, correct: a.correct, viaTimeout: !!a.viaTimeout, banners: [] };
-          if (qs.banners && qs.banners.length) step.banners.push(...qs.banners);
-          if (a.correct) {
-            enc.streak++;
-            run.bestStreak = Math.max(run.bestStreak, enc.streak);
-            if (enc.shieldLeft > 0) {
-              enc.shieldLeft--;
-              step.shield = enc.shieldLeft;
-            } else {
-              enc.done++;
-              if (node.phase && !enc.phased && enc.done >= Math.ceil(enc.need / 2)) {
-                enc.phased = true;
-                enc.phaseMul = 1.5;
-                raiseThreat(22);
-                step.banners.push({ title: "The slope lets go", sub: "it releases all at once" });
-              }
-            }
-            const out = trail.emit("answer:correct", ctx());
-            if (out.staminaDelta) addStamina(out.staminaDelta);
-            if (out.threatDelta) raiseThreat(out.threatDelta);
-            if (out.banners) step.banners.push(...out.banners);
-            step.threatDelta = out.threatDelta || 0;
-          } else {
-            const out = trail.emit("answer:wrong", ctx({ viaTimeout: a.viaTimeout }));
-            if (!out.keepStreak) {
-              enc.streak = 0;
-              enc.streakEase = 0;
-            }
-            if (out.staminaCost > 0) addStamina(-out.staminaCost);
-            else if (out.staminaDelta) addStamina(out.staminaDelta);
-            if (out.threatDelta) raiseThreat(out.threatDelta);
-            if (out.banners) step.banners.push(...out.banners);
-            if (node.streakGate) {
-              enc.done = Math.max(0, enc.done - 2);
-              step.banners.push({ title: "Knocked back", sub: "you slide down the ridge" });
-            }
-            step.threatDelta = out.threatDelta || 0;
-          }
-          step.stamina = run.stamina;
-          step.threat = Math.round(enc.threat);
-          step.streak = enc.streak;
-          step.done = enc.done;
-          steps.push(step);
-          if (enc.done >= enc.need) {
-            step.cleared = true;
-            break;
-          }
-        }
-        const cleared = enc.done >= enc.need;
-        let clearRestore = 0;
-        if (cleared) {
-          const co = trail.emit("pitch:clear", ctx());
-          clearRestore = (co.clearBonus || 0) + trail.pitchRestore(node, "clear", run);
-          addStamina(clearRestore);
-        }
-        return {
-          node,
-          start,
-          steps,
-          strikes,
-          cleared,
-          final: {
-            stamina: run.stamina,
-            threat: Math.round(enc.threat),
-            streak: enc.streak,
-            bestStreak: run.bestStreak,
-            done: enc.done,
-            need: enc.need,
-            clearRestore,
-            survived: run.stamina > 0
-          }
-        };
+        return simulatePitchNode(trail, node, opts);
       },
       /**
        * Grade a set line the way a guidebook would: Monte Carlo the whole
@@ -1150,7 +1457,7 @@ var TrailBundle = (() => {
         let summits = 0;
         let endSum = 0;
         for (let r = 0; r < runs; r++) {
-          const rnd2 = seededRng((opts.seed || 1) * 7919 + r);
+          const rnd2 = seededRng2((opts.seed || 1) * 7919 + r);
           let stamina = CONFIG2.STAM_MAX;
           let alive = true;
           for (let i = 0; i < route.length && alive; i++) {
@@ -1266,7 +1573,8 @@ var TrailBundle = (() => {
     { id: "daily_ridge", ic: "\u{1F305}", name: "Ridge Walker", desc: "Complete Today's Ridge." },
     { id: "oath_summit", ic: "\u{1F91D}", name: "Bound", desc: "Summit with an expedition oath sworn." },
     { id: "grade_s", ic: "\u{1F48E}", name: "Alpine Grade", desc: "Earn an S grade on a summit run." },
-    { id: "first_ascent", ic: "\u26CF\uFE0F", name: "First Ascent", desc: "Summit a set line from the guidebook." }
+    { id: "first_ascent", ic: "\u26CF\uFE0F", name: "First Ascent", desc: "Summit a set line from the guidebook." },
+    { id: "tale_5", ic: "\u{1F5FF}", name: "Keeper's Audience", desc: "Face five trail tales at the story cairns." }
   ];
   var HARD_KINDS = /* @__PURE__ */ new Set([
     "void",
@@ -1336,7 +1644,8 @@ var TrailBundle = (() => {
     return a;
   }
   function buildRoute(rnd2, topic, config, hazards = hazard_warden_exports) {
-    const { scaleNode: scaleNode2, nSwitch: nSwitch2, nGate: nGate2, nRest: nRest2, nShrine: nShrine2, nSerac: nSerac2, nSummit: nSummit2 } = hazards;
+    const { scaleNode: scaleNode2, nSwitch: nSwitch2, nGate: nGate2, nRest: nRest2, nShrine: nShrine2, nTale: nTale2, nSerac: nSerac2, nSummit: nSummit2 } = hazards;
+    const tales = config.MODS.tales !== false && typeof nTale2 === "function";
     let alt = 1600;
     const step = (g) => {
       alt += g + Math.floor(rnd2() * 70);
@@ -1358,6 +1667,7 @@ var TrailBundle = (() => {
       A(fn(nd(3), step(220)), 1);
     });
     A(pick(T2, 1)[0](nd(4), step(240)), 1);
+    if (tales) A(nTale2(step(90)), 1);
     A(nGate2(nd(4), step(235), null), 1);
     A(nRest2(step(150), config), 1);
     pick(T2, 2).forEach((fn) => {
@@ -1373,6 +1683,7 @@ var TrailBundle = (() => {
     });
     A(nGate2(nd(5), step(315), null), 3);
     A(nRest2(step(140), config), 3);
+    if (tales) A(nTale2(step(95)), 3);
     A(nSerac2(5, step(320)), 3);
     A(nSummit2(6, step(360)), 3);
     return r;
@@ -2496,6 +2807,257 @@ var TrailBundle = (() => {
     };
   }
 
+  // src/agents/cairn-keeper.js
+  var TALES = [
+    {
+      id: "ghostrope",
+      ic: "\u{1FAA2}",
+      title: "The Ghost Rope",
+      minAct: 1,
+      text: "A fixed line hangs down the face, anchors rusted, sheath bleached by more seasons than anyone has counted. Whoever set it never came back for it. It would save you an hour of honest climbing \u2014 if it holds.",
+      choices: [
+        {
+          ic: "\u{1F9D7}",
+          label: "Trust the old line",
+          desc: "Climb the rope. If it holds you save real strength. If it doesn\u2019t\u2026",
+          gamble: {
+            p: 0.6,
+            win: { stam: 16 },
+            winText: "The anchors creak but hold. You top the pitch with strength to spare.",
+            lose: { stam: -12 },
+            loseText: "The sheath parts at the second anchor. You catch yourself, barely, and climb the rest the hard way."
+          }
+        },
+        {
+          ic: "\u{1F97E}",
+          label: "Break your own trail",
+          desc: "Ignore the rope and read the rock yourself. The next pitch asks one less of you.",
+          fx: { easeNext: 1 },
+          after: "Slower, but every hold is yours now. You know this ground before the mountain can ask about it."
+        }
+      ]
+    },
+    {
+      id: "portercache",
+      ic: "\u{1F392}",
+      title: "The Lost Porter\u2019s Cache",
+      minAct: 1,
+      text: "A pack frame juts from the snow off the trail, canvas gone stiff, straps still buckled. Someone carried this high and set it down meaning to come back. The snow says that was a long time ago.",
+      choices: [
+        {
+          ic: "\u26CF\uFE0F",
+          label: "Dig it out",
+          desc: "Cost: 8 stamina. Whatever was worth carrying up here is yours now.",
+          fx: { stam: -8, relic: true },
+          after: "The digging costs you, but the cache was packed by someone who knew the mountain."
+        },
+        {
+          ic: "\u{1F4D3}",
+          label: "Mark it and move on",
+          desc: "Note it in the ledger for whoever comes next. Keep your pace. +5 stamina.",
+          fx: { stam: 5 },
+          after: "You stack three stones over the frame and keep moving. The rhythm of the climb carries you."
+        }
+      ]
+    },
+    {
+      id: "keeper",
+      ic: "\u{1F5FF}",
+      title: "The Keeper of Cairns",
+      minAct: 1,
+      text: 'An old climber sits beside the cairn as if the two were built together, restacking its stones by feel. "Every climber who passes leaves something," the Keeper says. "Most leave what they think they know. Recite, or rest. Either is honest."',
+      choices: [
+        {
+          ic: "\u{1F5E3}\uFE0F",
+          label: "Recite what you know",
+          desc: "Give the Keeper your ledger, line by line. A boon is promised at the next camp.",
+          fx: { draftNext: true },
+          after: 'The Keeper listens without a word, then nods once. "The next fire you sit at will owe you something."'
+        },
+        {
+          ic: "\u{1F932}",
+          label: "Admit what you don\u2019t",
+          desc: "Name the trails where you are thinnest. Honesty rests easy. +10 stamina.",
+          fx: { stam: 10 },
+          after: '"Good," says the Keeper. "The mountain only punishes the ones who lie about it." You leave lighter than you came.'
+        }
+      ]
+    },
+    {
+      id: "signalmirror",
+      ic: "\u{1FA9E}",
+      title: "The Signal Mirror",
+      minAct: 1,
+      text: "Something glints on a shelf above the route \u2014 glass or steel, angled like it was left to be seen. It is a hard scramble off the line to reach it, over rock the guidebook never graded.",
+      choices: [
+        {
+          ic: "\u{1F9D7}",
+          label: "Climb to it",
+          desc: "Off-route and ungraded. It might be worth the detour. It might just be far.",
+          gamble: {
+            p: 0.55,
+            win: { relic: true },
+            winText: "A signal kit, oiled and wrapped, left by someone who planned to need it. Now it\u2019s yours.",
+            lose: { stam: -14 },
+            loseText: "A sardine tin, polished by wind. The scramble back down costs more than the shine was worth."
+          }
+        },
+        {
+          ic: "\u{1F463}",
+          label: "Stay on the line",
+          desc: "Shiny things put climbers in the ledger\u2019s margins. Keep moving. +5 stamina.",
+          fx: { stam: 5 },
+          after: "You keep your feet on the route and your eyes on the next hold. The glint watches you go."
+        }
+      ]
+    },
+    {
+      id: "echochamber",
+      ic: "\u{1F4E3}",
+      title: "The Echo Chamber",
+      minAct: 2,
+      text: "The couloir narrows until the walls hold your breathing and hand it back to you. Guides say the mountain answers anyone who calls their name here. They disagree about what it answers with.",
+      choices: [
+        {
+          ic: "\u{1F5E3}\uFE0F",
+          label: "Call your name",
+          desc: "Let the mountain answer. Guides disagree on what comes back.",
+          gamble: {
+            p: 0.5,
+            win: { stam: 12 },
+            winText: "Your own voice returns steady and doubled, like a rope team you didn\u2019t know you had. The walls feel wider going out.",
+            lose: { threatNext: 12 },
+            loseText: "Something else answers \u2014 lower, and from above. It knows the route ahead of you, and now it is waiting on it."
+          }
+        },
+        {
+          ic: "\u{1F92B}",
+          label: "Pass in silence",
+          desc: "Listen instead. The walls teach you the ground ahead \u2014 the next pitch asks one less.",
+          fx: { easeNext: 1 },
+          after: "You move through on quiet feet, and the couloir tells you everything it has heard about the pitch above."
+        }
+      ]
+    },
+    {
+      id: "bivouac",
+      ic: "\u26FA",
+      title: "Whiteout Bivouac",
+      minAct: 2,
+      text: "The cloud comes down the face like a lid closing, and an old bivouac ledge opens to your left \u2014 dry, walled, room for one. Weather like this passes. So does time, and the mountain keeps ahead of anyone who stands still.",
+      choices: [
+        {
+          ic: "\u{1F6CF}\uFE0F",
+          label: "Wait it out",
+          desc: "+18 stamina \u2014 but the mountain gets ahead of you. The next pitch opens with 15 threat.",
+          fx: { stam: 18, threatNext: 15 },
+          after: "You wake to clear air and stiff legs. Somewhere above, the route has been rearranging itself without you."
+        },
+        {
+          ic: "\u{1F32B}\uFE0F",
+          label: "Push through the cloud",
+          desc: "Cost: 10 stamina. Arrive before the weather settles \u2014 the next pitch asks one less.",
+          fx: { stam: -10, easeNext: 1 },
+          after: "You climb inside the whiteout by feel and count. When it lifts, you are above it, and the pitch ahead never saw you coming."
+        }
+      ]
+    },
+    {
+      id: "grave",
+      ic: "\u{1FAA6}",
+      title: "The Unmarked Grave",
+      minAct: 2,
+      text: "A mound of stones off the trail, too deliberate for rockfall, too old for names. An ice axe stands at its head, the way climbers mark the ones who stopped climbing. The wind has been the only visitor for years.",
+      choices: [
+        {
+          ic: "\u{1FAA8}",
+          label: "Tend the cairn",
+          desc: "Cost: 10 stamina to restack the stones. What the climber carried passes to you.",
+          fx: { stam: -10, relic: true },
+          after: "You rebuild the mound stone by stone. Beneath the axe head, wrapped in oilcloth, something the mountain never claimed."
+        },
+        {
+          ic: "\u{1F3A9}",
+          label: "Pass in respect",
+          desc: "A nod, and onward. Some ledgers are closed. +8 stamina.",
+          fx: { stam: 8 },
+          after: "You touch the axe once and keep walking. Whoever they were, they would have told you to save your strength for the ridge."
+        }
+      ]
+    },
+    {
+      id: "oldledger",
+      ic: "\u{1F4D6}",
+      title: "The Old Guide\u2019s Ledger",
+      minAct: 3,
+      text: "Frozen into the ice at head height: a leather journal, pages fanned open mid-entry. The hand is steady until the last line, which is not. It is a record of an attempt on this exact route \u2014 one that ends above where you stand.",
+      choices: [
+        {
+          ic: "\u{1F9CA}",
+          label: "Read it where it froze",
+          desc: "Cost: 5 stamina in the cold. Their route notes earn you a promised boon at the next camp.",
+          fx: { stam: -5, draftNext: true },
+          after: 'The cold works into your gloves while you read. The last legible line: "the high camp fire owes the next one through." It meant you.'
+        },
+        {
+          ic: "\u26CF\uFE0F",
+          label: "Chip it free and carry it",
+          desc: "Cost: 8 stamina. A closed record belongs off this mountain \u2014 and the mountain pays its debts.",
+          fx: { stam: -8, relic: true },
+          after: "The ice gives it up an inch at a time. The weight in your pack feels less like paper and more like something owed being repaid."
+        }
+      ]
+    },
+    {
+      id: "thinbargain",
+      ic: "\u{1FAC1}",
+      title: "The Thin Air Bargain",
+      minAct: 3,
+      text: "Above the last camp the mountain finally speaks plainly, the way places do when the air runs out. What it says is a price. What it offers is the next pitch, already half-climbed. Nothing up here is free, and nothing is a trick either.",
+      choices: [
+        {
+          ic: "\u{1F4A8}",
+          label: "Pay in breath",
+          desc: "Cost: 15 stamina. The next pitch asks two fewer of you.",
+          fx: { stam: -15, easeNext: 2 },
+          after: "You give the mountain what it asked. The route above visibly relaxes, like a fist half-opening."
+        },
+        {
+          ic: "\u{1FAC0}",
+          label: "Keep your lungs",
+          desc: "Refuse the trade. The mountain takes offense \u2014 the next pitch opens with 10 threat.",
+          fx: { threatNext: 10 },
+          after: "You climb on with everything you came with. Above you, the route tightens back into a fist. Fair is fair."
+        }
+      ]
+    }
+  ];
+  function drawTale(rnd2, act, usedIds) {
+    const used = usedIds || [];
+    let pool = TALES.filter((t) => t.minAct <= (act || 1) && used.indexOf(t.id) < 0);
+    if (!pool.length) pool = TALES.filter((t) => t.minAct <= (act || 1));
+    if (!pool.length) pool = TALES;
+    return pool[Math.floor(rnd2() * pool.length)];
+  }
+  function resolveChoice(choice, rnd2) {
+    if (choice.gamble) {
+      const g = choice.gamble;
+      const won = rnd2() < g.p;
+      return { fx: (won ? g.win : g.lose) || {}, text: won ? g.winText : g.loseText, won };
+    }
+    return { fx: choice.fx || {}, text: choice.after || "", won: null };
+  }
+  function createCairnKeeper() {
+    return {
+      id: "cairn-keeper",
+      name: "Cairn Keeper",
+      role: "Trail tales \u2014 narrative choice encounters drawn at story cairns",
+      api: { TALES, drawTale, resolveChoice },
+      register() {
+      }
+    };
+  }
+
   // src/core/kernel.js
   var AGENT_META = [
     {
@@ -2548,6 +3110,13 @@ var TrailBundle = (() => {
       blurb: "Study coach. Domain readiness, mastery analytics, and what to review next \u2014 pure functions over run progress."
     },
     {
+      id: "cairn-keeper",
+      name: "Cairn Keeper",
+      icon: "\u{1F5FF}",
+      color: "#b9a2d8",
+      blurb: "Trail tales. Narrative choice encounters at story cairns \u2014 risks, bargains, and promises, deterministic from the run seed."
+    },
+    {
       id: "trail-chronicler",
       name: "Trail Chronicler",
       icon: "\u{1F4D3}",
@@ -2568,6 +3137,7 @@ var TrailBundle = (() => {
     const economy = createEconomyApi();
     const atlasAgent = createAtlasArtisan();
     const sageAgent = createSummitSage();
+    const keeperAgent = createCairnKeeper();
     const stewardAgent = createSandboxSteward();
     const chroniclerAgent = createTrailChronicler();
     const scheduler = createScheduler(CONFIG);
@@ -2616,6 +3186,7 @@ var TrailBundle = (() => {
       },
       atlas: atlasAgent,
       sage: sageAgent,
+      keeper: keeperAgent,
       steward: stewardAgent,
       chronicler: chroniclerAgent
     };
@@ -2639,6 +3210,7 @@ var TrailBundle = (() => {
       makeCtx,
       emit,
       economy,
+      engine: climb_engine_exports,
       buildRoute: (rnd2, topic) => buildRoute(rnd2, topic, CONFIG, hazard_warden_exports),
       weakestDomain: (run, bank) => weakestDomainLetter(run, bank),
       pitchRestore: (node, mode, run) => pitchRestore(node, mode, run, CONFIG),

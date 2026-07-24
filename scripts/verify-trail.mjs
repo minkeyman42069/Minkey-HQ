@@ -6,7 +6,7 @@ import { createKernel } from '../src/core/kernel.js';
 
 const Trail = createKernel();
 
-const required = ['boon', 'hazard', 'scholar', 'economy', 'expedition', 'atlas', 'sage', 'steward', 'chronicler'];
+const required = ['boon', 'hazard', 'scholar', 'economy', 'expedition', 'atlas', 'sage', 'keeper', 'steward', 'chronicler'];
 for (const k of required) {
   if (!Trail.agents[k]) throw new Error(`Missing agent: ${k}`);
 }
@@ -14,7 +14,7 @@ for (const k of required) {
 if (!Trail.economy?.grantRelic) throw new Error('Mountain economy API incomplete');
 if (Object.keys(Trail.agents.boon.api.catalog).length < 16) throw new Error('Boon catalog too small');
 if (Trail.agents.boon.api.duos.length < 8) throw new Error('Duo catalog too small');
-if (!Trail.meta || Trail.meta.length !== 9) throw new Error('Agent meta incomplete');
+if (!Trail.meta || Trail.meta.length !== 10) throw new Error('Agent meta incomplete');
 for (const m of Trail.meta) {
   if (!m.id || !m.name || !m.icon || !m.blurb) throw new Error(`Agent meta entry incomplete: ${m.id}`);
 }
@@ -58,6 +58,32 @@ const readiness = Trail.agents.sage.api.readiness(sageRun, sageBank, Trail.CONFI
 if (readiness.ready !== 1) throw new Error('Sage readiness miscount');
 if (!Trail.agents.sage.api.recommend(sageRun, sageBank, Trail.CONFIG).length) throw new Error('Sage produced no tips');
 
+// --- Cairn Keeper trail tales ---
+const keeper = Trail.agents.keeper.api;
+if (!Array.isArray(keeper.TALES) || keeper.TALES.length < 8) throw new Error('Tale deck too small');
+for (const t of keeper.TALES) {
+  if (!t.id || !t.title || !t.text || !Array.isArray(t.choices) || t.choices.length < 2) {
+    throw new Error(`Tale incomplete: ${t.id}`);
+  }
+  for (const c of t.choices) {
+    if (!c.label || !c.desc || (!c.fx && !c.gamble)) throw new Error(`Tale choice incomplete: ${t.id}`);
+  }
+}
+const seededTale = () => 0.42;
+const taleA = keeper.drawTale(seededTale, 1, []);
+const taleB = keeper.drawTale(seededTale, 1, []);
+if (taleA.id !== taleB.id) throw new Error('Tale draw is not deterministic');
+if (taleA.minAct > 1) throw new Error('Tale draw ignored act gate');
+const redraw = keeper.drawTale(seededTale, 1, [taleA.id]);
+if (redraw.id === taleA.id) throw new Error('Tale draw repeated a used tale');
+const gambleChoice = keeper.TALES.find((t) => t.choices.some((c) => c.gamble)).choices.find((c) => c.gamble);
+const won = keeper.resolveChoice(gambleChoice, () => 0);
+const lost = keeper.resolveChoice(gambleChoice, () => 0.999);
+if (won.won !== true || lost.won !== false) throw new Error('Gamble resolution broken');
+if (!won.text || !lost.text) throw new Error('Gamble outcomes need text');
+const routeWithTales = Trail.buildRoute(() => 0.5, null);
+if (routeWithTales.filter((n) => n.kind === 'tale').length !== 2) throw new Error('Route should hold two story cairns');
+
 // --- Sandbox Steward deterministic simulation ---
 const steward = Trail.agents.steward.api;
 if (steward.pitchKinds().length < 20) throw new Error('Steward exposes too few pitch kinds');
@@ -75,6 +101,44 @@ if (!simA.cleared) throw new Error('Steward sim should clear an easy pitch');
 if (simA.final.stamina !== simB.final.stamina) throw new Error('Steward sim is not deterministic');
 const draftPrev = steward.previewDraft(Trail, { owned: [], seed: 3, count: 3 });
 if (draftPrev.length !== 3) throw new Error('Steward previewDraft failed');
+
+// --- Climb Engine: one combat truth ---
+const eng = Trail.engine;
+if (!eng || typeof eng.resolveAnswer !== 'function' || typeof eng.playClimb !== 'function') {
+  throw new Error('Climb engine missing from kernel');
+}
+const half = () => 0.5;
+// Shielded pitch: a correct answer cracks a layer before progress counts.
+const shieldNode = steward.spawnNode(Trail, { kind: 'sealedface', act: 2, need: 3 });
+const sRun = eng.blankRun({});
+const sEnc = eng.blankEnc(shieldNode, { threat: eng.entryThreat(shieldNode) });
+sRun.seen++;
+eng.resolveAnswer(Trail, sRun, sEnc, { correct: true, viaTimeout: false, rnd: half });
+if (sEnc.shieldLeft !== shieldNode.shield - 1 || sEnc.done !== 0) throw new Error('Shield math broken');
+if (sRun.right !== 1) throw new Error('Engine should own run.right');
+// Streak-gate pitch: a miss slides progress back two.
+const knifeNode = steward.spawnNode(Trail, { kind: 'knife', act: 1, need: 4 });
+const kRun = eng.blankRun({});
+const kEnc = eng.blankEnc(knifeNode);
+kEnc.done = 3;
+kRun.seen++;
+eng.resolveAnswer(Trail, kRun, kEnc, { correct: false, viaTimeout: false, rnd: half });
+if (kEnc.done !== 1) throw new Error('Streak-gate knockback broken');
+// Entry threat: kind seeds merge with route-set startThreat.
+if (eng.entryThreat({ kind: 'serac' }) !== 25) throw new Error('Serac entry threat broken');
+if (eng.entryThreat({ kind: 'summit', startThreat: 33 }) !== 33) throw new Error('startThreat merge broken');
+// Headless whole climbs through the real bus: deterministic, skill-monotone.
+const climbA = eng.playClimb(Trail, { seed: 99, accuracy: 0.85 });
+const climbB = eng.playClimb(Trail, { seed: 99, accuracy: 0.85 });
+if (JSON.stringify(climbA) !== JSON.stringify(climbB)) throw new Error('playClimb is not deterministic');
+let summitsHi = 0;
+let summitsLo = 0;
+for (let i = 1; i <= 60; i++) {
+  if (eng.playClimb(Trail, { seed: i, accuracy: 0.95, timeoutRate: 0.02, answerSeconds: 5 }).summited) summitsHi++;
+  if (eng.playClimb(Trail, { seed: i, accuracy: 0.4, timeoutRate: 0.1 }).summited) summitsLo++;
+}
+if (summitsHi < 30) throw new Error(`Skilled headless climber should usually summit (got ${summitsHi}/60)`);
+if (summitsLo > 3) throw new Error(`Guessing should not summit (got ${summitsLo}/60)`);
 
 // --- Trail Chronicler telemetry ---
 const chron = Trail.agents.chronicler.api;

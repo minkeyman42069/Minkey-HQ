@@ -48,6 +48,7 @@ export const ACHIEVEMENTS = [
   { id: 'oath_summit', ic: '🤝', name: 'Bound', desc: 'Summit with an expedition oath sworn.' },
   { id: 'grade_s', ic: '💎', name: 'Alpine Grade', desc: 'Earn an S grade on a summit run.' },
   { id: 'first_ascent', ic: '⛏️', name: 'First Ascent', desc: 'Summit a set line from the guidebook.' },
+  { id: 'tale_5', ic: '🗿', name: "Keeper's Audience", desc: 'Face five trail tales at the story cairns.' },
 ];
 
 const HARD_KINDS = new Set([
@@ -123,7 +124,8 @@ function shuffle(a, rnd) {
  * @param {typeof defaultHazards} hazards
  */
 export function buildRoute(rnd, topic, config, hazards = defaultHazards) {
-  const { scaleNode, nSwitch, nGate, nRest, nShrine, nSerac, nSummit } = hazards;
+  const { scaleNode, nSwitch, nGate, nRest, nShrine, nTale, nSerac, nSummit } = hazards;
+  const tales = config.MODS.tales !== false && typeof nTale === 'function';
 
   let alt = 1600;
   const step = (g) => { alt += g + Math.floor(rnd() * 70); return alt; };
@@ -144,6 +146,7 @@ export function buildRoute(rnd, topic, config, hazards = defaultHazards) {
   A(nSwitch(nd(3), step(215)), 1);
   pick(tierPool(1).filter((fn) => fn !== nSwitch), 1).forEach((fn) => { A(fn(nd(3), step(220)), 1); });
   A(pick(T2, 1)[0](nd(4), step(240)), 1);
+  if (tales) A(nTale(step(90)), 1);
   A(nGate(nd(4), step(235), null), 1);
   A(nRest(step(150), config), 1);
 
@@ -159,6 +162,7 @@ export function buildRoute(rnd, topic, config, hazards = defaultHazards) {
   pick(T4, 3).forEach((fn) => { A(fn(nd(4), step(305)), 3); });
   A(nGate(nd(5), step(315), null), 3);
   A(nRest(step(140), config), 3);
+  if (tales) A(nTale(step(95)), 3);
   A(nSerac(5, step(320)), 3);
   A(nSummit(6, step(360)), 3);
 

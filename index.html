@@ -433,6 +433,13 @@ body.wx-clear-dawn #aurora{opacity:.08!important;}
   padding:13px 15px;font-size:13.5px;line-height:1.55;margin:14px 0;}
 .weakcard.clean{background:rgba(95,206,159,.1);border-color:var(--pine);}
 .weakcard b{color:var(--rust);} .weakcard.clean b{color:var(--pine);}
+.sagecard{display:none;background:rgba(127,212,160,.07);border:1px solid rgba(127,212,160,.4);border-radius:var(--r-sm);
+  padding:13px 15px;font-size:13.5px;line-height:1.55;margin:14px 0;}
+.sagecard .sg-hd{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#7fd4a0;margin-bottom:6px;}
+.sagecard ul{margin:4px 0 0;padding-left:18px;}
+.sagecard li{margin:3px 0;}
+.sagecard .sg-next{margin-top:9px;color:var(--mut);font-size:12.5px;}
+.sagecard .sg-next b{color:#7fd4a0;}
 .codebox{background:#081522;border:1px solid var(--line);border-radius:var(--r-sm);padding:13px;margin-top:6px;}
 .codebox .cl{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
 .code{font-family:'Space Mono',monospace;font-size:11.5px;color:var(--pine);word-break:break-all;
@@ -956,6 +963,7 @@ body.lastlegs::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:
         <div class="sect">Where each trail stands</div>
         <div id="ttbl"></div>
         <div class="weakcard" id="weakcard"></div>
+        <div class="sagecard" id="sagecard"></div>
         <div class="missedcard" id="missedCard"></div>
         <button class="copybtn" id="shareBtn" onclick="shareResult()">&#128228; Share your result</button>
       </div>
@@ -1027,7 +1035,7 @@ const BANK = [
 {cat:"Schedules of Reinforcement",dom:"C",q:"A slot-machine-style token board gives the client a reinforcer after 3, 7, 2, and 9 correct responses across trials — the requirement changes unpredictably. This schedule is:",a:["Variable ratio","Fixed ratio","Fixed interval","Continuous reinforcement"],c:0,e:"A <b>varying, unpredictable number of responses</b> before reinforcement is <b>variable ratio (VR)</b>, which produces steady, resistant responding. Fixed ratio uses a constant response requirement."},
 {cat:"Schedules of Reinforcement",dom:"C",q:"An RBT sets a timer for 2 minutes. The first correct response after each 2-minute interval earns a sticker. This schedule is:",a:["Fixed interval (FI 2-min)","Variable interval (VI 2-min)","Fixed ratio (FR 2)","Variable ratio (VR 2)"],c:0,e:"Reinforcement for the first response after a <b>fixed amount of time</b> is <b>fixed interval (FI)</b>. Variable interval would use unpredictable time periods; ratio schedules depend on response count."},
 {cat:"Schedules of Reinforcement",dom:"C",q:"A supervisor instructs the RBT to deliver praise on average every 4 minutes, but the actual interval varies from 2 to 6 minutes across the session. This schedule is:",a:["Variable interval (VI 4-min)","Fixed interval (FI 4-min)","Variable ratio (VR 4)","Noncontingent reinforcement"],c:0,e:"Reinforcement after a <b>varying amount of time</b> (around 4 minutes) is <b>variable interval (VI)</b>. Fixed interval would use identical time periods; ratio schedules depend on responses, not time."},
-{cat:"Schedules of Reinforcement",dom:"C",q:"While teaching a brand-new skill, the RBT delivers praise and a token after every correct response. This schedule is:",a:["Continuous reinforcement (CRF)","Fixed ratio (FR-1)","Variable ratio","Fixed interval"],c:0,e:"Reinforcing <b>every occurrence</b> during initial acquisition is <b>continuous reinforcement (CRF)</b>. Although FR-1 also delivers after each response, CRF is the standard term for 100% reinforcement during early teaching."},
+{cat:"Schedules of Reinforcement",dom:"C",q:"While teaching a brand-new skill, the RBT delivers praise and a token after every correct response. This schedule is:",a:["Continuous reinforcement (CRF)","Fixed ratio (FR-5)","Variable ratio","Fixed interval"],c:0,e:"Reinforcing <b>every occurrence</b> during initial acquisition is <b>continuous reinforcement (CRF)</b>. FR-5 would require five responses per reinforcer; VR varies the count; FI waits for time to pass."},
 {cat:"Schedules of Reinforcement",dom:"C",q:"Reinforcement delivered on a time schedule regardless of what the client does is…",a:["Continuous reinforcement","Noncontingent reinforcement","Differential reinforcement","Fixed interval"],c:1,e:"Delivered independent of behavior = <b>noncontingent reinforcement (NCR)</b>."},
 {cat:"Schedules of Reinforcement",dom:"C",q:"A learner is learning to request 'break' using a communication card for the first time. The BCBA instructs the RBT to deliver a preferred break after every correct mand during the first week. The recommended schedule is:",a:["Continuous reinforcement (CRF)","Variable ratio","Fixed interval","Extinction"],c:0,e:"During <b>initial acquisition</b> of a new skill, <b>CRF</b> (reinforcing every correct response) builds the response quickly. Thinning to intermittent schedules comes after the skill is established."},
 {cat:"Schedules of Reinforcement",dom:"C",q:"After a client masters hand-washing with a token after every correct step, the BCBA instructs the RBT to move to a token every 3 steps, then every 5 steps. This process is called:",a:["Thinning the reinforcement schedule","Shaping the topography","Fading the discriminative stimulus","Extinction of the replacement behavior"],c:0,e:"<b>Thinning</b> systematically reduces how often reinforcement is delivered while maintaining the behavior. Shaping changes response form; fading reduces prompts, not reinforcement frequency."},
@@ -1207,7 +1215,7 @@ const BANK = [
 {cat:"Differential Reinforcement",dom:"D",q:"You deliver reinforcement only if the problem behavior is ABSENT for a set period of time. This is:",a:["DRO (omission)","DRA (alternative)","DRL (low rates)","DRI (incompatible)"],c:0,e:"<b>DRO</b> (differential reinforcement of other/zero behavior) reinforces the ABSENCE of the target behavior for an interval."},
 {cat:"Differential Reinforcement",dom:"D",q:"A student raises their hand so often it's disruptive. You want fewer raises, not zero. Which schedule fits?",a:["DRL (low rates)","DRH (high rates)","DRO (omission)","DRA (alternative)"],c:0,e:"<b>DRL</b> reinforces LOWER rates of a behavior that's acceptable in small amounts — reduce, don't eliminate."},
 {cat:"Differential Reinforcement",dom:"D",q:"You want to INCREASE how often a learner completes work, so you reinforce higher rates of responding. This is:",a:["DRH (high rates)","DRL (low rates)","DRO (omission)","DRI (incompatible)"],c:0,e:"<b>DRH</b> reinforces HIGHER rates of a desired behavior (e.g., more task completions)."},
-{cat:"Differential Reinforcement",dom:"D",q:"The difference between DRA and DRI is:",a:["DRI's replacement behavior physically cannot co-occur with the problem; DRA's just needs to be an appropriate alternative","DRA reinforces absence; DRI reinforces presence","DRA is for high rates; DRI is for low rates","There is no difference"],c:0,e:"Both reinforce a replacement, but <b>DRI</b> requires the alternative to be INCOMPATIBLE (can't happen at the same time), while <b>DRA</b> just needs an appropriate alternative."},
+{cat:"Differential Reinforcement",dom:"D",q:"To reduce hand-flapping during table work, the RBT reinforces keeping hands folded on the table — a behavior that cannot physically happen at the same time as flapping. This procedure is:",a:["DRI (incompatible)","DRA (alternative)","DRO (omission)","DRL (low rates)"],c:0,e:"Hands folded <b>cannot co-occur</b> with flapping, so this is <b>DRI</b>. A replacement that is merely appropriate (like asking for a break) would be <b>DRA</b>; reinforcing the absence of the behavior for an interval would be <b>DRO</b>."},
 {cat:"Differential Reinforcement",dom:"D",q:"Why is DRO generally NOT used to MAINTAIN a skill?",a:["It targets the ABSENCE of a behavior, not the continued performance of a skill","It reinforces too often","It only works with tokens","It requires punishment"],c:0,e:"<b>DRO reinforces not doing something</b>, so it doesn't build or maintain an active skill — maintenance relies on intermittent reinforcement of the skill itself."},
 
 /* Discontinuous Measurement */
@@ -1238,7 +1246,7 @@ const BANK = [
 {cat:"Reinforcement & Punishment",dom:"C",q:"A learner is removed from the setting entirely (e.g., sent to a separate area) following behavior. This is:",a:["Exclusionary time-out","Non-exclusionary time-out","Response cost","Delayed access"],c:0,e:"<b>Exclusionary time-out</b> removes the learner FROM the reinforcing environment for a period."},
 {cat:"Reinforcement & Punishment",dom:"C",q:"You take away a specific earned reinforcer (like removing points/tokens) after problem behavior. This is:",a:["Response cost","Exclusionary time-out","Overcorrection","DRO"],c:0,e:"<b>Response cost</b> is a form of negative punishment where a specific reinforcer/token is withdrawn contingent on behavior."},
 {cat:"Reinforcement & Punishment",dom:"C",q:"After making a mess, the learner must clean it up AND tidy the surrounding area beyond the original state. This is:",a:["Restitutional overcorrection","Response cost","Time-out","Noncontingent reinforcement"],c:0,e:"<b>Restitutional overcorrection</b> requires restoring the environment to a better-than-original condition after the disruption."},
-{cat:"Reinforcement & Punishment",dom:"C",q:"The difference between response cost and time-out from reinforcement is:",a:["Response cost removes a specific reinforcer already earned; time-out removes access to reinforcement for a period","Response cost adds an aversive; time-out removes one","Response cost is reinforcement; time-out is punishment","There is no difference"],c:0,e:"<b>Response cost</b> takes away an owned reinforcer (tokens); <b>time-out</b> suspends access to the reinforcing environment/activity temporarily."},
+{cat:"Reinforcement & Punishment",dom:"C",q:"A learner loses two previously earned tokens for hitting. Later, hitting leads to sitting apart from a game for two minutes with no chance to earn tokens. In order, these procedures are:",a:["Response cost, then time-out from reinforcement","Time-out from reinforcement, then response cost","Extinction, then response cost","Negative reinforcement, then time-out"],c:0,e:"Losing <b>earned tokens</b> is <b>response cost</b>; losing <b>access to reinforcement for a period</b> is <b>time-out</b>. Both are negative punishment — nothing aversive is added, and neither is extinction (withholding the maintaining reinforcer)."},
 {cat:"Reinforcement & Punishment",dom:"C",q:"In the RBT's toolbox, punishment procedures should be used:",a:["Only as a last resort after less intrusive strategies, and aversives only when there's risk of serious harm","First, because they work fastest","Routinely for any problem behavior","Whenever a parent requests them"],c:0,e:"Punishment is a <b>last resort</b>; the most intrusive/aversive procedures are reserved for behavior posing a risk of serious harm or death."},
 
 /* Crisis & Emergency */
@@ -1297,7 +1305,7 @@ const BANK = [
 /* Professionalism & Scope */
 {cat:"Professionalism & Scope",dom:"F",q:"An RBT is asked by a family to implement a procedure NOT in the behavior plan and outside their training. The RBT should:",a:["Decline and consult their supervisor","Do it to keep the family happy","Modify the plan themselves","Ignore the request entirely"],c:0,e:"RBTs work under supervision within their <b>scope of competence</b>; new/unfamiliar procedures require consulting the supervising BCBA."},
 {cat:"Professionalism & Scope",dom:"F",q:"Which situation must an RBT report to their supervisor RIGHT AWAY?",a:["A sudden, unexplained increase in self-injury or aggression","A client having a good session","Running slightly ahead of schedule","A preferred item being chosen"],c:0,e:"Unexpected changes like <b>spikes in SIB/aggression</b>, health changes, or safety concerns must be reported immediately."},
-{cat:"Professionalism & Scope",dom:"F",q:"The difference between 'scope of competence' and 'scope of practice' is:",a:["Scope of practice is what the credential allows; scope of competence is what YOU are actually trained and able to do","They are identical","Competence is broader than practice","Practice is set by the family"],c:0,e:"<b>Scope of practice</b> = the profession's permitted activities; <b>scope of competence</b> = your individual demonstrated skills, which may be narrower."},
+{cat:"Professionalism & Scope",dom:"F",q:"The RBT credential permits implementing token economies, but this RBT has never been trained to run one. Running one anyway means acting:",a:["outside their scope of competence, within the scope of practice","outside the scope of practice, within their scope of competence","within both scope of practice and scope of competence","outside both scope of practice and scope of competence"],c:0,e:"<b>Scope of practice</b> is what the credential permits; <b>scope of competence</b> is what YOU are trained and able to do. Token economies are RBT practice, but without training this RBT lacks competence — seek training and supervision first."},
 {cat:"Professionalism & Scope",dom:"F",q:"Getting genuine agreement/willingness from a client (especially one who can't give legal consent) to participate is called:",a:["Assent","Consent","Compliance","Contingency"],c:0,e:"<b>Assent</b> is the learner's voluntary willingness to participate; <b>consent</b> is the legal permission given by a guardian."},
 {cat:"Professionalism & Scope",dom:"F",q:"Under HIPAA's 'minimum necessary' rule, an RBT should:",a:["Share only the client information needed for the specific purpose","Share all records with anyone who asks","Post progress on social media","Keep no documentation"],c:0,e:"The <b>minimum necessary</b> standard means disclosing only the PHI required for the task at hand."},
 {cat:"Professionalism & Scope",dom:"F",q:"A team where professionals from different fields work TOGETHER with shared goals and integrated input is:",a:["Interdisciplinary","Multidisciplinary","Hierarchical","Independent"],c:0,e:"<b>Interdisciplinary</b> teams collaborate directly, integrating expertise toward shared goals."},
@@ -1432,7 +1440,7 @@ const BANK = [
 {cat:"Shaping",dom:"C",q:"When starting a shaping program, the first thing you reinforce is:",a:["The closest approximation the learner already does without prompts","The full terminal behavior","A completely novel behavior","The last step of a chain"],c:0,e:"You begin at <b>baseline</b> — the nearest approximation the learner already performs unprompted — and build from there."},
 {cat:"Shaping",dom:"C",type:"tf",q:"In shaping, you keep reinforcing earlier approximations even after the learner masters a closer one.",correct:false,e:"<b>False.</b> Differential reinforcement is used — you reinforce the newer, closer approximation and stop reinforcing the earlier one."},
 {cat:"Shaping",dom:"C",q:"What process moves a learner from one approximation to the next during shaping?",a:["Differential reinforcement","Noncontingent reinforcement","Response cost","Time delay"],c:0,e:"Shaping uses <b>differential reinforcement</b>: reinforce the closer approximation while the previous one goes on extinction."},
-{cat:"Shaping",dom:"C",type:"odd",q:"Three of these belong to shaping. Which is the odd one out?",a:["Successive approximation","Terminal behavior","Baseline approximation","Response cost"],c:3,e:"<b>Response cost</b> is a punishment procedure. The others are shaping concepts."},
+{cat:"Shaping",dom:"C",type:"odd",q:"Three of these belong to shaping. Which is the odd one out?",a:["Successive approximation","Terminal behavior","Differential reinforcement","Response cost"],c:3,e:"<b>Response cost</b> is a punishment procedure. Shaping works through <b>differential reinforcement of successive approximations</b> toward a terminal behavior."},
 
 /* Teaching Procedures */
 {cat:"Teaching Procedures",dom:"C",q:"In discrete trial training, after the learner responds correctly you should:",a:["Deliver the reinforcer immediately","Wait 30 seconds, then reinforce","Repeat the SD three times","Withhold reinforcement until the session ends"],c:0,e:"In <b>DTT</b>, reinforcement is delivered <b>immediately</b> after the correct response to strengthen it."},
@@ -1551,7 +1559,7 @@ const BANK = [
 {cat:"Ethics & Scope",dom:"F",q:"Ongoing cultural humility and responsiveness means:",a:["Examining your own biases and respecting the family's values","Assuming your way is best","Treating every family identically","Avoiding cultural topics entirely"],c:0,e:"Cultural humility means identifying personal biases and responding respectfully to each family (F.10)."},
 {cat:"Ethics & Scope",dom:"F",q:"Maintaining client dignity includes:",a:["Speaking respectfully and protecting privacy during care","Discussing the client in public","Using nicknames about their behavior","Ignoring their preferences"],c:0,e:"Core ethics: treat others with compassion, dignity, and respect (F.1)."},
 {cat:"Ethics & Scope",dom:"F",type:"tf",q:"Accepting and acting on supervisor feedback is an expected professional skill for RBTs.",correct:true,e:"<b>True.</b> Accepting feedback and collaborating are required interpersonal/professional skills (F.9)."},
-{cat:"Ethics & Scope",dom:"F",type:"odd",q:"Three of these are part of cultural responsiveness. Which does NOT belong?",a:["Identify your personal biases","Respect the family's values","Adapt your communication respectfully","Ignore the family's language needs"],c:3,e:"Ignoring language needs is the opposite of cultural responsiveness (F.10)."},
+{cat:"Ethics & Scope",dom:"F",type:"odd",q:"Three of these are part of cultural responsiveness. Which does NOT belong?",a:["Identify your personal biases","Respect the family's values","Adapt your communication respectfully","Use the same materials and style with every family"],c:3,e:"A one-size-fits-all approach is the opposite of cultural responsiveness (F.10) — the other three actively adapt to the family."},
 
 /* Reinforcement & Punishment */
 {cat:"Reinforcement & Punishment",dom:"C",q:"Negative reinforcement:",a:["Removes a stimulus to INCREASE a behavior","Adds a stimulus to increase a behavior","Removes a stimulus to decrease a behavior","Adds a stimulus to decrease a behavior"],c:0,e:"<b>Negative</b> = remove; <b>reinforcement</b> = behavior increases. Something aversive is taken away."},
@@ -1652,9 +1660,7 @@ const BANK = [
 {cat:"Ethics & Scope",dom:"F",task:"F.6",q:"A caregiver invites the RBT to a personal social media group for \"team updates.\" The best response is to:",a:["Decline and keep communication on approved professional channels","Join but avoid posting","Join and post weekly progress photos","Join only if the BCBA is also a member"],c:0,e:"Professional <b>boundaries</b> limit social-media entanglements that blur the therapeutic relationship (F.6)."},
 {cat:"Ethics & Scope",dom:"F",task:"F.7",q:"A family offers the RBT paid babysitting on weekends. This is problematic because it creates a:",a:["Multiple relationship","Supervision deficit","Token economy","Motivating operation"],c:0,e:"A <b>multiple relationship</b> can impair objectivity and create conflicts of interest (F.7)."},
 ];
-BANK.forEach(function(q,i){ q.id=i; if(!q.type) q.type='mc'; });
-/* ---------- AGENT BRIDGE (see src/agents/ + game/trail.bundle.js) ---------- */
-function lockTierNow(){ return CONFIG.LOCK_TIER; }
+BANK.forEach(function(q,i){ q.id=i; if(!q.type) q.type='mc'; });function lockTierNow(){ return CONFIG.LOCK_TIER; }
 function trailCtx(extra){ return Trail.makeCtx(RUN, ENC, Object.assign({ rnd: rnd }, extra||{})); }
 function showBanners(banners){ if(!banners) return; for(var i=0;i<banners.length;i++){ var b=banners[i]; banner(b.title, b.sub); } }
 function grantRelic(id){
@@ -1673,7 +1679,7 @@ function freshRun(topic, opts){
   var mb=mergedBank();
   var oath=(typeof getSelectedOath==='function'?getSelectedOath():'none');
   var _r={ topic:topic, oath:oath, route:buildRoute(topic), nodeIdx:0, actShown:{}, freeDraft:false,
-    daily:!!opts.daily, knownDuos:new Set(),
+    daily:!!opts.daily, knownDuos:new Set(), usedTales:[], freeDraftFrom:null,
     prog:{}, locked:new Set(), mastered:new Set(), boons:new Set(), flares:0,
     stamina:CONFIG.STAM_MAX, altitude:1600,
     seen:0, right:0, bestStreak:0, nodeCleared:0, summited:false, stones:{}, stoneNow:null, recovered:0,
@@ -1702,6 +1708,7 @@ function enterCurrentNode(){
   var node=RUN.route[RUN.nodeIdx];
   if(node.kind==='rest'){ openLedge(node,'rest'); return; }
   if(node.kind==='shrine'){ openShrine(node); return; }
+  if(node.kind==='tale'){ openTale(node); return; }
   var prevAct=RUN.curAct||1;
   if(node.act>prevAct && node.act>1 && !RUN.actShown[node.act]){
     RUN.actShown[node.act]=true;
@@ -1714,7 +1721,7 @@ function enterCurrentNode(){
   _enterCurrentNode(node);
 }
 function _enterCurrentNode(node){
-  ENC={ node:node, need:node.need, done:0, threat:0, max:node.max, lifelineUsed:false, firstMissUsed:false, firstTimeoutUsed:false, rallyUsed:false, bulwarkUsed:false, streakEase:0, cairnBank:0, missCount:0, spikeT:0, shieldLeft:(node.shield||0), easeMul:1, timeMul:1, phaseMul:1, phased:false, luckyUsed:false, cruxTold:false, streak:0, lastId:-1 };
+  ENC=Trail.engine.blankEnc(node, { threat: Trail.engine.entryThreat(node) });
   RUN.altitude=node.alt; RUN.ending=false;
   if(node.kind==='gate'){
     if(RUN.topic){ ENC.node.domain=RUN.topic; ENC.node.blurb="It stands where the route narrows, and it has read your ledger. It will ask about "+RUN.topic+". Wrong answers feed it. Right ones back it off."; }
@@ -1724,9 +1731,10 @@ function _enterCurrentNode(node){
     setTimeout(function(){ banner('Gatekeeper waits','Domain '+gd+': '+DOMAINS[gd].n); },200);
     }
   }
-  if(node.kind==='serac'){ ENC.threat=25; setTimeout(function(){ banner('The ice groans','it was waiting for you'); },250); }
+  if(node.kind==='serac'){ setTimeout(function(){ banner('The ice groans','it was waiting for you'); },250); }
   if(node.kind==='storm'){ setTimeout(function(){ banner('Rising squall','only speed clears this ridge'); },250); }
-  if(node.kind==='summit'){ ENC.threat=20; setTimeout(function(){ banner('The final pitch','all that is left is what you know'); },250); }
+  if(node.kind==='summit'){ setTimeout(function(){ banner('The final pitch','all that is left is what you know'); },250); }
+  if(node.startThreat && node.kind!=='serac' && node.kind!=='summit'){ setTimeout(function(){ banner('It was warned','something told this pitch you were coming'); },250); }
   var pent=Trail.emit('pitch:enter', trailCtx());
   if(pent.staminaDelta) addStamina(pent.staminaDelta);
   showBanners(pent.banners);
@@ -1753,34 +1761,35 @@ function nextInEncounter(){
 function onPick(correct, srcEl){ if(RUN.busy||RUN.paused) return; RUN.busy=true; clearInterval(RUN.timer); resolve(correct,false,srcEl); }
 function onTimeout(){ if(RUN.busy) return; RUN.busy=true; if(RUN.view) RUN.view.reveal(); resolve(false,true,null); }
 
+/* Presentation layer over the Climb Engine: state changes happen in
+ * Trail.engine; this maps the engine's event stream onto DOM/audio. */
+function syncVitals(){ RENDER.stam(); if(ENC) RENDER.threat();
+  if(typeof document!=='undefined' && document.body && document.body.classList) document.body.classList.toggle('lastlegs', RUN.stamina>0 && RUN.stamina<=25 && !!ENC); }
+function applyEngineEvents(ev){ if(!ev) return;
+  for(var i=0;i<ev.length;i++){ var e=ev[i];
+    if(e.t==='strike'){ if(e.blocked){ AUDIO.tick(); RENDER.encChrome(); } else { AUDIO.strike(); RENDER.encChrome(); banner('The mountain pushes back','&#8722;'+e.hit+' stamina'); } }
+    else if(e.t==='banners'||e.t==='gust'){ showBanners(e.banners); }
+    else if(e.t==='shield'){ banner('The face cracks', e.left>0?(e.left+' layer'+(e.left>1?'s':'')+' to break'):'the shell gives way \u2014 climb'); }
+    else if(e.t==='phase'){ banner('The slope lets go','it releases all at once'); }
+    else if(e.t==='crux'){ banner('The crux','one hard move from the ledge'); }
+    else if(e.t==='knockback'){ if(RENDER.encChrome) RENDER.encChrome(); banner('Knocked back','you slide down the ridge'); }
+    else if(e.t==='spike'){ AUDIO.tick(); }
+    else if(e.t==='lastlegs'){ banner('Last legs','no room left for a slip'); }
+    else if(e.t==='iceaxe'){ banner('\u26cf\ufe0f The ice axe bites','you arrest the fall \u2014 1 stamina'); }
+    else if(e.t==='fell'){ if(RUN.timer) clearInterval(RUN.timer); setTimeout(function(){ endRun('fell'); }, 650); }
+  } }
+
 function resolve(correct, viaTimeout, srcEl){
   var q=RUN.current; var before=RUN.prog[q.id]?RUN.prog[q.id].tier:0;
   var p=SCHED.grade(q.id, correct, viaTimeout); RUN.seen++;
   if(!correct){ RUN.stones[q.id]=RUN.seen+4; }
   else if(RUN.stoneNow===q.id){ RUN.recovered=(RUN.recovered||0)+1; if(RUN.relics&&RUN.relics.has('chalk')){ ENC.threat=0; RENDER.threat(); } if(RUN.nodeIdx>=Math.floor(RUN.route.length*0.55)) RUN.mastered.add(q.id); banner('Loose stone reclaimed','you brought it back'); }
   RUN.stoneNow=null;
-  if(correct){
-    RUN.right++; ENC.streak++; RUN.bestStreak=Math.max(RUN.bestStreak,ENC.streak);
-    if(ENC.shieldLeft>0){ ENC.shieldLeft--; banner('The face cracks', ENC.shieldLeft>0?(ENC.shieldLeft+' layer'+(ENC.shieldLeft>1?'s':'')+' to break'):'the shell gives way \u2014 climb'); }
-    else { ENC.done++; if(ENC.node.phase && !ENC.phased && ENC.done>=Math.ceil(ENC.need/2)){ ENC.phased=true; ENC.phaseMul=1.5; raiseThreat(22); banner('The slope lets go','it releases all at once'); }
-      if(ENC.need>1 && ENC.done===ENC.need-1 && !ENC.cruxTold){ ENC.cruxTold=true; banner('The crux','one hard move from the ledge'); } }
-    AUDIO.correct(); flash('ok'); if(srcEl) burst(srcEl);
-    if(before<lockTierNow() && p.tier>=lockTierNow()) sealLocked();
-    var bout=Trail.emit('answer:correct', trailCtx());
-    if(bout.staminaDelta) addStamina(bout.staminaDelta);
-    if(bout.timeDelta) RUN.timeLeft=Math.min(RUN.maxTime, RUN.timeLeft+bout.timeDelta);
-    if(bout.threatDelta) raiseThreat(bout.threatDelta);
-    showBanners(bout.banners);
-  } else {
-    AUDIO.wrong(viaTimeout); flash('no'); var _sc=document.getElementById('card'); _sc.classList.remove('shake'); void _sc.offsetWidth; _sc.classList.add('shake');
-    var wout=Trail.emit('answer:wrong', trailCtx({ viaTimeout: viaTimeout }));
-    if(!wout.keepStreak){ ENC.streak=0; ENC.streakEase=0; }
-    if(wout.staminaCost>0) addStamina(-wout.staminaCost);
-    else if(wout.staminaDelta) addStamina(wout.staminaDelta);
-    if(wout.threatDelta) raiseThreat(wout.threatDelta);
-    showBanners(wout.banners);
-    if(ENC.node.streakGate){ ENC.done=Math.max(0, ENC.done-2); if(RENDER.encChrome) RENDER.encChrome(); banner('Knocked back','you slide down the ridge'); }
-  }
+  if(correct){ AUDIO.correct(); flash('ok'); if(srcEl) burst(srcEl); if(before<lockTierNow() && p.tier>=lockTierNow()) sealLocked(); }
+  else { AUDIO.wrong(viaTimeout); flash('no'); var _sc=document.getElementById('card'); _sc.classList.remove('shake'); void _sc.offsetWidth; _sc.classList.add('shake'); }
+  var res=Trail.engine.resolveAnswer(Trail, RUN, ENC, { correct: correct, viaTimeout: viaTimeout, rnd: rnd });
+  syncVitals(); applyEngineEvents(res.events);
+  if(res.timeDelta) RUN.timeLeft=Math.min(RUN.maxTime, RUN.timeLeft+res.timeDelta);
   RENDER.encChrome(); RENDER.tierBadge(q); RENDER.momentum();
   RENDER.explain(q, correct, viaTimeout, before, p.tier);
   if(RUN.stamina<=0){ return; }
@@ -1800,24 +1809,13 @@ function clearEncounter(){
   openLedge(ENC.node,'clear');
 }
 
-/* threat + stamina */
-function raiseThreat(x){ if(!ENC) return; ENC.threat=Math.max(0,Math.min(ENC.max,ENC.threat+x));
-  if(ENC.threat>=ENC.max) mountainStrikes(); RENDER.threat(); }
-function mountainStrikes(){
-  ENC.threat=Math.max(0,ENC.threat-CONFIG.THREAT_RESET);
-  var sout=Trail.emit('mountain:strike', trailCtx());
-  if(sout.blocked){ AUDIO.tick(); RENDER.encChrome(); return; }
-  var _hit=sout.hit!=null?sout.hit:ENC.node.hit;
-  if(ENC.node.kind==='gate' && typeof oathGateHitMult==='function') _hit=Math.round(_hit*oathGateHitMult(RUN));
-  if(RUN.relics&&RUN.relics.has('carabiner')&&!ENC.luckyUsed){ ENC.luckyUsed=true; _hit=Math.round(_hit*0.5); }
-  if(RUN.relics&&RUN.relics.has('rope')&&ENC.node.kind==='gate') _hit=Math.round(_hit*0.75);
-  addStamina(-_hit); AUDIO.strike();
-  RENDER.encChrome(); banner('The mountain pushes back', '&#8722;'+_hit+' stamina'); }
-function addStamina(x){ RUN.stamina=Math.max(0,Math.min(CONFIG.STAM_MAX, RUN.stamina+x)); RENDER.stam();
-  if(typeof document!=='undefined' && document.body && document.body.classList){ var _ll=(RUN.stamina>0 && RUN.stamina<=25 && !!ENC); document.body.classList.toggle('lastlegs', _ll); if(_ll && !RUN.lastLegsTold){ RUN.lastLegsTold=true; banner('Last legs','no room left for a slip'); } }
-  if(RUN.stamina<=0 && ENC && !RUN.ending){
-    if(CONFIG.MODS.relics && RUN.relics && RUN.relics.has('iceaxe') && !RUN.iceaxeUsed){ RUN.iceaxeUsed=true; RUN.stamina=1; RENDER.stam(); banner('\u26CF\uFE0F The ice axe bites','you arrest the fall \u2014 1 stamina'); return; }
-    RUN.ending=true; if(RUN.timer) clearInterval(RUN.timer); setTimeout(function(){ endRun('fell'); }, 650); } }
+/* threat + stamina \u2014 math lives in the Climb Engine; these wrappers render */
+function raiseThreat(x){ if(!ENC) return; var ev=[];
+  Trail.engine.raiseThreat(Trail, RUN, ENC, x, rnd, ev);
+  syncVitals(); applyEngineEvents(ev); }
+function addStamina(x){ var ev=[];
+  Trail.engine.addStamina(Trail, RUN, ENC||null, x, ev);
+  syncVitals(); applyEngineEvents(ev); }
 
 /* focus timer */
 function startTimer(){
@@ -1831,10 +1829,8 @@ function startTick(){
   var wrap=document.getElementById('focus'), bar=document.getElementById('focusbar');
   RUN.timer=setInterval(function(){
     RUN.timeLeft-=0.05; var frac=Math.max(0,RUN.timeLeft/RUN.maxTime); bar.style.width=(frac*100)+'%';
-    if(ENC.node.rise){ var _rm=Trail.agents.boon.api.riseMultiplier(trailCtx()); if(ENC.node.enrage && ENC.threat>=ENC.max*0.6) _rm*=ENC.node.enrage; if(ENC.phaseMul) _rm*=ENC.phaseMul; if(ENC.need>1 && ENC.done>=ENC.need-1) _rm*=CONFIG.CRUX_RISE_MULT; _rm=Math.min(_rm,2.0); var _oathR=typeof oathRiseMult==='function'?oathRiseMult(RUN):1; raiseThreat(ENC.node.rise*0.05*_rm*(RUN.weather?RUN.weather.rise:1)*_oathR); }
-    if(ENC.node.gust && rnd()<ENC.node.gust*0.05){ var gustAmt=12+Math.floor(rnd()*10); var gout=Trail.emit('hazard:gust', trailCtx({ gust: gustAmt })); raiseThreat(gout.threatDelta!=null?gout.threatDelta:gustAmt); showBanners(gout.banners); }
-    if(ENC.node.drain) addStamina(-ENC.node.drain*0.05);
-    if(ENC.node.spike){ ENC.spikeT+=0.05; if(ENC.spikeT>=(ENC.node.spikeEvery||3.5)){ ENC.spikeT=0; AUDIO.tick(); raiseThreat(ENC.node.spike); } }
+    var ev=[]; Trail.engine.tickDrift(Trail, RUN, ENC, 0.05, rnd, ev);
+    syncVitals(); applyEngineEvents(ev);
     if(frac<=0.28){ wrap.classList.add('low'); }
     if(RUN.timeLeft<=0){ clearInterval(RUN.timer); onTimeout(); }
   },50);
@@ -1883,6 +1879,38 @@ function openShrine(node){
   box.appendChild(give); box.appendChild(pass);
   RUN.nodeIdx++; renderHeld(); show('ledge');
 }
+function applyTaleFx(fx){
+  var ev=[];
+  Trail.engine.applyTaleFx(Trail, RUN, fx, { enc: (typeof ENC!=='undefined'?ENC:null), grantRelic: grantRelic, events: ev });
+  syncVitals(); applyEngineEvents(ev);
+}
+function openTale(node){
+  clearInterval(RUN.timer); RUN.altitude=node.alt||RUN.altitude;
+  var tale=Trail.agents.keeper.api.drawTale(rnd, node.act||1, RUN.usedTales);
+  RUN.usedTales.push(tale.id);
+  document.getElementById('ledgeIc').innerHTML=tale.ic;
+  document.getElementById('ledgeTitle').textContent=tale.title;
+  document.getElementById('ledgeSub').textContent=tale.text;
+  document.getElementById('rewardRow').innerHTML='<span class="pill ice">&#9968;&#65039; '+fmt(node.alt||RUN.altitude)+' m</span>';
+  var draftWrap=document.getElementById('draftWrap'); draftWrap.style.display='block';
+  document.getElementById('draftLabel').textContent='What do you do?';
+  var box=document.getElementById('boons'); box.innerHTML='';
+  tale.choices.forEach(function(ch){
+    var el=document.createElement('button'); el.type='button'; el.className='boon'+(ch.gamble?' rare':'');
+    el.innerHTML='<div class="bic">'+ch.ic+'</div><div><div class="bt">'+ch.label+'</div><div class="bd">'+ch.desc+'</div></div>';
+    el.onclick=function(){
+      var out=Trail.agents.keeper.api.resolveChoice(ch, rnd);
+      applyTaleFx(out.fx);
+      draftWrap.style.display='none';
+      if(out.text) document.getElementById('ledgeSub').textContent=out.text;
+      if(out.won===false){ AUDIO.lock(); } else { AUDIO.correct(); }
+      META.tales=(META.tales||0)+1; if(META.tales>=5) unlockAchievement('tale_5'); saveMeta();
+      renderHeld();
+    };
+    box.appendChild(el);
+  });
+  RUN.nodeIdx++; renderHeld(); show('ledge');
+}
 function openLedge(node, mode){
   clearInterval(RUN.timer); RUN.altitude=node.alt||RUN.altitude;
   if(mode==='rest'){ addStamina(pitchRestore(node,'rest')); RUN.nodeIdx++; }
@@ -1901,9 +1929,10 @@ function openLedge(node, mode){
   var scholarBonus=!!RUN.freeDraft;
   var offer = (isRest || node.kind==='gate' || spoils || scholarBonus) && draftBoons();
   if(offer && offer.length){
-    if(scholarBonus) RUN.freeDraft=false;
+    var promiseLabel = RUN.freeDraftFrom==='tale' ? "The Keeper's promise" : "Scholar's reward";
+    if(scholarBonus){ RUN.freeDraft=false; RUN.freeDraftFrom=null; }
     draftWrap.style.display='block';
-    document.getElementById('draftLabel').textContent = scholarBonus ? "Scholar's reward" : spoils ? 'Spoils of the pitch' : isRest ? 'Take one for the climb' : 'Claim a boon';
+    document.getElementById('draftLabel').textContent = scholarBonus ? promiseLabel : spoils ? 'Spoils of the pitch' : isRest ? 'Take one for the climb' : 'Claim a boon';
     var box=document.getElementById('boons'); box.innerHTML='';
     offer.forEach(function(id){
       if(id==='_stamina'){
@@ -2237,6 +2266,22 @@ function endRun(kind){
   else { wc.className='weakcard clean'; wc.style.display='block';
     wc.innerHTML='<b>Every trail is holding.</b> Push the pace next climb and see what the thin air shakes loose.'; }
 
+  var sg=document.getElementById('sagecard');
+  if(sg){
+    if(typeof Trail!=='undefined' && Trail.agents && Trail.agents.sage && RUN.seen>0){
+      try{
+        var tips=Trail.agents.sage.api.recommend(RUN, BANK, CONFIG).slice(0,3);
+        var nr=Trail.agents.sage.api.nextReview(RUN, BANK, 6);
+        var seenCats={}, revCats=[];
+        nr.forEach(function(x){ if(!seenCats[x.cat]&&revCats.length<3){ seenCats[x.cat]=1; revCats.push(x.cat); } });
+        sg.style.display='block';
+        sg.innerHTML='<div class="sg-hd">&#129504; The Sage&rsquo;s counsel</div><ul>'
+          +tips.map(function(t){ return '<li>'+t+'</li>'; }).join('')+'</ul>'
+          +(revCats.length?'<div class="sg-next"><b>Open the next climb here:</b> '+revCats.join(' · ')+'</div>':'');
+      }catch(e){ sg.style.display='none'; }
+    } else { sg.style.display='none'; }
+  }
+
   document.getElementById('code').textContent=buildCode(kind,acc,top);
   renderMissed();
   var _brB=boardReady(); commitRun(kind); checkAchievements(kind); var _brA=boardReady(); var _bl=document.getElementById('bankline');
@@ -2313,7 +2358,7 @@ function starField(){ var s=''; var pts=[[10,12],[22,8],[34,16],[46,10],[58,14],
 /* ---------- grade, share ---------- */
 function gradeRun(){ var acc=RUN.seen?RUN.right/RUN.seen:0; var sc=acc*100; if(RUN.summited) sc+=12; sc+=Math.min(8,RUN.bestStreak); sc+=RUN.stamina*0.05; sc+=(RUN.recovered||0)*3; sc+=(RUN.clutch||0)*4; if(RUN.relics&&RUN.relics.has('stone')) sc+=15; sc=sc*(RUN.weather?RUN.weather.score:1);
   return sc>=100?'S':sc>=88?'A':sc>=74?'B':sc>=58?'C':'D'; }
-function nodeEmoji(kind){ var m={storm:'⛈️',gate:'🛡️',rest:'🏕️',summit:'🏔️',serac:'🧊',whiteout:'🌫️',crevasse:'🕳️',traverse:'🧗',thinair:'🫁',icefall:'☄️',void:'🌑',knife:'🗡️',berg:'⛏️',snowfield:'🌨️',couloir:'🗻',icewall:'💠',windslab:'🌀',sealedface:'🔒',longwall:'🪜',tempest:'🌪️',closing:'⏳',avalanche:'💥',corniceridge:'🌬️',frozentitan:'🧊',shrine:'⛩️'}; return m[kind]||'⛰️'; }
+function nodeEmoji(kind){ var m={storm:'⛈️',gate:'🛡️',rest:'🏕️',summit:'🏔️',serac:'🧊',whiteout:'🌫️',crevasse:'🕳️',traverse:'🧗',thinair:'🫁',icefall:'☄️',void:'🌑',knife:'🗡️',berg:'⛏️',snowfield:'🌨️',couloir:'🗻',icewall:'💠',windslab:'🌀',sealedface:'🔒',longwall:'🪜',tempest:'🌪️',closing:'⏳',avalanche:'💥',corniceridge:'🌬️',frozentitan:'🧊',shrine:'⛩️',tale:'🗿'}; return m[kind]||'⛰️'; }
 function copyText(txt, btnId, done){ var b=document.getElementById(btnId);
   var okc=function(){ if(b){ b.classList.add('done'); b.textContent=done; } };
   if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(okc).catch(function(){fb(txt,okc);}); } else fb(txt,okc); }
@@ -2446,8 +2491,8 @@ function nodeSub(node){
   return n+' to clear';
 }
 /* ---------- META-PROGRESSION (permanent bank so a fall is never a reset) ---------- */
-var META={bank:{},runs:0,summits:0,bestAlt:0,miles:0,achievements:[],dailyDone:0};
-function loadMeta(){ try{ var s=localStorage.getItem('rbtTrailMeta'); if(s){ var o=JSON.parse(s); META={bank:o.bank||{},runs:o.runs||0,summits:o.summits||0,bestAlt:o.bestAlt||0,miles:o.miles||0,achievements:o.achievements||[],dailyDone:o.dailyDone||0}; } }catch(e){} }
+var META={bank:{},runs:0,summits:0,bestAlt:0,miles:0,achievements:[],dailyDone:0,tales:0};
+function loadMeta(){ try{ var s=localStorage.getItem('rbtTrailMeta'); if(s){ var o=JSON.parse(s); META={bank:o.bank||{},runs:o.runs||0,summits:o.summits||0,bestAlt:o.bestAlt||0,miles:o.miles||0,achievements:o.achievements||[],dailyDone:o.dailyDone||0,tales:o.tales||0}; } }catch(e){} }
 function saveMeta(){ try{ localStorage.setItem('rbtTrailMeta',JSON.stringify(META)); }catch(e){} }
 function mergedBank(){ var m={},b=META.bank||{}; Object.keys(b).forEach(function(id){ m[id]=b[id]; }); Object.keys(SAVED).forEach(function(id){ m[id]=Math.max(m[id]||0,SAVED[id]); }); return m; }
 function boardReady(){ var b=META.bank||{},n=0; Object.keys(b).forEach(function(id){ if(b[id]>=CONFIG.LOCK_TIER) n++; }); return n; }

@@ -1,5 +1,6 @@
 import { createAgentBus } from './agent-bus.js';
 import { CONFIG } from './config.js';
+import * as ClimbEngine from './climb-engine.js';
 import { createBoonArchitect } from '../agents/boon-architect.js';
 import { createEconomyApi, WEATHERS, RELICS, pitchRestore } from '../agents/mountain-economy.js';
 import {
@@ -36,6 +37,7 @@ import { createAtlasArtisan } from '../agents/atlas-artisan.js';
 import { createSandboxSteward } from '../agents/sandbox-steward.js';
 import { createTrailChronicler } from '../agents/trail-chronicler.js';
 import { createSummitSage } from '../agents/summit-sage.js';
+import { createCairnKeeper } from '../agents/cairn-keeper.js';
 
 const AGENT_META = [
   {
@@ -88,6 +90,13 @@ const AGENT_META = [
     blurb: 'Study coach. Domain readiness, mastery analytics, and what to review next — pure functions over run progress.',
   },
   {
+    id: 'cairn-keeper',
+    name: 'Cairn Keeper',
+    icon: '🗿',
+    color: '#b9a2d8',
+    blurb: 'Trail tales. Narrative choice encounters at story cairns — risks, bargains, and promises, deterministic from the run seed.',
+  },
+  {
     id: 'trail-chronicler',
     name: 'Trail Chronicler',
     icon: '📓',
@@ -109,6 +118,7 @@ export function createKernel() {
   const economy = createEconomyApi();
   const atlasAgent = createAtlasArtisan();
   const sageAgent = createSummitSage();
+  const keeperAgent = createCairnKeeper();
   const stewardAgent = createSandboxSteward();
   const chroniclerAgent = createTrailChronicler();
   const scheduler = createScheduler(CONFIG);
@@ -159,6 +169,7 @@ export function createKernel() {
     },
     atlas: atlasAgent,
     sage: sageAgent,
+    keeper: keeperAgent,
     steward: stewardAgent,
     chronicler: chroniclerAgent,
   };
@@ -185,6 +196,7 @@ export function createKernel() {
     makeCtx,
     emit,
     economy,
+    engine: ClimbEngine,
     buildRoute: (rnd, topic) => buildRoute(rnd, topic, CONFIG, HazardWarden),
     weakestDomain: (run, bank) => weakestDomainLetter(run, bank),
     pitchRestore: (node, mode, run) => pitchRestore(node, mode, run, CONFIG),

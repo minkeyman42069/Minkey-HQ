@@ -9,7 +9,7 @@ export const FOE_COLORS = {
   icewall: '#6fb0d0', windslab: '#7d93b0', sealedface: '#90a4b8', longwall: '#8a9a86', tempest: '#6a5a9a',
   closing: '#d6a94e', avalanche: '#b3bcc6', corniceridge: '#9fb4c8', frozentitan: '#7fd4e8',
   rockfall: '#c2a178', verglas: '#8fd0e8',
-  shrine: '#c9a86a', rest: '#d89b52',
+  shrine: '#c9a86a', rest: '#d89b52', tale: '#b9a2d8',
 };
 
 export function foeColor(kind) {
@@ -264,6 +264,14 @@ export function nShrine(alt) {
   };
 }
 
+export function nTale(alt) {
+  return {
+    kind: 'tale', icon: '🗿', title: 'Story Cairn',
+    blurb: 'A cairn taller than the trail needs, stacked by hands that wanted it noticed. Something waits here besides the wind, and it will ask you to choose.',
+    need: 0, restore: 0, boon: false, alt,
+  };
+}
+
 export function nCorniceRidge(need, alt) {
   return {
     kind: 'corniceridge', icon: '🌬️', title: 'Wind Lip',
@@ -335,7 +343,7 @@ export function nodeEmoji(kind) {
     switchback: '🪨', storm: '⛈️', gate: '🛡️', rest: '🏕️', summit: '🏔️', serac: '🧊', whiteout: '🌫️', crevasse: '🕳️',
     traverse: '🧗', thinair: '🫁', icefall: '☄️', void: '🌑', knife: '🗡️', berg: '⛏️', snowfield: '🌨️',
     couloir: '🗻', icewall: '💠', windslab: '🌀', sealedface: '🔒', longwall: '🪜', tempest: '🌪️',
-    closing: '⏳', avalanche: '💥', corniceridge: '🌬️', frozentitan: '🧊', rockfall: '🥌', verglas: '🪞', shrine: '⛩️',
+    closing: '⏳', avalanche: '💥', corniceridge: '🌬️', frozentitan: '🧊', rockfall: '🥌', verglas: '🪞', shrine: '⛩️', tale: '🗿',
   };
   return m[kind] || '⛰️';
 }
@@ -347,6 +355,7 @@ export function nodeSub(node) {
   if (node.kind === 'gate') return node.domain ? 'Weakest domain — ' + node.domain : 'Gatekeeper duel';
   if (node.kind === 'rest') return 'Catch your breath, then draft a boon';
   if (node.kind === 'shrine') return 'Leave an offering for a relic, or pass by';
+  if (node.kind === 'tale') return 'A trail tale waits — hear it out, then choose';
   if (node.kind === 'serac') return 'Fast and punishing — ' + n + ' before the ice lets go';
   if (node.kind === 'summit') return 'The final pitch — ' + n + ' to top out';
   if (node.kind === 'whiteout') return 'Move fast — ' + n + ' before the cloud closes';

@@ -1296,6 +1296,25 @@ var TrailBundle = (() => {
     n.hit = Math.round(n.hit * (1 + (act - 1) * 0.1));
     n.time = Math.max(8, n.time - (act - 1) * 2);
     if (n.restore) n.restore = Math.max(8, Math.round(n.restore * (1 - (act - 1) * 0.08)));
+    if (n.kind === "gate") {
+      if (act === 1) {
+        n.decay = true;
+        n.miss = Math.round(n.miss * 0.8);
+      } else if (act === 2) {
+        n.streakGate = true;
+        n.enrage = 1.3;
+        n.miss = Math.round(n.miss * 0.68);
+      } else if (act === 3) {
+        n.enrage = 1.4;
+        n.lapsePool = true;
+        n.startThreat = Math.max(n.startThreat || 0, 8);
+        n.miss = Math.round(n.miss * 0.82);
+        n.stages = [
+          { at: 2, title: "It turns a page", sub: "the questions sharpen \u2014 it has found an edge", set: { rise: +(n.rise * 1.12).toFixed(2) }, threat: 9 },
+          { at: 4, title: "It reads the last line", sub: "everything you have missed, all at once", set: { rise: +(n.rise * 1.28).toFixed(2) }, threat: 12 }
+        ];
+      }
+    }
     return n;
   }
   var BESTIARY = [
@@ -1322,7 +1341,7 @@ var TrailBundle = (() => {
     { fn: nAvalanche, a: "Release", m: "Release. At the halfway mark the slope lets go all at once." },
     { fn: nCorniceRidge, a: "Chaos ridge", m: "Chaos ridge. Gusts without warning, and a miss slides you back." },
     { fn: nFrozenTitan, a: "Armored elite", m: "Armored elite. Three shield layers, and it enrages when threat runs high." },
-    { fn: (n, al) => nGate(n, al, null), a: "Competence duel", m: "Competence duel. Draws every question from your weakest exam domain." },
+    { fn: (n, al) => nGate(n, al, null), a: "The examiners", m: "Three fights, not one: Bram rapid-fires on a tightening clock, Odile knocks you back on a miss, the Last Examiner drills everything you have ever missed in stages." },
     { fn: nSerac, a: "Elite", m: "Elite. Starts angry \u2014 a quarter of the threat bar is already lit." },
     { fn: nSummit, a: "Final pitch", m: "Final pitch in three stages \u2014 shoulder, cornice, top \u2014 each faster and angrier than the last." }
   ].map((e) => ({ ...e, t: e.fn(1, 0).tier }));

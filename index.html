@@ -1748,12 +1748,26 @@ function _enterCurrentNode(node){
   RUN.altitude=node.alt; RUN.ending=false;
   if(node.kind==='gate'){
     var _bossLine=ENC.node.bossLine||'The examiner is waiting.';
+    var _tell = node.lapsePool ? 'It asks only what you have missed before. Answer, and the ledger closes a little.'
+              : node.streakGate ? 'Miss here and she sends you two moves back down the ridge.'
+              : node.decay ? 'His clock tightens with every question. Answer on instinct.'
+              : '';
+    var _lap=[];
+    if(node.lapsePool && typeof META!=='undefined' && META.lapses){
+      _lap=Object.keys(META.lapses).filter(function(id){ return META.lapses[id]>0 && BANK[+id]; }).map(Number);
+    }
     if(RUN.topic){ ENC.node.domain=RUN.topic; ENC.node.blurb=_bossLine+' The subject today is '+RUN.topic+'.'; }
+    else if(node.lapsePool && _lap.length){
+      ENC.node.lapseIds=_lap; ENC.node.domain='your ledger of misses';
+      ENC.node.blurb=_bossLine+' It draws from every concept you have ever missed &mdash; '+_lap.length+' of them &mdash; and nothing else.';
+      setTimeout(function(){ banner(ENC.node.title||'The Last Examiner', 'It opens the ledger &mdash; '+_lap.length+' past miss'+(_lap.length===1?'':'es')); },200);
+    }
     else {
     var gd=weakestDomainLetter(); ENC.node.gateDomain=gd; ENC.node.domain=DOMAINS[gd].n;
     ENC.node.blurb=_bossLine+' The subject today is '+DOMAINS[gd].n+' — the one you know least. No pressure.';
     setTimeout(function(){ banner(ENC.node.title||'The examiner', 'Domain '+gd+': '+DOMAINS[gd].n); },200);
     }
+    if(_tell) setTimeout(function(){ banner('⚔️ '+(ENC.node.title||'The examiner'), _tell); },1050);
   }
   if(node.kind==='serac'){ setTimeout(function(){ banner('The ice groans','it was waiting for you'); },250); }
   if(node.kind==='storm'){ setTimeout(function(){ banner('Rising squall','only speed clears this ridge'); },250); }
@@ -1769,6 +1783,7 @@ function nextInEncounter(){
   var poolCat = RUN.topic || null;
   var ids;
   if(poolCat){ ids=BANK.filter(function(q){return q.cat===poolCat;}).map(function(q){return q.id;}); }
+  else if(ENC.node.lapseIds && ENC.node.lapseIds.length){ ids=ENC.node.lapseIds.slice(); }
   else if(ENC.node.gateDomain){ var gd=ENC.node.gateDomain; ids=BANK.filter(function(q){return domainOf(q)===gd;}).map(function(q){return q.id;}); }
   else { ids=BANK.map(function(q){return q.id;}); }
   var _stone=null; for(var _sid in RUN.stones){ if(RUN.stones[_sid]<=RUN.seen && (+_sid)!==ENC.lastId){ _stone=+_sid; break; } }
@@ -1814,7 +1829,10 @@ function resolve(correct, viaTimeout, srcEl){
     if(RUN.domMiss[_wd]===2) setTimeout(function(){ banner('\uD83E\uDDE0 The Sage marks your ledger', DOMAINS[_wd].n+' has slipped twice this climb \u2014 the examiners will notice'); }, 900); }
   else if(RUN.stoneNow===q.id){ RUN.recovered=(RUN.recovered||0)+1; if(RUN.relics&&RUN.relics.has('chalk')){ ENC.threat=0; RENDER.threat(); } if(RUN.nodeIdx>=Math.floor(RUN.route.length*0.55)) RUN.mastered.add(q.id); banner('Loose stone reclaimed','you brought it back'); }
   RUN.stoneNow=null;
-  if(correct){ AUDIO.correct(); flash('ok'); if(srcEl) burst(srcEl); if(before<lockTierNow() && p.tier>=lockTierNow()) sealLocked(); }
+  if(correct){ AUDIO.correct(); flash('ok'); if(srcEl) burst(srcEl); if(before<lockTierNow() && p.tier>=lockTierNow()) sealLocked();
+    if(ENC && ENC.node && ENC.node.lapsePool && typeof META!=='undefined' && META.lapses && META.lapses[q.id]){
+      META.lapses[q.id]--; if(META.lapses[q.id]<=0) delete META.lapses[q.id]; saveMeta();
+      setTimeout(function(){ banner('🪨 The ledger closes a little','a concept you once missed, answered under the worst pressure'); }, 700); } }
   else { AUDIO.wrong(viaTimeout); flash('no'); var _sc=document.getElementById('card'); _sc.classList.remove('shake'); void _sc.offsetWidth; _sc.classList.add('shake'); }
   var res=Trail.engine.resolveAnswer(Trail, RUN, ENC, { correct: correct, viaTimeout: viaTimeout, rnd: rnd });
   syncVitals(); applyEngineEvents(res.events);

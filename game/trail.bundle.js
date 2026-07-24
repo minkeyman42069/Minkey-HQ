@@ -1626,8 +1626,7 @@ var TrailBundle = (() => {
     { id: "first_ascent", ic: "\u26CF\uFE0F", name: "First Ascent", desc: "Summit a set line from the guidebook." },
     { id: "tale_5", ic: "\u{1F5FF}", name: "Keeper's Audience", desc: "Face five stories at the waymarks." },
     { id: "bird_friend", ic: "\u{1F426}", name: "Bird of Good Standing", desc: "Feed the ptarmigan, then summit. It keeps accounts." },
-    { id: "review_5", ic: "\u{1FAA8}", name: "Stone Mason", desc: "Reclaim loose stones in five Morning Reviews." },
-    { id: "streak_7", ic: "\u{1F525}", name: "Seven Days on the Mountain", desc: "Study seven days in a row." }
+    { id: "review_5", ic: "\u{1FAA8}", name: "Stone Mason", desc: "Reclaim loose stones in five Morning Reviews." }
   ];
   var HARD_KINDS = /* @__PURE__ */ new Set([
     "void",

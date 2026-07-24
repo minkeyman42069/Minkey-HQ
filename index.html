@@ -453,34 +453,6 @@ button:focus-visible,.opt:focus-visible,.boon:focus-visible{outline:2px solid #7
   background:rgba(95,206,159,.1);color:var(--ink);font-weight:700;font-size:13.5px;cursor:pointer;}
 .review-btn:disabled{opacity:.55;cursor:default;}
 .review-btn small{display:block;font-weight:400;color:var(--mut);font-size:11px;margin-top:2px;}
-.streak-banner{display:none;margin:0 0 14px;padding:12px 16px;border-radius:14px;text-align:center;
-  background:linear-gradient(180deg,rgba(242,140,60,.14),rgba(227,115,86,.07));border:1px solid rgba(242,140,60,.34);}
-.streak-banner.lit{display:block;animation:streakpop .5s ease;}
-@keyframes streakpop{0%{transform:scale(.94);opacity:0;}100%{transform:scale(1);opacity:1;}}
-.streak-flame{font-size:26px;line-height:1;display:block;margin-bottom:3px;}
-.streak-count{font-size:15px;font-weight:800;color:#ffd9a0;letter-spacing:.2px;}
-.streak-count b{color:#ff9a52;}
-.streak-note{font-size:11.5px;color:var(--mut);margin-top:3px;line-height:1.4;}
-.streak-dots{display:flex;justify-content:center;gap:5px;margin-top:8px;}
-.streak-dots i{width:9px;height:9px;border-radius:50%;background:#0d2138;border:1px solid rgba(127,164,190,.2);}
-.streak-dots i.on{background:#ff9a52;border-color:#ffb877;box-shadow:0 0 6px rgba(255,154,82,.5);}
-.register-block{display:none;margin:0 0 4px;}
-.register-block.has{display:block;}
-.register-block summary{cursor:pointer;list-style:none;padding:12px 15px;border-radius:var(--r-sm);
-  background:rgba(10,25,40,.55);border:1px solid var(--line);font-size:12.5px;color:var(--ink);}
-.register-block summary::-webkit-details-marker{display:none;}
-.register-block summary .rg-c{color:#f4d190;font-weight:700;font-family:'Space Mono',monospace;}
-.register-wrap{padding:6px 4px 2px;}
-.reg-row{display:flex;align-items:center;gap:10px;padding:8px 11px;margin:5px 0;border-radius:10px;
-  background:rgba(10,25,40,.4);border:1px solid var(--line);font-size:12px;}
-.reg-grade{flex:0 0 34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;
-  font-weight:800;font-family:'Space Grotesk',sans-serif;font-size:15px;}
-.reg-meta{flex:1;color:var(--mut);line-height:1.45;}
-.reg-meta b{color:var(--ink);font-weight:600;}
-.reg-date{flex:0 0 auto;color:var(--dim);font-family:'Space Mono',monospace;font-size:10.5px;}
-.best-faced{display:inline-block;margin-top:6px;font-size:10.5px;color:var(--dim);font-family:'Space Mono',monospace;}
-.best-faced b{color:#7fd4a0;}
-.best-faced.new b{color:#f4d190;}
 .sagecard{display:none;background:rgba(127,212,160,.07);border:1px solid rgba(127,212,160,.4);border-radius:var(--r-sm);
   padding:13px 15px;font-size:13.5px;line-height:1.55;margin:14px 0;}
 .sagecard .sg-hd{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#7fd4a0;margin-bottom:6px;}
@@ -841,9 +813,8 @@ body.lastlegs::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:
         </div>
         <h1 class="title">THE RBT <span class="k">TRAIL</span></h1>
         <p class="trail-tag">Know your terms, or the mountain wins.</p>
-        <p class="trail-lore">Climbers call it the Grandfather. It asks you everything you know, one pitch at a time, and it is scrupulously fair: fall as often as it takes &mdash; every concept you lock in stays locked, and the fires up there are friendlier than you have heard.</p>
+        <p class="trail-lore">Fall as often as it takes &mdash; every concept you lock in stays locked.</p>
       </div>
-      <div class="streak-banner" id="streakBanner"></div>
       <div class="trail-cta">
         <button class="cta big prime" id="climbBtn" aria-label="Start a full climb" onclick="beginRun(null)">&#129406; Climb the mountain</button>
       </div>
@@ -851,16 +822,15 @@ body.lastlegs::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:
         <button type="button" class="daily-btn" id="dailyBtn" aria-label="Play the seeded daily climb" onclick="beginDailyRidge()">&#127749; Today's Ridge</button>
       </div>
       <div class="ledger-block" id="ledgerBlock"></div>
-      <div class="register-block" id="registerBlock"></div>
-      <div class="oath-block">
-        <div class="oath-label">Swear an oath (optional \u2014 changes the whole climb)</div>
-        <div class="oath-row" id="oathRow"></div>
-      </div>
       <div class="act-row">
         <button type="button" class="act-btn" onclick="startExam()"><span class="act-ic">&#128221;</span><span class="act-lb">Board Sim &middot; 40Q</span></button>
         <button type="button" class="act-btn" onclick="openBestiary()"><span class="act-ic">&#128215;</span><span class="act-lb">Bestiary</span></button>
       </div>
-      <div class="trail-stats" id="trailStats"></div>
+      <details class="trail-panel">
+        <summary>Swear an oath &middot; optional, changes the whole climb</summary>
+        <div class="panel-in"><div class="oath-row" id="oathRow"></div></div>
+      </details>
+      <div class="trail-stats" id="trailStats" hidden></div>
       <div class="achieve-strip" id="achieveStrip"></div>
       <div class="audio-toggle"><button type="button" id="audioBtn" onclick="toggleAudio()">&#128264; Sound</button></div>
       <details class="trail-panel">
@@ -1744,8 +1714,8 @@ function freshRun(topic, opts){
 }
 function getSelectedOath(){ try{ return localStorage.getItem('rbtTrailOath')||'none'; }catch(e){ return 'none'; } }
 function setSelectedOath(id){ try{ localStorage.setItem('rbtTrailOath', id||'none'); }catch(e){} renderOaths(); }
-function beginRun(topic){ if(CONFIG.AUDIO) AUDIO.unlock(); var _adv=touchStreak(); if(_adv && META.streak.count>=2) setTimeout(function(){ banner('\uD83D\uDD25 Day '+META.streak.count,'you came back \u2014 the streak grows'); },900); RNG.fn=Math.random; RNG.seeded=false; RUN=freshRun(topic); RENDER.map(); show('map'); if(RUN.weather && RUN.weather.name!=='Clear Dawn') setTimeout(function(){ banner(RUN.weather.ic+' '+RUN.weather.name, RUN.weather.desc); },350); if(RUN.oath&&RUN.oath!=='none'){ var o=(OATHS||[]).find(function(x){return x.id===RUN.oath;}); if(o) setTimeout(function(){ banner(o.ic+' '+o.name+' sworn', o.desc); },600); } }
-function beginDailyRidge(){ touchStreak();
+function beginRun(topic){ if(CONFIG.AUDIO) AUDIO.unlock(); RNG.fn=Math.random; RNG.seeded=false; RUN=freshRun(topic); RENDER.map(); show('map'); if(RUN.weather && RUN.weather.name!=='Clear Dawn') setTimeout(function(){ banner(RUN.weather.ic+' '+RUN.weather.name, RUN.weather.desc); },350); if(RUN.oath&&RUN.oath!=='none'){ var o=(OATHS||[]).find(function(x){return x.id===RUN.oath;}); if(o) setTimeout(function(){ banner(o.ic+' '+o.name+' sworn', o.desc); },600); } }
+function beginDailyRidge(){
   if(typeof dailySeed!=='function'||typeof createSeededRng!=='function'){ beginRun(null); return; }
   if(META.dailyDone===dailySeed()){ banner("Today's Ridge",'cleared for today \u2014 the ridge resets at midnight'); return; }
   if(CONFIG.AUDIO) AUDIO.unlock();
@@ -1776,7 +1746,6 @@ function enterCurrentNode(){
 function _enterCurrentNode(node){
   ENC=Trail.engine.blankEnc(node, { threat: Trail.engine.entryThreat(node) });
   RUN.altitude=node.alt; RUN.ending=false;
-  if(node.need>0 && node.kind!=='rest' && node.kind!=='shrine' && node.kind!=='tale'){ noteFoe(node.kind,false); saveMeta(); }
   if(node.kind==='gate'){
     var _bossLine=ENC.node.bossLine||'The examiner is waiting.';
     if(RUN.topic){ ENC.node.domain=RUN.topic; ENC.node.blurb=_bossLine+' The subject today is '+RUN.topic+'.'; }
@@ -1859,7 +1828,6 @@ function afterQuestion(){ nextInEncounter(); }
 
 function clearEncounter(){
   clearInterval(RUN.timer); RUN.nodeCleared++;
-  if(ENC&&ENC.node) noteFoe(ENC.node.kind,true);
   var cout=Trail.emit('pitch:clear', trailCtx());
   var _bonus=cout.clearBonus||0;
   if(RUN.stamina>0 && RUN.stamina<=25){ RUN.clutch=(RUN.clutch||0)+1; banner('Clutch pitch','cleared on your last legs'); }
@@ -2112,14 +2080,10 @@ var RENDER = {
         var node=b.fn(4,3000), col=foeColor(node.kind);
         node=scaleNode(Object.assign({},node),3);
         var card=document.createElement('div'); card.className='bestcard'+(t>=4?' elite':'');
-        var fs=(META.foes&&META.foes[node.kind])||{faced:0,cleared:0};
-        var faced = fs.faced>0
-          ? '<span class="best-faced">Faced <b>'+fs.faced+'</b>&times; · cleared <b>'+fs.cleared+'</b></span>'
-          : '<span class="best-faced new">Not yet met on the mountain</span>';
         card.innerHTML='<div class="bestic" style="background:'+col+'22;border-color:'+col+'">'+node.icon+'</div>'
           +'<div class="bestbody"><div class="bestrow"><span class="bestname">'+node.title+'</span>'
           +'<span class="bestarch" style="color:'+col+'">'+b.a+'</span></div>'
-          +'<div class="bestmech">'+b.m+'</div><div class="bestlore">'+(node.blurb||'')+'</div>'+faced+'</div>';
+          +'<div class="bestmech">'+b.m+'</div><div class="bestlore">'+(node.blurb||'')+'</div></div>';
         host.appendChild(card);
       });
     });
@@ -2247,7 +2211,7 @@ function pickExamIds(n){
 function examPassed(pct){ return pct>=(CONFIG.EXAM_PASS||80); }
 function examBlueprint(n){ var ids=pickExamIds(n), c={A:0,B:0,C:0,D:0,E:0,F:0}; ids.forEach(function(i){ c[domainOf(BANK[i])]++; }); return c; }
 function startExam(){
-  if(CONFIG.AUDIO) AUDIO.unlock(); touchStreak(); RNG.fn=Math.random; RNG.seeded=false;
+  if(CONFIG.AUDIO) AUDIO.unlock(); RNG.fn=Math.random; RNG.seeded=false;
   EXAM={ ids:pickExamIds(CONFIG.EXAM_N||40), i:0, right:0, seen:0, dom:{}, missed:[], busy:false, view:null };
   document.getElementById('examResult').style.display='none';
   document.getElementById('examQuit').style.display='';
@@ -2359,7 +2323,7 @@ function pickReviewIds(n){
   return ids.slice(0,n).map(Number);
 }
 function startReview(){
-  if(CONFIG.AUDIO) AUDIO.unlock(); touchStreak(); RNG.fn=Math.random; RNG.seeded=false;
+  if(CONFIG.AUDIO) AUDIO.unlock(); RNG.fn=Math.random; RNG.seeded=false;
   var ids=pickReviewIds(10); if(!ids.length) return;
   EXAM={ ids:ids, i:0, right:0, seen:0, dom:{}, missed:[], busy:false, view:null, mode:'review' };
   document.getElementById('examResult').style.display='none';
@@ -2649,46 +2613,17 @@ function nodeSub(node){
   return n+' to clear';
 }
 /* ---------- META-PROGRESSION (permanent bank so a fall is never a reset) ---------- */
-var META={bank:{},runs:0,summits:0,bestAlt:0,miles:0,achievements:[],dailyDone:0,tales:0,lapses:{},reviews:0,streak:{count:0,best:0,last:0},register:[],foes:{},bestStreak:0};
-function loadMeta(){ try{ var s=localStorage.getItem('rbtTrailMeta'); if(s){ var o=JSON.parse(s); META={bank:o.bank||{},runs:o.runs||0,summits:o.summits||0,bestAlt:o.bestAlt||0,miles:o.miles||0,achievements:o.achievements||[],dailyDone:o.dailyDone||0,tales:o.tales||0,lapses:o.lapses||{},reviews:o.reviews||0,streak:o.streak||{count:0,best:0,last:0},register:o.register||[],foes:o.foes||{},bestStreak:o.bestStreak||0}; } }catch(e){} }
+var META={bank:{},runs:0,summits:0,bestAlt:0,miles:0,achievements:[],dailyDone:0,tales:0,lapses:{},reviews:0};
+function loadMeta(){ try{ var s=localStorage.getItem('rbtTrailMeta'); if(s){ var o=JSON.parse(s); META={bank:o.bank||{},runs:o.runs||0,summits:o.summits||0,bestAlt:o.bestAlt||0,miles:o.miles||0,achievements:o.achievements||[],dailyDone:o.dailyDone||0,tales:o.tales||0,lapses:o.lapses||{},reviews:o.reviews||0}; } }catch(e){} }
 function saveMeta(){ try{ localStorage.setItem('rbtTrailMeta',JSON.stringify(META)); }catch(e){} }
 function mergedBank(){ var m={},b=META.bank||{}; Object.keys(b).forEach(function(id){ m[id]=b[id]; }); Object.keys(SAVED).forEach(function(id){ m[id]=Math.max(m[id]||0,SAVED[id]); }); return m; }
 function boardReady(){ var b=META.bank||{},n=0; Object.keys(b).forEach(function(id){ if(b[id]>=CONFIG.LOCK_TIER) n++; }); return n; }
 var RANKS=[[0,'Novice'],[8,'Apprentice'],[25,'Technician'],[60,'Seasoned'],[120,'Board-Ready']];
 function careerRank(){ var br=boardReady(),name='Novice'; for(var i=0;i<RANKS.length;i++){ if(br>=RANKS[i][0]) name=RANKS[i][1]; } return name; }
-/* ---------- THE EXPEDITION LOG — the mountain remembers the climber ---------- */
-function dayStamp(d){ d=d||new Date(); return d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate(); }
-function touchStreak(){
-  var today=dayStamp();
-  var st=META.streak=META.streak||{count:0,best:0,last:0};
-  if(st.last===today) return false;
-  var yd=new Date(); yd.setDate(yd.getDate()-1);
-  st.count = (st.last===dayStamp(yd)) ? (st.count||0)+1 : 1;
-  st.last=today; st.best=Math.max(st.best||0, st.count);
-  saveMeta(); renderStreak();
-  if(st.count>=7) unlockAchievement('streak_7');
-  return true;
-}
-function streakActiveToday(){ var st=META.streak; return st && st.last===dayStamp(); }
-function pushRegister(grade){
-  META.register=META.register||[];
-  var w=(RUN.weather&&RUN.weather.name)||'Clear Dawn';
-  var acc=RUN.seen?Math.round(RUN.right/RUN.seen*100):0;
-  META.register.unshift({ d:Date.now(), g:grade, alt:Math.round(RUN.altitude), w:w, acc:acc, daily:!!RUN.daily });
-  if(META.register.length>30) META.register.length=30;
-}
-function noteFoe(kind, cleared){
-  if(!kind) return;
-  META.foes=META.foes||{};
-  var f=META.foes[kind]=META.foes[kind]||{faced:0,cleared:0};
-  if(cleared){ f.cleared++; } else { f.faced++; }
-}
 function commitRun(kind){
   Object.keys(RUN.prog).forEach(function(id){ var t=RUN.prog[id].tier||0; if(t>0) META.bank[id]=Math.max(META.bank[id]||0,t);
     var w=RUN.prog[id].wrong||0; if(w>0) META.lapses[id]=Math.min(9,(META.lapses[id]||0)+w); });
   META.runs++; if(kind==='summit') META.summits++;
-  META.bestStreak=Math.max(META.bestStreak||0, RUN.bestStreak||0);
-  if(kind==='summit'){ try{ pushRegister(gradeRun()); }catch(e){} }
   if(RUN.daily && kind==='summit' && typeof dailySeed==='function') META.dailyDone=dailySeed();
   META.bestAlt=Math.max(META.bestAlt, Math.round(RUN.altitude));
   META.miles+=Math.max(0, Math.round(RUN.altitude-1600));
@@ -2794,43 +2729,7 @@ function confettiBurst(){
     (function(el){ setTimeout(function(){el.remove();},3200); })(p);
   }
 }
-function gradeTone(g){ return {S:'#f4d190',A:'#7fd4a0','A-':'#7fd4a0',B:'#8fc4dd',C:'#c9a86a',D:'#e0a06a',E:'#e0866a',F:'#e0866a'}[g]||'#8fc4dd'; }
-function renderStreak(){
-  var el=document.getElementById('streakBanner'); if(!el) return;
-  var st=META.streak||{count:0,best:0,last:0};
-  var today=dayStamp(); var yd=new Date(); yd.setDate(yd.getDate()-1); var yday=dayStamp(yd);
-  var alive = st.last===today || st.last===yday;
-  var cur = alive ? (st.count||0) : 0;
-  if(cur<=0){ el.className='streak-banner'; el.innerHTML=''; return; }
-  var studiedToday = st.last===today;
-  var dots=''; for(var i=0;i<7;i++){ dots+='<i class="'+(i<Math.min(cur,7)?'on':'')+'"></i>'; }
-  var note = studiedToday
-    ? 'On the mountain today. Come back tomorrow and it keeps burning.'
-    : 'Still lit from yesterday \u2014 one climb or review today keeps it alive.';
-  if(st.best>cur) note += ' \u00b7 best '+st.best;
-  el.className='streak-banner lit';
-  el.innerHTML='<span class="streak-flame">\uD83D\uDD25</span>'
-    +'<div class="streak-count"><b>'+cur+'</b>-day climbing streak</div>'
-    +'<div class="streak-dots">'+dots+'</div>'
-    +'<div class="streak-note">'+note+'</div>';
-}
-function renderRegister(){
-  var el=document.getElementById('registerBlock'); if(!el) return;
-  var reg=META.register||[];
-  if(!reg.length){ el.className='register-block'; el.innerHTML=''; return; }
-  var rows=reg.slice(0,8).map(function(r){
-    var when=new Date(r.d); var ds=(when.getMonth()+1)+'/'+when.getDate();
-    var gc=gradeTone(r.g);
-    return '<div class="reg-row"><div class="reg-grade" style="background:'+gc+'22;color:'+gc+';border:1px solid '+gc+'55">'+r.g+'</div>'
-      +'<div class="reg-meta"><b>'+fmt(r.alt)+'m</b> \u00b7 '+r.acc+'% accuracy \u00b7 '+r.w+(r.daily?' \u00b7 Ridge':'')+'</div>'
-      +'<div class="reg-date">'+ds+'</div></div>';
-  }).join('');
-  var more=reg.length>8?'<div class="mmore">+'+(reg.length-8)+' more in the register</div>':'';
-  el.className='register-block has';
-  el.innerHTML='<details><summary>\uD83C\uDFD4\uFE0F Summit register \u2014 <span class="rg-c">'+META.summits+' top'+(META.summits===1?'':'s')+'</span>'+(META.bestStreak?', best run '+META.bestStreak+'\u00d7':'')+'</summary><div class="register-wrap">'+rows+more+'</div></details>';
-}
 function renderMeta(){
-  renderStreak(); renderRegister();
   var el=document.getElementById('trailStats'); if(!el) return;
   if(typeof Trail!=='undefined' && Trail.agents && Trail.agents.atlas){
     el.innerHTML=Trail.agents.atlas.api.statsMarkup(META,{boardReady:boardReady,careerRank:careerRank,fmt:fmt,BANK:BANK,CONFIG:CONFIG});

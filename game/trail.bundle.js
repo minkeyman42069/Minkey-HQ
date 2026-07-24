@@ -743,7 +743,7 @@ var TrailBundle = (() => {
       kind: "summit",
       icon: "\u{1F3D4}\uFE0F",
       title: "Summit Push",
-      blurb: "Six moves of ridge left. The shoulder is steady, the cornice is not, and the last two moves belong to whoever wants them more.",
+      blurb: "Six moves of ridge to the top. The first few are steady. The last cross a cornice \u2014 snow curled over open air \u2014 with no margin left on them.",
       need,
       tier: 5,
       time: 15,
@@ -768,7 +768,7 @@ var TrailBundle = (() => {
       kind: "serac",
       icon: "\u{1F9CA}",
       title: "Falling Serac",
-      blurb: "A hanging wall of ice, creaking before you even rope up. It was falling today with or without you. Be quick, and be elsewhere.",
+      blurb: "A hanging wall of ice, groaning before you even rope up. It will come down today whether you are under it or not. Climb fast.",
       need,
       tier: 5,
       time: 13,
@@ -1272,9 +1272,9 @@ var TrailBundle = (() => {
     };
   }
   var ACTS = [
-    { name: "The Approach", flavor: 'Warm rock, easy glacier, a whole mountain overhead. "Enjoy this part," Marta says. "It is the only part that is enjoying you back."' },
-    { name: "The Headwall", flavor: "The face goes vertical and stops being polite about it. Everything you climb from here, you earn." },
-    { name: "The Death Zone", flavor: "Above the last camp the air quits helping and the mountain plays its whole hand. Climb like you mean to be remembered." }
+    { name: "The Approach", flavor: "Firm rock, open glacier, the last of the day\u2019s warmth still in the stone. The summit is a long way up. Down here the ground is easy, and it does not stay that way." },
+    { name: "The Headwall", flavor: "The glacier ends at a wall of rock and blue ice, dead vertical. The walking is finished. From here it is your hands, your edges, and what you actually know." },
+    { name: "The Death Zone", flavor: "Above the last camp the air holds half the oxygen it did below. Your legs burn, your thinking blurs, and nothing you do recovers. Keep moving." }
   ];
   var GATEKEEPERS = {
     1: { name: "Bram of the First Narrows", line: '"Everyone thinks they know the low ground. Show me."', beaten: '"Hm. Go on, then. Odile is less patient than I am."' },

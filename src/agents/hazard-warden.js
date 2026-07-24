@@ -33,7 +33,7 @@ export const TIER_COMBAT = {
 export function nSwitch(need, alt) {
   return {
     kind: 'switchback', icon: '🪨', title: 'Scree Slope',
-    blurb: 'A slope of broken rock that moves underfoot. Slow is fine. Wrong is what slides.',
+    blurb: 'A slope of loose, broken rock that shifts under your boots. Test each hold and keep your weight easy; the scree slides when you hurry it.',
     need, tier: 1, time: 18, rise: 0.8, miss: 26, ease: 7, max: 100, hit: 12, restore: 14, boon: false, alt,
     tname: 'Loose scree', tic: '🪨',
   };
@@ -42,7 +42,7 @@ export function nSwitch(need, alt) {
 export function nStorm(need, alt) {
   return {
     kind: 'storm', icon: '🌩️', title: 'Rising Squall',
-    blurb: 'Snow coming in sideways and worse by the second. Nothing you know will quiet it. Outrun it or wear it.',
+    blurb: 'Snow driving in sideways, harder by the second. Answering right will not calm this one — only speed gets you clear of it.',
     need, tier: 2, time: 12, rise: 1.85, miss: 15, ease: 0, max: 100, hit: 15, restore: 16, boon: true, noBoonEase: true, alt,
     tname: 'The squall', tic: '🌩️',
   };
@@ -95,7 +95,7 @@ export function nSerac(need, alt) {
 export function nWhiteout(need, alt) {
   return {
     kind: 'whiteout', icon: '🌫️', title: 'Blinding Whiteout',
-    blurb: 'The cloud comes up the face and the world goes to milk. No ridge, no sky, no down. Climb by feel, and climb now.',
+    blurb: 'The cloud swallows the face and everything goes white — no ridge, no sky, no sense of down. You climb this one by feel, and you climb it fast.',
     need, tier: 4, time: 10, rise: 2.4, miss: 13, ease: 5, max: 100, hit: 15, restore: 16, boon: true, alt,
     tname: 'The whiteout', tic: '🌫️',
   };
@@ -104,7 +104,7 @@ export function nWhiteout(need, alt) {
 export function nCrevasse(need, alt) {
   return {
     kind: 'crevasse', icon: '🕳️', title: 'Snow Bridge',
-    blurb: 'A rib of old snow over a dark with no bottom. A few careful steps and you are across. It only counts the wrong ones.',
+    blurb: 'A rib of old snow bridging a crack with no visible bottom. A few careful steps put you across. One wrong step drops you through it.',
     need, tier: 2, time: 15, rise: 1.25, miss: 32, ease: 11, max: 100, hit: 24, restore: 18, boon: true, alt,
     tname: 'The snow bridge', tic: '🕳️',
   };
@@ -113,7 +113,7 @@ export function nCrevasse(need, alt) {
 export function nTraverse(need, alt) {
   return {
     kind: 'traverse', icon: '🧗', title: 'Exposed Traverse',
-    blurb: 'Ledges strung across the face for the better part of a mile. None of it is hard. All of it is long, and the wind leans on you the whole way.',
+    blurb: 'Narrow ledges strung across the face for most of a mile. No single move is hard; there are just a great many of them, and the wind pushes at you the whole way.',
     need, tier: 1, time: 16, rise: 1.5, miss: 16, ease: 6, max: 100, hit: 14, restore: 16, boon: true, alt,
     tname: 'The traverse', tic: '🧗',
   };
@@ -122,7 +122,7 @@ export function nTraverse(need, alt) {
 export function nThinAir(need, alt) {
   return {
     kind: 'thinair', icon: '🫁', title: 'The Thin Air',
-    blurb: 'The air up here is a rumor. Your body burns whether you move or not — so move.',
+    blurb: 'This high, every breath gives back less than it should. Your body burns through itself whether you climb or stand still, so keep climbing.',
     need, tier: 4, time: 16, rise: 1.1, miss: 18, ease: 8, max: 100, hit: 13, restore: 16, boon: true, drain: 0.34, alt,
     tname: 'Thin air', tic: '🫁',
   };
@@ -131,7 +131,7 @@ export function nThinAir(need, alt) {
 export function nIcefall(need, alt) {
   return {
     kind: 'icefall', icon: '☄️', title: 'The Icefall',
-    blurb: 'The serac field above calves on its own clock, tons at a time. Watch. Count. Cross. The ice does not aim, and it does not need to.',
+    blurb: 'The ice field above sheds on its own schedule, tons of it at a time. Learn the timing between the falls and cross in the gaps.',
     need, tier: 4, time: 14, rise: 0.8, miss: 18, ease: 9, max: 100, hit: 15, restore: 16, boon: true, spike: 13, spikeEvery: 5, alt,
     tname: 'The icefall', tic: '☄️',
   };
@@ -167,7 +167,7 @@ export function nBergschrund(need, alt) {
 export function nSnowfield(need, alt) {
   return {
     kind: 'snowfield', icon: '🌨️', title: 'The Snowfield',
-    blurb: 'Thigh-deep powder that swallows your mistakes along with your boots. Slow going. Kind going. Find a rhythm and keep it.',
+    blurb: 'Thigh-deep powder. Every step is work, but the soft snow forgives a clumsy one. Slow, tiring, and the gentlest ground you will find up here. Find a rhythm and keep it.',
     need, tier: 1, time: 18, rise: 0.7, miss: 12, ease: 10, max: 100, hit: 10, restore: 14, boon: true, alt,
     tname: 'The snowfield', tic: '🌨️',
   };
@@ -185,7 +185,7 @@ export function nCouloir(need, alt) {
 export function nIcewall(need, alt) {
   return {
     kind: 'icewall', icon: '💠', title: 'The Ice Wall',
-    blurb: 'Ninety degrees of blue ice. Swing, test, trust, step up. Rush one placement and the whole pitch knows it.',
+    blurb: 'Ninety degrees of blue ice. Swing the axe, test it, weight it, step up, and again. Rush one placement and it fails with your weight on it.',
     need, tier: 3, time: 14, rise: 1.6, miss: 24, ease: 9, max: 100, hit: 20, restore: 18, boon: true, alt,
     tname: 'The ice wall', tic: '💠',
   };
@@ -194,7 +194,7 @@ export function nIcewall(need, alt) {
 export function nWindslab(need, alt) {
   return {
     kind: 'windslab', icon: '🌀', title: 'Gust Field',
-    blurb: 'Wind-packed slabs that boom underfoot. The gusts keep no schedule and send no warning. Stay low and keep moving.',
+    blurb: 'Wind-packed slabs that boom underfoot. The gusts come with no pattern and no warning. Stay low and keep moving.',
     need, tier: 2, time: 14, rise: 1.0, miss: 16, ease: 8, max: 100, hit: 16, restore: 16, boon: true, gust: 0.11, alt,
     tname: 'The gust field', tic: '🌀',
   };
@@ -212,7 +212,7 @@ export function nSealedFace(need, alt) {
 export function nLongWall(need, alt) {
   return {
     kind: 'longwall', icon: '🪜', title: 'The Long Wall',
-    blurb: 'You cannot see the top from the bottom, and not from halfway either. The first breather on this wall helps. The fifth barely does.',
+    blurb: 'A wall so long you cannot see the top of it, even from halfway up. The rests still come, but each one gives back a little less than the last.',
     need, tier: 3, time: 16, rise: 1.5, miss: 20, ease: 11, max: 100, hit: 16, restore: 16, boon: true, fatigue: true, alt,
     tname: 'The long wall', tic: '🪜',
   };
@@ -221,7 +221,7 @@ export function nLongWall(need, alt) {
 export function nTempest(need, alt) {
   return {
     kind: 'tempest', icon: '🌪️', title: 'The Tempest',
-    blurb: 'A storm with an appetite. Let the danger build and the wind rises to meet it, driving you toward the edge it wants you over. Starve it calm.',
+    blurb: 'This storm builds on itself. Let the threat climb past halfway and the wind doubles, shoving you toward the drop. Keep the threat low and it stays climbable.',
     need, tier: 4, time: 13, rise: 1.55, miss: 22, ease: 8, max: 100, hit: 18, restore: 18, boon: true, enrage: 1.9, alt,
     tname: 'The tempest', tic: '🌪️',
   };
@@ -230,7 +230,7 @@ export function nTempest(need, alt) {
 export function nClosing(need, alt) {
   return {
     kind: 'closing', icon: '⏳', title: 'The Closing Window',
-    blurb: 'The forecast bought you an hour and the mountain is spending it fast. Each chance you get is briefer than the last. Go.',
+    blurb: 'The weather window is closing, and fast. Each question leaves you less time than the one before. Move.',
     need, tier: 4, time: 14, rise: 2.0, miss: 24, ease: 7, max: 100, hit: 17, restore: 18, boon: true, decay: true, alt,
     tname: 'The closing window', tic: '⏳',
   };
@@ -239,7 +239,7 @@ export function nClosing(need, alt) {
 export function nAvalanche(need, alt) {
   return {
     kind: 'avalanche', icon: '💥', title: 'The Avalanche',
-    blurb: 'A loaded slope, quiet the way held breath is quiet. Somewhere past the middle it lets go. Where you stand when it does is up to you.',
+    blurb: 'A slope loaded with snow, silent for now. Somewhere past the halfway mark it releases all at once. Get the hard climbing done before it does.',
     need, tier: 4, time: 15, rise: 1.25, miss: 22, ease: 9, max: 100, hit: 20, restore: 18, boon: true, phase: true, alt,
     tname: 'The avalanche', tic: '💥',
   };
@@ -266,7 +266,7 @@ export function nVerglas(need, alt) {
 export function nShrine(alt) {
   return {
     kind: 'shrine', icon: '⛩️', title: 'Weathered Shrine',
-    blurb: 'Stacked stones and faded prayer flags. Climbers leave an offering here for luck. Sometimes the luck is real.',
+    blurb: 'Stacked stones and old prayer flags, left by climbers before the hard ground above. You could leave something too.',
     need: 0, restore: 0, boon: false, alt,
   };
 }
@@ -282,7 +282,7 @@ export function nTale(alt) {
 export function nCorniceRidge(need, alt) {
   return {
     kind: 'corniceridge', icon: '🌬️', title: 'Wind Lip',
-    blurb: 'A lip of snow curled over empty air by wind that has not stopped in years. It bucks without warning, and a slip undoes honest work.',
+    blurb: 'A lip of snow curled out over empty air, shaped by wind that never quits. It heaves without warning, and a slip here drops you back down the ridge.',
     need, tier: 3, time: 15, rise: 0.9, miss: 14, ease: 9, max: 100, hit: 15, restore: 18, boon: true, gust: 0.05, streakGate: true, alt,
     tname: 'The wind lip', tic: '🌬️',
   };
@@ -291,7 +291,7 @@ export function nCorniceRidge(need, alt) {
 export function nFrozenTitan(need, alt) {
   return {
     kind: 'frozentitan', icon: '🧊', title: 'Glacier Block',
-    blurb: 'A pillar of glacier ice three winters thick. All three layers break before the climbing counts, and old ice splinters hard when it starts to lose.',
+    blurb: 'A pillar of glacier ice, three winters thick. All three layers have to break before any climbing counts, and the old ice throws sharp shards once it starts to fail.',
     need, tier: 4, time: 14, rise: 1.1, miss: 19, ease: 9, max: 100, hit: 17, restore: 20, boon: true, shield: 3, enrage: 1.8, alt,
     tname: 'The glacier block', tic: '🧊',
   };

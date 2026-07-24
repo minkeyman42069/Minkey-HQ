@@ -70,7 +70,7 @@ export function nRest(alt, configRef) {
 export function nSummit(need, alt) {
   return {
     kind: 'summit', icon: '🏔️', title: 'Summit Push',
-    blurb: 'Six moves of ridge left. The shoulder is steady, the cornice is not, and the last two moves belong to whoever wants them more.',
+    blurb: 'Six moves of ridge to the top. The first few are steady. The last cross a cornice — snow curled over open air — with no margin left on them.',
     need, tier: 5, time: 15, rise: 2.1, miss: 22, ease: 8, max: 100, hit: 20, restore: 14, boon: false, alt,
     stages: [
       { at: 2, title: 'The Shoulder is behind you', sub: 'the ridge narrows — the wind picks a side', set: { rise: 2.7 }, threat: 12 },
@@ -83,7 +83,7 @@ export function nSummit(need, alt) {
 export function nSerac(need, alt) {
   return {
     kind: 'serac', icon: '🧊', title: 'Falling Serac',
-    blurb: 'A hanging wall of ice, creaking before you even rope up. It was falling today with or without you. Be quick, and be elsewhere.',
+    blurb: 'A hanging wall of ice, groaning before you even rope up. It will come down today whether you are under it or not. Climb fast.',
     need, tier: 5, time: 13, rise: 2.6, miss: 22, ease: 10, max: 100, hit: 22, restore: 20, boon: true, alt,
     stages: [
       { at: 3, title: 'The ice lets go above', sub: 'run the last moves — do not look up', set: { rise: 3.1 }, threat: 18 },
@@ -298,9 +298,9 @@ export function nFrozenTitan(need, alt) {
 }
 
 export const ACTS = [
-  { name: 'The Approach', flavor: 'Warm rock, easy glacier, a whole mountain overhead. "Enjoy this part," Marta says. "It is the only part that is enjoying you back."' },
-  { name: 'The Headwall', flavor: 'The face goes vertical and stops being polite about it. Everything you climb from here, you earn.' },
-  { name: 'The Death Zone', flavor: 'Above the last camp the air quits helping and the mountain plays its whole hand. Climb like you mean to be remembered.' },
+  { name: 'The Approach', flavor: 'Firm rock, open glacier, the last of the day’s warmth still in the stone. The summit is a long way up. Down here the ground is easy, and it does not stay that way.' },
+  { name: 'The Headwall', flavor: 'The glacier ends at a wall of rock and blue ice, dead vertical. The walking is finished. From here it is your hands, your edges, and what you actually know.' },
+  { name: 'The Death Zone', flavor: 'Above the last camp the air holds half the oxygen it did below. Your legs burn, your thinking blurs, and nothing you do recovers. Keep moving.' },
 ];
 
 /** The three examiners. Every climber meets them in order. */

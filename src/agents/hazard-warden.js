@@ -33,7 +33,7 @@ export const TIER_COMBAT = {
 export function nSwitch(need, alt) {
   return {
     kind: 'switchback', icon: '🪨', title: 'Scree Slope',
-    blurb: 'A slope of loose, broken rock that shifts under your boots. Test each hold and keep your weight easy; the scree slides when you hurry it.',
+    blurb: 'A slope of loose, shifting rock. Take your time and it is easy ground. Make one wrong move, though, and the whole slope slides out from under you.',
     need, tier: 1, time: 18, rise: 0.8, miss: 26, ease: 7, max: 100, hit: 12, restore: 14, boon: false, alt,
     tname: 'Loose scree', tic: '🪨',
   };
@@ -185,7 +185,7 @@ export function nCouloir(need, alt) {
 export function nIcewall(need, alt) {
   return {
     kind: 'icewall', icon: '💠', title: 'The Ice Wall',
-    blurb: 'Ninety degrees of blue ice. Swing the axe, test it, weight it, step up, and again. Rush one placement and it fails with your weight on it.',
+    blurb: 'Ninety degrees of blue ice. Swing the axe, test it, weight it, step up, and again. Rush one of those moves and it fails with your weight on it.',
     need, tier: 3, time: 14, rise: 1.6, miss: 24, ease: 9, max: 100, hit: 20, restore: 18, boon: true, alt,
     tname: 'The ice wall', tic: '💠',
   };
@@ -257,7 +257,7 @@ export function nRockfall(need, alt) {
 export function nVerglas(need, alt) {
   return {
     kind: 'verglas', icon: '🪞', title: 'Black Ice',
-    blurb: 'Meltwater froze over the rock in a skin too thin to see. Your edges bite for a moment after every move. Move again before they skate.',
+    blurb: 'Meltwater froze over the rock in a skin too thin to see. Your boots hold for a second after each step, then start to slide. The only way up is to keep moving before they do.',
     need, tier: 3, time: 15, rise: 1.9, miss: 18, ease: 4, max: 100, hit: 17, restore: 18, boon: true, swift: 9, alt,
     tname: 'The black ice', tic: '🪞',
   };
@@ -299,7 +299,7 @@ export function nFrozenTitan(need, alt) {
 
 export const ACTS = [
   { name: 'The Approach', flavor: 'Firm rock, open glacier, the last of the day’s warmth still in the stone. The summit stands a long way overhead.' },
-  { name: 'The Headwall', flavor: 'The glacier ends at a wall of rock and blue ice, dead vertical. The walking is finished. From here it is your hands, your edges, and what you actually know.' },
+  { name: 'The Headwall', flavor: 'The glacier ends at a wall of rock and blue ice, dead vertical. The walking is over. Everything above here is climbed by hand, and it runs on how much you actually know.' },
   { name: 'The Death Zone', flavor: 'Above the last camp the air holds half the oxygen it did below. Your legs burn, your thoughts blur, your body stops recovering. Keep moving.' },
 ];
 

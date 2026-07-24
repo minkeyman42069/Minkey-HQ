@@ -38,7 +38,7 @@ You can also open `index.html` directly in a browser — works offline after the
 
 On the route you'll pass **waymarks** — short story encounters with a real mechanical choice (wager stamina on a ghost rope, trade breath for an easier pitch, tend an unmarked grave). Every outcome is deterministic from the run seed, so Today's Ridge tells every climber the same tales. After a climb, the **Summit Sage** reads your ledger on the debrief screen: which exam domain to focus, where accuracy dipped, and which concepts to open the next climb with. And the mountain remembers: every miss becomes a **loose stone** in your lifetime ledger. The trailhead shows your mastery across all six exam domains, **Morning Review** drills exactly the concepts you keep missing (each clean answer promotes them a Leitner tier), and the named Gatekeepers pick their subject from everything you have ever gotten wrong — not just today.
 
-After each run you receive an `RBT5:…` trail-log code. Paste it on the trailhead to import concept tiers from finished climbs.
+The mountain also keeps a record of *you*: a **daily study streak** at the trailhead (the proven way to actually show up), a **summit register** signing every top with its grade, weather, and date, and a **living bestiary** that tracks how many times you have faced and cleared each hazard. After each run you receive an `RBT5:…` trail-log code. Paste it on the trailhead to import concept tiers from finished climbs.
 
 The sandbox's **Route Setter** lets you author a named line, grade it (alpine F–ED via Monte Carlo through the real agent bus), and cut a `LINE1:…` code. Anyone who pastes that code at the trailhead climbs your set route — summiting an imported line earns the **First Ascent** badge.
 

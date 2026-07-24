@@ -51,6 +51,7 @@ export const ACHIEVEMENTS = [
   { id: 'tale_5', ic: '🗿', name: "Keeper's Audience", desc: 'Face five stories at the waymarks.' },
   { id: 'bird_friend', ic: '🐦', name: 'Bird of Good Standing', desc: 'Feed the ptarmigan, then summit. It keeps accounts.' },
   { id: 'review_5', ic: '🪨', name: 'Stone Mason', desc: 'Reclaim loose stones in five Morning Reviews.' },
+  { id: 'streak_7', ic: '🔥', name: 'Seven Days on the Mountain', desc: 'Study seven days in a row.' },
 ];
 
 const HARD_KINDS = new Set([

@@ -58,7 +58,12 @@ per pass, not one sweep.
   strongest writing in the game, so this was surgical: excised the punchy
   fragment closers, the parallel-cringe ("Write true, climb true"), a couple of
   smug aphorisms, and one self-aware line ("that is the whole game"). Voice kept.
-- ○ **Examiner dialogue** — Bram, Odile, the Last Examiner.
+- ✅ **Examiner dialogue** — Bram, Odile, the Last Examiner, made three
+  distinct voices instead of one; the enemy blurbs given a final identity pass.
+- ✅ **Weather** — the four sky conditions. Cut the em-dash aside and the punchy
+  "Pack patience" closer, dropped the game-y "short clocks," and made each one
+  state its actual effect (faster threat, less time, less healing, or nothing).
+- ○ **Oath & gear descriptions.**
 - ✅ **Banners & event lines** — the mid-climb call-outs. Cut the tics (the
   em-dash asides, the fortune-cookie "all that is left is what you know") and
   built a variety system: the frequent banners (strikes, crux, knockback, last

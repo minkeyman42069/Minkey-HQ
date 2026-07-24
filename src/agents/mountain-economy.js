@@ -3,10 +3,10 @@
  */
 
 export const WEATHERS = [
-  { name: 'Clear Dawn', ic: '\uD83C\uDF04', rise: 1, time: 1, heal: 1, score: 1, desc: 'A rare, kind morning. No tricks today — just you and the route.' },
-  { name: 'Gathering Storm', ic: '\u26C8\uFE0F', rise: 1.18, time: 1, heal: 1, score: 1.1, desc: 'Trouble builds faster all day. Summit in this and it counts for more.' },
-  { name: 'Dead of Night', ic: '\uD83C\uDF0C', rise: 1, time: 0.88, heal: 1, score: 1.15, desc: 'Short clocks in the dark, but the mountain drops more treasure at night.' },
-  { name: 'Thin Season', ic: '\uD83E\uDD76', rise: 1, time: 1, heal: 0.75, score: 1.12, desc: 'Camps and ledges heal less this season. Pack patience.' },
+  { name: 'Clear Dawn', ic: '\uD83C\uDF04', rise: 1, time: 1, heal: 1, score: 1, desc: 'A clear, still morning, the rarest kind of weather this high. Nothing works against you today but the climb itself.' },
+  { name: 'Gathering Storm', ic: '\u26C8\uFE0F', rise: 1.18, time: 1, heal: 1, score: 1.1, desc: 'A storm building over the high peaks, hours out but coming for you. The threat rises faster all day under it, and a summit earned in this counts for more.' },
+  { name: 'Dead of Night', ic: '\uD83C\uDF0C', rise: 1, time: 0.88, heal: 1, score: 1.15, desc: 'You climb this one by headlamp, with less time to read each move. In return, the mountain gives up more of its buried gear in the dark.' },
+  { name: 'Thin Season', ic: '\uD83E\uDD76', rise: 1, time: 1, heal: 0.75, score: 1.12, desc: 'The lean months, when the mountain gives nothing back easily. Every camp and every ledge restores less than it should.' },
 ];
 
 export const RELICS = {

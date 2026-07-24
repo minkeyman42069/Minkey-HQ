@@ -64,7 +64,7 @@ export const BOONS = {
     name: 'Tailwind',
     tag: 'speed',
     rare: false,
-    desc: '+5 seconds on the focus timer.',
+    desc: '+5 seconds on every clock. Time is stamina you have not spent yet.',
   },
   coldfront: {
     ic: '❄️',
@@ -127,7 +127,7 @@ export const BOONS = {
     name: 'High Camp',
     tag: 'streak',
     rare: true,
-    desc: 'Clearing a pitch on a streak restores extra stamina.',
+    desc: 'Finish a pitch on a 3+ streak and the ledge heals you extra.',
   },
   quickdraw: {
     ic: '⏱️',
@@ -141,7 +141,7 @@ export const BOONS = {
     name: 'Flare',
     tag: 'threat',
     rare: true,
-    desc: 'Twice per climb, zero out the threat meter.',
+    desc: 'Twice per climb, fire it and the threat meter drops to zero. Save one for the summit.',
   },
   allin: {
     ic: '🎲',

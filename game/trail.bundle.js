@@ -1588,28 +1588,28 @@ var TrailBundle = (() => {
       id: "none",
       name: "Open Route",
       ic: "\u{1F9ED}",
-      desc: "No vow. Standard climb.",
+      desc: "No vow, no strings. The mountain as it comes.",
       mods: {}
     },
     {
       id: "swift",
       name: "Swift Line",
       ic: "\u26A1",
-      desc: "+18% focus timer. Passive threat builds 12% faster.",
+      desc: "More time to think (+18% clock), but the mountain moves quicker too (+12% threat). For climbers who read every option.",
       mods: { time: 1.18, rise: 1.12 }
     },
     {
       id: "iron",
       name: "Iron Lungs",
       ic: "\u{1FAC1}",
-      desc: "Miss & strike costs \u221218%. Camp heals \u221222%.",
+      desc: "Hits hurt less (\u221218% miss and strike costs), camps help less (\u221222% heals). For climbers who trust their floor.",
       mods: { stamCost: 0.82, heal: 0.78 }
     },
     {
       id: "scholar",
       name: "Scholar's Vow",
       ic: "\u{1F4DA}",
-      desc: "Gatekeepers hit harder (+25% strike). Extra boon draft entering Act III.",
+      desc: "The examiners hit +25% harder, and you carry extra gear into Act III. For climbers who want the fight.",
       mods: { gateHit: 1.25, act3Draft: true }
     }
   ];
@@ -1874,7 +1874,7 @@ var TrailBundle = (() => {
       name: "Tailwind",
       tag: "speed",
       rare: false,
-      desc: "+5 seconds on the focus timer."
+      desc: "+5 seconds on every clock. Time is stamina you have not spent yet."
     },
     coldfront: {
       ic: "\u2744\uFE0F",
@@ -1937,7 +1937,7 @@ var TrailBundle = (() => {
       name: "High Camp",
       tag: "streak",
       rare: true,
-      desc: "Clearing a pitch on a streak restores extra stamina."
+      desc: "Finish a pitch on a 3+ streak and the ledge heals you extra."
     },
     quickdraw: {
       ic: "\u23F1\uFE0F",
@@ -1951,7 +1951,7 @@ var TrailBundle = (() => {
       name: "Flare",
       tag: "threat",
       rare: true,
-      desc: "Twice per climb, zero out the threat meter."
+      desc: "Twice per climb, fire it and the threat meter drops to zero. Save one for the summit."
     },
     allin: {
       ic: "\u{1F3B2}",
@@ -2237,9 +2237,9 @@ var TrailBundle = (() => {
     iceaxe: { ic: "\u26CF\uFE0F", name: "Ice Axe", desc: "Once per climb, arrest a fatal fall and hold on at 1 stamina." },
     carabiner: { ic: "\u{1F517}", name: "Lucky Carabiner", desc: "The first strike each pitch costs half." },
     oxygen: { ic: "\u{1F4A8}", name: "Oxygen Cache", desc: "Firing a flare also restores 12 stamina." },
-    chalk: { ic: "\u{1F45D}", name: "Chalk Bag", desc: "Reclaiming a loose stone fully calms the threat." },
+    chalk: { ic: "\u{1F45D}", name: "Chalk Bag", desc: "Answer a question you once missed and the threat goes fully quiet." },
     rope: { ic: "\u{1F9F6}", name: "Woven Rope", desc: "Gatekeepers strike 25% softer." },
-    stone: { ic: "\u{1F48E}", name: "Summit Stone", desc: "Worth +15 summit score. It wants to go home." },
+    stone: { ic: "\u{1F48E}", name: "Summit Stone", desc: "Does nothing but weigh a little and mean a lot. +15 summit score \u2014 it wants to go home." },
     feather: { ic: "\u{1FAB6}", name: "Ptarmigan Feather", desc: "Once per climb, a timeout costs nothing and your streak survives. A small bird pays a small debt." }
   };
   function pitchRestore(node, mode, run, config) {
